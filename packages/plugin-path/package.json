@@ -1,0 +1,29 @@
+{
+  "name": "@wugui/plugin-path",
+  "version": "1.0.0",
+  "description": "component path normalizer",
+  "main": "lib/index.js",
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/wugui.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@wugui/core": "*",
+    "@wugui/utils": "*",
+    "path-to-regexp": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.6.8"
+  },
+  "scripts": {
+    "start": "tsc -w",
+    "build": "rm -rf lib && tsc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "gitHead": "2ca3a69a1fe748a7cbb9936e7f0d8f9bf529b2e2"
+}

@@ -1,0 +1,65 @@
+{
+  "name": "boilerplate-simple",
+  "version": "1.0.0",
+  "description": "wugui",
+  "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "deploy": "bash ./scripts/deploy.sh"
+  },
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/wugui.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@wugui/core": "*",
+    "@wugui/framework-simple": "*",
+    "@wugui/hooks": "*",
+    "@wugui/utils": "*",
+    "antd": "^3.20.7",
+    "classnames": "^2.2.6",
+    "events": "^3.0.0",
+    "history": "^4.9.0",
+    "lodash": "^4.17.15",
+    "path-to-regexp": "^3.0.0",
+    "query-string": "^6.8.1",
+    "react-dom": "^16.8.6",
+    "react": "^16.8.6",
+    "styled-components": "^5.0.0-beta.8"
+  },
+  "devDependencies": {
+    "@ant-design/colors": "^3.1.0",
+    "@craco/craco": "^5.2.4",
+    "@types/classnames": "^2.2.9",
+    "@types/history": "^4.7.2",
+    "@types/jest": "^24.0.16",
+    "@types/lodash": "^4.14.136",
+    "@types/node": "^12.6.8",
+    "@types/react-dom": "^16.8.5",
+    "@types/react": "^16.8.23",
+    "craco-antd": "^1.11.0",
+    "react-scripts": "^3.0.1",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.5.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

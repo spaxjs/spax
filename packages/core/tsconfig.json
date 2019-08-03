@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src/",
+    "composite": false,
+    "paths": {
+      "~/*": [
+        "./src/*",
+      ],
+      "lodash/*": [
+        "./node_modules/@types/lodash-es/*",
+      ],
+    },
+    "outDir": "./lib/",
+  },
+  "include": [
+    "./src/**/*",
+  ],
+}

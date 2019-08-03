@@ -1,0 +1,35 @@
+{
+  "name": "@wugui/framework-simple",
+  "version": "1.0.0",
+  "description": "一般一般，世界第三",
+  "main": "lib/index.js",
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/wugui.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@wugui/core": "*",
+    "@wugui/plugin-lazy": "*",
+    "@wugui/plugin-level": "*",
+    "@wugui/plugin-path": "*",
+    "@wugui/plugin-router": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^12.6.8",
+    "@types/react": "^16.8.23"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "scripts": {
+    "start": "tsc -w",
+    "build": "rm -rf lib && tsc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "gitHead": "2ca3a69a1fe748a7cbb9936e7f0d8f9bf529b2e2"
+}

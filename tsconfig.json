@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "esnext",
+      "es2017.object",
+    ],
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "newLine": "LF",
+    "noEmit": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "target": "esnext",
+  },
+  "exclude": [
+    "coverage",
+    "*/node_modules/*",
+    "packages/**/lib",
+  ],
+}

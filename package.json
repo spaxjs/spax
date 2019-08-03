@@ -1,0 +1,39 @@
+{
+  "name": "wugui",
+  "version": "1.0.0",
+  "description": "wugui master",
+  "homepage": "https://wugui.crossjs.com/",
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/wugui.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.16",
+    "@types/node": "^12.6.8",
+    "jest": "^24.8.0",
+    "lerna": "^3.16.4",
+    "pre-commit": "^1.2.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^4.0.0",
+    "tslint-react-hooks": "^2.2.1",
+    "typescript": "^3.5.3"
+  },
+  "scripts": {
+    "boot": "lerna bootstrap",
+    "alias": "lerna link",
+    "lint": "tslint --project ./ --fix",
+    "build": "lerna run build --ignore boilerplate-*",
+    "publish": "lerna publish --skip-git --force-publish",
+    "dev": "lerna exec 'yarn start' --ignore boilerplate-*",
+    "start": "jest --no-cache --watch",
+    "test": "jest --no-cache"
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}
