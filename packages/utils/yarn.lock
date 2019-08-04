@@ -7,10 +7,10 @@
   resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.136.tgz#413e85089046b865d960c9ff1d400e04c31ab60f"
   integrity sha1-QT6FCJBGuGXZYMn/HUAOBMMatg8=
 
-"@types/node@^12.6.8":
-  version "12.6.8"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.6.8.tgz#e469b4bf9d1c9832aee4907ba8a051494357c12c"
-  integrity sha1-5Gm0v50cmDKu5JB7qKBRSUNXwSw=
+"@types/node@^12.6.9":
+  version "12.6.9"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.6.9.tgz#ffeee23afdc19ab16e979338e7b536fdebbbaeaf"
+  integrity sha1-/+7iOv3BmrFul5M457U2/eu7rq8=
 
 lodash@^4.17.15:
   version "4.17.15"

@@ -13,7 +13,7 @@
     "@wugui/core": "*"
   },
   "devDependencies": {
-    "@types/node": "^12.6.8"
+    "@types/node": "^12.6.9"
   },
   "scripts": {
     "start": "tsc -w",

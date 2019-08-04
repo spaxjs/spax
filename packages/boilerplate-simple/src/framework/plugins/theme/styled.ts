@@ -6,6 +6,7 @@ export const Outer: typeof Layout = styled(Layout)`
 `;
 
 export const Sider: typeof Layout.Sider = styled(Layout.Sider)`
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.35);
 `;
 
 export const Logo = styled("div")`
@@ -16,23 +17,25 @@ export const Logo = styled("div")`
 `;
 
 export const LogoImage = styled("img")`
-  margin-right: 0.2em;
-  padding-left: 19px;
-  height: 24px;
-  vertical-align: baseline;
+  padding-left: 12px;
+  height: 32px;
+  vertical-align: middle;
   transition: padding-left 0.15s;
   will-change: padding-left;
   &.collapsed {
-    padding-left: 28px;
+    padding-left: 24px;
   }
 `;
 
 export const LogoTitle = styled("h1")`
   display: inline-block;
+  margin: 0 0 0 0.2em;
+  font-family: Avenir, "Helvetica Neue", Arial, Helvetica, sans-serif;
   color: white;
   font-style: normal;
   font-size: 20px;
-  vertical-align: baseline;
+  line-height: 32px;
+  vertical-align: middle;
   transition: opacity 0.15s;
   will-change: opacity;
   &.collapsed {

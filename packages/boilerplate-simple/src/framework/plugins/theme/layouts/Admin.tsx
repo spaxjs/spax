@@ -1,15 +1,15 @@
-import { useGlobalState } from "@wugui/hooks";
+import { useGlobalState, usePersistState } from "@wugui/hooks";
 import { Link } from "@wugui/plugin-router";
 import { Avatar, Button, Icon, Popconfirm } from "antd";
 import classNames from "classnames";
-import React, { useState } from "react";
+import React from "react";
 import Breadcrumb from "../Breadcrumb";
 import Menu from "../Menu";
 import { Content, Header, Logo, LogoImage, LogoTitle, Main, Outer, Sider } from "../styled";
 
 export default function AdminLayout(props: any) {
   const [auth, setAuth] = useGlobalState<string>("auth");
-  const [collapsed, setCollapse] = useState(false);
+  const [collapsed, setCollapse] = usePersistState<boolean>("plugin-theme-collapse", false);
   const [repo] = useGlobalState<any>("repo");
 
   const { logoImage, logoTitle } = props.option;

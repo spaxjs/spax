@@ -15,7 +15,7 @@
     "path-to-regexp": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.6.8"
+    "@types/node": "^12.6.9"
   },
   "scripts": {
     "start": "tsc -w",
