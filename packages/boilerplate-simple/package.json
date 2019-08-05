@@ -22,31 +22,25 @@
     "@wugui/hooks": "*",
     "@wugui/plugin-router": "*",
     "@wugui/utils": "*",
-    "antd": "^3.20.7",
     "classnames": "^2.2.6",
-    "events": "^3.0.0",
-    "history": "^4.9.0",
-    "lodash": "^4.17.15",
-    "path-to-regexp": "^3.0.0",
-    "query-string": "^6.8.2",
+    "grommet": "^2.7.4",
+    "grommet-icons": "^4.2.0",
     "react-dom": "^16.8.6",
     "react": "^16.8.6",
-    "styled-components": "^5.0.0-beta.8"
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "@ant-design/colors": "^3.1.0",
     "@craco/craco": "^5.2.4",
     "@types/classnames": "^2.2.9",
-    "@types/history": "^4.7.2",
     "@types/jest": "^24.0.16",
-    "@types/lodash": "^4.14.136",
     "@types/node": "^12.6.9",
     "@types/react-dom": "^16.8.5",
     "@types/react": "^16.8.24",
-    "craco-antd": "^1.11.0",
+    "@types/styled-components": "^4.1.18",
     "react-scripts": "^3.0.1",
     "source-map-loader": "^0.2.4",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "webpack-bundle-analyzer": "^3.4.1"
   },
   "eslintConfig": {
     "extends": "react-app"

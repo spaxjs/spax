@@ -1,21 +1,24 @@
 import { useGlobalState } from "@wugui/hooks";
 import { Link, usePathname } from "@wugui/plugin-router";
-import { Button, Checkbox, Form, Icon, Input } from "antd";
-import React, { useEffect } from "react";
+import { Box, Button, TextInput } from "grommet";
+import { FormLock, Login, View } from "grommet-icons";
+import React, { useEffect, useState } from "react";
 
-function UI(props: any) {
+export default function UI(props: any) {
   const [auth, setAuth] = useGlobalState<string>("auth");
   const [, setPath] = usePathname();
-  const { getFieldDecorator } = props.form;
+
+  const [username, setUsername] = useState("admin");
+  const [password, setPassword] = useState("admin");
+  const [reveal, setReveal] = useState(false);
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    props.form.validateFields((err: any, values: any) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-        setAuth(values.username);
-      }
-    });
+    if (username && password) {
+      setAuth(username);
+    } else {
+      alert("Please input username!");
+    }
   }
 
   useEffect(() => {
@@ -25,50 +28,49 @@ function UI(props: any) {
   }, [auth, setPath]);
 
   return (
-    <Form onSubmit={handleSubmit} className="login-form">
-      <Form.Item
-        extra="admin or guest"
+    <>
+      <Box
+        width="medium"
+        direction="row"
+        margin="large"
+        align="center"
+        round="small"
+        border
       >
-        {getFieldDecorator("username", {
-          initialValue: auth,
-          rules: [{ required: true, message: "Please input your username!" }],
-        })(
-          <Input
-            prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-            placeholder="Username"
-          />,
-        )}
-      </Form.Item>
-      <Form.Item
-        extra="any strings"
+        <TextInput
+          plain
+          type="text"
+          value={username}
+          onChange={event => setUsername(event.target.value)}
+        />
+      </Box>
+      <Box
+        width="medium"
+        direction="row"
+        margin="large"
+        align="center"
+        round="small"
+        border
       >
-        {getFieldDecorator("password", {
-          initialValue: auth,
-          rules: [{ required: true, message: "Please input your Password!" }],
-        })(
-          <Input
-            prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-            type="password"
-            placeholder="Password"
-          />,
-        )}
-      </Form.Item>
-      <Form.Item>
-        {getFieldDecorator("remember", {
-          valuePropName: "checked",
-          initialValue: true,
-        })(<Checkbox>Remember me</Checkbox>)}
+        <TextInput
+          plain
+          type={reveal ? "text" : "password"}
+          value={password}
+          onChange={event => setPassword(event.target.value)}
+        />
         <Button
-          type="primary"
-          htmlType="submit"
-          icon="login"
-        >
-          Login
-        </Button>
+          icon={reveal ? <View size="medium" /> : <FormLock size="medium" />}
+          onClick={() => setReveal(!reveal)}
+        />
+      </Box>
+      <Box>
+        <Button
+          icon={<Login />}
+          label="Login"
+          onClick={handleSubmit}
+        />
         <Link to="/register">Register</Link>
-      </Form.Item>
-    </Form>
+      </Box>
+    </>
   );
 }
-
-export default Form.create({ name: "login" })(UI);

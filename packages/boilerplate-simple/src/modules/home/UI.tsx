@@ -1,11 +1,12 @@
 import { Link } from "@wugui/plugin-router";
-import { Card } from "antd";
-import React, { ReactElement } from "react";
+import { Box, Heading} from "grommet";
+import React, { ReactNode } from "react";
 
-export default function UI(props: any): ReactElement<void> {
+export default function UI(props: any): ReactNode {
   return (
-    <Card title={props.title}>
+    <Box>
+      <Heading>{props.title}</Heading>
       Goto: <Link to="/dashboard">Dashboard</Link>
-    </Card>
+    </Box>
   );
 }

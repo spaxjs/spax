@@ -1,5 +1,5 @@
 import { useGlobalState } from "@wugui/hooks";
-import { Spin } from "antd";
+import { InProgress } from "grommet-icons";
 import React from "react";
 
 const initialStates = {
@@ -33,7 +33,7 @@ export default {
       siteTitle: "wugui",
     },
     lazy: {
-      fallback: <Spin size="large" />,
+      fallback: <InProgress size="xlarge" />,
     },
     router: {
       NotFound: require("framework/components/exception/NotFound").default,

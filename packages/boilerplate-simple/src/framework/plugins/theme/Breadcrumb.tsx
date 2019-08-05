@@ -1,9 +1,8 @@
 import { Link, useMatched } from "@wugui/plugin-router";
-import { Breadcrumb as AntBreadcrumb } from "antd";
 import React from "react";
 import styled from "styled-components";
 
-export const BreadcrumbOuter: typeof AntBreadcrumb = styled(AntBreadcrumb)`
+export const Outer = styled("div")`
   margin-bottom: 1rem;
   &:empty {
     display: none;
@@ -14,16 +13,17 @@ export default function Breadcrumb(props: any) {
   const matched = useMatched();
 
   return (
-    <BreadcrumbOuter {...props}>
+    <Outer {...props}>
       {
-        matched.map(([{key, path, title}, params]) => {
+        matched.map(([{key, path, title}, params], index) => {
           return (
-            <AntBreadcrumb.Item key={key}>
+            <span key={key}>
+              {matched.length === index + 1 ? "" : "/"}
               <Link to={{pathname: path, params}}>{title}</Link>
-            </AntBreadcrumb.Item>
+            </span>
           );
         })
       }
-    </BreadcrumbOuter>
+    </Outer>
   );
 }

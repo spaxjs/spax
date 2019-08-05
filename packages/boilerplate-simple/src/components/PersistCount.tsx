@@ -1,20 +1,24 @@
 import { usePersistState } from "@wugui/hooks";
-import { Avatar, Badge, Button, Card } from "antd";
+import { Box, Button } from "grommet";
 import React, { ReactElement } from "react";
 
-export default function PersistCount(props: any): ReactElement<void> {
+export default function GlobalCount(props: any): ReactElement<void> {
   const [count, setCount] = usePersistState("count", 0);
   return (
-    <Card title={props.title}>
-      <Button onClick={() => setCount(count + 1)}>
-        +
-      </Button>
-      <Badge showZero count={count} overflowCount={9}>
-        <Avatar>A</Avatar>
-      </Badge>
-      <Button onClick={() => setCount(Math.max(0, count - 1))}>
+    <Box className={props.className} title={props.meta.title}>
+      <Button
+        className="minus"
+        onClick={() => setCount(prevCount => prevCount - 1)}
+      >
         -
       </Button>
-    </Card>
+      {count}
+      <Button
+        className="plus"
+        onClick={() => setCount(prevCount => prevCount + 1)}
+      >
+        +
+      </Button>
+    </Box>
   );
 }

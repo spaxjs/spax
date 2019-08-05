@@ -1,74 +1,12 @@
-import { useGlobalState } from "@wugui/hooks";
-import { Link, usePathname } from "@wugui/plugin-router";
-import { Button, Checkbox, Form, Icon, Input } from "antd";
-import React, { useEffect } from "react";
+import { Link } from "@wugui/plugin-router";
+import { Box, Heading } from "grommet";
+import React from "react";
 
-function UI(props: any) {
-  const [auth, setAuth] = useGlobalState<string>("auth");
-  const [, setPath] = usePathname();
-  const { getFieldDecorator } = props.form;
-
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    props.form.validateFields((err: any, values: any) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-        setAuth(values.username);
-      }
-    });
-  }
-
-  useEffect(() => {
-    if (auth) {
-      setPath("/");
-    }
-  }, [auth, setPath]);
-
+export default function UI(props: any) {
   return (
-    <Form onSubmit={handleSubmit} className="login-form">
-      <Form.Item
-        extra="admin or guest"
-      >
-        {getFieldDecorator("username", {
-          initialValue: auth,
-          rules: [{ required: true, message: "Please input your username!" }],
-        })(
-          <Input
-            prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-            placeholder="Username"
-          />,
-        )}
-      </Form.Item>
-      <Form.Item
-        extra="any strings"
-      >
-        {getFieldDecorator("password", {
-          initialValue: auth,
-          rules: [{ required: true, message: "Please input your Password!" }],
-        })(
-          <Input
-            prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-            type="password"
-            placeholder="Password"
-          />,
-        )}
-      </Form.Item>
-      <Form.Item>
-        {getFieldDecorator("remember", {
-          valuePropName: "checked",
-          initialValue: true,
-        })(<Checkbox>Remember me</Checkbox>)}
-        <Button
-          type="primary"
-          htmlType="submit"
-          icon="register"
-        >
-          Register
-        </Button>
-        <Link to="/login">Login</Link>
-      </Form.Item>
-    </Form>
+    <Box>
+      <Heading>Todo</Heading>
+      <Link to="/login">Login</Link>
+    </Box>
   );
 }
-
-export default Form.create({ name: "register" })(UI);

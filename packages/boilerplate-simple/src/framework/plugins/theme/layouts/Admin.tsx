@@ -1,61 +1,67 @@
 import { useGlobalState, usePersistState } from "@wugui/hooks";
 import { Link } from "@wugui/plugin-router";
-import { Avatar, Button, Icon, Popconfirm } from "antd";
-import classNames from "classnames";
+import { Box, Button, DropButton, Heading } from "grommet";
+import { Github, Logout } from "grommet-icons";
 import React from "react";
+import styled from "styled-components";
 import Breadcrumb from "../Breadcrumb";
+import Header from "../Header";
+import Logo from "../Logo";
+import Main from "../Main";
 import Menu from "../Menu";
-import { Content, Header, Logo, LogoImage, LogoTitle, Main, Outer, Sider } from "../styled";
+import Sider from "../Sider";
+
+const Outer = styled(Box)`
+  min-height: 100vh;
+`;
 
 export default function AdminLayout(props: any) {
   const [auth, setAuth] = useGlobalState<string>("auth");
   const [collapsed, setCollapse] = usePersistState<boolean>("plugin-theme-collapse", false);
   const [repo] = useGlobalState<any>("repo");
 
-  const { logoImage, logoTitle } = props.option;
-
   return (
     <Outer>
+      <Header>
+        <Logo option={props.option} />
+        <a className="github" href={repo.url}>
+          <Github />
+        </a>
+        {auth ? <>
+          <Box
+            className="avatar"
+            height="36px"
+            width="36px"
+            round="full"
+          >{auth.charAt(0).toUpperCase()}</Box>
+          <em className="username">{auth}</em>
+          <DropButton
+            icon={<Logout />}
+            label="Logout"
+            dropContent={<Box>
+              <Box direction="row" justify="between" align="center">
+                <Heading level={3} margin="small">
+                  Are you sure to logout?
+                </Heading>
+              </Box>
+              <Button onClick={() => setAuth("")}>Yes</Button>
+            </Box>}
+            dropProps={{ align: { top: "bottom" } }}
+          />
+        </> : <Link className="login" to="/login">
+          Login
+        </Link>}
+      </Header>
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={(c) => setCollapse(c)}
       >
-        <Logo>
-          <Link to="/">
-            <LogoImage className={classNames({ collapsed })} src={logoImage} alt="wugui" />
-            <LogoTitle className={classNames({ collapsed })}>{logoTitle}</LogoTitle>
-          </Link>
-        </Logo>
         <Menu />
       </Sider>
       <Main>
-        <Header>
-          <a className="github" href={repo.url}>
-            <Icon type="github" />
-          </a>
-          {auth ? <>
-            <Avatar className="avatar">{auth.charAt(0).toUpperCase()}</Avatar>
-            <em className="username">{auth}</em>
-            <Popconfirm
-              title="Are you sure to logout?"
-              onConfirm={() => setAuth("")}
-              okText="Yes"
-              okType="danger"
-              cancelText="No"
-            >
-              <Button className="logout" type="danger" icon="logout">
-                Logout
-              </Button>
-            </Popconfirm>
-          </> : <Link className="login" to="/login">
-            Login
-          </Link>}
-        </Header>
-        <Content>
-          <Breadcrumb />
-          {props.children}
-        </Content>
+        <Breadcrumb />
+        {props.children}
       </Main>
     </Outer>
   );

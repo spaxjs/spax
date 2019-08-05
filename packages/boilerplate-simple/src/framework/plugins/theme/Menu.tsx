@@ -2,8 +2,9 @@ import { IModule, useParsed } from "@wugui/core";
 import { useGlobalState } from "@wugui/hooks";
 import { Link, useMatched } from "@wugui/plugin-router";
 import { debug } from "@wugui/utils";
-import { Icon, Menu as AntMenu } from "antd";
-import React, { ReactNode } from "react";
+import { Box, Collapsible } from "grommet";
+import { Anchor } from "grommet-icons";
+import React, { ReactElement, ReactNode, useState } from "react";
 
 interface IMenu {
   title: string;
@@ -21,48 +22,61 @@ export default function Menu(props: any) {
   const menu = getMenu(auth, modules);
   const paths = matched.map(([{ path }]) => path);
 
+  console.log(menu);
   return (
-    <AntMenu
-      mode="inline"
-      defaultOpenKeys={paths.slice(0, -1)}
-      defaultSelectedKeys={paths.slice(paths.length - 1)}
-      {...props}
-      >{createMenuItems(menu, paths)}</AntMenu>
+    <>
+      {createMenuItems(menu, paths)}
+    </>
+  );
+}
+
+function MenuGroup(props: any): ReactElement {
+  const [open, setOpen] = useState(false);
+  const { key, title, icon = "minus", path, empty } = props;
+  return (
+    <>
+    {
+      empty ? <Box onClick={() => setOpen(!open)}>
+        <Anchor />
+        <span>{title}</span>
+      </Box> : <Link to={path} onClick={() => setOpen(!open)}>
+        <Anchor />
+        <span>{title}</span>
+      </Link>
+    }
+    <Collapsible
+      key={key}
+      open={open}
+    >
+      {props.children}
+    </Collapsible>
+  </>
   );
 }
 
 function createMenuItems(menu: any[], paths: string[]): ReactNode[] {
-  return menu.map(({ title, icon = "minus", path, empty, children }) => {
+  return menu.map(({ key, title, icon = "minus", path, empty, children }) => {
     if (children) {
       return (
-        <AntMenu.SubMenu
-          key={path}
-          title={
-            empty ? <>
-              <Icon type={icon} />
-              <span>{title}</span>
-            </> : <Link to={path}>
-              <Icon type={icon} />
-              <span>{title}</span>
-            </Link>
-         }
-          onTitleClick={(e) => {
-            if (empty) {
-              e.domEvent.preventDefault();
-            }
-          }}
-          >
+        <MenuGroup
+          key={key}
+          title={title}
+          icon={icon}
+          path={path}
+          empty={empty}
+        >
           {createMenuItems(children, paths)}
-        </AntMenu.SubMenu>
+        </MenuGroup>
       );
     }
+    // 没有子节点，直接显示
     return (
-      <AntMenu.Item key={path}>
+      <Box key={path}>
         <Link to={path}>
-          <Icon type={icon} />
+          <Anchor />
           <span>{title}</span>
         </Link>
-      </AntMenu.Item>
+      </Box>
     );
   });
 }
@@ -88,11 +102,12 @@ function getMenuData(auth: string, modules: IModule[]): IMenu[] {
     // 过滤掉无 标题 的模块
     // 过滤掉无 权限 的模块
     .filter(({ path, title, authority }) => path.indexOf(":") === -1 && !!title && hasAuth(auth, authority))
-    .map(({ path, title, icon, empty, modules: childModules }) => {
+    .map(({ key, path, title, icon, empty, modules: childModules }) => {
       return {
+        key,
+        path,
         title,
         icon,
-        path,
         empty,
         children: childModules.length ? getMenuData(auth, childModules) : undefined,
       };

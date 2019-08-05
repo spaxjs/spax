@@ -8,6 +8,19 @@
     "type": "git",
     "url": "git://github.com/crossjs/wugui.git"
   },
+  "keywords": [
+    "react",
+    "hooks",
+    "typescript",
+    "extensible",
+    "pluggable",
+    "progressive",
+    "boilerplate",
+    "react-scripts",
+    "craco",
+    "styled-components",
+    "grommet"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^24.0.16",
