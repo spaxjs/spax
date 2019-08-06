@@ -1,24 +1,24 @@
 import { usePersistState } from "@wugui/hooks";
-import { Box, Button } from "grommet";
+import { Box, Button, Heading } from "grommet";
+import { Add, Subtract } from "grommet-icons";
 import React, { ReactElement } from "react";
 
 export default function GlobalCount(props: any): ReactElement<void> {
   const [count, setCount] = usePersistState("count", 0);
   return (
-    <Box className={props.className} title={props.meta.title}>
+    <Box className={props.className}>
+      <Heading>{props.title}</Heading>
       <Button
-        className="minus"
+        plain={false}
+        icon={<Subtract />}
         onClick={() => setCount(prevCount => prevCount - 1)}
-      >
-        -
-      </Button>
+      />
       {count}
       <Button
-        className="plus"
+        plain={false}
+        icon={<Add />}
         onClick={() => setCount(prevCount => prevCount + 1)}
-      >
-        +
-      </Button>
+      />
     </Box>
   );
 }

@@ -1,8 +1,10 @@
 import { useGlobalState } from "@wugui/hooks";
 import { Link, usePathname } from "@wugui/plugin-router";
-import { Box, Button, TextInput } from "grommet";
+import { Box, Button, FormField, Grid, TextInput, Anchor } from "grommet";
 import { FormLock, Login, View } from "grommet-icons";
 import React, { useEffect, useState } from "react";
+
+const suggestions = ["admin", "guest"];
 
 export default function UI(props: any) {
   const [auth, setAuth] = useGlobalState<string>("auth");
@@ -31,45 +33,63 @@ export default function UI(props: any) {
     <>
       <Box
         width="medium"
-        direction="row"
-        margin="large"
-        align="center"
-        round="small"
-        border
+        direction="column"
+        gap="small"
       >
-        <TextInput
-          plain
-          type="text"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
-        />
-      </Box>
-      <Box
-        width="medium"
-        direction="row"
-        margin="large"
-        align="center"
-        round="small"
-        border
-      >
-        <TextInput
-          plain
-          type={reveal ? "text" : "password"}
-          value={password}
-          onChange={event => setPassword(event.target.value)}
-        />
-        <Button
-          icon={reveal ? <View size="medium" /> : <FormLock size="medium" />}
-          onClick={() => setReveal(!reveal)}
-        />
-      </Box>
-      <Box>
-        <Button
-          icon={<Login />}
-          label="Login"
-          onClick={handleSubmit}
-        />
-        <Link to="/register">Register</Link>
+        <FormField
+          label="用户"
+          required
+          validate={{ regexp: /^[a-z]{4,20}$/, message: "4-20 位小写字母" }}>
+          <Box
+            pad="xsmall"
+            border>
+            <TextInput
+              plain
+              placeholder="admin or guest"
+              value={username}
+              onChange={event => setUsername(event.target.value)}
+              onSelect={event => setUsername(event.suggestion)}
+              suggestions={suggestions}
+            />
+          </Box>
+        </FormField>
+        <FormField
+          label="密码"
+          required
+          validate={{ regexp: /^[a-z0-9]{4,20}$/i, message: "4-20 位字母或数字" }}>
+          <Box
+            direction="row"
+            pad="xsmall"
+            border>
+            <TextInput
+              plain
+              type={reveal ? "text" : "password"}
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
+            <Button
+              plain
+              icon={reveal ? <View size="medium" /> : <FormLock size="medium" />}
+              onClick={() => setReveal(!reveal)}
+            />
+          </Box>
+        </FormField>
+        <Box
+          height="xxsmall">
+          <Button
+            fill
+            primary
+            icon={<Login />}
+            label="Login"
+            onClick={handleSubmit}
+          />
+        </Box>
+        <Grid
+          columns={["flex", "auto"]}
+          margin={{top: "xxsmall"}}>
+          <Link as={Anchor} to="/register">注册</Link>
+          <Link as={Anchor} to="/forgot">忘记密码？</Link>
+        </Grid>
       </Box>
     </>
   );

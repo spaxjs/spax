@@ -3,9 +3,6 @@ import React from "react";
 import styled from "styled-components";
 
 const Outer = styled(Box)`
-  background: white;
-  padding: 0 1rem;
-  text-align: right;
   .github {
     font-size: 20px;
     vertical-align: middle;
@@ -24,17 +21,16 @@ const Outer = styled(Box)`
   }
 `;
 
-export default function Header(props: any) {
+export default function Header({children, ...props}: any) {
   return (
     <Outer
       gridArea="header"
-      direction="row"
       align="center"
       justify="between"
-      pad={{ horizontal: "medium", vertical: "small" }}
-      background="dark-2"
+      pad="small"
+      {...props}
     >
-      {props.children}
+      {children}
     </Outer>
   );
 }

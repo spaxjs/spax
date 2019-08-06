@@ -9,6 +9,7 @@ interface LinkProps extends AnyObject {
     search?: AnyObject;
     hash?: AnyObject;
   };
+  as?: any;
   children: ReactNode;
 }
 
@@ -18,7 +19,7 @@ interface LinkProps extends AnyObject {
  * <Link to={{pathname: "/login", search: {rv: 1}}}>Login</Link>
  * // <a href="/#/login?rv=1">Login</a>
  */
-export default function Link({children, to, ...props}: LinkProps) {
+export default function Link({children, to, as: As, ...props}: LinkProps) {
   if (typeof to === "string") {
     to = {
       pathname: to,
@@ -26,6 +27,8 @@ export default function Link({children, to, ...props}: LinkProps) {
   }
   const url = pathToRegexp.compile(to.pathname)(to.params || {});
   return (
-    <a {...props} href={`/#${url}`}>{children}</a>
+    As
+    ? <As {...props} href={`/#${url}`}>{children}</As>
+    : <a {...props} href={`/#${url}`}>{children}</a>
   );
 }

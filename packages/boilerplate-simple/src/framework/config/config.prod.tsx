@@ -27,9 +27,7 @@ export default {
       initialStates,
     },
     theme: {
-      hideBreadcrumb: false,
-      logoImage: require("images/wugui.png"),
-      logoTitle: "wugui",
+      logoImage: require("images/logo.png"),
       siteTitle: "wugui",
     },
     lazy: {

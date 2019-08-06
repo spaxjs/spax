@@ -5,13 +5,14 @@ new Framework({
   modules: [
     import("modules/login"),
     import("modules/register"),
+    import("modules/forgot"),
     import("modules/home"),
     import("modules/dashboard"),
     import("modules/hooks"),
+    import("modules/nested"),
     // import("modules/todo"),
     // import("modules/grid"),
     // import("modules/grid2"),
-    // import("modules/nest"),
     // import("modules/group"),
     // 404
     {

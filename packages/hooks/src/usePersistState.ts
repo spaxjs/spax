@@ -1,8 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
+const prefix = "@wugui/hooks/persist/state/";
+
 export function usePersistState<S>(key: string, initialState?: S | (() => S)): [S, Dispatch<SetStateAction<S>>] {
+  const realKey = `${prefix}${key}`;
   const [state, setState] = useState(() => {
-    const value = localStorage.getItem(key);
+    const value = localStorage.getItem(realKey);
     if (value === null) {
       return typeof initialState === "function" ? (initialState as any)() : initialState;
     }
@@ -14,7 +17,7 @@ export function usePersistState<S>(key: string, initialState?: S | (() => S)): [
   });
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
+    localStorage.setItem(realKey, JSON.stringify(state));
   }, [state]);
 
   return [

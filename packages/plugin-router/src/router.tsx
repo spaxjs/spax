@@ -111,31 +111,30 @@ export function Switch({ level, loose, option }: SwitchProps) {
   const { useAuth = () => true, NotFound, Forbidden } = option;
   const authed = useAuth(childModule);
 
-  if (authed) {
-    // tslint:disable-next-line: no-shadowed-variable
-    const { key, level, component: Matched, data, modules: childModules } = childModule;
-    return (
-      <Matched
-        {...data}
-        {...matchedParams}
-        key={key}
-        meta={childModule}
-        renderChildModules={(props: AnyObject) => {
-          // 如果没有子模块，则返回空
-          return childModules.length ? (
-            <Switch
-              level={level + 1}
-              option={option}
-              loose={matchedParams.exact}
-              {...props}
-            />
-          ) : null;
-        }}
-      />
-    );
-  }
-
   if (childModule) {
+    if (authed) {
+      // tslint:disable-next-line: no-shadowed-variable
+      const { key, level, component: Matched, data, modules: childModules } = childModule;
+      return (
+        <Matched
+          {...data}
+          {...matchedParams}
+          key={key}
+          meta={childModule}
+          renderChildModules={(props: AnyObject) => {
+            // 如果没有子模块，则返回空
+            return childModules.length ? (
+              <Switch
+                level={level + 1}
+                option={option}
+                loose={matchedParams.exact}
+                {...props}
+              />
+            ) : null;
+          }}
+        />
+      );
+    }
     return Forbidden ? <Forbidden /> : null;
   }
 

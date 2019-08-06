@@ -2,8 +2,8 @@ import { IModule, useParsed } from "@wugui/core";
 import { useGlobalState } from "@wugui/hooks";
 import { Link, useMatched } from "@wugui/plugin-router";
 import { debug } from "@wugui/utils";
-import { Box, Collapsible } from "grommet";
-import { Anchor } from "grommet-icons";
+import { Box, Collapsible, Grid, Text } from "grommet";
+import { Down, Next, Subtract } from "grommet-icons";
 import React, { ReactElement, ReactNode, useState } from "react";
 
 interface IMenu {
@@ -22,7 +22,6 @@ export default function Menu(props: any) {
   const menu = getMenu(auth, modules);
   const paths = matched.map(([{ path }]) => path);
 
-  console.log(menu);
   return (
     <>
       {createMenuItems(menu, paths)}
@@ -32,36 +31,48 @@ export default function Menu(props: any) {
 
 function MenuGroup(props: any): ReactElement {
   const [open, setOpen] = useState(false);
-  const { key, title, icon = "minus", path, empty } = props;
+  const { key, title, icon: Icon = Subtract, path, empty } = props;
+  const Pointer = open ? Down : Next;
   return (
-    <>
-    {
-      empty ? <Box onClick={() => setOpen(!open)}>
-        <Anchor />
-        <span>{title}</span>
-      </Box> : <Link to={path} onClick={() => setOpen(!open)}>
-        <Anchor />
-        <span>{title}</span>
-      </Link>
-    }
-    <Collapsible
-      key={key}
-      open={open}
-    >
-      {props.children}
-    </Collapsible>
-  </>
+    <Box>
+      {
+        empty ? <Grid
+          fill="horizontal"
+          rows={["auto"]}
+          columns={["auto", "flex", "auto"]}
+          areas={[
+            { name: "icon", start: [0, 0], end: [0, 0] },
+            { name: "title", start: [1, 0], end: [1, 0] },
+            { name: "pointer", start: [2, 0], end: [2, 0] },
+          ]}
+          onClick={() => setOpen(!open)}>
+          <Box gridArea="icon"><Icon /></Box>
+          <Text gridArea="title">{title}</Text>
+          <Box gridArea="pointer"><Pointer /></Box>
+        </Grid> : <Link to={path} onClick={() => setOpen(!open)}>
+          <Icon />
+          <span>{title}</span>
+          <Pointer />
+        </Link>
+      }
+      <Collapsible
+        key={key}
+        open={open}
+      >
+        {props.children}
+      </Collapsible>
+    </Box>
   );
 }
 
 function createMenuItems(menu: any[], paths: string[]): ReactNode[] {
-  return menu.map(({ key, title, icon = "minus", path, empty, children }) => {
+  return menu.map(({ key, title, icon: Icon = Subtract, path, empty, children }) => {
     if (children) {
       return (
         <MenuGroup
           key={key}
           title={title}
-          icon={icon}
+          icon={Icon}
           path={path}
           empty={empty}
         >
@@ -73,7 +84,7 @@ function createMenuItems(menu: any[], paths: string[]): ReactNode[] {
     return (
       <Box key={path}>
         <Link to={path}>
-          <Anchor />
+          <Icon />
           <span>{title}</span>
         </Link>
       </Box>

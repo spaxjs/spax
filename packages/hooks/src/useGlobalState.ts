@@ -1,5 +1,6 @@
 import EventEmitter from "events";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { usePersistState } from "./usePersistState";
 
 const emitter = new EventEmitter();
 
@@ -7,7 +8,7 @@ const map: Map<string, any> = new Map();
 const mapInitial: Map<string, any> = new Map();
 
 export function useGlobalState<S>(key: string, initialState?: S | (() => S)): [S, Dispatch<SetStateAction<S>>, () => void] {
-  const [state, setState] = useState(map.has(key) ? map.get(key) : initialState);
+  const [state, setState] = usePersistState(key, map.has(key) ? map.get(key) : initialState);
 
   useEffect(() => {
     // mounting 时监听
@@ -43,7 +44,7 @@ export function useGlobalState<S>(key: string, initialState?: S | (() => S)): [S
   ];
 }
 
-export function initGlobalState<S>(key: string, initialState: S | (() => S)): void {
+export function initGlobalState<S>(key: string, initialState: S | (() => S), mapProvider?: any): void {
   const state = typeof initialState === "function" ? (initialState as any)() : initialState;
   map.set(key, state);
   mapInitial.set(key, state);

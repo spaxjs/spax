@@ -8,6 +8,6 @@ export default {
   authority: ["admin"],
   component: UI,
   data: {
-    title: "Home",
+    title: "Hello World",
   },
 };
