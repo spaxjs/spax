@@ -1327,10 +1327,10 @@
   resolved "https://registry.npm.taobao.org/@types/jest-diff/download/@types/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
   integrity sha1-NcwVucTzChjvIYUuJV/bAvbVm4k=
 
-"@types/jest@^24.0.16":
-  version "24.0.16"
-  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.16.tgz#8d3e406ec0f0dc1688d6711af3062ff9bd428066"
-  integrity sha1-jT5AbsDw3BaI1nEa8wYv+b1CgGY=
+"@types/jest@^24.0.17":
+  version "24.0.17"
+  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.17.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fjest%2Fdownload%2F%40types%2Fjest-24.0.17.tgz#b66ea026efb746eb5db1356ee28518aaff7af416"
+  integrity sha1-tm6gJu+3RutdsTVu4oUYqv969BY=
   dependencies:
     "@types/jest-diff" "*"
 
