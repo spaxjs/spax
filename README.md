@@ -5,7 +5,7 @@
 :fist_raised: 用于开发框架的框架：使用 React、TypeScript，可扩展、插件化、渐进式，满足各种规模的业务开发。
 
 ![Travis (.org)](https://img.shields.io/travis/crossjs/wugui)
-![Codecov](https://img.shields.io/codecov/c/github/crossjs/wugui?token=b84a011a-d748-4803-9f70-cae73476576e)
+![Codecov](https://img.shields.io/codecov/c/github/crossjs/wugui)
 
 ## :open_book: 名词解释 Glossary
 
