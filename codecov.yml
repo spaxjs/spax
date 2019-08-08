@@ -1,4 +1,5 @@
 codecov:
+  token: b84a011a-d748-4803-9f70-cae73476576e
   branch: master
 
 coverage:
