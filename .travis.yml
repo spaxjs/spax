@@ -11,6 +11,8 @@ before_install:
   - rm -f .npmrc
 before_script:
   - yarn boot
+  - yarn build
+  - yarn alias
 scripts:
   - npm install codecov -g
 after_success:
