@@ -1,5 +1,5 @@
-import { createMuiTheme } from "@material-ui/core/styles";
 import { green, lime } from "@material-ui/core/colors";
+import { createMuiTheme } from "@material-ui/core/styles";
 import { recursive } from "merge";
 
 export default function getTheme(type: "light" | "dark" = "light") {
@@ -30,7 +30,7 @@ export default function getTheme(type: "light" | "dark" = "light") {
   return recursive(raw, {
     palette: {
       primary: {
-        contrastText: "#ffffff"
+        contrastText: "#ffffff",
       },
       secondary: {
         contrastText: raw.palette.primary.main,
@@ -62,4 +62,4 @@ export default function getTheme(type: "light" | "dark" = "light") {
       },
     },
   });
-};
+}
