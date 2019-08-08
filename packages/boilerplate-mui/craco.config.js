@@ -1,6 +1,6 @@
 const path = require("path");
-const { whenProd } = require("@craco/craco");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+// const { whenProd } = require("@craco/craco");
+// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const getAliasForCommonLibraries = (modules) => {
   return modules.reduce((obj, name) => {
@@ -11,9 +11,9 @@ const getAliasForCommonLibraries = (modules) => {
 };
 
 module.exports = {
-  webpack: {
-    plugins: whenProd([new BundleAnalyzerPlugin()], [])
-  },
+  // webpack: {
+  //   plugins: whenProd([new BundleAnalyzerPlugin()], [])
+  // },
   plugins: [
     {
       plugin: {

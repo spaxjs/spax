@@ -1182,6 +1182,17 @@
   dependencies:
     "@babel/runtime" "^7.2.0"
 
+"@material-ui/lab@^4.0.0-alpha.22":
+  version "4.0.0-alpha.22"
+  resolved "https://registry.npm.taobao.org/@material-ui/lab/download/@material-ui/lab-4.0.0-alpha.22.tgz#918f76e41a9aa9a427e5987ea9cc089f49fcd951"
+  integrity sha1-kY925BqaqaQn5Zh+qcwIn0n82VE=
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.1.0"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    warning "^4.0.3"
+
 "@material-ui/styles@^4.3.0":
   version "4.3.0"
   resolved "https://registry.npm.taobao.org/@material-ui/styles/download/@material-ui/styles-4.3.0.tgz#27f11fbf061d8a20ad5703acb0dbb0e69cc00345"
@@ -1231,6 +1242,11 @@
     "@babel/runtime" "^7.4.4"
     prop-types "^15.7.2"
     react-is "^16.8.6"
+
+"@mdi/svg@^3.8.95":
+  version "3.8.95"
+  resolved "https://registry.npm.taobao.org/@mdi/svg/download/@mdi/svg-3.8.95.tgz#174a0de996e057d6ca1f1d956cff4d1b96df4e10"
+  integrity sha1-F0oN6ZbgV9bKHx2VbP9NG5bfThA=
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -2716,7 +2732,7 @@ clone-deep@^2.0.1:
     kind-of "^6.0.0"
     shallow-clone "^1.0.0"
 
-clsx@^1.0.2:
+clsx@^1.0.2, clsx@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/clsx/download/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
   integrity sha1-DAFx9tXLL+g4SEY8FfzCa034wuw=
@@ -6402,6 +6418,11 @@ merge2@^1.2.3:
   resolved "https://registry.npm.taobao.org/merge2/download/merge2-1.2.3.tgz#7ee99dbd69bb6481689253f018488a1b902b0ed5"
   integrity sha1-fumdvWm7ZIFoklPwGEiKG5ArDtU=
 
+merge@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/merge/download/merge-1.2.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmerge%2Fdownload%2Fmerge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
+  integrity sha1-OL6/gMMiCopIe2/Ps5QbsRcgwUU=
+
 methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/methods/download/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
@@ -9965,7 +9986,7 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-warning@^4.0.1:
+warning@^4.0.1, warning@^4.0.3:
   version "4.0.3"
   resolved "https://registry.npm.taobao.org/warning/download/warning-4.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwarning%2Fdownload%2Fwarning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
   integrity sha1-Fungd+uKhtavfWSqHgX9hbRnjKM=

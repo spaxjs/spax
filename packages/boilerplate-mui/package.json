@@ -19,19 +19,20 @@
   "dependencies": {
     "@material-ui/core": "^4.3.1",
     "@material-ui/icons": "^4.2.1",
+    "@mdi/svg": "^3.8.95",
     "@wugui/core": "*",
     "@wugui/framework-simple": "*",
     "@wugui/hooks": "*",
     "@wugui/plugin-router": "*",
     "@wugui/utils": "*",
-    "classnames": "^2.2.6",
+    "clsx": "^1.0.4",
+    "merge": "^1.2.1",
     "react-dom": "^16.8.6",
     "react": "^16.8.6",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "@craco/craco": "^5.2.4",
-    "@types/classnames": "^2.2.9",
     "@types/jest": "^24.0.17",
     "@types/node": "^12.6.9",
     "@types/react-dom": "^16.8.5",

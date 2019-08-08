@@ -2,9 +2,12 @@ import { ICoreHooks, IModule, IPluginOption } from "@wugui/core";
 import React, { ReactElement } from "react";
 import { ChildRoutes, Router, Switch } from "./router";
 
+import { LinkProps } from "./types";
+export type LinkProps = LinkProps;
+
 export { default as Link } from "./Link";
-export { useMatched } from "./router";
-export { useLocation, usePathname, useSearch, useHash } from "./hooks";
+export { useExact, useMatched, useMatchedChild } from "./router";
+export { useHash, useLocation, usePathname, useSearch } from "./hooks";
 
 export default ({ parse, render }: ICoreHooks) => {
   parse.tap("Router", (current: IModule, parent: IModule, option: IPluginOption) => {
@@ -33,7 +36,9 @@ export default ({ parse, render }: ICoreHooks) => {
     },
     (element: ReactElement, option: IPluginOption): ReactElement => {
       return (
-        <Router option={option}>
+        <Router
+          option={option}
+        >
           {element}
         </Router>
       );

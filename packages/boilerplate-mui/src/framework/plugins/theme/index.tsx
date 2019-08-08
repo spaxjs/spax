@@ -1,15 +1,15 @@
 import { ICoreHooks, IPluginOption } from "@wugui/core";
 import React, { ReactElement } from "react";
-import Theme from "./Theme";
+import Root from "./Root";
 
 export default ({ render }: ICoreHooks) => {
   render.tap(
     "Theme",
     (modules: ReactElement, option: IPluginOption): ReactElement => {
       return (
-        <Theme
+        <Root
           option={option}
-        >{modules}</Theme>
+        >{modules}</Root>
       );
     },
   );

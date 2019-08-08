@@ -2,7 +2,7 @@ import { AnyObject, IModule, useParsed } from "@wugui/core";
 import { debug } from "@wugui/utils";
 import React from "react";
 import { usePathname } from "./hooks";
-import { MatchedParams, RouterProps, SwitchProps, TMatched } from "./types";
+import { MatchedParams, RouterProps, SwitchProps, TMatchedModule } from "./types";
 
 function flatten(childModules: IModule[], a: IModule[] = []) {
   childModules.forEach((childModule) => {
@@ -32,14 +32,14 @@ function useFlattened() {
   return flattenedModules;
 }
 
-const cacheMap: Map<string, TMatched[]> = new Map();
+const cacheMap: Map<string, TMatchedModule[]> = new Map();
 
-export function useMatched(level: number = 0): TMatched[] {
+export function useMatched(level: number = 0): TMatchedModule[] {
   const [pathname] = usePathname();
   const flattened = useFlattened();
 
   if (!cacheMap.has(pathname)) {
-    const matched: TMatched[] = [];
+    const matched: TMatchedModule[] = [];
 
     // `/a/b/c` -> `["/a", "/b", "/c"]`
     const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
@@ -67,7 +67,7 @@ export function useMatched(level: number = 0): TMatched[] {
             ...params,
             [name]: execArray[index + 1],
           }), {
-            exact: tokens.length === childModule.level,
+            $$exact: tokens.length === childModule.level,
           });
 
           // 推入
@@ -98,12 +98,36 @@ export function useMatched(level: number = 0): TMatched[] {
 
   return level === 0 ?
     cacheMap.get(pathname) :
+    level === -1 ?
+    cacheMap.get(pathname).slice(-1) :
     cacheMap.get(pathname).filter(([childModule]) => childModule.level === level);
 }
 
+export function MatchedRoutes() {
+}
+
+let globalOption: AnyObject;
+
 export function Router({ option, ...props }: RouterProps) {
+  globalOption = option;
   useMatched();
   return props.children;
+}
+
+export function useExact({ $$exact }: any): boolean {
+  return $$exact;
+}
+
+export function useMatchedChild({ $$exact, $$meta: { level, modules }}: any): React.FC<any> {
+  // 如果没有子模块，则返回空
+  return modules.length ? (props: any) => (
+    <Switch
+      level={level + 1}
+      option={globalOption}
+      loose={$$exact}
+      {...props}
+    />
+  ) : () => null;
 }
 
 export function Switch({ level, loose, option }: SwitchProps) {
@@ -114,24 +138,23 @@ export function Switch({ level, loose, option }: SwitchProps) {
   if (childModule) {
     if (authed) {
       // tslint:disable-next-line: no-shadowed-variable
-      const { key, level, component: Matched, data, modules: childModules } = childModule;
+      const { component: Matched, data } = childModule;
       return (
         <Matched
           {...data}
           {...matchedParams}
-          key={key}
-          meta={childModule}
-          renderChildModules={(props: AnyObject) => {
-            // 如果没有子模块，则返回空
-            return childModules.length ? (
-              <Switch
-                level={level + 1}
-                option={option}
-                loose={matchedParams.exact}
-                {...props}
-              />
-            ) : null;
-          }}
+          $$meta={childModule}
+          // renderChildModules={(props: AnyObject) => {
+          //   // 如果没有子模块，则返回空
+          //   return childModules.length ? (
+          //     <Switch
+          //       level={level + 1}
+          //       option={option}
+          //       loose={matchedParams.$$exact}
+          //       {...props}
+          //     />
+          //   ) : null;
+          // }}
         />
       );
     }
@@ -146,8 +169,8 @@ export function Switch({ level, loose, option }: SwitchProps) {
   return NotFound ? <NotFound /> : null;
 }
 
-export function ChildRoutes({ exact, renderChildModules }: AnyObject) {
-  if (exact) {
+export function ChildRoutes({ $$exact, renderChildModules }: AnyObject) {
+  if ($$exact) {
     return null;
   }
   return renderChildModules ? renderChildModules() : null;

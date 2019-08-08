@@ -1,20 +1,15 @@
+import { Box } from "@material-ui/core";
+import { BoxProps } from "@material-ui/core/Box";
 import React from "react";
-import styled from "styled-components";
 
-const Outer = styled.div`
-`;
-
-export default function Footer({children, ...props}: any) {
+const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {
   return (
-    <Outer
-      gridArea="footer"
-      direction="column"
-      align="center"
-      justify="between"
-      pad="small"
+    <Box
       {...props}
     >
       {children}
-    </Outer>
+    </Box>
   );
-}
+};
+
+export default Footer;

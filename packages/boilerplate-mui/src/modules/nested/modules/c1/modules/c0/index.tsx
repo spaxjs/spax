@@ -1,14 +1,3 @@
-import LocalCount from "components/LocalCount";
-import React, { ReactElement } from "react";
-
-function UI(props: any): ReactElement<void> {
-  return (
-    <LocalCount title={props.title || props.meta.title}>
-      {props.renderChildModules()}
-    </LocalCount>
-  );
-}
-
 /**
  * path 为空字符串，
  * 表示与父级拥有同样的 path，
@@ -17,15 +6,15 @@ function UI(props: any): ReactElement<void> {
 export default {
   path: "",
   title: "C0",
-  component: UI,
+  lazy: () => import("modules/nested/components/UI"),
   modules: [{
     path: "",
     title: "C0",
-    component: UI,
+    lazy: () => import("modules/nested/components/UI"),
     modules: [{
       path: "",
       title: "C0",
-      component: UI,
+      lazy: () => import("modules/nested/components/UI"),
     }],
   }],
 };

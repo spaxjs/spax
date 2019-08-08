@@ -1,25 +1,39 @@
-import { Link } from "@wugui/plugin-router";
+import { Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/styles";
+import { Link, LinkProps } from "@wugui/plugin-router";
+import clsx from "clsx";
 import React from "react";
-import styled from "styled-components";
 
-const Outer = styled(Link)`
-`;
+const useStyles = makeStyles((theme: Theme & { custom: any }) =>
+  createStyles({
+    logo: {
+      ...theme.mixins.toolbar,
+      display: "flex",
+      justifyContent: "center",
+      "& > img": {
+        maxWidth: "100%",
+        maxHeight: "100%",
+      },
+    },
+  }),
+);
 
-const LogoImage = styled("img")`
-  height: 48px;
-  transition: padding-left 0.15s;
-  will-change: padding-left;
-  &.collapsed {
-    padding-left: 24px;
-  }
-`;
+const Logo: React.FC<Partial<LinkProps> & { className?: any, option?: any }> = ({className, option, ...props}: any) => {
+  const {logo} = useStyles(props);
 
-export default function Logo(props: any) {
-  const { logoImage, siteTitle } = props.option;
+  const { logoImage, siteTitle } = option;
 
   return (
-    <Outer to="/">
-      <LogoImage src={logoImage} alt={siteTitle} />
-    </Outer>
+    <Link
+      to="/"
+      className={clsx([logo, className])}
+      {...props}
+    >
+      <img
+        src={logoImage}
+        alt={siteTitle} />
+    </Link>
   );
-}
+};
+
+export default Logo;

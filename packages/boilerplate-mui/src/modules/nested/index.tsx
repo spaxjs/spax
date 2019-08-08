@@ -1,9 +1,9 @@
-import { Menu } from "@material-ui/icons";
+import { FilterList } from "@material-ui/icons";
 
 export default {
   path: "nested",
   title: "Nested",
-  icon: Menu,
+  icon: FilterList,
   lazy: () => import("./UI"),
   modules: [
     import("./modules/c1"),

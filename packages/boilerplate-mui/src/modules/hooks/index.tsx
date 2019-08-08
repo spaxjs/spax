@@ -1,4 +1,5 @@
-import { RvHookup } from "@material-ui/icons";
+import { DeviceHub } from "@material-ui/icons";
+import UI from "./UI";
 
 /**
  * 没有 component，直接显示匹配的子模块
@@ -6,11 +7,13 @@ import { RvHookup } from "@material-ui/icons";
 export default {
   path: "hooks",
   title: "Hooks",
-  icon: RvHookup,
+  icon: DeviceHub,
   description: "一些有用的 React Hooks",
-  // component: UI,
+  component: UI,
   modules: [
     import("./persist"),
     import("./global"),
+    import("./search"),
+    import("./hash"),
   ],
 };

@@ -14,7 +14,7 @@ const UI2 = styled(GlobalCount)`
 export default function UI(props: any): ReactElement<void> {
   return (
     <Box>
-      <Heading>{props.meta.title}</Heading>
+      <Heading>{props.title}</Heading>
       <UI1 {...props} />
       <UI2 {...props} />
     </Box>

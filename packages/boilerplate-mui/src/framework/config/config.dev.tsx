@@ -5,6 +5,7 @@ import React from "react";
 const initialStates = {
   auth: "",
   count: 0,
+  "sidebar-open": true,
   repo: {
     url: "https://github.com/crossjs/wugui",
   },

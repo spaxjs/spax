@@ -1,17 +1,6 @@
-import { AnyObject } from "@wugui/core";
 import pathToRegexp from "path-to-regexp";
-import React, { ReactNode } from "react";
-
-interface LinkProps extends AnyObject {
-  to: string | {
-    pathname: string;
-    params?: AnyObject;
-    search?: AnyObject;
-    hash?: AnyObject;
-  };
-  as?: any;
-  children: ReactNode;
-}
+import React from "react";
+import { LinkProps } from "./types";
 
 /**
  * @example
@@ -19,16 +8,21 @@ interface LinkProps extends AnyObject {
  * <Link to={{pathname: "/login", search: {rv: 1}}}>Login</Link>
  * // <a href="/#/login?rv=1">Login</a>
  */
-export default function Link({children, to, as: As, ...props}: LinkProps) {
+export default function Link({children, to, as: As, component: Cp, ...props}: LinkProps) {
   if (typeof to === "string") {
     to = {
       pathname: to,
     };
   }
+  if (typeof to === "boolean") {
+    return <a {...props}>{children}</a>;
+  }
   const url = pathToRegexp.compile(to.pathname)(to.params || {});
   return (
     As
     ? <As {...props} href={`/#${url}`}>{children}</As>
+    : Cp
+    ? <Cp {...props} href={`/#${url}`}>{children}</Cp>
     : <a {...props} href={`/#${url}`}>{children}</a>
   );
 }
