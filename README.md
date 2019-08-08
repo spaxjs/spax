@@ -57,9 +57,16 @@ wugui init my_wugui_app
 
 以下示例使用的技术栈非必选，实际应用时可根据自身偏好选择。
 
-### [boilerplate-simple](packages/boilerplate-simple)
+### [boilerplate-grommet](packages/boilerplate-grommet)
 
 - craco
 - react-scripts
 - styled-components
 - grommet
+
+### [boilerplate-mui](packages/boilerplate-mui)
+
+- craco
+- react-scripts
+- styled-components
+- material-ui
