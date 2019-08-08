@@ -2,13 +2,13 @@ import { Container, Typography } from "@material-ui/core";
 import { Link } from "@wugui/plugin-router";
 import React from "react";
 
-export default function Forbidden(props: any) {
+export default function NotFound(props: any) {
   return (
     <Container>
-      <Typography variant="h1">403</Typography>
-      Sorry, you don't have access to this page.
+      <Typography variant="h1">404</Typography>
+      Sorry, the page you visited does not exist.
       <hr />
-      <Link to="/login">Login</Link>
+      <Link to="/">Home</Link>
     </Container>
   );
 }
