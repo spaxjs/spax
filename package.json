@@ -30,6 +30,7 @@
     "@types/node": "^12.7.1",
     "babel-jest": "^24.8.0",
     "babel-preset-react-app": "^9.0.0",
+    "husky": "^3.0.3",
     "jest": "^24.8.0",
     "lerna": "^3.16.4",
     "pre-commit": "^1.2.2",
@@ -44,16 +45,20 @@
     "typescript": "^3.5.3"
   },
   "scripts": {
+    "lerna": "lerna",
     "boot": "lerna bootstrap",
     "alias": "lerna link",
     "lint": "tslint --project ./ --fix",
     "build": "lerna run build --ignore boilerplate-*",
+    "prepublish": "lerna run prepublish",
     "publish": "lerna publish --skip-git --force-publish",
     "dev": "lerna exec 'yarn start' --ignore boilerplate-*",
     "start": "jest --no-cache --watch",
     "test": "jest --no-cache"
   },
-  "pre-commit": [
-    "lint"
-  ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  }
 }
