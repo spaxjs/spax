@@ -6,13 +6,16 @@ module.exports = {
     "tsx"
   ],
   "transform": {
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
   },
-  "globals": {
-    "ts-jest": {
-      "tsConfig": "tsconfig.json"
-    }
-  },
+  "setupFiles": [
+    "react-app-polyfill/jsdom"
+  ],
+  // "globals": {
+  //   "ts-jest": {
+  //     "tsConfig": "tsconfig.json"
+  //   }
+  // },
   "testMatch": [
     "**/test/*.(ts|tsx)"
   ],

@@ -13,6 +13,8 @@ const hooks: ICH = {
 const cache: Map<string, any> = new Map();
 
 export async function mount(plugins: TCP[], options: ICO): Promise<void> {
+  // 清理现场
+  cache.clear();
   // 存到本地
   cache.set("plugins", plugins);
   cache.set("options", options);
@@ -34,8 +36,11 @@ export async function mount(plugins: TCP[], options: ICO): Promise<void> {
   const mountingElement: HTMLElement = typeof options.container === "string"
     ? document.querySelector(options.container) : options.container;
 
+  // 转字符串，避免出错
+  const renderElement = Array.isArray(renderedModules) ? JSON.stringify(renderedModules, null, 2) : renderedModules;
+
     // 挂载
-  ReactDOM.render(renderedModules, mountingElement, () => {
+  ReactDOM.render(renderElement, mountingElement, () => {
     if (process.env.NODE_ENV !== "production")
       debug("Mounted to container: %O", options.container);
   });

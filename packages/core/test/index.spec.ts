@@ -1,9 +1,8 @@
 import "jest";
-import { Framework, getParsedModules, getRenderedModules, mount } from "../src";
+import { mount, useParsed, useRendered } from "../src";
 
 test("exports", () => {
   expect(typeof mount).toBe("function");
-  expect(typeof getParsedModules).toBe("function");
-  expect(typeof getRenderedModules).toBe("function");
-  expect(typeof Framework).toBe("function");
+  expect(typeof useParsed).toBe("function");
+  expect(typeof useRendered).toBe("function");
 });
