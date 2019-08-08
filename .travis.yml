@@ -10,7 +10,7 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
   - rm -f .npmrc
 before_script:
-  - yarn run lerna run prepublish
+  - yarn boot
 scripts:
   - npm install codecov -g
 after_success:
