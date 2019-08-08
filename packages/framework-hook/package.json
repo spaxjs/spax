@@ -1,7 +1,7 @@
 {
-  "name": "@wugui/plugin-router",
+  "name": "@wugui/framework-hook",
   "version": "1.0.0",
-  "description": "router in hooks",
+  "description": "framework on hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
@@ -11,14 +11,13 @@
   "license": "MIT",
   "dependencies": {
     "@wugui/core": "*",
-    "@wugui/hooks": "*",
-    "@wugui/utils": "*",
-    "history": "^4.9.0",
-    "path-to-regexp": "^3.0.0",
-    "query-string": "^6.8.2"
+    "@wugui/framework": "*",
+    "@wugui/plugin-lazy": "*",
+    "@wugui/plugin-level": "*",
+    "@wugui/plugin-path": "*",
+    "@wugui/plugin-router": "*"
   },
   "devDependencies": {
-    "@types/history": "^4.7.2",
     "@types/node": "^12.7.1",
     "@types/react": "^16.8.25"
   },

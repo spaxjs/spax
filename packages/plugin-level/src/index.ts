@@ -1,7 +1,7 @@
-import { ICoreHooks, IModule, IPluginOption } from "@wugui/core";
+import { ICH, IMD, IPO } from "@wugui/core";
 
-export default ({ parse }: ICoreHooks) => {
-  parse.tap("Level", (current: IModule, parent: IModule, option: IPluginOption) => {
+export default ({ parse }: ICH) => {
+  parse.tap("Level", (current: IMD, parent: IMD, option: IPO) => {
     return {
       ...current,
       level: parent.level ? parent.level + 1 : 1,

@@ -1,14 +1,16 @@
+import { mount, TCP } from "@wugui/core";
 import { debug, error, warn } from "@wugui/utils";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
-import { mount } from "./core";
-import { IFrameworkOptions, TPluginFunction } from "./types";
+import { IFO } from "./types";
 
-export abstract class Framework {
+export * from "./types";
+
+export default abstract class Framework {
   // 插件
-  public static plugins: TPluginFunction[] = [];
+  public static plugins: TCP[] = [];
   // 选项
-  public static options: IFrameworkOptions = {
+  public static options: IFO = {
     version: "1.0.0",
     // 插件选项
     plugins: {},
@@ -17,10 +19,10 @@ export abstract class Framework {
     container: "#root",
   };
 
-  private plugins: TPluginFunction[] = [];
-  private options: IFrameworkOptions = {};
+  private plugins: TCP[] = [];
+  private options: IFO = {};
 
-  constructor(options: IFrameworkOptions = {}) {
+  constructor(options: IFO = {}) {
     debug(`
                __
     .,-;-;-,. /'_\\
@@ -29,7 +31,7 @@ export abstract class Framework {
   \`/_/====/_/-'\\_\\
    ""     ""    ""`);
 
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV === "development") {
       warn("Looks like we are in development mode!");
     }
 
@@ -48,7 +50,7 @@ export abstract class Framework {
   /**
    * 通过原型链实现递归合并
    */
-  private initialize(ctorOptions: IFrameworkOptions): void {
+  private initialize(ctorOptions: IFO): void {
     let ctr: any = this.constructor;
     // 静态属性 plugins
     const plugins = [ctr.plugins];
@@ -67,7 +69,9 @@ export abstract class Framework {
         options.unshift(ctr.options);
       }
     }
+    // 拍平
     this.plugins = plugins.flat();
+    // 合并
     this.options = merge(...options, ctorOptions);
     if (process.env.NODE_ENV !== "production")
       debug("Start Framework with options: %O, plugins: ", this.options, this.plugins);
@@ -79,20 +83,20 @@ export abstract class Framework {
  * 数组：合并
  */
 function merge(...args: any[]) {
-  return mergeWith({}, ...args, (object: any, source: any) => {
+  return mergeWith({}, ...args, (obj: any, src: any) => {
     // 合并数组
-    if (Array.isArray(source)) {
-      if (Array.isArray(object)) {
-        return object.concat(source);
+    if (Array.isArray(src)) {
+      if (Array.isArray(obj)) {
+        return obj.concat(src);
       }
     }
     // 合并对象
-    if (isPlainObject(source)) {
-      if (isPlainObject(object)) {
-        return merge(object, source);
+    if (isPlainObject(src)) {
+      if (isPlainObject(obj)) {
+        return merge(obj, src);
       }
     }
     // 其它，直接覆盖
-    return object;
+    return obj;
   });
 }

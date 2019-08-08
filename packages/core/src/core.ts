@@ -1,10 +1,10 @@
 import { debug } from "@wugui/utils";
 import { ReactElement } from "react";
 import * as ReactDOM from "react-dom";
-import { InitHook, ParseHook, RenderHook } from "./Hook";
-import { ICoreHooks, IFrameworkOptions, IModule, IPluginOption, TPluginFunction } from "./types";
+import { InitHook, ParseHook, RenderHook } from "./hooks";
+import { ICH, ICO, IMD, IPO, TCP } from "./types";
 
-const hooks: ICoreHooks = {
+const hooks: ICH = {
   init: new InitHook(),
   parse: new ParseHook(),
   render: new RenderHook(),
@@ -12,7 +12,7 @@ const hooks: ICoreHooks = {
 
 const cache: Map<string, any> = new Map();
 
-export async function mount(plugins: TPluginFunction[], options: IFrameworkOptions): Promise<void> {
+export async function mount(plugins: TCP[], options: ICO): Promise<void> {
   // 存到本地
   cache.set("plugins", plugins);
   cache.set("options", options);
@@ -48,7 +48,7 @@ export function useParsed() {
   return [cache.get("parsedModules")];
 }
 
-async function getParsedModules(modules?: IModule[]): Promise<IModule[]> {
+async function getParsedModules(modules?: IMD[]): Promise<IMD[]> {
   if (cache.has("parsedModules")) {
     return cache.get("parsedModules");
   }
@@ -75,7 +75,7 @@ export function useRendered() {
   return [cache.get("renderedModules")];
 }
 
-async function getRenderedModules(modules?: IModule[]): Promise<ReactElement | ReactElement[] | null> {
+async function getRenderedModules(modules?: IMD[]): Promise<ReactElement | ReactElement[] | null> {
   if (cache.has("renderedModules")) {
     return cache.get("renderedModules");
   }
@@ -107,22 +107,22 @@ async function getRenderedModules(modules?: IModule[]): Promise<ReactElement | R
  * // 如果有子模块（深度优先）
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
-async function parseModules(modules: any[], parent: any = {}): Promise<any[]> {
-  modules = await Promise.all(modules.map(async (mc: any) => {
+async function parseModules(modules: IMD[], parent: IMD = {}): Promise<IMD[]> {
+  modules = await Promise.all(modules.map(async (mc: IMD) => {
     mc = await interopDefaultExports(mc);
 
     if (Array.isArray(mc)) {
-      mc = await Promise.all(mc.map((_mc) => runParse(_mc, parent)));
+      mc = await Promise.all(mc.map((_mc) => parseModule(_mc, parent)));
       return mc;
     }
 
-    return runParse(mc, parent);
+    return parseModule(mc, parent);
   }));
 
   return modules.flat();
 }
 
-async function runParse(mc: any, parent: any): Promise<any> {
+async function parseModule(mc: IMD, parent: IMD): Promise<IMD> {
   // pre
   mc = await hooks.parse.run(mc, parent, getPluginOption, "pre");
 
@@ -140,7 +140,7 @@ async function runParse(mc: any, parent: any): Promise<any> {
 /**
  * 渲染模块树
  */
-async function renderModules(parsedModules: any[]): Promise<any> {
+async function renderModules(parsedModules: IMD[]): Promise<any> {
   let renderedModules: any = parsedModules;
 
   // 前置处理
@@ -152,8 +152,8 @@ async function renderModules(parsedModules: any[]): Promise<any> {
   return renderedModules;
 }
 
-function getPluginOption(name: string): IPluginOption {
-  const { plugins }: IFrameworkOptions = cache.get("options");
+function getPluginOption(name: string): IPO {
+  const { plugins }: ICO = cache.get("options");
   return plugins ? plugins[name] || plugins[name.toLowerCase()] || {} : {};
 }
 

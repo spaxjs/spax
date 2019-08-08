@@ -1,4 +1,4 @@
-import { IPluginOption, TPriority } from "./types";
+import { IPO, TPriority } from "./types";
 
 abstract class Hook {
   public abstract hooks: {
@@ -38,8 +38,8 @@ abstract class Hook {
 
 export class InitHook extends Hook {
   public hooks: {
-    pre: Array<[string, (c: IPluginOption) => any]>;
-    post: Array<[string, (c: IPluginOption) => any]>;
+    pre: Array<[string, (c: IPO) => any]>;
+    post: Array<[string, (c: IPO) => any]>;
   } = {
     pre: [],
     post: [],
@@ -47,15 +47,15 @@ export class InitHook extends Hook {
 
   public tap(
     name: string,
-    pre?: (c: IPluginOption) => any,
-    post?: (c: IPluginOption) => any,
+    pre?: (c: IPO) => any,
+    post?: (c: IPO) => any,
     deps?: string[],
   ) {
     super.tap(name, pre, post, deps);
   }
 
   public async run(
-    c: ((name: string) => IPluginOption),
+    c: ((name: string) => IPO),
     d: TPriority,
   ): Promise<any> {
     return Promise.all(this.hooks[d].map(([name, fn]) => fn(c(name))));
@@ -64,8 +64,8 @@ export class InitHook extends Hook {
 
 export class ParseHook<A, B> extends Hook {
   public hooks: {
-    pre: Array<[string, (a: A, b: B, c: IPluginOption) => any]>;
-    post: Array<[string, (a: A, b: B, c: IPluginOption) => any]>;
+    pre: Array<[string, (a: A, b: B, c: IPO) => any]>;
+    post: Array<[string, (a: A, b: B, c: IPO) => any]>;
   } = {
     pre: [],
     post: [],
@@ -73,8 +73,8 @@ export class ParseHook<A, B> extends Hook {
 
   public tap(
     name: string,
-    pre?: (a: A, b: B, c: IPluginOption) => any,
-    post?: (a: A, b: B, c: IPluginOption) => any,
+    pre?: (a: A, b: B, c: IPO) => any,
+    post?: (a: A, b: B, c: IPO) => any,
     deps?: string[],
   ) {
     super.tap(name, pre, post, deps);
@@ -83,7 +83,7 @@ export class ParseHook<A, B> extends Hook {
   public async run(
     a: A,
     b: B,
-    c: ((name: string) => IPluginOption),
+    c: ((name: string) => IPO),
     d: TPriority,
   ): Promise<any> {
     const hooks = this.hooks[d];
@@ -98,8 +98,8 @@ export class ParseHook<A, B> extends Hook {
 
 export class RenderHook<A> extends Hook {
   public hooks: {
-    pre: Array<[string, (a: A, c: IPluginOption) => any]>;
-    post: Array<[string, (a: A, c: IPluginOption) => any]>;
+    pre: Array<[string, (a: A, c: IPO) => any]>;
+    post: Array<[string, (a: A, c: IPO) => any]>;
   } = {
     pre: [],
     post: [],
@@ -107,8 +107,8 @@ export class RenderHook<A> extends Hook {
 
   public tap(
     name: string,
-    pre?: (a: A, c: IPluginOption) => any,
-    post?: (a: A, c: IPluginOption) => any,
+    pre?: (a: A, c: IPO) => any,
+    post?: (a: A, c: IPO) => any,
     deps?: string[],
   ) {
     super.tap(name, pre, post, deps);
@@ -116,7 +116,7 @@ export class RenderHook<A> extends Hook {
 
   public async run(
     a: A,
-    c: ((name: string) => IPluginOption),
+    c: ((name: string) => IPO),
     d: TPriority,
   ): Promise<any> {
     const hooks = this.hooks[d];

@@ -10,13 +10,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/utils": "*",
-    "lodash": "^4.17.15"
+    "@wugui/utils": "*"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.136",
-    "@types/node": "^12.6.9",
-    "@types/react": "^16.8.24",
+    "@types/node": "^12.7.1",
+    "@types/react": "^16.8.25",
     "@types/react-dom": "^16.8.5"
   },
   "peerDependencies": {

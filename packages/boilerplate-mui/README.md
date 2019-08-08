@@ -13,5 +13,4 @@
 <Router>
   <Theme layout>
     <Switch modules> -> <Matched> - 匹配到的模块
-      <Auth modules> ->
 ```

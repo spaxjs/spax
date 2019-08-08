@@ -1,4 +1,5 @@
-import { Framework, IFrameworkOptions, TPluginFunction } from "@wugui/core";
+import { TCP } from "@wugui/core";
+import Framework, { IFO } from "@wugui/framework";
 import LazyPlugin from "@wugui/plugin-lazy";
 import LevelPlugin from "@wugui/plugin-level";
 import PathPlugin from "@wugui/plugin-path";
@@ -10,7 +11,7 @@ const options = process.env.NODE_ENV === "production"
 
 export default class SimpleFramework extends Framework {
   // 插件
-  public static plugins: TPluginFunction[] = [
+  public static plugins: TCP[] = [
     PathPlugin,
     LevelPlugin,
     LazyPlugin,
@@ -18,5 +19,5 @@ export default class SimpleFramework extends Framework {
   ];
 
   // 选项
-  public static options: IFrameworkOptions = options.default;
+  public static options: IFO = options.default;
 }

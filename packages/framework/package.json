@@ -1,7 +1,7 @@
 {
-  "name": "@wugui/framework-simple",
+  "name": "@wugui/framework",
   "version": "1.0.0",
-  "description": "一般一般，世界第三",
+  "description": "base framework class",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
@@ -11,14 +11,13 @@
   "license": "MIT",
   "dependencies": {
     "@wugui/core": "*",
-    "@wugui/plugin-lazy": "*",
-    "@wugui/plugin-level": "*",
-    "@wugui/plugin-path": "*",
-    "@wugui/plugin-router": "*"
+    "@wugui/utils": "*",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@types/node": "^12.6.9",
-    "@types/react": "^16.8.24"
+    "@types/lodash": "^4.14.136",
+    "@types/node": "^12.7.1",
+    "@types/react": "^16.8.25"
   },
   "peerDependencies": {
     "react": "^16.8.6"

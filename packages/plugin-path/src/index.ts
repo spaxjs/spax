@@ -1,9 +1,9 @@
-import { AnyObject, ICoreHooks, IModule, IPluginOption } from "@wugui/core";
+import { AnyObject, ICH, IMD, IPO } from "@wugui/core";
 import { warn } from "@wugui/utils";
 import pathToRegexp, { Key } from "path-to-regexp";
 
-export default ({ parse }: ICoreHooks) => {
-  parse.tap("Path", (current: IModule, parent: IModule, option: IPluginOption) => {
+export default ({ parse }: ICH) => {
+  parse.tap("Path", (current: IMD, parent: IMD, option: IPO) => {
     return {
       ...current,
       ...normalizePath(current, parent, option),
@@ -11,7 +11,7 @@ export default ({ parse }: ICoreHooks) => {
   });
 };
 
-function normalizePath(current: IModule, parent: IModule, option: IPluginOption): AnyObject {
+function normalizePath(current: IMD, parent: IMD, option: IPO): AnyObject {
   let { path } = current;
 
   if (path === undefined) {

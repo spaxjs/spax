@@ -1,10 +1,10 @@
-import { AnyObject, IModule, useParsed } from "@wugui/core";
+import { AnyObject, IModuleDescription, useParsed } from "@wugui/core";
 import { debug } from "@wugui/utils";
 import React from "react";
 import { usePathname } from "./hooks";
 import { MatchedParams, RouterProps, SwitchProps, TMatchedModule } from "./types";
 
-function flatten(childModules: IModule[], a: IModule[] = []) {
+function flatten(childModules: IModuleDescription[], a: IModuleDescription[] = []) {
   childModules.forEach((childModule) => {
     // 子模块优先匹配
     if (childModule.modules) {
@@ -15,7 +15,7 @@ function flatten(childModules: IModule[], a: IModule[] = []) {
   return a;
 }
 
-let flattenedModules: IModule[];
+let flattenedModules: IModuleDescription[];
 
 function useFlattened() {
   const [childModules] = useParsed();

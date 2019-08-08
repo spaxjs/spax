@@ -1,4 +1,4 @@
-import { AnyObject, IModule } from "@wugui/core";
+import { AnyObject, IModuleDescription } from "@wugui/core";
 import { ReactNode } from "react";
 
 export interface LinkProps extends AnyObject {
@@ -20,10 +20,10 @@ export interface RouterProps extends AnyObject {
 export interface SwitchProps extends AnyObject {
   level: number;
   loose?: boolean;
-  // modules: IModule[];
+  // modules: IModuleDescription[];
   option?: AnyObject;
 }
 
 export interface MatchedParams extends AnyObject {}
 
-export type TMatchedModule = [IModule?, MatchedParams?];
+export type TMatchedModule = [IModuleDescription?, MatchedParams?];

@@ -1,7 +1,7 @@
 import { Collapse, List, ListItem, ListItemIcon, ListItemText, Theme } from "@material-ui/core";
 import { ExpandLess, ExpandMore, Remove } from "@material-ui/icons";
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { IModule, useParsed } from "@wugui/core";
+import { IModuleDescription, useParsed } from "@wugui/core";
 import { useGlobalState } from "@wugui/hooks";
 import { Link, useMatched } from "@wugui/plugin-router";
 import { debug } from "@wugui/utils";
@@ -117,7 +117,7 @@ function MenuList(props: any): ReactElement {
 /**
  * 获取需要显示的菜单树结构
  */
-function getMenu(auth: string, modules: IModule[]): IMenu[] {
+function getMenu(auth: string, modules: IModuleDescription[]): IMenu[] {
   if (!cacheMap.has(auth)) {
     const menuData = getMenuData(auth, modules);
 
@@ -129,7 +129,7 @@ function getMenu(auth: string, modules: IModule[]): IMenu[] {
   return cacheMap.get(auth);
 }
 
-function getMenuData(auth: string, modules: IModule[]): IMenu[] {
+function getMenuData(auth: string, modules: IModuleDescription[]): IMenu[] {
   return modules
     // 过滤掉 路径带变量 的模块
     // 过滤掉无 标题 的模块

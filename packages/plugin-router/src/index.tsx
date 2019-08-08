@@ -1,4 +1,4 @@
-import { ICoreHooks, IModule, IPluginOption } from "@wugui/core";
+import { ICH, IMD, IPO } from "@wugui/core";
 import React, { ReactElement } from "react";
 import { ChildRoutes, Router, Switch } from "./router";
 
@@ -9,8 +9,8 @@ export { default as Link } from "./Link";
 export { useExact, useMatched, useMatchedChild } from "./router";
 export { useHash, useLocation, usePathname, useSearch } from "./hooks";
 
-export default ({ parse, render }: ICoreHooks) => {
-  parse.tap("Router", (current: IModule, parent: IModule, option: IPluginOption) => {
+export default ({ parse, render }: ICH) => {
+  parse.tap("Router", (current: IMD, parent: IMD, option: IPO) => {
     return {
       ...current,
       ...normalizeComponent(current, option),
@@ -25,7 +25,7 @@ export default ({ parse, render }: ICoreHooks) => {
    */
   render.tap(
     "Router",
-    (modules: IModule[], option: IPluginOption): ReactElement => {
+    (modules: IMD[], option: IPO): ReactElement => {
       // 不传入 modules，而是直接去 core 取
       return (
         <Switch
@@ -34,7 +34,7 @@ export default ({ parse, render }: ICoreHooks) => {
         />
       );
     },
-    (element: ReactElement, option: IPluginOption): ReactElement => {
+    (element: ReactElement, option: IPO): ReactElement => {
       return (
         <Router
           option={option}
@@ -53,7 +53,7 @@ export default ({ parse, render }: ICoreHooks) => {
  * 同时，设置 empty 属性，
  * 标识输入的 component 属性是否为空。
  */
-function normalizeComponent(current: IModule, option: IPluginOption) {
+function normalizeComponent(current: IMD, option: IPO) {
   const { path, level, authority = [], data = {}, component, modules = [] } = current;
   const empty = component === undefined;
   return {

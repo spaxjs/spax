@@ -1,5 +1,6 @@
-import { TPluginFunction } from "@wugui/core";
-import SimpleFramework from "@wugui/framework-simple";
+import { TCP } from "@wugui/core";
+import { IFO } from "@wugui/framework";
+import FrameworkHook from "@wugui/framework-hook";
 import StorePlugin from "./plugins/store";
 import ThemePlugin from "./plugins/theme";
 
@@ -7,11 +8,11 @@ const options = process.env.NODE_ENV === "production"
   ? require("./config/config.prod")
   : require("./config/config.dev");
 
-export default class Framework extends SimpleFramework {
-  public static plugins: TPluginFunction[] = [
+export default class Framework extends FrameworkHook {
+  public static plugins: TCP[] = [
     StorePlugin,
     ThemePlugin,
   ];
 
-  public static options: any = options.default;
+  public static options: IFO = options.default;
 }

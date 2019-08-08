@@ -1182,17 +1182,6 @@
   dependencies:
     "@babel/runtime" "^7.2.0"
 
-"@material-ui/lab@^4.0.0-alpha.22":
-  version "4.0.0-alpha.22"
-  resolved "https://registry.npm.taobao.org/@material-ui/lab/download/@material-ui/lab-4.0.0-alpha.22.tgz#918f76e41a9aa9a427e5987ea9cc089f49fcd951"
-  integrity sha1-kY925BqaqaQn5Zh+qcwIn0n82VE=
-  dependencies:
-    "@babel/runtime" "^7.4.4"
-    "@material-ui/utils" "^4.1.0"
-    clsx "^1.0.4"
-    prop-types "^15.7.2"
-    warning "^4.0.3"
-
 "@material-ui/styles@^4.3.0":
   version "4.3.0"
   resolved "https://registry.npm.taobao.org/@material-ui/styles/download/@material-ui/styles-4.3.0.tgz#27f11fbf061d8a20ad5703acb0dbb0e69cc00345"
@@ -1243,10 +1232,10 @@
     prop-types "^15.7.2"
     react-is "^16.8.6"
 
-"@mdi/svg@^3.8.95":
-  version "3.8.95"
-  resolved "https://registry.npm.taobao.org/@mdi/svg/download/@mdi/svg-3.8.95.tgz#174a0de996e057d6ca1f1d956cff4d1b96df4e10"
-  integrity sha1-F0oN6ZbgV9bKHx2VbP9NG5bfThA=
+"@mdi/svg@^3.9.97":
+  version "3.9.97"
+  resolved "https://registry.npm.taobao.org/@mdi/svg/download/@mdi/svg-3.9.97.tgz#653fb2249e47c62bd89664ab1479eb5e16a3051c"
+  integrity sha1-ZT+yJJ5HxivYlmSrFHnrXhajBRw=
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -1397,11 +1386,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/classnames@^2.2.9":
-  version "2.2.9"
-  resolved "https://registry.npm.taobao.org/@types/classnames/download/@types/classnames-2.2.9.tgz?cache=0&sync_timestamp=1562086035227&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fclassnames%2Fdownload%2F%40types%2Fclassnames-2.2.9.tgz#d868b6febb02666330410fe7f58f3c4b8258be7b"
-  integrity sha1-2Gi2/rsCZmMwQQ/n9Y88S4JYvns=
-
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
   resolved "https://registry.npm.taobao.org/@types/istanbul-lib-coverage/download/@types/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"
@@ -1434,10 +1418,10 @@
   dependencies:
     "@types/jest-diff" "*"
 
-"@types/node@^12.6.9":
-  version "12.6.9"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.6.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.6.9.tgz#ffeee23afdc19ab16e979338e7b536fdebbbaeaf"
-  integrity sha1-/+7iOv3BmrFul5M457U2/eu7rq8=
+"@types/node@^12.7.1":
+  version "12.7.1"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.1.tgz?cache=0&sync_timestamp=1565213600002&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.1.tgz#3b5c3a26393c19b400844ac422bd0f631a94d69d"
+  integrity sha1-O1w6Jjk8GbQAhErEIr0PYxqU1p0=
 
 "@types/prop-types@*":
   version "15.7.1"
@@ -1479,10 +1463,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/react@^16.8.24":
-  version "16.8.24"
-  resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.8.24.tgz#8d1ea1fcbfa214220da3d3c04e506f1077b0deac"
-  integrity sha1-jR6h/L+iFCINo9PATlBvEHew3qw=
+"@types/react@^16.8.25":
+  version "16.8.25"
+  resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.8.25.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-16.8.25.tgz#0247613ab58b1b11ba10fed662e1947c5f2bb89c"
+  integrity sha1-AkdhOrWLGxG6EP7WYuGUfF8ruJw=
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -2677,11 +2661,6 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
-
-classnames@^2.2.6:
-  version "2.2.6"
-  resolved "https://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
-  integrity sha1-Q5Nb/90pHzJtrQogUwmzjQD2UM4=
 
 clean-css@4.2.x:
   version "4.2.1"
@@ -9986,7 +9965,7 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-warning@^4.0.1, warning@^4.0.3:
+warning@^4.0.1:
   version "4.0.3"
   resolved "https://registry.npm.taobao.org/warning/download/warning-4.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwarning%2Fdownload%2Fwarning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
   integrity sha1-Fungd+uKhtavfWSqHgX9hbRnjKM=
