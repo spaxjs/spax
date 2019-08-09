@@ -1,7 +1,8 @@
-import { mount, TCP } from "@wugui/core";
-import { debug, error, warn } from "@wugui/utils";
+import { run, TCP } from "@wugui/core";
+import { debug, error, fatal, warn } from "@wugui/utils";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
+import * as ReactDOM from "react-dom";
 import { IFO } from "./types";
 
 export * from "./types";
@@ -40,8 +41,27 @@ export default abstract class Framework {
 
   public async mount() {
     try {
-      // 挂载！
-      return mount(this.plugins, this.options);
+      const { plugins, options } = this;
+
+      // 解析
+      const rendered = await run(plugins, options);
+
+      // 挂载点
+      const mountingElement: HTMLElement = typeof options.container === "string"
+        ? document.querySelector(options.container) : options.container;
+
+      if (!mountingElement) {
+        fatal(`${options.container} is not a valid HTMLElement`);
+      }
+
+      // 转字符串，避免出错
+      const renderElement = Array.isArray(rendered) ? JSON.stringify(rendered) : rendered;
+
+      // 挂载
+      ReactDOM.render(renderElement, mountingElement, () => {
+        if (process.env.NODE_ENV !== "production")
+          debug("Mounted to container: %O", options.container);
+      });
     } catch (e) {
       error(e);
     }
@@ -97,6 +117,6 @@ function merge(...args: any[]) {
       }
     }
     // 其它，直接覆盖
-    return obj;
+    return src;
   });
 }

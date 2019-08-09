@@ -25,3 +25,10 @@ export function error(...args: any[]) {
 export function trace(...args: any[]) {
   console.trace(...makeArgs(args));
 }
+
+export function fatal(...args: any[]) {
+  if (args.length > 1) {
+    error(...args);
+  }
+  throw Error(args[0]);
+}

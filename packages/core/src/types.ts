@@ -30,12 +30,12 @@ export type IPO = IPluginOption;
 export interface IPluginOptions extends AnyObject<IPluginOption>{}
 
 export interface ICoreOptions {
+  // 运行范围
+  scope?: string;
   // 插件选项
   plugins?: IPluginOptions;
   // 业务模块
   modules?: IModuleDescription[];
-  // 挂载点
-  container?: string | HTMLElement;
 }
 
 export type ICO = ICoreOptions;

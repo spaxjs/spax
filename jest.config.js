@@ -19,9 +19,12 @@ module.exports = {
   "testMatch": [
     "**/test/*.(ts|tsx)"
   ],
-  "collectCoverage": process.env.npm_lifecycle_event === "test",
+  "testEnvironment": "jest-environment-jsdom-fourteen",
+  "collectCoverage": true,
   "collectCoverageFrom": [
-    "**/src/**/*.(ts|tsx)"
+    "**/src/**.(ts|tsx)",
+    "!**/boilerplate-*/**",
+    "!**/node_modules/**"
   ],
   "coverageReporters": [
     "lcov",
