@@ -35,7 +35,7 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     // 存储以备外部调用
     cache.set(PARSED, parsedModules);
 
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV === "development")
       debug("Parsed modules: %O", parsedModules);
 
     return parsedModules;
@@ -52,7 +52,7 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     // 存储以备外部调用
     cache.set(RENDERED, renderedModules);
 
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV === "development")
       debug("Rendered modules: %O", renderedModules);
 
     return renderedModules;
@@ -119,7 +119,7 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     return c ? c[name] || c[name.toLowerCase()] || {} : {};
   }
 
-  if (process.env.NODE_ENV !== "production")
+  if (process.env.NODE_ENV === "development")
     debug("Hooked plugins: %O", plugins);
 
   // 插件

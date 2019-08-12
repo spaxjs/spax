@@ -11,6 +11,9 @@ export function useGlobalState<S>(key: string, initialState?: S | (() => S)): [S
   const [state, setState] = usePersistState(key, map.has(key) ? map.get(key) : initialState);
 
   useEffect(() => {
+    if (!mapInitial.has(key)) {
+      mapInitial.set(key, state);
+    }
     // mounting 时监听
     emitter.on(key, setState);
     return () => {

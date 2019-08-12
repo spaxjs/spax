@@ -4,7 +4,7 @@ import { ReactComponent as Github } from "@mdi/svg/svg/github-circle.svg";
 import { ReactComponent as Login } from "@mdi/svg/svg/login.svg";
 import { ReactComponent as Logout } from "@mdi/svg/svg/logout.svg";
 import { useGlobalState } from "@wugui/hooks";
-import { Link, useMatched } from "@wugui/plugin-router";
+import { Link, useMatched } from "@wugui/router";
 import React from "react";
 import Breadcrumbs from "../Breadcrumbs";
 import Footer from "../Footer";

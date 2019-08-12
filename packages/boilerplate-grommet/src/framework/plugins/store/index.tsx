@@ -5,7 +5,7 @@ import { debug } from "@wugui/utils";
 
 export default ({ init }: ICH) => {
   init.tap("Store", ({ initialStates = [] }: IPO) => {
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV === "development")
       debug("Initialize global states: %O", initialStates);
 
     Object.entries(initialStates).forEach(([key, initialState]) => {

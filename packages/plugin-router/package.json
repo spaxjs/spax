@@ -11,19 +11,14 @@
   "license": "MIT",
   "dependencies": {
     "@wugui/core": "*",
-    "@wugui/hooks": "*",
-    "@wugui/utils": "*",
-    "history": "^4.9.0",
-    "path-to-regexp": "^3.0.0",
-    "query-string": "^6.8.2"
+    "@wugui/router": "*"
   },
   "devDependencies": {
-    "@types/history": "^4.7.2",
     "@types/node": "^12.7.1",
-    "@types/react": "^16.8.25"
+    "@types/react": "^16.9.1"
   },
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "^16.9.0"
   },
   "scripts": {
     "start": "tsc -w",

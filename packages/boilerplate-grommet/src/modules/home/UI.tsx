@@ -1,4 +1,4 @@
-import { Link } from "@wugui/plugin-router";
+import { Link } from "@wugui/router";
 import { Anchor, Box, Heading, WorldMap } from "grommet";
 import { FormNextLink, Inspect } from "grommet-icons";
 import React, { ReactNode, useState } from "react";

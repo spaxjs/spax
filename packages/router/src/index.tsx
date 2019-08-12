@@ -1,8 +1,11 @@
 import { AnyObject, IModuleDescription, useParsed } from "@wugui/core";
+import { usePathname } from "@wugui/history";
 import { debug } from "@wugui/utils";
 import React from "react";
-import { usePathname } from "./hooks";
 import { MatchedParams, RouterProps, SwitchProps, TMatchedModule } from "./types";
+
+export * from "./types";
+export { default as Link } from "./Link";
 
 function flatten(childModules: IModuleDescription[], a: IModuleDescription[] = []) {
   childModules.forEach((childModule) => {
@@ -23,7 +26,7 @@ function useFlattened() {
   if (!flattenedModules) {
     flattenedModules = flatten(childModules);
 
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV === "development")
       debug("Flattened: %O", flattenedModules);
 
     return flattenedModules;
@@ -34,6 +37,10 @@ function useFlattened() {
 
 const cacheMap: Map<string, TMatchedModule[]> = new Map();
 
+/**
+ * 匹配整棵模块树
+ * TODO 动态匹配子树
+ */
 export function useMatched(level: number = 0): TMatchedModule[] {
   const [pathname] = usePathname();
   const flattened = useFlattened();
@@ -90,7 +97,7 @@ export function useMatched(level: number = 0): TMatchedModule[] {
       }
     }
 
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV === "development")
       debug("Matched of `%s`: %O", pathname, matched);
 
     cacheMap.set(pathname, matched);

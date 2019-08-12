@@ -23,7 +23,9 @@ module.exports = {
   "collectCoverage": true,
   "collectCoverageFrom": [
     "**/src/**.(ts|tsx)",
+    "!**/src/types.(ts|tsx)",
     "!**/boilerplate-*/**",
+    "!**/framework-*/**",
     "!**/node_modules/**"
   ],
   "coverageReporters": [

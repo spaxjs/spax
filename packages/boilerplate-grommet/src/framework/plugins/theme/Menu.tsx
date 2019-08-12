@@ -1,6 +1,6 @@
 import { IModuleDescription, useParsed } from "@wugui/core";
 import { useGlobalState } from "@wugui/hooks";
-import { Link, useMatched } from "@wugui/plugin-router";
+import { Link, useMatched } from "@wugui/router";
 import { debug } from "@wugui/utils";
 import { Box, Collapsible, Grid, Text } from "grommet";
 import { Down, Next, Subtract } from "grommet-icons";
@@ -99,7 +99,7 @@ function getMenu(auth: string, modules: IModuleDescription[]): IMenu[] {
   if (!cacheMap.has(auth)) {
     const menuData = getMenuData(auth, modules);
 
-    if (process.env.NODE_ENV !== "production")
+    if (process.env.NODE_ENV === "development")
       debug("Menu configuration created: %O", menuData);
 
     cacheMap.set(auth, menuData);

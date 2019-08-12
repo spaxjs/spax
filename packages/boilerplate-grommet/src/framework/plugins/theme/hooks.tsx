@@ -1,4 +1,4 @@
-import { useMatched } from "@wugui/plugin-router";
+import { useMatched } from "@wugui/router";
 import { FunctionComponent, useEffect } from "react";
 
 export function useLayout(): FunctionComponent<{ option: any }> {

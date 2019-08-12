@@ -12,7 +12,7 @@ export default function Root(props: any) {
 
   const theme = getTheme("light");
 
-  if (process.env.NODE_ENV !== "production")
+  if (process.env.NODE_ENV === "development")
     debug("Theme config: %O", theme);
 
   return (

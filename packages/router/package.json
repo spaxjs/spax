@@ -1,0 +1,34 @@
+{
+  "name": "@wugui/router",
+  "version": "1.0.0",
+  "description": "router utilities",
+  "main": "lib/index.js",
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/wugui.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@wugui/core": "*",
+    "@wugui/history": "*",
+    "@wugui/utils": "*",
+    "path-to-regexp": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.1",
+    "@types/react": "^16.9.1"
+  },
+  "peerDependencies": {
+    "react": "^16.9.0"
+  },
+  "scripts": {
+    "start": "tsc -w",
+    "build": "rm -rf lib && tsc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "gitHead": "2ca3a69a1fe748a7cbb9936e7f0d8f9bf529b2e2"
+}

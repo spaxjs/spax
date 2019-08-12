@@ -1,13 +1,6 @@
 import { ICH, IMD, IPO } from "@wugui/core";
+import { ChildRoutes, Router, Switch } from "@wugui/router";
 import React, { ReactElement } from "react";
-import { ChildRoutes, Router, Switch } from "./router";
-
-import { LinkProps } from "./types";
-export type LinkProps = LinkProps;
-
-export { default as Link } from "./Link";
-export { useExact, useMatched, useMatchedChild } from "./router";
-export { useHash, useLocation, usePathname, useSearch } from "./hooks";
 
 export default ({ parse, render }: ICH) => {
   parse.tap("Router", (current: IMD, parent: IMD, option: IPO) => {

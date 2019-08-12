@@ -1,5 +1,5 @@
 import { useGlobalState, usePersistState } from "@wugui/hooks";
-import { Link } from "@wugui/plugin-router";
+import { Link } from "@wugui/router";
 import { Box, Button, DropButton, Grid, Heading } from "grommet";
 import { Github, Logout } from "grommet-icons";
 import React from "react";

@@ -7,9 +7,6 @@
       "~/*": [
         "./src/*",
       ],
-      "lodash/*": [
-        "./node_modules/@types/lodash-es/*",
-      ],
     },
     "outDir": "./lib/",
   },

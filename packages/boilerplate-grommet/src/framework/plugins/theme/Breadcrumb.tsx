@@ -1,4 +1,4 @@
-import { Link, useMatched } from "@wugui/plugin-router";
+import { Link, useMatched } from "@wugui/router";
 import React from "react";
 import styled from "styled-components";
 

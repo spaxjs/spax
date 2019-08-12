@@ -1,5 +1,5 @@
 import { Container, Typography } from "@material-ui/core";
-import { Link } from "@wugui/plugin-router";
+import { Link } from "@wugui/router";
 import React from "react";
 
 export default function NotFound(props: any) {

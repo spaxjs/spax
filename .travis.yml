@@ -13,7 +13,6 @@ before_script:
   - yarn boot
   - yarn build
   - yarn alias
-scripts:
-  - yarn add global codecov
 after_success:
+  - yarn global add codecov
   - codecov

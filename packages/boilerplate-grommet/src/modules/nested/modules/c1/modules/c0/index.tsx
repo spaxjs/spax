@@ -1,4 +1,4 @@
-import { useMatchedChild } from "@wugui/plugin-router";
+import { useMatchedChild } from "@wugui/router";
 import LocalCount from "components/LocalCount";
 import React, { ReactElement } from "react";
 

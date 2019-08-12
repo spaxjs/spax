@@ -1,4 +1,4 @@
-import { Link } from "@wugui/plugin-router";
+import { Link } from "@wugui/router";
 import React from "react";
 import styled from "styled-components";
 

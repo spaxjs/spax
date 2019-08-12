@@ -10,7 +10,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/core": "*"
+    "@wugui/core": "*",
+    "history": "^4.9.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.1"

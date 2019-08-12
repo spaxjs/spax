@@ -1,5 +1,6 @@
+import { usePathname } from "@wugui/history";
 import { useGlobalState } from "@wugui/hooks";
-import { Link, usePathname } from "@wugui/plugin-router";
+import { Link } from "@wugui/router";
 import { Anchor, Box, Button, FormField, Grid, TextInput } from "grommet";
 import { FormLock, Login, View } from "grommet-icons";
 import React, { useEffect, useState } from "react";

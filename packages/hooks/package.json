@@ -14,10 +14,10 @@
   },
   "devDependencies": {
     "@types/node": "^12.7.1",
-    "@types/react": "^16.8.25"
+    "@types/react": "^16.9.1"
   },
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "^16.9.0"
   },
   "scripts": {
     "start": "tsc -w",

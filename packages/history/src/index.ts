@@ -1,5 +1,5 @@
 import { AnyObject } from "@wugui/core";
-import { createHashHistory, Location } from "history";
+import { createHashHistory, History, Location } from "history";
 import pathToRegexp from "path-to-regexp";
 import queryString from "query-string";
 import { useEffect, useState } from "react";
@@ -11,17 +11,17 @@ const hashHistory = createHashHistory();
  * const [{ pathname }, navigate] = useLocation();
  * navigate("/login");
  */
-export function useLocation(): [Location, (
+export function useLocation(history: History = hashHistory): [Location, (
   pathname: string,
   params?: AnyObject,
   search?: AnyObject,
   hash?: AnyObject,
   replace?: boolean,
 ) => void] {
-  const [location, setLocation] = useState(hashHistory.location);
+  const [location, setLocation] = useState(history.location);
 
   useEffect(() => {
-    return hashHistory.listen((_location) => {
+    return history.listen((_location) => {
       setLocation(_location);
     });
   }, []);
@@ -49,24 +49,24 @@ export function useLocation(): [Location, (
         }
       }
       if (replace) {
-        hashHistory.replace(url);
+        history.replace(url);
       } else {
-        hashHistory.push(url);
+        history.push(url);
       }
     },
   ];
 }
 
-export function usePathname(): [string, any] {
-  const [{ pathname }, navigate] = useLocation();
+export function usePathname(history?: History): [string, any] {
+  const [{ pathname }, navigate] = useLocation(history);
   return [
     pathname,
     navigate,
   ];
 }
 
-export function useSearch(): [AnyObject, any] {
-  const [{ pathname, search }, navigate] = useLocation();
+export function useSearch(history?: History): [AnyObject, any] {
+  const [{ pathname, search }, navigate] = useLocation(history);
   return [
     queryString.parse(search),
     (searchObj: AnyObject) => {
@@ -75,8 +75,8 @@ export function useSearch(): [AnyObject, any] {
   ];
 }
 
-export function useHash(): [AnyObject, any] {
-  const [{ pathname, hash }, navigate] = useLocation();
+export function useHash(history?: History): [AnyObject, any] {
+  const [{ pathname, hash }, navigate] = useLocation(history);
   return [
     queryString.parse(hash),
     (hashObj: AnyObject) => {

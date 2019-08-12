@@ -1,4 +1,4 @@
-import { Link } from "@wugui/plugin-router";
+import { Link } from "@wugui/router";
 import { Box, Heading } from "grommet";
 import React from "react";
 
