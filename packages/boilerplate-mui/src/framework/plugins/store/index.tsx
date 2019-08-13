@@ -1,6 +1,6 @@
 
 import { ICH, IPO } from "@wugui/core";
-import { initGlobalState } from "@wugui/hooks";
+import { setGlobalState } from "@wugui/hooks";
 import { debug } from "@wugui/utils";
 
 export default ({ init }: ICH) => {
@@ -9,7 +9,7 @@ export default ({ init }: ICH) => {
       debug("Initialize global states: %O", initialStates);
 
     Object.entries(initialStates).forEach(([key, initialState]) => {
-      initGlobalState(key, initialState);
+      setGlobalState(key, initialState);
     });
   });
 };

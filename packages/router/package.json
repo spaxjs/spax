@@ -12,7 +12,9 @@
   "dependencies": {
     "@wugui/core": "*",
     "@wugui/history": "*",
+    "@wugui/hooks": "*",
     "@wugui/utils": "*",
+    "events": "^3.0.0",
     "path-to-regexp": "^3.0.0"
   },
   "devDependencies": {

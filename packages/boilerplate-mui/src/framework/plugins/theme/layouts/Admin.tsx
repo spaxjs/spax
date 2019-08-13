@@ -30,8 +30,10 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 export default function AdminLayout(props: any) {
   const [repo] = useGlobalState<any>("repo");
   const [auth, setAuth] = useGlobalState<string>("auth");
-  const [[{title}]] = useMatched(-1);
+  const matched = useMatched();
   const {root, h1} = useStyles(props);
+
+  const lastMatched = matched[matched.length - 1];
 
   return (
     <Box
@@ -39,7 +41,7 @@ export default function AdminLayout(props: any) {
       <Header>
         <Typography
           className={h1}
-          variant="h1">{title}</Typography>
+          variant="h1">{lastMatched ? lastMatched[0].title : ""}</Typography>
         {
           auth ? (
             <>

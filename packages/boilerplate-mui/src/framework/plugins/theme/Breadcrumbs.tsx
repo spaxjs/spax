@@ -1,10 +1,10 @@
 import { Breadcrumbs as B, Link as L} from "@material-ui/core";
 import { BreadcrumbsProps } from "@material-ui/core/Breadcrumbs";
-import { Link, useMatched } from "@wugui/router";
+import { Link } from "@wugui/router";
 import React from "react";
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = (props: any) => {
-  const matched = useMatched();
+  const matched = [];
 
   return (
     <B {...props}>

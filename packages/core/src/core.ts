@@ -4,20 +4,23 @@ import { ICH, ICO, IMD, IPO, TCP } from "./types";
 
 const cache: Map<string, any> = new Map();
 
-const DEFAULT_SCOPE = "🐢";
 const KEY_PARSED = "parsed";
 const KEY_RENDERED = "rendered";
 
+export const DEFAULT_SCOPE = "🐢";
+
 export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> {
-  const {scope = DEFAULT_SCOPE} = options;
+  const { scope = DEFAULT_SCOPE } = options;
+
   if (cache.has(scope)) {
     error("Scope `%s` already taken. Please set use a different string.", scope);
     return;
   }
+
   cache.set(scope, 1);
 
-  const PARSED = `${scope}${KEY_PARSED}`;
-  const RENDERED = `${scope}${KEY_RENDERED}`;
+  const PARSED = `${scope}&${KEY_PARSED}`;
+  const RENDERED = `${scope}&${KEY_RENDERED}`;
 
   const hooks: ICH = {
     init: new InitHook(),
@@ -86,7 +89,7 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
 
   async function parseModule(mc: IMD, parent: IMD): Promise<IMD> {
     // pre
-    mc = await hooks.parse.run(mc, parent, getPluginOption, "pre");
+    mc = await hooks.parse.run(mc, parent, getPluginOption, options, "pre");
 
     // 子模块在 pre 之后、post 之前处理掉
     if (mc.modules) {
@@ -94,7 +97,7 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     }
 
     // post
-    mc = await hooks.parse.run(mc, parent, getPluginOption, "post");
+    mc = await hooks.parse.run(mc, parent, getPluginOption, options, "post");
 
     return mc;
   }
@@ -106,10 +109,10 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     let renderedModules: any = parsedModules;
 
     // 前置处理
-    renderedModules = await hooks.render.run(renderedModules, getPluginOption, "pre");
+    renderedModules = await hooks.render.run(renderedModules, getPluginOption, options, "pre");
 
     // 后置处理
-    renderedModules = await hooks.render.run(renderedModules, getPluginOption, "post");
+    renderedModules = await hooks.render.run(renderedModules, getPluginOption, options, "post");
 
     return renderedModules;
   }
@@ -126,8 +129,8 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
   plugins.forEach((plugin) => plugin(hooks));
 
   // 初始化
-  await hooks.init.run(getPluginOption, "pre");
-  await hooks.init.run(getPluginOption, "post");
+  await hooks.init.run(getPluginOption, options, "pre");
+  await hooks.init.run(getPluginOption, options, "post");
 
   // 模块
   const rendered: any = await getRenderedModules(options.modules);
@@ -140,14 +143,14 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
  * 未来，此处有可能是 Reactive 的
  */
 export function useParsed(scope: string = DEFAULT_SCOPE) {
-  return [cache.get(`${scope}${KEY_PARSED}`)];
+  return [cache.get(`${scope}&${KEY_PARSED}`)];
 }
 
 /**
  * 未来，此处有可能是 Reactive 的
  */
 export function useRendered(scope: string = DEFAULT_SCOPE) {
-  return [cache.get(`${scope}${KEY_RENDERED}`)];
+  return [cache.get(`${scope}&${KEY_RENDERED}`)];
 }
 
 // 对于使用 import() 引入的模块，需要转换

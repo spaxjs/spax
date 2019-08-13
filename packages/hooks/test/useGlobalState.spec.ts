@@ -44,15 +44,6 @@ describe("useGlobalState", () => {
     expect(result1.current[0]).toBe(2);
     expect(result2.current[0]).toBe(1);
 
-    act(() => {
-      // reset
-      result.current[2]();
-    });
-
-    expect(result.current[0]).toBe(0);
-    expect(result1.current[0]).toBe(0);
-    expect(result2.current[0]).toBe(1);
-
     unmount();
     unmount1();
   });

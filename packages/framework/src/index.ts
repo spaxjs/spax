@@ -12,6 +12,7 @@ export default abstract class Framework {
   public static plugins: TCP[] = [];
   // 选项
   public static options: IFO = {
+    scope: "🐢",
     version: "1.0.0",
     // 插件选项
     plugins: {},

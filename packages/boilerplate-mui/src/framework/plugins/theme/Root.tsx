@@ -1,14 +1,14 @@
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
+import { IPO } from "@wugui/core";
 import { debug } from "@wugui/utils";
 import React from "react";
-import { useLayout, useTitle } from "./hooks";
+import DocumentTitle from "./DocumentTitle";
+import { useLayout } from "./hooks";
 import getTheme from "./theme";
 
-export default function Root(props: any) {
+const Root: React.FC<{ option: IPO }> = (props: any) => {
   const Layout = useLayout();
-
-  useTitle(props.option.siteTitle);
 
   const theme = getTheme("light");
 
@@ -18,9 +18,12 @@ export default function Root(props: any) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <DocumentTitle fallback={props.option.siteTitle} />
       <Layout option={props.option}>
         {props.children}
       </Layout>
     </ThemeProvider>
   );
-}
+};
+
+export default Root;

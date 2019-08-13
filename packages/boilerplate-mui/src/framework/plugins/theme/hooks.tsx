@@ -1,12 +1,11 @@
 import { useMatched } from "@wugui/router";
-import { FunctionComponent, useEffect } from "react";
+import { FC, useEffect } from "react";
 
-export function useLayout(): FunctionComponent<{ option: any }> {
-  const [firstMatched] = useMatched(1);
+export function useLayout(): FC<{ option: any }> {
+  const matched = useMatched();
 
-  if (firstMatched && firstMatched[0]) {
-    const { layout } = firstMatched[0];
-    return layout === "blank"
+  if (matched && matched[0] && matched[0][0]) {
+    return matched[0][0].layout === "blank"
       ? require("./layouts/Blank").default
       : require("./layouts/Admin").default;
   }
@@ -14,7 +13,7 @@ export function useLayout(): FunctionComponent<{ option: any }> {
   return require("./layouts/Admin").default;
 }
 
-export function useTitle(defaultTitle: string): void {
+export function useTitle(fallback: string): void {
   const matched = useMatched();
 
   useEffect(() => {
@@ -22,11 +21,11 @@ export function useTitle(defaultTitle: string): void {
       .filter(([{ title, path }]) => Boolean(title) && path !== "/" )
       .map(([{ title }]) => title)
       .reverse()
-      .concat(defaultTitle)
+      .concat(fallback)
       .join(" - ");
     // reset the title
     return () => {
-      document.title = defaultTitle;
+      document.title = fallback;
     };
-  }, [defaultTitle, matched]);
+  }, [fallback, matched]);
 }

@@ -2,7 +2,7 @@ import { useMatched } from "@wugui/router";
 import { FunctionComponent, useEffect } from "react";
 
 export function useLayout(): FunctionComponent<{ option: any }> {
-  const [firstMatched] = useMatched(1);
+  const [firstMatched] = useMatched(1, []);
 
   if (firstMatched && firstMatched[0]) {
     const { layout } = firstMatched[0];

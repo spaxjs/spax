@@ -1,10 +1,10 @@
 import { Badge, Button, Container, Typography } from "@material-ui/core";
-import { Add, Favorite, Refresh, Remove } from "@material-ui/icons";
+import { Add, Favorite, Remove } from "@material-ui/icons";
 import { useGlobalState } from "@wugui/hooks";
 import React, { ReactElement } from "react";
 
 export default function GlobalCount(props: any): ReactElement<void> {
-  const [count, setCount, resetCount] = useGlobalState("count");
+  const [count, setCount] = useGlobalState("count");
   return (
     <Container className={props.className}>
       <Typography variant="h1">{props.title}</Typography>
@@ -19,9 +19,6 @@ export default function GlobalCount(props: any): ReactElement<void> {
         color="primary"
         onClick={() => setCount(prevCount => prevCount + 1)}
       ><Add /></Button>
-      <Button
-        onClick={resetCount}
-      ><Refresh /></Button>
     </Container>
   );
 }

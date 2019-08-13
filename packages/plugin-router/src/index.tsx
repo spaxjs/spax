@@ -1,4 +1,4 @@
-import { ICH, IMD, IPO } from "@wugui/core";
+import { ICH, ICO, IMD, IPO } from "@wugui/core";
 import { ChildRoutes, Router, Switch } from "@wugui/router";
 import React, { ReactElement } from "react";
 
@@ -18,18 +18,22 @@ export default ({ parse, render }: ICH) => {
    */
   render.tap(
     "Router",
-    (modules: IMD[], option: IPO): ReactElement => {
-      // 不传入 modules，而是直接去 core 取
+    (modules: IMD[], option: IPO, { scope }: ICO): ReactElement => {
+      // 向后传
+      Object.assign(option, { modules });
       return (
         <Switch
           level={1}
+          modules={modules}
+          scope={scope}
           option={option}
         />
       );
     },
-    (element: ReactElement, option: IPO): ReactElement => {
+    (element: ReactElement, option: IPO, { scope }: ICO): ReactElement => {
       return (
         <Router
+          scope={scope}
           option={option}
         >
           {element}
