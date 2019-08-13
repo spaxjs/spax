@@ -32,7 +32,7 @@ export default {
       siteTitle: "wugui",
     },
     lazy: {
-      fallback: <FlightTakeoff />,
+      fallback: <FlightTakeoff fontSize="large" />,
     },
     router: {
       NotFound: require("framework/components/exception/NotFound").default,

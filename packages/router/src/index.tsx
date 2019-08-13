@@ -1,50 +1,22 @@
-import { AnyObject, DEFAULT_SCOPE, IMD } from "@wugui/core";
+import { AnyObject, DEFAULT_SCOPE } from "@wugui/core";
 import { usePathname } from "@wugui/history";
-import { debug } from "@wugui/utils";
-import EventEmitter from "events";
 import React, { useEffect, useState } from "react";
-import { MatchedParams, RouterProps, SwitchProps, TMatchedModule } from "./types";
+import { RouterProps, SwitchProps, TMatchedModule } from "./types";
+import { getMatchedState, matchedDb } from "./utils";
 
 export * from "./types";
 export { default as Link } from "./Link";
 
-const db = {
-  value: {},
-  emitter: new EventEmitter(),
-  get(scope: string) {
-    if (!this.value.hasOwnProperty(scope)) {
-      this.value[scope] = [];
-    }
-    return this.value[scope];
-  },
-  add(scope: string, level: number, v: TMatchedModule) {
-    if (level === 1) {
-      this.value[scope] = [];
-    }
-    this.value[scope][level - 1] = v;
-    if (level === 1 || v[1].$$exact) {
-      this.emit(scope);
-    }
-  },
-  emit(scope: string) {
-    this.emitter.emit(scope, [...this.value[scope]]);
-  },
-  on(scope: string, cb: any) {
-    this.emitter.on(scope, cb);
-    return () => {
-      this.emitter.off(scope, cb);
-    };
-  },
-};
-
 export function Router({ scope, option: { modules }, ...props }: RouterProps) {
+  const [pathname] = usePathname();
   // 为了外部能够第一时间获得匹配到的顶级模块
-  useMatchedState(scope, 1, modules);
-  return props.children;
+  const matchedState = getMatchedState(scope, pathname, 1, modules);
+  return matchedState ? props.children : null;
 }
 
 export function Switch({ level, modules, scope, option, loose }: SwitchProps) {
-  const matchedState = useMatchedState(scope, level, modules, level === 1);
+  const [pathname] = usePathname();
+  const matchedState = getMatchedState(scope, pathname, level, modules);
   const { useAuth = () => true, NotFound, Forbidden } = option;
   const authed = useAuth(matchedState ? matchedState[0] : undefined);
 
@@ -85,79 +57,13 @@ export function useExact({ $$exact }: any): boolean {
 }
 
 export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedModule[] {
-  const [state, setState] = useState(db.get(scope));
+  const [state, setState] = useState(matchedDb.get(scope));
 
   useEffect(() => {
-    return db.on(scope, setState);
+    return matchedDb.on(scope, setState);
   }, []);
 
   return state;
-}
-
-const cacheMap: Map<string, TMatchedModule> = new Map();
-function useMatchedState(
-  scope: string = DEFAULT_SCOPE,
-  level: number = 1,
-  modules: IMD[],
-  silent: boolean = false,
-): TMatchedModule {
-  const [pathname] = usePathname();
-  const cacheKey = `${scope}&${pathname}&${level}`;
-  if (!cacheMap.has(cacheKey)) {
-
-    // `/a/b/c` -> `["/a", "/b", "/c"]`
-    const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
-
-    const matchedState: TMatchedModule = ((n) => {
-      let fallbackModule: any = null;
-      // 从寻找`完整`匹配到寻找`父级`匹配
-      // TODO 优化为按指定 level 匹配？
-      while (n--) {
-        const toPath = tokens.slice(0, n + 1).join("");
-
-        for (let i = 0; i < modules.length; i++) {
-          const childModule: IMD = modules[i];
-
-          if (childModule.path.indexOf("*") !== -1) {
-            if (!fallbackModule) {
-              fallbackModule = childModule;
-            }
-            continue;
-          }
-
-          const execArray = childModule.pathRE.exec(toPath);
-
-          if (execArray) {
-            const matchedParams: MatchedParams = childModule.pathKeys.reduce((params: MatchedParams, {name}, index: number) => ({
-              ...params,
-              [name]: execArray[index + 1],
-            }), {
-              $$exact: tokens.length === childModule.level,
-            });
-
-            if (process.env.NODE_ENV === "development")
-              debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childModule);
-
-            return [childModule, matchedParams] as TMatchedModule;
-          }
-        }
-      }
-
-      return [fallbackModule, {}] as TMatchedModule;
-    })(tokens.length);
-
-    if (matchedState) {
-      cacheMap.set(cacheKey, matchedState);
-    }
-  }
-
-  const cached = cacheMap.get(cacheKey);
-
-  if (!silent && cached) {
-    db.add(scope, level, cached);
-  }
-
-  return cached || null;
 }
 
 export function useMatchedChild({ $$exact, $$meta: { level, modules }, $$scope, $$option}: any): React.FC<any> {

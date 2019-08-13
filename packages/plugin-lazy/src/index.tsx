@@ -12,12 +12,10 @@ export default ({ parse }: ICH) => {
 
 const weakMap: WeakMap<any, any> = new WeakMap();
 
-function handleLazy(current: IMD, { fallback = <div>Loading...</div> }: IPO) {
+function handleLazy(current: IMD, { fallback = <div>...</div> }: IPO) {
   const { lazy } = current;
   if (lazy) {
     if (!weakMap.has(lazy)) {
-      // React.lazy 有 bug
-      // https://github.com/facebook/react/issues/14188
       weakMap.set(lazy, React.lazy(lazy));
     }
     return {

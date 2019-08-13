@@ -1,4 +1,4 @@
-import { IPO, TPriority, ICO } from "./types";
+import { ICO, IPO, TPriority } from "./types";
 
 abstract class Hook {
   public abstract hooks: {
