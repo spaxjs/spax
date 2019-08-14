@@ -1,5 +1,5 @@
 import { run, TCP } from "@wugui/core";
-import { debug, error, fatal, warn } from "@wugui/utils";
+import { debug, error, fatal, warn } from "@wugui/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import * as ReactDOM from "react-dom";

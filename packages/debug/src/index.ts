@@ -26,9 +26,9 @@ export function trace(...args: any[]) {
   console.trace(...makeArgs(args));
 }
 
-export function fatal(...args: any[]) {
-  if (args.length > 1) {
+export function fatal(arg0: any, ...args: any[]) {
+  if (args.length) {
     error(...args);
   }
-  throw Error(args[0]);
+  throw Error(arg0);
 }

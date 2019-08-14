@@ -1,5 +1,5 @@
 import { DEFAULT_SCOPE, IMD } from "@wugui/core";
-import { debug } from "@wugui/utils";
+import { debug } from "@wugui/debug";
 import EventEmitter from "events";
 import { MatchedParams, TMatchedState } from "./types";
 

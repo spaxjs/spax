@@ -2,7 +2,7 @@
 
 :construction: 原型阶段
 
-:fist_raised: 用于开发框架的框架：使用 React、TypeScript，可扩展、插件化、渐进式，满足各种规模的业务开发。
+:fist_raised: 使用 React、TypeScript，可扩展、插件化、渐进式，满足各种规模的业务开发。
 
 [![Build Status](https://travis-ci.org/crossjs/wugui.svg?branch=master)](https://travis-ci.org/crossjs/wugui)
 [![codecov](https://codecov.io/gh/crossjs/wugui/branch/master/graph/badge.svg)](https://codecov.io/gh/crossjs/wugui)

@@ -1,7 +1,7 @@
 {
-  "name": "@wugui/utils",
+  "name": "@wugui/debug",
   "version": "1.0.0",
-  "description": "utilities",
+  "description": "debug utilities",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
@@ -9,15 +9,6 @@
     "url": "git://github.com/crossjs/wugui.git"
   },
   "license": "MIT",
-  "dependencies": {
-    "history": "^4.9.0",
-    "lodash": "^4.17.15",
-    "regenerator-runtime": "^0.13.2"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.136",
-    "@types/node": "^12.7.1"
-  },
   "scripts": {
     "start": "tsc -w",
     "build": "rm -rf lib && tsc"

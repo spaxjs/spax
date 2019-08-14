@@ -1,5 +1,5 @@
 import { AnyObject, ICH, IMD, IPO } from "@wugui/core";
-import { warn } from "@wugui/utils";
+import { warn } from "@wugui/debug";
 import pathToRegexp, { Key } from "path-to-regexp";
 
 export default ({ parse }: ICH) => {

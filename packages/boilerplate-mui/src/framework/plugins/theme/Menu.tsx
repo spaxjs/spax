@@ -4,7 +4,7 @@ import { createStyles, makeStyles } from "@material-ui/styles";
 import { IModuleDescription, useParsed } from "@wugui/core";
 import { useGlobalState } from "@wugui/hooks";
 import { Link, useMatched } from "@wugui/router";
-import { debug } from "@wugui/utils";
+import { debug } from "@wugui/debug";
 import React, { ReactElement, ReactNode, useState } from "react";
 
 interface IMenu {

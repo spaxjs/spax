@@ -1,4 +1,4 @@
-import { debug, error } from "@wugui/utils";
+import { debug, error } from "@wugui/debug";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 import { ICH, ICO, IMD, IPO, TCP } from "./types";
 

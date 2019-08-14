@@ -20,7 +20,6 @@ export const Switch: React.FC<SwitchProps> = ({
   useAuth = () => true,
   NotFound = () => null,
   Forbidden = () => null,
-  ...props
 }: SwitchProps): any => {
   const [pathname] = usePathname();
   const matchedState = getMatched(scope, pathname, level, modules);
@@ -33,7 +32,6 @@ export const Switch: React.FC<SwitchProps> = ({
       return (
         <Matched
           {...data}
-          {...props}
           {...matchedState[1]}
           $$meta={matchedState[0]}
           $$scope={scope}
@@ -74,6 +72,11 @@ export const Link: React.FC<LinkProps> = ({children, to, as: As, component: Cp, 
     to = {
       pathname: to,
     };
+  }
+  if (!to.pathname) {
+    to.pathname = "/";
+  } else if (to.pathname.charAt(0) !== "/") {
+    to.pathname = `/${to.pathname}`;
   }
   const url = pathToRegexp.compile(to.pathname)(to.params || {});
   return (

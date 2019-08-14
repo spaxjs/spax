@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@wugui/core": "*",
-    "@wugui/utils": "*",
+    "@wugui/debug": "*",
     "history": "^4.9.0",
     "path-to-regexp": "^3.0.0"
   },

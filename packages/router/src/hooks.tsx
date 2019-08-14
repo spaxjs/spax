@@ -20,7 +20,7 @@ export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
 
 export function useChild({ $$exact, $$meta: { level, modules }, $$scope, $$useAuth, $$NotFound, $$Forbidden }: any): React.FC<any> {
   // 如果没有子模块，则返回空
-  return modules.length ? (props: any) => (
+  return (modules && modules.length) ? (props: any) => (
     <Switch
       level={level + 1}
       modules={modules}
