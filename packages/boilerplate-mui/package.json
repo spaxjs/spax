@@ -46,9 +46,6 @@
     "typescript": "^3.5.3",
     "webpack-bundle-analyzer": "^3.4.1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",

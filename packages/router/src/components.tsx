@@ -41,6 +41,9 @@ export const Switch: React.FC<SwitchProps> = ({
         />
       );
     }
+    if (authed === undefined) {
+      return null;
+    }
     return <Forbidden />;
   }
 

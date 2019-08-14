@@ -19,7 +19,10 @@
     "react-scripts",
     "craco",
     "styled-components",
-    "grommet"
+    "material-ui",
+    "templates",
+    "router",
+    "modular"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -29,7 +32,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^9.1.0",
+    "@testing-library/react": "^9.1.1",
     "@testing-library/react-hooks": "^2.0.1",
     "@types/jest": "^24.0.17",
     "@types/node": "^12.7.1",

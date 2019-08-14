@@ -6,7 +6,7 @@ import { Link } from "@wugui/router";
 import React, { useEffect, useState } from "react";
 
 export default function UI(props: any) {
-  const [auth, setAuth] = useGlobalState<string>("auth");
+  const [role, setRole] = useGlobalState<string>("role");
   const [, setPath] = usePathname();
 
   const [username, setUsername] = useState("admin");
@@ -16,17 +16,17 @@ export default function UI(props: any) {
   function handleSubmit(e: any) {
     e.preventDefault();
     if (username && password) {
-      setAuth(username);
+      setRole(username);
     } else {
       alert("Please input username!");
     }
   }
 
   useEffect(() => {
-    if (auth) {
+    if (role) {
       setPath("/");
     }
-  }, [auth, setPath]);
+  }, [role, setPath]);
 
   return (
     <>

@@ -1,9 +1,9 @@
 import { useGlobalState } from "@wugui/hooks";
 import Loading from "framework/components/interaction/Loading";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const initialStates = {
-  auth: "",
+  role: "",
   PersistCount: 0,
   GlobalCount: 0,
   "sidebar-open": true,
@@ -39,8 +39,22 @@ export default {
       NotFound: require("framework/components/exception/NotFound").default,
       Forbidden: require("framework/components/exception/Forbidden").default,
       useAuth: function useAuth({ authority } = { authority: [] }): boolean {
-        const [auth] = useGlobalState<string>("auth");
-        return hasAuth(auth, authority);
+        const [role] = useGlobalState<string>("role");
+        const [auth, setAuth] = useState(undefined);
+
+        useEffect(() => {
+          let unmounted = false;
+          // 模拟异步
+          setImmediate(() => {
+            if (!unmounted) {
+              setAuth(hasAuth(role, authority));
+            }
+          });
+          return () => {
+            unmounted = true;
+          };
+        }, [role, authority]);
+        return auth;
       },
     },
   },

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 
 export default function AdminLayout(props: any) {
   const [repo] = useGlobalState<any>("repo");
-  const [auth, setAuth] = useGlobalState<string>("auth");
+  const [role, setRole] = useGlobalState<string>("role");
   const matched = useMatched();
   const {root, h1} = useStyles(props);
 
@@ -43,9 +43,9 @@ export default function AdminLayout(props: any) {
           className={h1}
           variant="h1">{lastMatched ? lastMatched[0].title : ""}</Typography>
         {
-          auth ? (
+          role ? (
             <>
-              <IconButton color="inherit" edge="end" onClick={() => setAuth("")}><Logout fill="currentColor" /></IconButton>
+              <IconButton color="inherit" edge="end" onClick={() => setRole("")}><Logout fill="currentColor" /></IconButton>
             </>
           ) : (
             <Link

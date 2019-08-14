@@ -1800,13 +1800,14 @@
     "@types/react" ">=16.9.0"
     "@types/react-test-renderer" ">=16.9.0"
 
-"@testing-library/react@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-9.1.0.tgz#c00c4ff90c5f9015365f63b7759a57c428b6ab56"
-  integrity sha1-wAxP+QxfkBU2X2O3dZpXxCi2q1Y=
+"@testing-library/react@^9.1.1":
+  version "9.1.1"
+  resolved "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-9.1.1.tgz#ee5b15c02b64cfbd14cdcad87fee2ed5f28fc2d1"
+  integrity sha1-7lsVwCtkz70UzcrYf+4u1fKPwtE=
   dependencies:
     "@babel/runtime" "^7.5.5"
     "@testing-library/dom" "^6.0.0"
+    "@types/react-dom" "^16.8.5"
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
@@ -1906,6 +1907,13 @@
   version "15.7.1"
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
   integrity sha1-8aEee6uww8rWgQC+OB0eBkxo8fY=
+
+"@types/react-dom@^16.8.5":
+  version "16.8.5"
+  resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.8.5.tgz?cache=0&sync_timestamp=1563902640329&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-dom%2Fdownload%2F%40types%2Freact-dom-16.8.5.tgz#3e3f4d99199391a7fb40aa3a155c8dd99b899cbd"
+  integrity sha1-Pj9NmRmTkaf7QKo6FVyN2ZuJnL0=
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-test-renderer@>=16.9.0":
   version "16.9.0"

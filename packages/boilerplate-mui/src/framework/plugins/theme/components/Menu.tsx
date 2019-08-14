@@ -14,7 +14,7 @@ import { debug } from "@wugui/debug";
 import { useGlobalState } from "@wugui/hooks";
 import { Link, useMatched } from "@wugui/router";
 import clsx from "clsx";
-import React, { ReactElement, ReactNode, useState, useEffect } from "react";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 
 interface IMenu {
   title: string;
@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Menu: React.FC<AnyObject> = (props: any) => {
-  const [auth] = useGlobalState<string>("auth");
+  const [role] = useGlobalState<string>("role");
   const [modules] = useParsed();
   const matched = useMatched();
-  const menu = getMenu(auth, modules);
+  const menu = getMenu(role, modules);
   const openedKeys = matched.map(([{ key }]) => key);
 
   return <MenuList menu={menu} openedKeys={openedKeys} />;
@@ -124,19 +124,19 @@ function MenuList(props: any): ReactElement {
 /**
  * 获取需要显示的菜单树结构
  */
-function getMenu(auth: string, modules: IMD[]): IMenu[] {
-  if (!cacheMap.has(auth)) {
-    const menuData = getMenuData(auth, modules);
+function getMenu(role: string, modules: IMD[]): IMenu[] {
+  if (!cacheMap.has(role)) {
+    const menuData = getMenuData(role, modules);
 
     if (process.env.NODE_ENV === "development")
       debug("Menu configuration created: %O", menuData);
 
-    cacheMap.set(auth, menuData);
+    cacheMap.set(role, menuData);
   }
-  return cacheMap.get(auth);
+  return cacheMap.get(role);
 }
 
-function getMenuData(auth: string, modules: IMD[]): IMenu[] {
+function getMenuData(role: string, modules: IMD[]): IMenu[] {
   return (
     modules
       // 过滤掉 路径带变量 的模块
@@ -144,7 +144,7 @@ function getMenuData(auth: string, modules: IMD[]): IMenu[] {
       // 过滤掉无 权限 的模块
       .filter(
         ({ path, title, authority }) =>
-          path.indexOf(":") === -1 && !!title && hasAuth(auth, authority),
+          path.indexOf(":") === -1 && !!title && hasAuth(role, authority),
       )
       .map(({ key, path, title, icon, empty, modules: childModules }) => {
         return {
@@ -154,7 +154,7 @@ function getMenuData(auth: string, modules: IMD[]): IMenu[] {
           icon,
           empty,
           children: childModules.length
-            ? getMenuData(auth, childModules)
+            ? getMenuData(role, childModules)
             : undefined,
         };
       })
@@ -162,12 +162,12 @@ function getMenuData(auth: string, modules: IMD[]): IMenu[] {
   );
 }
 
-function hasAuth(auth: string, authority: string[]) {
+function hasAuth(role: string, authority: string[]) {
   if (authority.length === 0) {
     return true;
   }
-  if (!auth) {
+  if (!role) {
     return false;
   }
-  return authority.indexOf(auth) !== -1;
+  return authority.indexOf(role) !== -1;
 }
