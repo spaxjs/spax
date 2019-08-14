@@ -1,13 +1,13 @@
-import { useChild } from "@wugui/router";
+import { Carrier } from "@wugui/router";
 import LocalCount from "components/LocalCount";
 import React, { ReactElement } from "react";
 
 export default function UI(props: any): ReactElement<void> {
-  const MatchedChild = useChild(props);
-
+  // 如果当前路由指向子孙，则只显示子孙
+  // 如果有子孙，则显示子孙
   return (
     <LocalCount title={props.title}>
-      <MatchedChild />
+      <Carrier greedy {...props} />
     </LocalCount>
   );
 }

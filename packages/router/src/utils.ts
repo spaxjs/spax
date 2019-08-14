@@ -57,7 +57,6 @@ export function getMatched(
     const matchedState: TMatchedState = ((n) => {
       let fallbackModule: any = null;
       // 从寻找`完整`匹配到寻找`父级`匹配
-      // TODO 优化为按指定 level 匹配？
       while (n--) {
         const toPath = tokens.slice(0, n + 1).join("");
 

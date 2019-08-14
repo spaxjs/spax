@@ -55,10 +55,10 @@ export const Switch: React.FC<SwitchProps> = ({
   return <NotFound />;
 };
 
-export const Carrier: React.FC<CarrierProps> = ({children = null, ...props}: CarrierProps) => {
+export const Carrier: React.FC<CarrierProps> = ({children = null, greedy = false, ...props}: CarrierProps) => {
   const exact = useExact(props);
   const MatchedChild = useChild(props);
-  return exact ? children : <MatchedChild />;
+  return (exact && !greedy) ? children : <MatchedChild />;
 };
 
 /**
