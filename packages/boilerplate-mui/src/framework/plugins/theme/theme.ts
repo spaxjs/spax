@@ -6,24 +6,8 @@ export default function getTheme(type: "light" | "dark" = "light") {
   const raw = createMuiTheme({
     palette: {
       type,
-      background: {
-        default: type === "dark" ? "#001529" : "#ffffff",
-      },
       primary: green,
       secondary: lime,
-      // warning: {
-      //   main: "#ffc071",
-      //   dark: "#ffb25e",
-      // },
-      // error: {
-      //   // xLight: red[50],
-      //   main: red[500],
-      //   dark: red[700],
-      // },
-      // success: {
-      //   xLight: green[50],
-      //   dark: green[700],
-      // },
     },
   });
 

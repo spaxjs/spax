@@ -1,6 +1,12 @@
-import { Box, Divider, IconButton, Link as L, Theme, Typography } from "@material-ui/core";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Link as L,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { ReactComponent as Github } from "@mdi/svg/svg/github-circle.svg";
 import { ReactComponent as Login } from "@mdi/svg/svg/login.svg";
 import { ReactComponent as Logout } from "@mdi/svg/svg/logout.svg";
 import { useGlobalState } from "@wugui/hooks";
@@ -16,8 +22,6 @@ import { Sidebar } from "../components/Sidebar";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({
-    root: {
-    },
     h1: {
       flexGrow: 1,
     },
@@ -25,62 +29,42 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 );
 
 export default function AdminLayout(props: any) {
-  const [repo] = useGlobalState<any>("repo");
   const [role, setRole] = useGlobalState<string>("role");
   const matched = useMatched();
-  const {root, h1} = useStyles(props);
+  const { h1 } = useStyles(props);
 
   const lastMatched = matched[matched.length - 1];
 
   return (
-    <Box
-      className={root}
-      display="flex"
-      flexDirection="column"
-      minHeight="100vh">
+    <Box display="flex" flexDirection="column" minHeight="100vh">
       <Header>
-        <Typography
-          className={h1}
-          variant="h1">{lastMatched ? lastMatched[0].title : ""}</Typography>
-        {
-          role ? (
-            <>
-              <IconButton color="inherit" edge="end" onClick={() => setRole("")}><Logout fill="currentColor" /></IconButton>
-            </>
-          ) : (
-            <Link
-              component={L}
-              color="inherit"
-              to="/login">
-              <IconButton color="inherit" edge="end"><Login fill="currentColor" /></IconButton>
-            </Link>
-          )
-        }
+        <Typography className={h1} variant="h1">
+          {lastMatched ? lastMatched[0].title : ""}
+        </Typography>
+        {role ? (
+          <IconButton color="inherit" edge="end" onClick={() => setRole("")}>
+            <Logout fill="currentColor" />
+          </IconButton>
+        ) : (
+          <Link component={L} color="inherit" to="/login">
+            <IconButton color="inherit" edge="end">
+              <Login fill="currentColor" />
+            </IconButton>
+          </Link>
+        )}
       </Header>
       <Sidebar>
-        <Logo
-          option={props.option} />
+        <Logo option={props.option} />
         <Divider />
         <Menu />
       </Sidebar>
       <Main>
-        <Box
-          mb={2}>
+        <Box mb={2}>
           <Breadcrumbs />
           <Divider />
         </Box>
-        <Box
-          flexGrow={1}>
-          {props.children}
-        </Box>
-        <Footer
-          pt={2}
-          textAlign="center">
-          <a href={repo.url}>
-            <Github />
-          </a>
-          <Typography variant="subtitle1">Copyright &copy; 2019 <L href="https://crossjs.com">crossjs.com</L></Typography>
-        </Footer>
+        <Box flexGrow={1}>{props.children}</Box>
+        <Footer pt={2} textAlign="center" />
       </Main>
     </Box>
   );

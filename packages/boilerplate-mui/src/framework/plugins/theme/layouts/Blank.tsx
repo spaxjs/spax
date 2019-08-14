@@ -1,7 +1,5 @@
-import { Box, Container, Link, Theme, Typography } from "@material-ui/core";
+import { Box, Container, Theme } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { ReactComponent as Github } from "@mdi/svg/svg/github-circle.svg";
-import { useGlobalState } from "@wugui/hooks";
 import React from "react";
 import { Footer } from "../components/Footer";
 import { Logo } from "../components/Logo";
@@ -20,7 +18,6 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 );
 
 export default function BlankLayout({children, ...props}: any) {
-  const [repo] = useGlobalState<any>("repo");
   const {root, logo} = useStyles(props);
 
   return (
@@ -46,12 +43,7 @@ export default function BlankLayout({children, ...props}: any) {
         <Footer
           px={2}
           py={4}
-          textAlign="center">
-          <a href={repo.url}>
-            <Github />
-          </a>
-          <Typography variant="subtitle1">Copyright &copy; 2019 <Link href="https://crossjs.com">crossjs.com</Link></Typography>
-        </Footer>
+          textAlign="center"/>
       </Box>
     </Container>
   );

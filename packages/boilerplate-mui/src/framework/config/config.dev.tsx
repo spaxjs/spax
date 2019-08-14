@@ -3,6 +3,7 @@ import Loading from "framework/components/interaction/Loading";
 import React, { useEffect, useState } from "react";
 
 const initialStates = {
+  themeType: "light",
   role: "",
   PersistCount: 0,
   GlobalCount: 0,
@@ -12,14 +13,14 @@ const initialStates = {
   },
 };
 
-function hasAuth(auth: string, authority: string[]) {
+function hasAuth(role: string, authority: string[]) {
   if (authority.length === 0) {
     return true;
   }
-  if (!auth) {
+  if (!role) {
     return false;
   }
-  return authority.indexOf(auth) !== -1;
+  return authority.indexOf(role) !== -1;
 }
 
 export default {
