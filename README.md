@@ -72,3 +72,7 @@ wugui init my_wugui_app
 - react-scripts
 - styled-components
 - material-ui
+
+## :bulb: 心得 tips
+
+- React Hook 等会触发 re-render 的逻辑，应尽量减少影响范围，尽量放到最靠近需要它的作用域。

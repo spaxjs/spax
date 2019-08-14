@@ -1,6 +1,6 @@
 import { ICH, IPO } from "@wugui/core";
 import React, { ReactElement } from "react";
-import Root from "./Root";
+import { Root } from "./Root";
 
 export default ({ render }: ICH) => {
   render.tap(

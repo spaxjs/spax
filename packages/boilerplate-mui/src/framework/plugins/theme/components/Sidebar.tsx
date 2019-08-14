@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   }),
 );
 
-const Sidebar: React.FC<DrawerProps> = ({children, ...props}: any) => {
+export const Sidebar: React.FC<DrawerProps> = ({children, ...props}: any) => {
   const [open] = useGlobalState("sidebar-open", true);
   const {drawer, drawerPaper} = useStyles({ open });
   return (
@@ -35,5 +35,3 @@ const Sidebar: React.FC<DrawerProps> = ({children, ...props}: any) => {
     </Drawer>
   );
 };
-
-export default Sidebar;

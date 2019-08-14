@@ -3,10 +3,10 @@ import { createStyles, makeStyles } from "@material-ui/styles";
 import { ReactComponent as Github } from "@mdi/svg/svg/github-circle.svg";
 import { useGlobalState } from "@wugui/hooks";
 import React from "react";
-import Footer from "../Footer";
+import { Footer } from "../components/Footer";
+import { Logo } from "../components/Logo";
+import { Slogan } from "../components/Slogan";
 import bg from "../images/bg.svg";
-import Logo from "../Logo";
-import Slogan from "../Slogan";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({

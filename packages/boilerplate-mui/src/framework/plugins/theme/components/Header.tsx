@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   }),
 );
 
-const Header: React.FC<AppBarProps> = ({children, ...props}: any) => {
+export const Header: React.FC<AppBarProps> = ({children, ...props}: any) => {
   const [open, setOpen] = useGlobalState("sidebar-open", true);
   const {appBar, menuButton} = useStyles({ open });
   return (
@@ -39,5 +39,3 @@ const Header: React.FC<AppBarProps> = ({children, ...props}: any) => {
     </AppBar>
   );
 };
-
-export default Header;

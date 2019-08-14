@@ -1,4 +1,4 @@
-import { Badge, Button, Container, Typography } from "@material-ui/core";
+import { Badge, Box, Button, Paper, Typography } from "@material-ui/core";
 import { Add, Favorite, Remove } from "@material-ui/icons";
 import React, { ReactElement, useState} from "react";
 
@@ -6,20 +6,22 @@ export default function LocalCount({children, ...props}: any): ReactElement<void
   const [count, setCount] = useState(0);
   return (
     <>
-      <Container className={props.className}>
-        <Typography variant="h1">{props.title}</Typography>
-        <Button
-          color="primary"
-          onClick={() => setCount(prevCount => prevCount - 1)}
-        ><Remove /></Button>
-        <Badge badgeContent={count} max={10} color="primary">
-          <Favorite />
-        </Badge>
-        <Button
-          color="primary"
-          onClick={() => setCount(prevCount => prevCount + 1)}
-        ><Add /></Button>
-      </Container>
+      <Paper className={props.className}>
+        <Box my={2} p={2}>
+          <Typography variant="h1">{props.title}</Typography>
+          <Button
+            color="primary"
+            onClick={() => setCount(prevCount => prevCount - 1)}
+          ><Remove /></Button>
+          <Badge badgeContent={count} max={10} color="primary">
+            <Favorite />
+          </Badge>
+          <Button
+            color="primary"
+            onClick={() => setCount(prevCount => prevCount + 1)}
+          ><Add /></Button>
+        </Box>
+      </Paper>
       {children}
     </>
   );

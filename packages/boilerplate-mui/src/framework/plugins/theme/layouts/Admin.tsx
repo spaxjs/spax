@@ -6,20 +6,17 @@ import { ReactComponent as Logout } from "@mdi/svg/svg/logout.svg";
 import { useGlobalState } from "@wugui/hooks";
 import { Link, useMatched } from "@wugui/router";
 import React from "react";
-import Breadcrumbs from "../Breadcrumbs";
-import Footer from "../Footer";
-import Header from "../Header";
-import Logo from "../Logo";
-import Main from "../Main";
-import Menu from "../Menu";
-import Sidebar from "../Sidebar";
+import { Breadcrumbs } from "../components/Breadcrumbs";
+import { Footer } from "../components/Footer";
+import { Header } from "../components/Header";
+import { Logo } from "../components/Logo";
+import { Main } from "../components/Main";
+import { Menu } from "../components/Menu";
+import { Sidebar } from "../components/Sidebar";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({
     root: {
-      display: "flex",
-      flexDirection: "column",
-      // background: `url(${bg})  no-repeat center center`,
     },
     h1: {
       flexGrow: 1,
@@ -37,7 +34,10 @@ export default function AdminLayout(props: any) {
 
   return (
     <Box
-      className={root}>
+      className={root}
+      display="flex"
+      flexDirection="column"
+      minHeight="100vh">
       <Header>
         <Typography
           className={h1}
@@ -65,13 +65,16 @@ export default function AdminLayout(props: any) {
       </Sidebar>
       <Main>
         <Box
-          mb={1}>
+          mb={2}>
           <Breadcrumbs />
+          <Divider />
         </Box>
-        {props.children}
+        <Box
+          flexGrow={1}>
+          {props.children}
+        </Box>
         <Footer
-          px={2}
-          py={4}
+          pt={2}
           textAlign="center">
           <a href={repo.url}>
             <Github />

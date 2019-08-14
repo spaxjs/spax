@@ -3,13 +3,11 @@ import { ThemeProvider } from "@material-ui/styles";
 import { IPO } from "@wugui/core";
 import { debug } from "@wugui/debug";
 import React from "react";
-import DocumentTitle from "./DocumentTitle";
-import { useLayout } from "./hooks";
+import { DocumentTitle } from "./components/DocumentTitle";
+import { Layout } from "./Layout";
 import getTheme from "./theme";
 
-const Root: React.FC<{ option: IPO }> = (props: any) => {
-  const Layout = useLayout();
-
+export const Root: React.FC<{ option: IPO }> = ({children, option}: any) => {
   const theme = getTheme("light");
 
   if (process.env.NODE_ENV === "development")
@@ -18,12 +16,10 @@ const Root: React.FC<{ option: IPO }> = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <DocumentTitle fallback={props.option.siteTitle} />
-      <Layout option={props.option}>
-        {props.children}
+      <DocumentTitle fallback={option.siteTitle} />
+      <Layout option={option}>
+        {children}
       </Layout>
     </ThemeProvider>
   );
 };
-
-export default Root;

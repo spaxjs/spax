@@ -1,5 +1,5 @@
-import { FlightTakeoff } from "@material-ui/icons";
 import { useGlobalState } from "@wugui/hooks";
+import Loading from "framework/components/interaction/Loading";
 import React from "react";
 
 const initialStates = {
@@ -32,7 +32,7 @@ export default {
       siteTitle: "wugui",
     },
     lazy: {
-      fallback: <FlightTakeoff fontSize="large" />,
+      fallback: <Loading />,
     },
     router: {
       NotFound: require("framework/components/exception/NotFound").default,

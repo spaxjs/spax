@@ -9,16 +9,17 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
     logo: {
       ...theme.mixins.toolbar,
       display: "flex",
+      alignItems: "center",
       justifyContent: "center",
       "& > img": {
         maxWidth: "100%",
-        maxHeight: "100%",
+        maxHeight: 48,
       },
     },
   }),
 );
 
-const Logo: React.FC<Partial<LinkProps> & { className?: any, option?: any }> = ({className, option, ...props}: any) => {
+export const Logo: React.FC<Partial<LinkProps> & { className?: any, option?: any }> = ({className, option, ...props}: any) => {
   const {logo} = useStyles(props);
 
   const { logoImage, siteTitle } = option;
@@ -35,5 +36,3 @@ const Logo: React.FC<Partial<LinkProps> & { className?: any, option?: any }> = (
     </Link>
   );
 };
-
-export default Logo;
