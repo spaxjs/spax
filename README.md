@@ -10,8 +10,8 @@
 
 ## :open_book: 名词解释 Glossary
 
-- 框架：特指 [@wugui/core](packages/core)
-- 业务框架：比如 [@wugui/framework-simple](packages/framework-simple)
+- 框架：特指 [@wugui/core](packages/core) 与 [@wugui/framework](packages/framework)
+- 业务框架：比如 [@wugui/framework-hook](packages/framework-hook)
 - 模块：业务模块声明，可能包含 path, component 等信息
 
 ## :pushpin: 设计原则 principle
@@ -33,40 +33,38 @@
 ### 安装
 
 ```bash
+# TODO
 yarn add global @wugui/cli
 ```
 
 ### 创建项目
 
 ```bash
+# TODO
 wugui init my_wugui_app
 ```
 
 ## :nut_and_bolt: 插件 plugins
 
-- [@wugui/plugin-lazy](packages/plugin-lazy) 提供异步组件支持
-- [@wugui/plugin-level](packages/plugin-level) 添加模块层级标记
+- [@wugui/plugin-lazy](packages/plugin-lazy) 支持异步组件
+- [@wugui/plugin-level](packages/plugin-level) 标记模块层级
 - [@wugui/plugin-path](packages/plugin-path) 规范化模块路由地址
-- [@wugui/plugin-router](packages/plugin-router) 简单的基于 hooks 的路由
+- [@wugui/plugin-router](packages/plugin-router) 提供路由支持
 
 ## :card_file_box: 框架 frameworks
 
-- [@wugui/framework-simple](packages/framework-simple) 基础框架，集成常见插件
+- [@wugui/framework](packages/framework) 框架基类
+- [@wugui/framework-hook](packages/framework-hook) 基础框架，集成常见插件
 
-## :anchor: 钩子 hooks
+## :ant: 配件 assets
 
-- [@wugui/hooks](packages/hooks) 一些常用的 hooks
+- [@wugui/history](packages/history) [history](https://github.com/ReactTraining/history) 的 React Hook 封装
+- [@wugui/hooks](packages/hooks) 一些常用的 React Hooks
+- [@wugui/router](packages/router) 基于 React Hook 的路由实现
 
 ## :rocket: 示例 examples
 
-以下示例使用的技术栈非必选，实际应用时可根据自身偏好选择。
-
-### [boilerplate-grommet](packages/boilerplate-grommet)
-
-- craco
-- react-scripts
-- styled-components
-- grommet
+以下示例使用的技术栈非必选，实际应用时可根据自身偏好灵活调整。
 
 ### [boilerplate-mui](packages/boilerplate-mui)
 
