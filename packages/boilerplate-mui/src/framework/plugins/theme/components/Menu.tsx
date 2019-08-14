@@ -13,6 +13,7 @@ import { AnyObject, IMD, useParsed } from "@wugui/core";
 import { debug } from "@wugui/debug";
 import { useGlobalState } from "@wugui/hooks";
 import { Link, useMatched } from "@wugui/router";
+import clsx from "clsx";
 import React, { ReactElement, ReactNode, useState } from "react";
 
 interface IMenu {
@@ -26,12 +27,14 @@ const cacheMap: Map<string, IMenu[]> = new Map();
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    list: {},
     listGroup: {
       paddingLeft: theme.spacing(2),
     },
     listItemIcon: {
       minWidth: 32,
+    },
+    listItemActive: {
+      fontWeight: "bold",
     },
   }),
 );
@@ -46,37 +49,45 @@ export const Menu: React.FC<AnyObject> = (props: any) => {
   return <MenuList menu={menu} paths={paths} />;
 };
 
-function MenuNest(props: any): ReactElement {
-  const { title, icon: Icon = Remove, path, empty, opened } = props;
-  const [open, setOpen] = useState(opened);
-  const { listGroup, listItemIcon } = useStyles({});
-  const Pointer = open ? ExpandLess : ExpandMore;
-  return (
-    <>
-      <Link component={L} to={empty ? false : path}>
-        <ListItem onClick={() => setOpen(!open)}>
-          <ListItemIcon className={listItemIcon}>
-            <Icon />
-          </ListItemIcon>
-          <ListItemText primary={title} />
-          <Pointer />
-        </ListItem>
-      </Link>
-      <Collapse className={listGroup} in={open}>
-        {props.children}
-      </Collapse>
-    </>
-  );
+function createMenuNest() {
+  return function MenuNest(props: any): ReactElement {
+    const { title, icon: Icon = Remove, path, empty, opened } = props;
+    const [open, setOpen] = useState(opened);
+    const { listGroup, listItemIcon, listItemActive } = useStyles({});
+    const Pointer = open ? ExpandLess : ExpandMore;
+
+    return (
+      <>
+        <Link component={L} to={empty ? false : path}>
+          <ListItem onClick={() => setOpen(!open)}>
+            <ListItemIcon className={listItemIcon}>
+              <Icon />
+            </ListItemIcon>
+            <ListItemText className={clsx(open && listItemActive)} disableTypography>
+              {title}
+            </ListItemText>
+            <Pointer />
+          </ListItem>
+        </Link>
+        <Collapse className={listGroup} in={open}>
+          {props.children}
+        </Collapse>
+      </>
+    );
+  };
 }
 
 function MenuList(props: any): ReactElement {
-  const { list, listItemIcon } = useStyles({});
+  const { listItemIcon, listItemActive } = useStyles({});
   const { menu, paths } = props;
   return (
-    <List className={list} component="nav">
+    <List component="nav">
       {menu.map(
         ({ key, title, icon: Icon = Remove, path, empty, children }) => {
+          const opened = paths.indexOf(path) !== -1;
           if (children) {
+            const MenuNest = createMenuNest();
+            // const MenuList = createMenuList();
             return (
               <MenuNest
                 key={key}
@@ -84,7 +95,7 @@ function MenuList(props: any): ReactElement {
                 icon={Icon}
                 path={path}
                 empty={empty}
-                opened={paths.indexOf(path) !== -1}
+                opened={opened}
               >
                 <MenuList menu={children} paths={paths} />
               </MenuNest>
@@ -97,7 +108,9 @@ function MenuList(props: any): ReactElement {
                 <ListItemIcon className={listItemIcon}>
                   <Icon />
                 </ListItemIcon>
-                <ListItemText primary={title} />
+                <ListItemText className={clsx(opened && listItemActive)} disableTypography>
+                  {title}
+                </ListItemText>
               </ListItem>
             </Link>
           );

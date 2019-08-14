@@ -12,6 +12,7 @@ export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
   const [state, setState] = useState(matchedDb.get(scope));
 
   useEffect(() => {
+    setState(matchedDb.get(scope));
     return matchedDb.on(scope, setState);
   }, []);
 
