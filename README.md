@@ -16,33 +16,12 @@
 
 ## :pushpin: 设计原则 principle
 
-### 可扩展
-
-核心框架仅提供必要的插件与模块管理能力，其它技术栈不做限制。
-
-### 插件化
-
-围绕插件初始化、模块解析、组件渲染等钩子函数，开发功能插件。
-
-### 渐进式
-
-业务框架演进路径：糅合于业务 -> 抽象成插件 -> 沉淀到框架。
-
-## :hammer_and_wrench: 使用 usage
-
-### 安装
-
-```bash
-# TODO
-yarn add global @wugui/cli
-```
-
-### 创建项目
-
-```bash
-# TODO
-wugui init my_wugui_app
-```
+- 可扩展
+  - 核心框架仅提供必要的插件与模块管理能力，其它技术栈不做限制。
+- 插件化
+  - 围绕插件初始化、模块解析、组件渲染等钩子函数，开发功能插件。
+- 渐进式
+  - 业务框架演进路径：糅合于业务 -> 抽象成插件 -> 沉淀到框架。
 
 ## :nut_and_bolt: 插件 plugins
 
@@ -64,7 +43,7 @@ wugui init my_wugui_app
 
 ## :rocket: 示例 examples
 
-以下示例使用的技术栈非必选，实际应用时可根据自身偏好灵活调整。
+> 以下示例使用的技术栈非必选，实际应用时可根据自身偏好灵活调整。
 
 - [boilerplate-mui](packages/boilerplate-mui)
   - craco
