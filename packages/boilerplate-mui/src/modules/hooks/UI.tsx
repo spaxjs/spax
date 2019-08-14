@@ -7,15 +7,10 @@ export default function UI(props: any) {
     <Carrier {...props}>
       <ArrowBack fontSize="large" />
       请从左侧菜单进入子模块
-      <pre>{`const exact = useExact(props);
-const MatchedChild = useChild(props);
-
-return exact ? (
-  <>
-    <ArrowBack fontSize="large" />
-    请从左侧菜单进入子模块
-  </>
-) : <MatchedChild />`}</pre>
+      <pre>{`<Carrier {...props}>
+  <ArrowBack fontSize="large" />
+  请从左侧菜单进入子模块
+</Carrier>`}</pre>
     </Carrier>
   );
 }

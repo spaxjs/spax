@@ -4,7 +4,7 @@ import { useGlobalState } from "@wugui/hooks";
 import React, { ReactElement } from "react";
 
 export default function GlobalCount(props: any): ReactElement<void> {
-  const [count, setCount] = useGlobalState("count");
+  const [count, setCount] = useGlobalState("GlobalCount");
   return (
     <Paper
       className={props.className}>

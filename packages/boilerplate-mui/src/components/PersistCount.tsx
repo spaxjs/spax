@@ -4,7 +4,7 @@ import { usePersistState } from "@wugui/hooks";
 import React, { ReactElement} from "react";
 
 export default function PersistCount(props: any): ReactElement<void> {
-  const [count, setCount] = usePersistState("count", 0);
+  const [count, setCount] = usePersistState("PersistCount", 0);
   return (
     <Paper className={props.className}>
       <Box my={2} p={2}>
