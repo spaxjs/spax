@@ -1,7 +1,7 @@
 import { DEFAULT_SCOPE } from "@wugui/core";
 import React, { useEffect, useState } from "react";
 import { Switch } from "./components";
-import { CarrierProps, TMatchedState } from "./types";
+import { TMatchedState } from "./types";
 import { matchedDb } from "./utils";
 
 export function useExact({ $$exact }: any): boolean {

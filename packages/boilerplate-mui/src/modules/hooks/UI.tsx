@@ -1,5 +1,5 @@
 import { ArrowBack } from "@material-ui/icons";
-import { useExact, useChild } from "@wugui/router";
+import { useChild, useExact } from "@wugui/router";
 import React from "react";
 
 export default function UI(props: any) {

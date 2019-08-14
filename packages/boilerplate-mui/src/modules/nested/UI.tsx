@@ -1,4 +1,4 @@
-import { useExact, useChild } from "@wugui/router";
+import { useChild, useExact } from "@wugui/router";
 import LocalCount from "components/LocalCount";
 import React, { ReactElement } from "react";
 

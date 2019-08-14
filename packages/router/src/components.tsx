@@ -1,7 +1,7 @@
 import { usePathname } from "@wugui/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useExact, useChild } from "./hooks";
+import { useChild, useExact } from "./hooks";
 import { CarrierProps, LinkProps, RouterProps, SwitchProps } from "./types";
 import { getMatched } from "./utils";
 
