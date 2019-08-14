@@ -4,6 +4,7 @@ import Framework from "../src";
 // tslint:disable: react-hooks-nesting
 
 const defaultOptions = {
+  scope: "🐢",
   version: "1.0.0",
   // 插件选项
   plugins: {},

@@ -1,5 +1,5 @@
 import { ICH, ICO, IMD, IPO } from "@wugui/core";
-import { ChildRoutes, Router, Switch } from "@wugui/router";
+import { Carrier, Router, Switch } from "@wugui/router";
 import React, { ReactElement } from "react";
 
 export default ({ parse, render }: ICH) => {
@@ -26,7 +26,10 @@ export default ({ parse, render }: ICH) => {
           level={1}
           modules={modules}
           scope={scope}
-          option={option}
+          loose={false}
+          useAuth={option.useAuth}
+          NotFound={option.NotFound}
+          Forbidden={option.Forbidden}
         />
       );
     },
@@ -34,7 +37,7 @@ export default ({ parse, render }: ICH) => {
       return (
         <Router
           scope={scope}
-          option={option}
+          modules={option.modules}
         >
           {element}
         </Router>
@@ -58,7 +61,7 @@ function normalizeComponent(current: IMD, option: IPO) {
     empty,
     authority,
     data,
-    component: empty ? ChildRoutes : component,
+    component: empty ? Carrier : component,
     modules,
   };
 }

@@ -9,7 +9,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = (props: any) => {
   return (
     <B {...props}>
       {
-        matched.map(([{key, path: pathname, title}, params], index) => {
+        matched.map(([{key, path: pathname, title}, params]) => {
           return (
             <Link
               key={key}

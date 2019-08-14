@@ -1,4 +1,4 @@
-import { AnyObject, IModuleDescription } from "@wugui/core";
+import { AnyObject, IMD } from "@wugui/core";
 import { ReactNode } from "react";
 
 export interface LinkProps extends AnyObject {
@@ -14,16 +14,29 @@ export interface LinkProps extends AnyObject {
 }
 
 export interface RouterProps extends AnyObject {
-  option: AnyObject;
+  scope: string;
+  modules: IMD[];
+  children?: ReactNode;
 }
 
 export interface SwitchProps extends AnyObject {
   level: number;
+  modules: IMD[];
+  scope: string;
   loose?: boolean;
-  // modules: IModuleDescription[];
-  option?: AnyObject;
+  useAuth?: (imd: IMD) => boolean;
+  NotFound?: React.FC<AnyObject>;
+  Forbidden?: React.FC<AnyObject>;
+}
+
+export interface CarrierProps extends AnyObject {
+  $$meta: IMD;
+  $$scope: string;
+  $$useAuth: (imd: IMD) => boolean;
+  $$NotFound: React.FC<AnyObject>;
+  $$Forbidden: React.FC<AnyObject>;
 }
 
 export interface MatchedParams extends AnyObject {}
 
-export type TMatchedModule = [IModuleDescription?, MatchedParams?];
+export type TMatchedState = [IMD?, MatchedParams?];

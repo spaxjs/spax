@@ -1,7 +1,7 @@
 import { DEFAULT_SCOPE, IMD } from "@wugui/core";
 import { debug } from "@wugui/utils";
 import EventEmitter from "events";
-import { MatchedParams, TMatchedModule } from "./types";
+import { MatchedParams, TMatchedState } from "./types";
 
 export const matchedDb = {
   value: {},
@@ -22,7 +22,7 @@ export const matchedDb = {
     this.ensure(scope);
     return this.value[scope];
   },
-  add(scope: string, level: number, v: TMatchedModule) {
+  add(scope: string, level: number, v: TMatchedState) {
     this.ensure(scope);
     const newValue = [...this.value[scope]];
     newValue[level - 1] = v;
@@ -40,21 +40,21 @@ export const matchedDb = {
   },
 };
 
-const cacheMap: Map<string, TMatchedModule> = new Map();
+const cacheMap: Map<string, TMatchedState> = new Map();
 
-export function getMatchedState(
+export function getMatched(
   scope: string = DEFAULT_SCOPE,
   pathname: string,
   level: number = 1,
   modules: IMD[],
-): TMatchedModule {
+): TMatchedState {
   const cacheKey = `${scope}&${pathname}&${level}`;
 
   if (!cacheMap.has(cacheKey)) {
     // `/a/b/c` -> `["/a", "/b", "/c"]`
     const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
 
-    const matchedState: TMatchedModule = ((n) => {
+    const matchedState: TMatchedState = ((n) => {
       let fallbackModule: any = null;
       // 从寻找`完整`匹配到寻找`父级`匹配
       // TODO 优化为按指定 level 匹配？
@@ -84,12 +84,12 @@ export function getMatchedState(
             if (process.env.NODE_ENV === "development")
               debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childModule);
 
-            return [childModule, matchedParams] as TMatchedModule;
+            return [childModule, matchedParams] as TMatchedState;
           }
         }
       }
 
-      return fallbackModule ? [fallbackModule, {}] as TMatchedModule : null;
+      return fallbackModule ? [fallbackModule, {}] as TMatchedState : null;
     })(tokens.length);
 
     if (matchedState) {

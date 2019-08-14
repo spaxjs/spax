@@ -1,7 +1,7 @@
 import { useMatched } from "@wugui/router";
-import { FC, useEffect } from "react";
+import React, { useEffect } from "react";
 
-export function useLayout(): FC<{ option: any }> {
+export function useLayout(): React.FC<{ option: any }> {
   const matched = useMatched();
 
   if (matched && matched[0] && matched[0][0]) {
