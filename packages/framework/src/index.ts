@@ -41,7 +41,7 @@ export default abstract class Framework {
     this.initialize(options);
   }
 
-  public async mount() {
+  public async mount(callback?: () => void) {
     try {
       const { plugins, options } = this;
 
@@ -63,6 +63,9 @@ export default abstract class Framework {
       ReactDOM.render(renderElement, mountingElement, () => {
         if (process.env.NODE_ENV === "development")
           debug("Mounted to container: %O", options.container);
+        if (callback) {
+          callback();
+        }
       });
     } catch (e) {
       error(e);

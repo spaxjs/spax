@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src/",
+    "composite": false,
+    "paths": {
+      "~/*": [
+        "./src/*",
+      ],
+    },
+    "outDir": "./lib/",
+  },
+  "include": [
+    "./src/**/*",
+  ],
+}

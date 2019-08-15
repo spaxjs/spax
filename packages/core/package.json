@@ -14,7 +14,7 @@
     "history": "^4.9.0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.1"
+    "@types/node": "^12.7.2"
   },
   "scripts": {
     "start": "tsc -w",

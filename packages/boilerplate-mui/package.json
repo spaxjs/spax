@@ -25,19 +25,19 @@
     "@spax/framework-hook": "*",
     "@spax/history": "*",
     "@spax/hooks": "*",
+    "@spax/i18n": "*",
+    "@spax/plugin-i18n": "*",
     "@spax/router": "*",
     "@spax/debug": "*",
     "clsx": "^1.0.4",
-    "history": "^4.9.0",
     "merge": "^1.2.1",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "styled-components": "^4.3.2"
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
     "@craco/craco": "^5.3.0",
     "@types/jest": "^24.0.17",
-    "@types/node": "^12.7.1",
+    "@types/node": "^12.7.2",
     "@types/react": "^16.9.1",
     "@types/react-dom": "^16.8.5",
     "@types/styled-components": "^4.1.18",

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 const initialStates = {
   themeType: "light",
   role: "",
+  lng: "zh",
   PersistCount: 0,
   GlobalCount: 0,
   "sidebar-open": true,
@@ -26,6 +27,9 @@ function hasAuth(role: string, authority: string[]) {
 export default {
   version: "0.0.1",
   plugins: {
+    i18n: {
+      lng: initialStates.lng,
+    },
     store: {
       initialStates,
     },

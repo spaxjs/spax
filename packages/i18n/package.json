@@ -1,7 +1,7 @@
 {
-  "name": "@spax/router",
+  "name": "@spax/i18n",
   "version": "1.0.0",
-  "description": "router utilities",
+  "description": "i18n hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
@@ -11,11 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "@spax/core": "*",
-    "@spax/history": "*",
-    "@spax/hooks": "*",
-    "@spax/debug": "*",
-    "events": "^3.0.0",
-    "path-to-regexp": "^3.0.0"
+    "i18next": "^17.0.11",
+    "react-i18next": "^10.12.2"
   },
   "devDependencies": {
     "@types/node": "^12.7.2",
