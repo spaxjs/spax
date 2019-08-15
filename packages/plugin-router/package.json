@@ -1,17 +1,17 @@
 {
-  "name": "@wugui/plugin-router",
+  "name": "@spax/plugin-router",
   "version": "1.0.0",
   "description": "router in hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/core": "*",
-    "@wugui/router": "*"
+    "@spax/core": "*",
+    "@spax/router": "*"
   },
   "devDependencies": {
     "@types/node": "^12.7.1",

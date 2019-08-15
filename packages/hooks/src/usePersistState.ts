@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const prefix = "@wugui/hooks/persist/state/";
+const prefix = "@spax/hooks/persist/state/";
 
 export function usePersistState<S>(key: string, initialState?: S | (() => S)): [S, Dispatch<SetStateAction<S>>] {
   const realKey = `${prefix}${key}`;

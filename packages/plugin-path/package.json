@@ -1,17 +1,17 @@
 {
-  "name": "@wugui/plugin-path",
+  "name": "@spax/plugin-path",
   "version": "1.0.0",
   "description": "component path normalizer",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/core": "*",
-    "@wugui/debug": "*",
+    "@spax/core": "*",
+    "@spax/debug": "*",
     "history": "^4.9.0",
     "path-to-regexp": "^3.0.0"
   },

@@ -1,12 +1,12 @@
 {
-  "name": "@wugui/hooks",
+  "name": "@spax/hooks",
   "version": "1.0.0",
   "description": "useful hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {

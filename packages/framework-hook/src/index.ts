@@ -1,9 +1,9 @@
-import { TCP } from "@wugui/core";
-import Framework, { IFO } from "@wugui/framework";
-import LazyPlugin from "@wugui/plugin-lazy";
-import LevelPlugin from "@wugui/plugin-level";
-import PathPlugin from "@wugui/plugin-path";
-import RouterPlugin from "@wugui/plugin-router";
+import { TCP } from "@spax/core";
+import Framework, { IFO } from "@spax/framework";
+import LazyPlugin from "@spax/plugin-lazy";
+import LevelPlugin from "@spax/plugin-level";
+import PathPlugin from "@spax/plugin-path";
+import RouterPlugin from "@spax/plugin-router";
 
 const options = process.env.NODE_ENV === "production"
   ? require("./config/config.prod")

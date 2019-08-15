@@ -1,4 +1,4 @@
-import { ICH, IMD, IPO } from "@wugui/core";
+import { ICH, IMD, IPO } from "@spax/core";
 
 export default ({ parse }: ICH) => {
   parse.tap("Level", (current: IMD, parent: IMD, option: IPO) => {

@@ -1,4 +1,4 @@
-# 🐢 LazyPlugin
+# :rocket: LazyPlugin
 
 基于 React.Suspense 与 React.Lazy，提供异步组件支持。
 
@@ -7,7 +7,7 @@
 ### 安装 install
 
 ```bash
-yarn add @wugui/plugin-lazy
+yarn add @spax/plugin-lazy
 ```
 
 ### 示例 examples
@@ -15,8 +15,8 @@ yarn add @wugui/plugin-lazy
 添加到 Framework
 
 ```ts
-import { Framework } from "@wugui/core";
-import LazyPlugin from "@wugui/plugin-lazy";
+import { Framework } from "@spax/core";
+import LazyPlugin from "@spax/plugin-lazy";
 
 const options = process.env.NODE_ENV === "production"
   ? require("./config/config.prod")

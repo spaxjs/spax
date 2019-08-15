@@ -1,7 +1,7 @@
 
-import { ICH, IPO } from "@wugui/core";
-import { debug } from "@wugui/debug";
-import { setGlobalState } from "@wugui/hooks";
+import { ICH, IPO } from "@spax/core";
+import { debug } from "@spax/debug";
+import { setGlobalState } from "@spax/hooks";
 
 export default ({ init }: ICH) => {
   init.tap("Store", ({ initialStates = [] }: IPO) => {

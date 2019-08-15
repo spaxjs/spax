@@ -1,4 +1,4 @@
-import { useGlobalState } from "@wugui/hooks";
+import { useGlobalState } from "@spax/hooks";
 import Loading from "framework/components/interaction/Loading";
 import React, { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ const initialStates = {
   GlobalCount: 0,
   "sidebar-open": true,
   repo: {
-    url: "https://github.com/crossjs/wugui",
+    url: "https://github.com/crossjs/spax",
   },
 };
 
@@ -31,7 +31,7 @@ export default {
     },
     theme: {
       logoImage: require("images/logo.png"),
-      siteTitle: "wugui",
+      siteTitle: "spax",
     },
     lazy: {
       fallback: <Loading />,

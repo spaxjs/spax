@@ -1,5 +1,5 @@
-import { run, TCP } from "@wugui/core";
-import { debug, error, fatal, warn } from "@wugui/debug";
+import { run, TCP } from "@spax/core";
+import { debug, error, fatal, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import * as ReactDOM from "react-dom";
@@ -12,7 +12,7 @@ export default abstract class Framework {
   public static plugins: TCP[] = [];
   // 选项
   public static options: IFO = {
-    scope: "🐢",
+    scope: "🚀",
     version: "1.0.0",
     // 插件选项
     plugins: {},

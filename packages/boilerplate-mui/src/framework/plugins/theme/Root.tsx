@@ -1,8 +1,8 @@
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import { IPO } from "@wugui/core";
-import { debug } from "@wugui/debug";
-import { useGlobalState } from "@wugui/hooks";
+import { IPO } from "@spax/core";
+import { debug } from "@spax/debug";
+import { useGlobalState } from "@spax/hooks";
 import React from "react";
 import { DocumentTitle } from "./components/DocumentTitle";
 import { Layout } from "./Layout";

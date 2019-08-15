@@ -1,4 +1,4 @@
-import { ICH, IPO } from "@wugui/core";
+import { ICH, IPO } from "@spax/core";
 import React, { ReactElement } from "react";
 import { Root } from "./Root";
 

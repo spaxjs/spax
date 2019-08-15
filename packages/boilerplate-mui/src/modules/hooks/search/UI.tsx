@@ -1,6 +1,6 @@
 import { Box, Container, IconButton, TextField, Typography } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
-import { useSearch } from "@wugui/history";
+import { useSearch } from "@spax/history";
 import React, { useState } from "react";
 
 export default function UI(props: any) {

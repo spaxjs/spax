@@ -1,6 +1,6 @@
 import { Badge, Box, Button, Paper, Typography } from "@material-ui/core";
 import { Add, Favorite, Remove } from "@material-ui/icons";
-import { useGlobalState } from "@wugui/hooks";
+import { useGlobalState } from "@spax/hooks";
 import React, { ReactElement } from "react";
 
 export default function GlobalCount(props: any): ReactElement<void> {

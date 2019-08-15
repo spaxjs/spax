@@ -1,6 +1,6 @@
 function makeArgs(args: any[]) {
   if (typeof args[0] === "string") {
-    args[0] = `🐢 ${args[0]}`;
+    args[0] = `🚀 ${args[0]}`;
   }
   return args;
 }

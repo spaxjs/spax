@@ -1,5 +1,5 @@
 import { ArrowBack } from "@material-ui/icons";
-import { Carrier } from "@wugui/router";
+import { Carrier } from "@spax/router";
 import React from "react";
 
 const code = `<Carrier {...props}>

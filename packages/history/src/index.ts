@@ -1,4 +1,4 @@
-import { AnyObject } from "@wugui/core";
+import { AnyObject } from "@spax/core";
 import { createHashHistory, History, Location } from "history";
 import pathToRegexp from "path-to-regexp";
 import queryString from "query-string";

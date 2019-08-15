@@ -1,6 +1,6 @@
 import { Theme } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { Link, LinkProps } from "@wugui/router";
+import { Link, LinkProps } from "@spax/router";
 import clsx from "clsx";
 import React from "react";
 

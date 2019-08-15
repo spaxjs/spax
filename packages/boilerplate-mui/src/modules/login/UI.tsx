@@ -1,8 +1,8 @@
 import { Box, Button, IconButton, InputAdornment, Link as L, TextField } from "@material-ui/core";
 import { Fingerprint, Visibility, VisibilityOff } from "@material-ui/icons";
-import { usePathname } from "@wugui/history";
-import { useGlobalState } from "@wugui/hooks";
-import { Link } from "@wugui/router";
+import { usePathname } from "@spax/history";
+import { useGlobalState } from "@spax/hooks";
+import { Link } from "@spax/router";
 import React, { useEffect, useState } from "react";
 
 export default function UI(props: any) {

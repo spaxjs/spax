@@ -1,4 +1,4 @@
-import { Carrier } from "@wugui/router";
+import { Carrier } from "@spax/router";
 import LocalCount from "components/LocalCount";
 import React, { ReactElement } from "react";
 

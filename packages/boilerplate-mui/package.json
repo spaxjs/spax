@@ -1,7 +1,7 @@
 {
   "name": "boilerplate-mui",
   "version": "1.0.0",
-  "description": "wugui",
+  "description": "spax",
   "private": true,
   "scripts": {
     "start": "craco start",
@@ -13,20 +13,20 @@
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
     "@mdi/svg": "^4.0.96",
-    "@wugui/core": "*",
-    "@wugui/framework": "*",
-    "@wugui/framework-hook": "*",
-    "@wugui/history": "*",
-    "@wugui/hooks": "*",
-    "@wugui/router": "*",
-    "@wugui/debug": "*",
+    "@spax/core": "*",
+    "@spax/framework": "*",
+    "@spax/framework-hook": "*",
+    "@spax/history": "*",
+    "@spax/hooks": "*",
+    "@spax/router": "*",
+    "@spax/debug": "*",
     "clsx": "^1.0.4",
     "history": "^4.9.0",
     "merge": "^1.2.1",

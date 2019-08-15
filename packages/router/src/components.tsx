@@ -1,4 +1,4 @@
-import { usePathname } from "@wugui/history";
+import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
 import { useChild } from "./hooks";

@@ -1,16 +1,16 @@
 {
-  "name": "@wugui/history",
+  "name": "@spax/history",
   "version": "1.0.0",
   "description": "history hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/core": "*",
+    "@spax/core": "*",
     "history": "^4.9.0",
     "path-to-regexp": "^3.0.0",
     "query-string": "^6.8.2"

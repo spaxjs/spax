@@ -1,4 +1,4 @@
-import { AnyObject, IMD } from "@wugui/core";
+import { AnyObject, IMD } from "@spax/core";
 import { ReactNode } from "react";
 
 export interface LinkProps extends AnyObject {

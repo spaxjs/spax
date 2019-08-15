@@ -1,17 +1,17 @@
 {
-  "name": "@wugui/framework",
+  "name": "@spax/framework",
   "version": "1.0.0",
   "description": "base framework class",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/core": "*",
-    "@wugui/debug": "*",
+    "@spax/core": "*",
+    "@spax/debug": "*",
     "history": "^4.9.0",
     "lodash": "^4.17.15"
   },

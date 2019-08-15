@@ -1,10 +1,3 @@
-# 🐢 history
+# :rocket: router
 
-> history hooks
-
-## APIs
-
-- useLocation
-- usePathname
-- useSearch
-- useHash
+> router in hooks

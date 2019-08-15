@@ -1,16 +1,16 @@
 {
-  "name": "@wugui/core",
+  "name": "@spax/core",
   "version": "1.0.0",
   "description": "core engine",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/debug": "*",
+    "@spax/debug": "*",
     "history": "^4.9.0"
   },
   "devDependencies": {

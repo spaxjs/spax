@@ -1,4 +1,4 @@
-import { ICO } from "@wugui/core";
+import { ICO } from "@spax/core";
 
 export interface IFrameworkOptions extends ICO {
   // 版本号

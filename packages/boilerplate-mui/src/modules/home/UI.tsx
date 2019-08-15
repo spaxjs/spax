@@ -1,7 +1,7 @@
 import { Box, Link as L, Typography } from "@material-ui/core";
 import { Explore, NavigateNext } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
-import { Link } from "@wugui/router";
+import { Link } from "@spax/router";
 import React, { ReactNode } from "react";
 
 const useStyles = makeStyles({

@@ -23,6 +23,6 @@
   },
   "include": [
     "src",
-    "node_modules/@wugui/*/src"
+    "node_modules/@spax/*/src"
   ]
 }

@@ -1,4 +1,4 @@
-import { DEFAULT_SCOPE } from "@wugui/core";
+import { DEFAULT_SCOPE } from "@spax/core";
 import React, { useEffect, useState } from "react";
 import { Switch } from "./components";
 import { TMatchedState } from "./types";

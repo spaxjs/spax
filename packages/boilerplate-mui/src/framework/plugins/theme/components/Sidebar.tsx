@@ -1,7 +1,7 @@
 import { Drawer, Theme } from "@material-ui/core";
 import { DrawerProps } from "@material-ui/core/Drawer";
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { useGlobalState } from "@wugui/hooks";
+import { useGlobalState } from "@spax/hooks";
 import React from "react";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>

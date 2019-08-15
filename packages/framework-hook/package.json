@@ -1,21 +1,21 @@
 {
-  "name": "@wugui/framework-hook",
+  "name": "@spax/framework-hook",
   "version": "1.0.0",
   "description": "framework on hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/core": "*",
-    "@wugui/framework": "*",
-    "@wugui/plugin-lazy": "*",
-    "@wugui/plugin-level": "*",
-    "@wugui/plugin-path": "*",
-    "@wugui/plugin-router": "*",
+    "@spax/core": "*",
+    "@spax/framework": "*",
+    "@spax/plugin-lazy": "*",
+    "@spax/plugin-level": "*",
+    "@spax/plugin-path": "*",
+    "@spax/plugin-router": "*",
     "history": "^4.9.0"
   },
   "devDependencies": {

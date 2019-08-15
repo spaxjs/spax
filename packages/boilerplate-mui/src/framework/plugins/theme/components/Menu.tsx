@@ -9,10 +9,10 @@ import {
 } from "@material-ui/core";
 import { ExpandLess, ExpandMore, Remove } from "@material-ui/icons";
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { AnyObject, IMD, useParsed } from "@wugui/core";
-import { debug } from "@wugui/debug";
-import { useGlobalState } from "@wugui/hooks";
-import { Link, useMatched } from "@wugui/router";
+import { AnyObject, IMD, useParsed } from "@spax/core";
+import { debug } from "@spax/debug";
+import { useGlobalState } from "@spax/hooks";
+import { Link, useMatched } from "@spax/router";
 import clsx from "clsx";
 import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 

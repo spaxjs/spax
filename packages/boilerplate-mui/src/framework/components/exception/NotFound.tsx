@@ -1,5 +1,5 @@
 import { Box, Card, CardActions, CardContent, Divider, Link as L, Typography } from "@material-ui/core";
-import { Link } from "@wugui/router";
+import { Link } from "@spax/router";
 import React from "react";
 
 export default function NotFound(props: any) {

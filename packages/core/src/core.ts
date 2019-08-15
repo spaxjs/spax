@@ -1,4 +1,4 @@
-import { debug, error } from "@wugui/debug";
+import { debug, error } from "@spax/debug";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 import { ICH, ICO, IMD, IPO, TCP } from "./types";
 
@@ -7,7 +7,7 @@ const cache: Map<string, any> = new Map();
 const KEY_PARSED = "parsed";
 const KEY_RENDERED = "rendered";
 
-export const DEFAULT_SCOPE = "🐢";
+export const DEFAULT_SCOPE = "🚀";
 
 export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> {
   const { scope = DEFAULT_SCOPE } = options;

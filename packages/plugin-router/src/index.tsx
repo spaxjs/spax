@@ -1,5 +1,5 @@
-import { ICH, ICO, IMD, IPO } from "@wugui/core";
-import { Carrier, Router, Switch } from "@wugui/router";
+import { ICH, ICO, IMD, IPO } from "@spax/core";
+import { Carrier, Router, Switch } from "@spax/router";
 import React, { ReactElement } from "react";
 
 export default ({ parse, render }: ICH) => {

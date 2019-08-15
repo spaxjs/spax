@@ -1,4 +1,4 @@
-import { ICH, IMD, IPO } from "@wugui/core";
+import { ICH, IMD, IPO } from "@spax/core";
 import React, { Suspense } from "react";
 
 export default ({ parse }: ICH) => {

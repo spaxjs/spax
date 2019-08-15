@@ -1,8 +1,8 @@
-# 🐢 Boilerplate
+# :rocket: Boilerplate
 
 > 简单的脚手架
 
-## :rocket: 用法 usage
+## :1234: 用法 usage
 
 ### 入口文件
 

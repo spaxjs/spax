@@ -1,3 +1,3 @@
-# 🐢 debug
+# :rocket: debug
 
 > debug utilities

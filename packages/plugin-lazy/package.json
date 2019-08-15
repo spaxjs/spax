@@ -1,16 +1,16 @@
 {
-  "name": "@wugui/plugin-lazy",
+  "name": "@spax/plugin-lazy",
   "version": "1.0.0",
   "description": "Suspense and lazy",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {
-    "@wugui/core": "*",
+    "@spax/core": "*",
     "history": "^4.9.0"
   },
   "devDependencies": {

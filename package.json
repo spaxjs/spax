@@ -1,12 +1,12 @@
 {
-  "name": "wugui",
+  "name": "spax",
   "version": "1.0.0",
-  "description": "wugui master",
-  "homepage": "https://wugui.crossjs.com/",
+  "description": "spax master",
+  "homepage": "https://spax.crossjs.com/",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/wugui.git"
+    "url": "git://github.com/crossjs/spax.git"
   },
   "keywords": [
     "react",

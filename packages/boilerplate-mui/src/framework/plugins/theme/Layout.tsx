@@ -1,4 +1,4 @@
-import { IPO } from "@wugui/core";
+import { IPO } from "@spax/core";
 import React from "react";
 import { useLayout } from "./hooks";
 

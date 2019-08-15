@@ -1,6 +1,6 @@
-import { TCP } from "@wugui/core";
-import { IFO } from "@wugui/framework";
-import FrameworkHook from "@wugui/framework-hook";
+import { TCP } from "@spax/core";
+import { IFO } from "@spax/framework";
+import FrameworkHook from "@spax/framework-hook";
 import StorePlugin from "./plugins/store";
 import ThemePlugin from "./plugins/theme";
 

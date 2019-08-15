@@ -1,7 +1,7 @@
 import { Box, FormControlLabel, Link, Switch, Typography } from "@material-ui/core";
 import { BoxProps } from "@material-ui/core/Box";
 import { ReactComponent as Github } from "@mdi/svg/svg/github-circle.svg";
-import { useGlobalState } from "@wugui/hooks";
+import { useGlobalState } from "@spax/hooks";
 import React from "react";
 
 export const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {

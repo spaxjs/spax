@@ -1,6 +1,6 @@
 import { Badge, Box, Button, Paper, Typography } from "@material-ui/core";
 import { Add, Favorite, Remove } from "@material-ui/icons";
-import { usePersistState } from "@wugui/hooks";
+import { usePersistState } from "@spax/hooks";
 import React, { ReactElement} from "react";
 
 export default function PersistCount(props: any): ReactElement<void> {
