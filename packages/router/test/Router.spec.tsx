@@ -1,6 +1,6 @@
+import { usePathname } from "@spax/history";
 import { act, render } from "@testing-library/react";
 import { act as actHook, renderHook } from "@testing-library/react-hooks";
-import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
 import { Carrier, Router } from "../src/components";

@@ -27,12 +27,11 @@ export default abstract class Framework {
   constructor(options: IFO = {}) {
     if (process.env.NODE_ENV !== "test") {
       debug(`
-               __
-    .,-;-;-,. /'_\\
-  _/_/_/_|_\\_\\) /
-'-<_><_><_><_>=/\\
-  \`/_/====/_/-'\\_\\
-   ""     ""    ""`);
+   _____ ____  ___   _  __
+  / ___// __ \\/   | | |/ /
+  \\__ \\/ /_/ / /| | |   /
+ ___/ / ____/ ___ |/   |
+/____/_/   /_/  |_/_/|_|`);
     }
 
     if (process.env.NODE_ENV === "development") {
