@@ -5,9 +5,6 @@ export default {
   title: "Nested",
   icon: FilterList,
   lazy: () => import("./components/UI"),
-  data: {
-    greedy: false,
-  },
   modules: [
     import("./modules/c1"),
     import("./modules/c2"),

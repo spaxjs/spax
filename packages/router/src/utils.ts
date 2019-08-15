@@ -47,6 +47,7 @@ export function getMatched(
   pathname: string,
   level: number = 1,
   modules: IMD[],
+  loose: boolean = false,
 ): TMatchedState {
   const cacheKey = `${scope}&${pathname}&${level}`;
 
@@ -63,7 +64,8 @@ export function getMatched(
         for (let i = 0; i < modules.length; i++) {
           const childModule: IMD = modules[i];
 
-          if (childModule.path.indexOf("*") !== -1) {
+          // 严格模式，才寻找 404
+          if (!loose && childModule.path.indexOf("*") !== -1) {
             if (!fallbackModule) {
               fallbackModule = childModule;
             }
@@ -78,6 +80,7 @@ export function getMatched(
               [name]: execArray[index + 1],
             }), {
               $$exact: tokens.length === childModule.level,
+              $$extra: tokens.length < childModule.level,
             });
 
             if (process.env.NODE_ENV === "development")
@@ -88,7 +91,7 @@ export function getMatched(
         }
       }
 
-      return fallbackModule ? [fallbackModule, {}] as TMatchedState : null;
+      return fallbackModule ? [fallbackModule, { $$is404: true }] as TMatchedState : null;
     })(tokens.length);
 
     if (matchedState) {

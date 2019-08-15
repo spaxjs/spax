@@ -1,7 +1,7 @@
 import { usePathname } from "@wugui/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useChild, useExact } from "./hooks";
+import { useChild } from "./hooks";
 import { CarrierProps, LinkProps, RouterProps, SwitchProps } from "./types";
 import { getMatched } from "./utils";
 
@@ -18,11 +18,13 @@ export const Switch: React.FC<SwitchProps> = ({
   scope,
   loose = false,
   useAuth = () => true,
+  Pending = () => null,
   NotFound = () => null,
   Forbidden = () => null,
+  children = null,
 }: SwitchProps): any => {
   const [pathname] = usePathname();
-  const matchedState = getMatched(scope, pathname, level, modules);
+  const matchedState = getMatched(scope, pathname, level, modules, loose);
   const authed = useAuth(matchedState ? matchedState[0] : undefined);
 
   if (matchedState) {
@@ -41,24 +43,24 @@ export const Switch: React.FC<SwitchProps> = ({
         />
       );
     }
+    // pending
     if (authed === undefined) {
-      return null;
+      return <Pending />;
     }
     return <Forbidden />;
   }
 
   // 宽松模式，不显示 404
   if (loose) {
-    return null;
+    return children;
   }
 
   return <NotFound />;
 };
 
-export const Carrier: React.FC<CarrierProps> = ({children = null, greedy = false, ...props}: CarrierProps) => {
-  const exact = useExact(props);
+export const Carrier: React.FC<CarrierProps> = ({children = null, ...props}: CarrierProps) => {
   const MatchedChild = useChild(props);
-  return (exact && !greedy) ? children : <MatchedChild />;
+  return <MatchedChild>{children}</MatchedChild>;
 };
 
 /**
