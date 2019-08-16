@@ -1,3 +1,4 @@
+import { useT } from "@spax/i18n";
 import { useMatched } from "@spax/router";
 import React, { useEffect } from "react";
 
@@ -15,11 +16,12 @@ export function useLayout(): React.FC<{ option: any }> {
 
 export function useTitle(fallback: string): void {
   const matched = useMatched();
+  const { t } = useT();
 
   useEffect(() => {
     document.title = matched
       .filter(([{ title, path }]) => Boolean(title) && path !== "/" )
-      .map(([{ title }]) => title)
+      .map(([{ title }]) => t(title))
       .reverse()
       .concat(fallback)
       .join(" - ");
