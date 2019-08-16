@@ -12,7 +12,6 @@
   "dependencies": {
     "@spax/core": "*",
     "@spax/debug": "*",
-    "history": "^4.9.0",
     "path-to-regexp": "^3.0.0"
   },
   "devDependencies": {
