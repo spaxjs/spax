@@ -50,7 +50,6 @@
 - [boilerplate-mui](packages/boilerplate-mui)
   - craco
   - react-scripts
-  - styled-components
   - material-ui
 
 ## :bulb: 心得 tips
