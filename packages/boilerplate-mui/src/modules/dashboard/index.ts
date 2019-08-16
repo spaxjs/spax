@@ -6,6 +6,6 @@ export default {
   icon: Dashboard,
   lazy: () => import("./UI"),
   data: {
-    description: "cc poetry",
+    description: "dashboard.cc-poetry",
   },
 };

@@ -2,12 +2,14 @@ import { Box, Button, IconButton, InputAdornment, Link as L, TextField } from "@
 import { Fingerprint, Visibility, VisibilityOff } from "@material-ui/icons";
 import { usePathname } from "@spax/history";
 import { useGlobalState } from "@spax/hooks";
+import { useT } from "@spax/i18n";
 import { Link } from "@spax/router";
 import React, { useEffect, useState } from "react";
 
 export default function UI(props: any) {
   const [role, setRole] = useGlobalState<string>("role");
   const [, setPath] = usePathname();
+  const { t } = useT("Theme");
 
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("admin");
@@ -34,7 +36,7 @@ export default function UI(props: any) {
         fullWidth
         margin="normal"
         variant="outlined"
-        label="用户"
+        label={t("Account")}
         placeholder="admin or guest"
         value={username}
         onChange={event => setUsername(event.target.value)}
@@ -43,7 +45,7 @@ export default function UI(props: any) {
         fullWidth
         margin="normal"
         variant="outlined"
-        label="密码"
+        label={t("Password")}
         type={reveal ? "text" : "password"}
         value={password}
         onChange={event => setPassword(event.target.value)}
@@ -64,16 +66,16 @@ export default function UI(props: any) {
           variant="contained"
           color="primary"
           onClick={handleSubmit}
-        ><Fingerprint /> Login</Button>
+        ><Fingerprint /> {t("Login")}</Button>
       </Box>
       <Box
         display="flex"
         flexDirection="row">
         <Box flexGrow={1}>
-          <Link component={L} to="/register">注册</Link>
+          <Link component={L} to="/register">{t("Register")}</Link>
         </Box>
         <Box flexGrow={0}>
-          <Link component={L} to="/forgot">忘记密码？</Link>
+          <Link component={L} to="/forgot">{t("Forgot your password?")}</Link>
         </Box>
       </Box>
     </>

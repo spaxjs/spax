@@ -28,7 +28,7 @@ export default {
   version: "0.0.1",
   plugins: {
     i18n: {
-      lng: initialStates.lng,
+      fallbackLng: initialStates.lng,
     },
     store: {
       initialStates,

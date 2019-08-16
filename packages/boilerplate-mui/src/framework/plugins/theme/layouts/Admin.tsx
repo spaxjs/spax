@@ -10,6 +10,7 @@ import { createStyles, makeStyles } from "@material-ui/styles";
 import { ReactComponent as Login } from "@mdi/svg/svg/login.svg";
 import { ReactComponent as Logout } from "@mdi/svg/svg/logout.svg";
 import { useGlobalState } from "@spax/hooks";
+import { useT } from "@spax/i18n";
 import { Link, useMatched } from "@spax/router";
 import React from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
@@ -32,6 +33,7 @@ export default function AdminLayout(props: any) {
   const [role, setRole] = useGlobalState<string>("role");
   const matched = useMatched();
   const { h1 } = useStyles(props);
+  const { t } = useT();
 
   const lastMatched = matched[matched.length - 1];
 
@@ -39,7 +41,7 @@ export default function AdminLayout(props: any) {
     <Box display="flex" flexDirection="column" minHeight="100vh">
       <Header>
         <Typography className={h1} variant="h1">
-          {lastMatched ? lastMatched[0].title : ""}
+          {lastMatched && lastMatched[0].title ? t(lastMatched[0].title) : ""}
         </Typography>
         {role ? (
           <IconButton color="inherit" edge="end" onClick={() => setRole("")}>

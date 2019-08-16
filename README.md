@@ -25,6 +25,7 @@
 
 ## :nut_and_bolt: 插件 plugins
 
+- [@spax/plugin-i18n](packages/plugin-i18n) 支持多语言
 - [@spax/plugin-lazy](packages/plugin-lazy) 支持异步组件
 - [@spax/plugin-level](packages/plugin-level) 标记模块层级
 - [@spax/plugin-path](packages/plugin-path) 规范化模块路由地址
@@ -39,6 +40,7 @@
 
 - [@spax/history](packages/history) [history](https://github.com/ReactTraining/history) 的 React Hook 封装
 - [@spax/hooks](packages/hooks) 一些常用的 React Hooks
+- [@spax/i18n](packages/i18n) [i18next](https://github.com/i18next/i18next) 的封装
 - [@spax/router](packages/router) 基于 React Hook 的路由实现
 
 ## :sparkler: 示例 examples

@@ -12,6 +12,7 @@ import { createStyles, makeStyles } from "@material-ui/styles";
 import { AnyObject, IMD, useParsed } from "@spax/core";
 import { debug } from "@spax/debug";
 import { useGlobalState } from "@spax/hooks";
+import { useT } from "@spax/i18n";
 import { Link, useMatched } from "@spax/router";
 import clsx from "clsx";
 import React, { ReactElement, ReactNode, useEffect, useState } from "react";
@@ -54,6 +55,7 @@ function MenuNest(props: any): ReactElement {
   const [open, setOpen] = useState(opened);
   const { listGroup, listItemIcon, listItemActive } = useStyles({});
   const Pointer = open ? ExpandLess : ExpandMore;
+  const { t } = useT();
 
   useEffect(() => {
     setOpen(opened);
@@ -67,7 +69,7 @@ function MenuNest(props: any): ReactElement {
             <Icon />
           </ListItemIcon>
           <ListItemText className={clsx(open && listItemActive)} disableTypography>
-            {title}
+            {t(title)}
           </ListItemText>
           <Pointer />
         </ListItem>
@@ -81,6 +83,7 @@ function MenuNest(props: any): ReactElement {
 
 function MenuList(props: any): ReactElement {
   const { listItemIcon, listItemActive } = useStyles({});
+  const { t } = useT();
   const { menu, openedKeys } = props;
   return (
     <List component="nav">
@@ -110,7 +113,7 @@ function MenuList(props: any): ReactElement {
                   <Icon />
                 </ListItemIcon>
                 <ListItemText className={clsx(opened && listItemActive)} disableTypography>
-                  {title}
+                  {t(title)}
                 </ListItemText>
               </ListItem>
             </Link>
