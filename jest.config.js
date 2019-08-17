@@ -26,6 +26,7 @@ module.exports = {
     "!**/src/types.(ts|tsx)",
     "!**/demo-*/**",
     "!**/framework-*/**",
+    "!**/plugin-*/**",
     "!**/node_modules/**"
   ],
   "coverageReporters": [

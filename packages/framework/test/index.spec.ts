@@ -41,3 +41,50 @@ test("mount", async () => {
   await a.mount();
   expect(container.textContent).toBe("[]");
 });
+
+test("mount(callback)", async () => {
+  const container = document.createElement("div");
+  class C extends Framework {
+    static options = {
+      scope: "framework-c-mount",
+      container,
+    };
+  }
+  const c = new C();
+  expect((c as any).options).toEqual({
+    ...defaultOptions,
+    scope: "framework-c-mount",
+    container,
+  });
+
+  let called = false;
+
+  await c.mount(() => {
+    called = true;
+  });
+
+  expect(called).toBe(true);
+});
+
+test("mount(error)", async () => {
+  class B extends Framework {
+    static options = {
+      scope: "framework-b-mount",
+    };
+  }
+  const b = new B();
+  expect((b as any).options).toEqual({
+    ...defaultOptions,
+    scope: "framework-b-mount",
+  });
+
+  let thrown = false;
+
+  try {
+    await b.mount();
+  } catch (error) {
+    thrown = true;
+  }
+
+  expect(thrown).toBe(true);
+});

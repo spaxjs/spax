@@ -10,6 +10,11 @@ test("debug", () => {
   } catch (error) {
     thrown = true;
   }
+  try {
+    fatal("", "");
+  } catch (error) {
+    thrown = true;
+  }
   log("");
   trace("");
   warn("");

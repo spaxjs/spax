@@ -29,17 +29,15 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
   };
 
   async function getParsedModules(modules?: IMD[]): Promise<IMD[]> {
-    if (!modules) {
-      return [];
-    }
-
     const parsedModules = await parseModules(modules);
 
     // 存储以备外部调用
     cache.set(PARSED, parsedModules);
 
-    if (process.env.NODE_ENV === "development")
+    if (process.env.NODE_ENV === "development") {
+      /* istanbul ignore next */
       debug("Parsed modules: %O", parsedModules);
+    }
 
     return parsedModules;
   }
@@ -55,15 +53,16 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     // 存储以备外部调用
     cache.set(RENDERED, renderedModules);
 
-    if (process.env.NODE_ENV === "development")
+    if (process.env.NODE_ENV === "development") {
+      /* istanbul ignore next */
       debug("Rendered modules: %O", renderedModules);
+    }
 
     return renderedModules;
   }
 
   /**
    * 递归处理模块，顺序执行 parser
-   * @todo 动态注册的模块，是否需要合并到现有模块树？
    * @example
    * // modules: [m1, m2]
    * // parsers: [p1, p2]
@@ -122,8 +121,10 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     return c ? c[name] || c[name.toLowerCase()] || {} : {};
   }
 
-  if (process.env.NODE_ENV === "development")
+  if (process.env.NODE_ENV === "development") {
+    /* istanbul ignore next */
     debug("Hooked plugins: %O", plugins);
+  }
 
   // 插件
   plugins.forEach((plugin) => plugin(hooks));

@@ -80,11 +80,13 @@ export function getMatched(
               [name]: execArray[index + 1],
             }), {
               $$exact: tokens.length === childModule.level,
-              $$extra: tokens.length < childModule.level,
+              // $$extra: tokens.length < childModule.level,
             });
 
-            if (process.env.NODE_ENV === "development")
+            if (process.env.NODE_ENV === "development") {
+              /* istanbul ignore next */
               debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childModule);
+            }
 
             return [childModule, matchedParams] as TMatchedState;
           }

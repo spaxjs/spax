@@ -30,17 +30,27 @@ describe("useRendered", () => {
 });
 
 describe("run", () => {
-  test("returns", async () => {
-    const ret = await run([], {
-      scope: "ret",
-      modules: [],
+  describe("returns", () => {
+    test("null", async () => {
+      const ret = await run([], {
+        scope: "ret",
+      });
+      expect(ret).toEqual(null);
     });
-    expect(ret).toEqual([]);
-    const ret2 = await run([], {
-      scope: "ret2",
-      modules: [{title: "hello"}],
+    test("[]", async () => {
+      const ret1 = await run([], {
+        scope: "ret1",
+        modules: [],
+      });
+      expect(ret1).toEqual([]);
     });
-    expect(ret2).toEqual([{title: "hello"}]);
+    test("[{...}]", async () => {
+      const ret2 = await run([], {
+        scope: "ret2",
+        modules: [{title: "hello"}],
+      });
+      expect(ret2).toEqual([{title: "hello"}]);
+    });
   });
 
   test("scope", async () => {
@@ -65,6 +75,25 @@ describe("run", () => {
         });
       }], {
         scope: "ordering",
+        modules: [],
+      });
+    });
+
+    test("dependency", async () => {
+      let index = 0;
+      await run([(hooks) => {
+        hooks.init.tap("Test", () => {
+          expect(index++).toBe(1);
+        }, () => {
+          expect(index++).toBe(2);
+        }, ["Test2"]);
+        hooks.init.tap("Test2", () => {
+          expect(index++).toBe(0);
+        }, () => {
+          expect(index++).toBe(3);
+        });
+      }], {
+        scope: "dependency",
         modules: [],
       });
     });

@@ -8,10 +8,6 @@ export function useExact({ $$exact }: any): boolean {
   return $$exact;
 }
 
-export function useExtra({ $$extra }: any): boolean {
-  return $$extra;
-}
-
 export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
   const [state, setState] = useState(matchedDb.get(scope));
 

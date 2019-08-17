@@ -26,6 +26,7 @@ export default abstract class Framework {
 
   constructor(options: IFO = {}) {
     if (process.env.NODE_ENV !== "test") {
+      /* istanbul ignore next */
       debug(`
    _____ ____  ___   _  __
   / ___// __ \\/   | | |/ /
@@ -35,6 +36,7 @@ export default abstract class Framework {
     }
 
     if (process.env.NODE_ENV === "development") {
+      /* istanbul ignore next */
       warn("Looks like we are in development mode!");
     }
 
@@ -60,7 +62,7 @@ export default abstract class Framework {
         ? document.querySelector(options.container) : options.container;
 
       if (!mountingElement) {
-        fatal(`${options.container} is not a valid HTMLElement`);
+        throw Error(`${options.container} is not a valid HTMLElement`);
       }
 
       // 解析
@@ -68,14 +70,16 @@ export default abstract class Framework {
 
       // 挂载
       ReactDOM.render(rendered, mountingElement, () => {
-        if (process.env.NODE_ENV === "development")
+        if (process.env.NODE_ENV === "development") {
+          /* istanbul ignore next */
           debug("Mounted to container: %O", options.container);
+        }
         if (callback) {
           callback();
         }
       });
     } catch (e) {
-      error(e);
+      fatal(e);
     }
   }
 
@@ -106,8 +110,10 @@ export default abstract class Framework {
     // 合并
     this.options = merge(...options, ctorOptions);
 
-    if (process.env.NODE_ENV === "development")
+    if (process.env.NODE_ENV === "development") {
+      /* istanbul ignore next */
       debug("Initialize Framework with options: %O, plugins: %O", this.options, this.plugins);
+    }
   }
 }
 

@@ -15,6 +15,17 @@ test("useLocation", () => {
   expect(result.current[0].pathname).toBe("/login");
 });
 
+test("useLocation(replace)", () => {
+  const { result } = renderHook(() => useLocation(history));
+  expect(result.current[0].pathname).toBe("/login");
+  act(() =>{
+    result.current[1]("/login2");
+    result.current[1]("/login", null, null, null, true);
+    history.goBack();
+  });
+  expect(result.current[0].pathname).toBe("/login");
+});
+
 test("usePathname", () => {
   const { result } = renderHook(() => usePathname(history));
   // from test:useLocation
