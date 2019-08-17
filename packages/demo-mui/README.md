@@ -1,14 +1,14 @@
-# :rocket: Boilerplate
+# MuiDemo
 
-> 简单的脚手架
+简单的基于 Material-UI 的脚手架，适用于中后台。
 
-## :1234: 用法 usage
+## 用法 Usage
 
 ### 入口文件
 
 `src/index.tsx`
 
-```ts
+```typescript
 // 本地框架
 import Framework from "framework";
 // 业务模块列表
@@ -21,7 +21,7 @@ new Framework({ modules }).mount();
 
 以 `src/modules/login` 为例
 
-```ts
+```typescript
 export default {
   // 路由路径
   path: "login",

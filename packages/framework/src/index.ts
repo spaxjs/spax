@@ -41,12 +41,19 @@ export default abstract class Framework {
     this.initialize(options);
   }
 
+  public async render(): Promise<React.DOMElement<any, any>> {
+    const { plugins, options } = this;
+
+    // 解析
+    const rendered = await run(plugins, options);
+
+    // 转字符串，避免出错
+    return Array.isArray(rendered) ? JSON.stringify(rendered) : rendered;
+  }
+
   public async mount(callback?: () => void) {
     try {
-      const { plugins, options } = this;
-
-      // 解析
-      const rendered = await run(plugins, options);
+      const { options } = this;
 
       // 挂载点
       const mountingElement: HTMLElement = typeof options.container === "string"
@@ -56,11 +63,11 @@ export default abstract class Framework {
         fatal(`${options.container} is not a valid HTMLElement`);
       }
 
-      // 转字符串，避免出错
-      const renderElement = Array.isArray(rendered) ? JSON.stringify(rendered) : rendered;
+      // 解析
+      const rendered = await this.render();
 
       // 挂载
-      ReactDOM.render(renderElement, mountingElement, () => {
+      ReactDOM.render(rendered, mountingElement, () => {
         if (process.env.NODE_ENV === "development")
           debug("Mounted to container: %O", options.container);
         if (callback) {

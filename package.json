@@ -58,7 +58,7 @@
     "boot": "lerna bootstrap",
     "alias": "lerna link",
     "lint": "tslint --project ./ --fix",
-    "build": "lerna run build --ignore boilerplate-*",
+    "build": "lerna run build --ignore demo-*",
     "publish": "lerna publish --skip-git --force-publish",
     "dev": "jest --no-cache --watch",
     "test": "jest --no-cache"

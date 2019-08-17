@@ -20,21 +20,26 @@ export default class Framework {
         }
         this.initialize(options);
     }
+    async render() {
+        const { plugins, options } = this;
+        // 解析
+        const rendered = await run(plugins, options);
+        // 转字符串，避免出错
+        return Array.isArray(rendered) ? JSON.stringify(rendered) : rendered;
+    }
     async mount(callback) {
         try {
-            const { plugins, options } = this;
-            // 解析
-            const rendered = await run(plugins, options);
+            const { options } = this;
             // 挂载点
             const mountingElement = typeof options.container === "string"
                 ? document.querySelector(options.container) : options.container;
             if (!mountingElement) {
                 fatal(`${options.container} is not a valid HTMLElement`);
             }
-            // 转字符串，避免出错
-            const renderElement = Array.isArray(rendered) ? JSON.stringify(rendered) : rendered;
+            // 解析
+            const rendered = await this.render();
             // 挂载
-            ReactDOM.render(renderElement, mountingElement, () => {
+            ReactDOM.render(rendered, mountingElement, () => {
                 if (process.env.NODE_ENV === "development")
                     debug("Mounted to container: %O", options.container);
                 if (callback) {

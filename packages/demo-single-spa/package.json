@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate-mui",
+  "name": "demo-single-spa",
   "version": "1.0.0",
   "description": "spax",
   "private": true,
@@ -17,9 +17,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@material-ui/core": "^4.3.2",
-    "@material-ui/icons": "^4.2.1",
-    "@mdi/svg": "^4.0.96",
     "@spax/core": "*",
     "@spax/framework": "*",
     "@spax/framework-hook": "*",
@@ -29,10 +26,10 @@
     "@spax/plugin-i18n": "*",
     "@spax/router": "*",
     "@spax/debug": "*",
-    "clsx": "^1.0.4",
-    "merge": "^1.2.1",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "single-spa": "^4.3.7",
+    "single-spa-react": "^2.10.2"
   },
   "devDependencies": {
     "@craco/craco": "^5.3.0",

@@ -1,0 +1,60 @@
+{
+  "name": "demo-mui",
+  "version": "1.0.0",
+  "description": "spax",
+  "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "deploy": "bash ./scripts/deploy.sh"
+  },
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/spax.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^4.3.2",
+    "@material-ui/icons": "^4.2.1",
+    "@mdi/svg": "^4.0.96",
+    "@spax/core": "*",
+    "@spax/framework": "*",
+    "@spax/framework-hook": "*",
+    "@spax/history": "*",
+    "@spax/hooks": "*",
+    "@spax/i18n": "*",
+    "@spax/plugin-i18n": "*",
+    "@spax/router": "*",
+    "@spax/debug": "*",
+    "clsx": "^1.0.4",
+    "merge": "^1.2.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "@craco/craco": "^5.3.0",
+    "@types/jest": "^24.0.17",
+    "@types/node": "^12.7.2",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.8.5",
+    "react-scripts": "^3.1.1",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.5.3",
+    "webpack-bundle-analyzer": "^3.4.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
