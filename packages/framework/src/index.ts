@@ -1,5 +1,5 @@
 import { run, TCP } from "@spax/core";
-import { debug, error, fatal, warn } from "@spax/debug";
+import { debug, error, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import * as ReactDOM from "react-dom";
@@ -79,7 +79,7 @@ export default abstract class Framework {
         }
       });
     } catch (e) {
-      fatal(e);
+      error(e);
     }
   }
 
