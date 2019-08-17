@@ -8,7 +8,7 @@ interface AnyObject<V = any> {
   [key: string]: V;
 }
 
-export function setup(options: InitOptions) {
+export function setup(options?: InitOptions) {
   i18n
     // load translation using xhr -> see /public/locales
     // learn more: https://github.com/perrin4869/i18next-fetch-backend

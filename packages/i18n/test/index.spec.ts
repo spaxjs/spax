@@ -1,13 +1,31 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-// import { useHash, useLocation, usePathname, useSearch } from "../src";
+import { addT, changeLng, setup, useT } from "../src";
 
 // tslint:disable: react-hooks-nesting
 
-// test("useLocation", () => {
-//   const { result } = renderHook(() => useLocation(history));
-//   expect(result.current[0].pathname).toBe("/");
-//   act(() =>{
-//     result.current[1]("/login");
-//   });
-//   expect(result.current[0].pathname).toBe("/login");
-// });
+beforeAll(() => {
+  setup();
+});
+
+test("useT", () => {
+  addT({
+    "dev": {
+      "foo": "bar",
+    },
+  });
+  const { result } = renderHook(() => useT());
+  expect(result.current.t("foo")).toBe("bar");
+});
+
+test("changeLng", () => {
+  const { result } = renderHook(() => useT());
+  act(() => {
+    changeLng("zh");
+    addT({
+      "zh": {
+        "foo": "吧",
+      },
+    });
+  });
+  expect(result.current.t("foo")).toBe("吧");
+});

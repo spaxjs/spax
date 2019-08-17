@@ -24,7 +24,7 @@ module.exports = {
   "collectCoverageFrom": [
     "**/src/**.(ts|tsx)",
     "!**/src/types.(ts|tsx)",
-    "!**/boilerplate-*/**",
+    "!**/demo-*/**",
     "!**/framework-*/**",
     "!**/node_modules/**"
   ],
