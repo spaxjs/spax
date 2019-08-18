@@ -27,6 +27,7 @@ module.exports = {
     "!**/demo-*/**",
     "!**/framework-*/**",
     "!**/plugin-*/**",
+    "!**/starter-*/**",
     "!**/node_modules/**"
   ],
   "coverageReporters": [
