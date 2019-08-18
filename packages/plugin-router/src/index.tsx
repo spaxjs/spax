@@ -8,7 +8,7 @@ export default ({ parse, render }: ICH) => {
       ...current,
       ...normalizeComponent(current, option),
     };
-  }, undefined, ["Loadable", "level"]);
+  }, undefined, ["Lazy", "Level"]);
 
   /**
    * @example

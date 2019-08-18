@@ -1,5 +1,5 @@
 import { run } from "@spax/core";
-import { debug, error, fatal, warn } from "@spax/debug";
+import { debug, fatal, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import * as ReactDOM from "react-dom";
@@ -7,6 +7,7 @@ export default class Framework {
     constructor(options = {}) {
         this.plugins = [];
         this.options = {};
+        /* istanbul ignore next */
         if (process.env.NODE_ENV !== "test") {
             debug(`
    _____ ____  ___   _  __
@@ -15,6 +16,7 @@ export default class Framework {
  ___/ / ____/ ___ |/   |
 /____/_/   /_/  |_/_/|_|`);
         }
+        /* istanbul ignore next */
         if (process.env.NODE_ENV === "development") {
             warn("Looks like we are in development mode!");
         }
@@ -34,21 +36,23 @@ export default class Framework {
             const mountingElement = typeof options.container === "string"
                 ? document.querySelector(options.container) : options.container;
             if (!mountingElement) {
-                fatal(`${options.container} is not a valid HTMLElement`);
+                throw Error(`${options.container} is not a valid HTMLElement`);
             }
             // 解析
             const rendered = await this.render();
             // 挂载
             ReactDOM.render(rendered, mountingElement, () => {
-                if (process.env.NODE_ENV === "development")
+                /* istanbul ignore next */
+                if (process.env.NODE_ENV === "development") {
                     debug("Mounted to container: %O", options.container);
+                }
                 if (callback) {
                     callback();
                 }
             });
         }
         catch (e) {
-            error(e);
+            fatal(e);
         }
     }
     /**
@@ -77,8 +81,10 @@ export default class Framework {
         this.plugins = plugins.flat();
         // 合并
         this.options = merge(...options, ctorOptions);
-        if (process.env.NODE_ENV === "development")
+        /* istanbul ignore next */
+        if (process.env.NODE_ENV === "development") {
             debug("Initialize Framework with options: %O, plugins: %O", this.options, this.plugins);
+        }
     }
 }
 // 插件
