@@ -6,6 +6,10 @@
 [![codecov](https://codecov.io/gh/crossjs/spax/branch/master/graph/badge.svg)](https://codecov.io/gh/crossjs/spax)
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
 
+## :coffee: 立即使用 StarterKit
+
+使用 [StarterKit](packages/starter-kit)，马上开始一段奇妙的旅程。
+
 ## :open_book: 名词解释 Glossary
 
 - 框架：特指 [@spax/core](packages/core) 与 [@spax/framework](packages/framework)

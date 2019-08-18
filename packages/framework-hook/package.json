@@ -10,12 +10,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "*",
-    "@spax/framework": "*",
-    "@spax/plugin-lazy": "*",
-    "@spax/plugin-level": "*",
-    "@spax/plugin-path": "*",
-    "@spax/plugin-router": "*",
+    "@spax/core": "^1.0.0",
+    "@spax/framework": "^1.0.0",
+    "@spax/plugin-lazy": "^1.0.0",
+    "@spax/plugin-level": "^1.0.0",
+    "@spax/plugin-path": "^1.0.0",
+    "@spax/plugin-router": "^1.0.1",
     "history": "^4.9.0"
   },
   "devDependencies": {
@@ -33,5 +33,5 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "gitHead": "2ca3a69a1fe748a7cbb9936e7f0d8f9bf529b2e2"
+  "gitHead": "674926434ad7d832d180722c8487a1278101cd97"
 }

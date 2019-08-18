@@ -10,10 +10,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "*",
-    "@spax/history": "*",
-    "@spax/hooks": "*",
-    "@spax/debug": "*",
+    "@spax/core": "^1.0.0",
+    "@spax/debug": "^1.0.0",
+    "@spax/history": "^1.0.0",
+    "@spax/hooks": "^1.0.0",
     "events": "^3.0.0",
     "path-to-regexp": "^3.0.0"
   },
@@ -32,5 +32,5 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "gitHead": "2ca3a69a1fe748a7cbb9936e7f0d8f9bf529b2e2"
+  "gitHead": "674926434ad7d832d180722c8487a1278101cd97"
 }

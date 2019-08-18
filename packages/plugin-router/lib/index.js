@@ -6,7 +6,7 @@ export default ({ parse, render }) => {
             ...current,
             ...normalizeComponent(current, option),
         };
-    }, undefined, ["Loadable", "level"]);
+    }, undefined, ["Lazy", "Level"]);
     /**
      * @example
      * <Router>
