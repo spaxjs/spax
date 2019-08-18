@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/crossjs/spax.svg?branch=master)](https://travis-ci.org/crossjs/spax)
 [![codecov](https://codecov.io/gh/crossjs/spax/branch/master/graph/badge.svg)](https://codecov.io/gh/crossjs/spax)
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
+[![DevDependencies](https://img.shields.io/david/dev/crossjs/spax.svg)](https://david-dm.org/crossjs/spax?type=dev)
 
 ## :coffee: 立即使用 StarterKit
 
