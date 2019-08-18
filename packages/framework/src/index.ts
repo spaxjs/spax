@@ -25,8 +25,8 @@ export default abstract class Framework {
   private options: IFO = {};
 
   constructor(options: IFO = {}) {
+    /* istanbul ignore next */
     if (process.env.NODE_ENV !== "test") {
-      /* istanbul ignore next */
       debug(`
    _____ ____  ___   _  __
   / ___// __ \\/   | | |/ /
@@ -35,8 +35,8 @@ export default abstract class Framework {
 /____/_/   /_/  |_/_/|_|`);
     }
 
+    /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      /* istanbul ignore next */
       warn("Looks like we are in development mode!");
     }
 
@@ -70,8 +70,8 @@ export default abstract class Framework {
 
       // 挂载
       ReactDOM.render(rendered, mountingElement, () => {
+        /* istanbul ignore next */
         if (process.env.NODE_ENV === "development") {
-          /* istanbul ignore next */
           debug("Mounted to container: %O", options.container);
         }
         if (callback) {
@@ -110,8 +110,8 @@ export default abstract class Framework {
     // 合并
     this.options = merge(...options, ctorOptions);
 
+    /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      /* istanbul ignore next */
       debug("Initialize Framework with options: %O, plugins: %O", this.options, this.plugins);
     }
   }

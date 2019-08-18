@@ -15,6 +15,7 @@ test("debug", () => {
   } catch (error) {
     thrown = true;
   }
+  log({});
   log("");
   trace("");
   warn("");

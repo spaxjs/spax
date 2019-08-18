@@ -79,40 +79,97 @@ describe("run", () => {
       });
     });
 
-    test("dependency", async () => {
-      let index = 0;
-      await run([(hooks) => {
-        hooks.init.tap("Test", () => {
-          expect(index++).toBe(1);
-        }, () => {
-          expect(index++).toBe(2);
-        }, ["Test2"]);
-        hooks.init.tap("Test2", () => {
-          expect(index++).toBe(0);
-        }, () => {
-          expect(index++).toBe(3);
+    describe("dependency", () => {
+      test("simple", async () => {
+        let index = 0;
+        await run([(hooks) => {
+          hooks.init.tap("Test", () => {
+            expect(index++).toBe(1);
+          }, () => {
+            expect(index++).toBe(2);
+          }, ["Test2"]);
+          hooks.init.tap("Test2", () => {
+            expect(index++).toBe(0);
+          }, () => {
+            expect(index++).toBe(3);
+          });
+        }], {
+          scope: "dependency-simple",
+          modules: [],
         });
-      }], {
-        scope: "dependency",
-        modules: [],
+      });
+      test("complicated", async () => {
+        let index = 0;
+        await run([(hooks) => {
+          hooks.init.tap("Test", () => {
+            expect(index++).toBe(1);
+          }, () => {
+            expect(index++).toBe(4);
+          }, ["Test2"]);
+          hooks.init.tap("Test2", () => {
+            expect(index++).toBe(0);
+          }, () => {
+            expect(index++).toBe(5);
+          });
+          hooks.init.tap("Test3", () => {
+            expect(index++).toBe(2);
+          }, () => {
+            expect(index++).toBe(3);
+          }, ["Test2"]);
+        }], {
+          scope: "dependency-complicated",
+          modules: [],
+        });
       });
     });
 
-    test("init", async () => {
-      await run([(hooks) => {
-        hooks.init.tap("Test", (option) => {
-          expect(option.foo).toBe("bar");
-        }, (option) => {
-          expect(option.foo).toBe("bar");
-        });
-      }], {
-        scope: "init",
-        plugins: {
-          test: {
-            foo: "bar",
+    describe("init", () => {
+      test("pre", async () => {
+        await run([(hooks) => {
+          hooks.init.tap("Test", (option) => {
+            expect(option.foo).toBe("bar");
+          });
+        }], {
+          scope: "init-pre",
+          plugins: {
+            test: {
+              foo: "bar",
+            },
           },
-        },
-        modules: [],
+          modules: [],
+        });
+      });
+      test("post", async () => {
+        await run([(hooks) => {
+          hooks.init.tap("Test", undefined, (option) => {
+            expect(option.foo).toBe("bar");
+          });
+        }], {
+          scope: "init-post",
+          plugins: {
+            test: {
+              foo: "bar",
+            },
+          },
+          modules: [],
+        });
+      });
+      test("both", async () => {
+        await run([(hooks) => {
+          hooks.init.tap("Test", (option) => {
+            expect(option.foo).toBe("bar");
+          }, (option) => {
+            expect(option.foo).toBe("bar");
+          });
+        }], {
+          scope: "init",
+          plugins: {
+            test: {
+              foo: "bar",
+            },
+          },
+          modules: [],
+        });
       });
     });
 

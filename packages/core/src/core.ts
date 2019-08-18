@@ -34,8 +34,8 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     // 存储以备外部调用
     cache.set(PARSED, parsedModules);
 
+    /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      /* istanbul ignore next */
       debug("Parsed modules: %O", parsedModules);
     }
 
@@ -53,8 +53,8 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     // 存储以备外部调用
     cache.set(RENDERED, renderedModules);
 
+    /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      /* istanbul ignore next */
       debug("Rendered modules: %O", renderedModules);
     }
 
@@ -121,8 +121,8 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
     return c ? c[name] || c[name.toLowerCase()] || {} : {};
   }
 
+  /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    /* istanbul ignore next */
     debug("Hooked plugins: %O", plugins);
   }
 

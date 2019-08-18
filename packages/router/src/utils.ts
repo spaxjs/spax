@@ -83,8 +83,8 @@ export function getMatched(
               // $$extra: tokens.length < childModule.level,
             });
 
+            /* istanbul ignore next */
             if (process.env.NODE_ENV === "development") {
-              /* istanbul ignore next */
               debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childModule);
             }
 
