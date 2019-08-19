@@ -27,6 +27,7 @@ module.exports = {
     "!**/demo-*/**",
     "!**/framework-*/**",
     "!**/plugin-*/**",
+    "!**/spax-*/**",
     "!**/starter-*/**",
     "!**/node_modules/**"
   ],

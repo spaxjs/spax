@@ -1,0 +1,34 @@
+{
+  "name": "@spax/spax-cli",
+  "version": "1.0.1",
+  "description": "spax cli",
+  "bin": {
+    "spax": "./spax-cli.js",
+    "spax-cli": "./spax-cli.js"
+  },
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/spax.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^3.0.0",
+    "download-git-repo": "^2.0.0",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^6.5.1",
+    "metalsmith": "^2.3.0",
+    "ora": "^3.4.0",
+    "rimraf": "^3.0.0",
+    "user-home": "^2.0.0",
+    "validate-npm-package-name": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

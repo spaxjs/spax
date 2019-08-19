@@ -9,6 +9,12 @@
 
 ## :coffee: 立即使用 StarterKit
 
+执行以下命令：
+
+```bash
+$ npx @spax/spax-cli <project-name>
+```
+
 使用 [StarterKit](packages/starter-kit)，马上开始一段奇妙的旅程。
 
 ## :open_book: 名词解释 Glossary
