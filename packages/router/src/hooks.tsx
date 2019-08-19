@@ -1,4 +1,4 @@
-import { DEFAULT_SCOPE } from "@spax/core";
+import { DEFAULT_SCOPE, IMD } from "@spax/core";
 import React, { useEffect, useState } from "react";
 import { Switch } from "./components";
 import { TMatchedState } from "./types";
@@ -6,6 +6,10 @@ import { matchedDb } from "./utils";
 
 export function useExact({ $$exact }: any): boolean {
   return $$exact;
+}
+
+export function useMeta({ $$meta }: any): IMD {
+  return $$meta;
 }
 
 export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {

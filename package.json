@@ -61,7 +61,8 @@
     "build": "lerna run build --no-private",
     "publish": "lerna publish --no-private --skip-git --force-publish",
     "dev": "jest --no-cache --watch",
-    "test": "jest --no-cache"
+    "test": "jest --no-cache",
+    "demo:mui": "lerna run start --scope demo-mui"
   },
   "husky": {
     "hooks": {

@@ -29,5 +29,5 @@ export function useTitle(fallback: string): void {
     return () => {
       document.title = fallback;
     };
-  }, [fallback, matched]);
+  }, [fallback, matched, t]);
 }

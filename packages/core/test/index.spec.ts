@@ -1,31 +1,31 @@
-import "jest";
+import { act, renderHook } from "@testing-library/react-hooks";
 import { run, useParsed, useRendered } from "../src";
 
 // tslint:disable: react-hooks-nesting
 
 describe("useParsed", () => {
   test("call before run", () => {
-    const [parsed] = useParsed();
-    expect(parsed).toBe(undefined);
+    const { result } = renderHook(() => useParsed());
+    expect(result.current[0]).toBe(undefined);
   });
 
   test("call after run", async () => {
     await run([], { scope: "useParsed" });
-    const [parsed] = useParsed();
-    expect(parsed).toBe(undefined);
+    const { result } = renderHook(() => useParsed("useParsed"));
+    expect(result.current[0]).toBe(undefined);
   });
 });
 
 describe("useRendered", () => {
   test("call before run", () => {
-    const [rendered] = useRendered();
-    expect(rendered).toBe(undefined);
+    const { result } = renderHook(() => useRendered());
+    expect(result.current[0]).toBe(undefined);
   });
 
   test("call after run", async () => {
     await run([], { scope: "useRendered" });
-    const [rendered] = useRendered();
-    expect(rendered).toBe(undefined);
+    const { result } = renderHook(() => useRendered("useRendered"));
+    expect(result.current[0]).toBe(undefined);
   });
 });
 
@@ -230,10 +230,10 @@ describe("run", () => {
         scope,
         modules,
       });
-      const [parsed] = useParsed(scope);
-      expect(parsed).toEqual(rawValue.concat(rawValue));
-      const [rendered] = useRendered(scope);
-      expect(rendered).toEqual(rawValue.concat(rawValue));
+      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      expect(resultParsed.current[0]).toEqual(rawValue.concat(rawValue));
+      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      expect(resultRendered.current[0]).toEqual(rawValue.concat(rawValue));
     });
 
     test("[{...}]", async () => {
@@ -243,10 +243,10 @@ describe("run", () => {
         scope,
         modules,
       });
-      const [parsed] = useParsed(scope);
-      expect(parsed).toEqual(modules);
-      const [rendered] = useRendered(scope);
-      expect(rendered).toEqual(modules);
+      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      expect(resultParsed.current[0]).toEqual(modules);
+      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      expect(resultRendered.current[0]).toEqual(modules);
     });
 
     test("[{...,[{...}]}]", async () => {
@@ -256,10 +256,10 @@ describe("run", () => {
         scope,
         modules,
       });
-      const [parsed] = useParsed(scope);
-      expect(parsed).toEqual(modules);
-      const [rendered] = useRendered(scope);
-      expect(rendered).toEqual(modules);
+      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      expect(resultParsed.current[0]).toEqual(modules);
+      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      expect(resultRendered.current[0]).toEqual(modules);
     });
 
     test("[[{...}]]", async () => {
@@ -269,10 +269,10 @@ describe("run", () => {
         scope,
         modules,
       });
-      const [parsed] = useParsed(scope);
-      expect(parsed).toEqual(modules[0]);
-      const [rendered] = useRendered(scope);
-      expect(rendered).toEqual(modules[0]);
+      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      expect(resultParsed.current[0]).toEqual(modules[0]);
+      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      expect(resultRendered.current[0]).toEqual(modules[0]);
     });
   });
 });

@@ -9,6 +9,8 @@ abstract class Hook {
   public preIdxMap: Map<string, number> = new Map();
   public postIdxMap: Map<string, number> = new Map();
 
+  constructor(protected scope: string) {}
+
   public tap(
     name: string,
     pre?: (...args: any[]) => any,
@@ -91,11 +93,11 @@ export class InitHook extends Hook {
   }
 
   public async run(
-    c: ((name: string) => IPO),
+    c: ((scope: string, name: string) => IPO),
     o: ICO,
     d: TPriority,
   ): Promise<any> {
-    return Promise.all(this.hooks[d].map(([name, fn]) => fn(c(name), o)));
+    return Promise.all(this.hooks[d].map(([name, fn]) => fn(c(this.scope, name), o)));
   }
 }
 
@@ -120,7 +122,7 @@ export class ParseHook<A, B> extends Hook {
   public async run(
     a: A,
     b: B,
-    c: ((name: string) => IPO),
+    c: ((scope: string, name: string) => IPO),
     o: ICO,
     d: TPriority,
   ): Promise<any> {
@@ -128,7 +130,7 @@ export class ParseHook<A, B> extends Hook {
     const hookLength = hooks.length;
     for (let i = 0; i < hookLength; i++) {
       const [name, fn] = hooks[i];
-      a = await fn(a, b, c(name), o);
+      a = await fn(a, b, c(this.scope, name), o);
     }
     return a;
   }
@@ -154,7 +156,7 @@ export class RenderHook<A> extends Hook {
 
   public async run(
     a: A,
-    c: ((name: string) => IPO),
+    c: ((scope: string, name: string) => IPO),
     o: ICO,
     d: TPriority,
   ): Promise<any> {
@@ -162,7 +164,7 @@ export class RenderHook<A> extends Hook {
     const hookLength = hooks.length;
     for (let i = 0; i < hookLength; i++) {
       const [name, fn] = hooks[i];
-      a = await fn(a, c(name), o);
+      a = await fn(a, c(this.scope, name), o);
     }
     return a;
   }

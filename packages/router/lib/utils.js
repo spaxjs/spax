@@ -64,10 +64,11 @@ export function getMatched(scope = DEFAULT_SCOPE, pathname, level = 1, modules, 
                             [name]: execArray[index + 1],
                         }), {
                             $$exact: tokens.length === childModule.level,
-                            $$extra: tokens.length < childModule.level,
                         });
-                        if (process.env.NODE_ENV === "development")
+                        /* istanbul ignore next */
+                        if (process.env.NODE_ENV === "development") {
                             debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childModule);
+                        }
                         return [childModule, matchedParams];
                     }
                 }

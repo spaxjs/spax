@@ -5,8 +5,8 @@ import { matchedDb } from "./utils";
 export function useExact({ $$exact }) {
     return $$exact;
 }
-export function useExtra({ $$extra }) {
-    return $$extra;
+export function useCurrent({ $$meta }) {
+    return $$meta;
 }
 export function useMatched(scope = DEFAULT_SCOPE) {
     const [state, setState] = useState(matchedDb.get(scope));

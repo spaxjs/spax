@@ -13,6 +13,7 @@ const useStyles = makeStyles({
 export default function UI(props: any): ReactNode {
   const {root} = useStyles(props);
   const { t } = useT();
+
   return (
     <Box>
       <pre className={root}>{t(props.description)}</pre>
