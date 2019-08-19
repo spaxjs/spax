@@ -38,6 +38,7 @@
     "@types/node": "^12.7.2",
     "babel-jest": "^24.9.0",
     "babel-preset-react-app": "^9.0.1",
+    "git-message": "^2.0.2",
     "husky": "^3.0.4",
     "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",

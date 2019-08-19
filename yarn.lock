@@ -1803,10 +1803,10 @@
     "@types/react" ">=16.9.0"
     "@types/react-test-renderer" ">=16.9.0"
 
-"@testing-library/react@^9.1.2":
-  version "9.1.2"
-  resolved "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-9.1.2.tgz#7a69e67f2c6137606bbe91dc6e66eecca5f6bc49"
-  integrity sha1-emnmfyxhN2BrvpHcbmbuzKX2vEk=
+"@testing-library/react@^9.1.3":
+  version "9.1.3"
+  resolved "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-9.1.3.tgz#3fb495227322ea36cd817532441dabb552e0d6ce"
+  integrity sha1-P7SVInMi6jbNgXUyRB2rtVLg1s4=
   dependencies:
     "@babel/runtime" "^7.5.5"
     "@testing-library/dom" "^6.0.0"
@@ -2224,6 +2224,13 @@ async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/async-limiter/download/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha1-3TeelPDbgxCwgpH51kwyCXZmF/0=
+
+async@^2.1.4:
+  version "2.6.3"
+  resolved "https://registry.npm.taobao.org/async/download/async-2.6.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fasync%2Fdownload%2Fasync-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
+  integrity sha1-1yYl4jRKNlbjo61Pp0n6gymdgv8=
+  dependencies:
+    lodash "^4.17.14"
 
 asynckit@^0.4.0:
   version "0.4.0"
@@ -3646,6 +3653,14 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+git-message@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/git-message/download/git-message-2.0.2.tgz#eb47458acb0b6d77fce6b1803e9791ef5ff89c63"
+  integrity sha1-60dFissLbXf85rGAPpeR71/4nGM=
+  dependencies:
+    async "^2.1.4"
+    ini "^1.3.4"
+
 git-raw-commits@2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/git-raw-commits/download/git-raw-commits-2.0.0.tgz#d92addf74440c14bcc5c83ecce3fb7f8a79118b5"
@@ -3882,10 +3897,10 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.npm.taobao.org/husky/download/husky-3.0.3.tgz#6f3fb99f60ef72cdf34e5d78445c2f798c441b1d"
-  integrity sha1-bz+5n2Dvcs3zTl14RFwveYxEGx0=
+husky@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npm.taobao.org/husky/download/husky-3.0.4.tgz#10a48ac11ab50859b0939750fa0b4e07ad0bf669"
+  integrity sha1-EKSKwRq1CFmwk5dQ+gtOB60L9mk=
   dependencies:
     chalk "^2.4.2"
     cosmiconfig "^5.2.1"
