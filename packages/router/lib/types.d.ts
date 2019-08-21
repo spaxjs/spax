@@ -1,4 +1,4 @@
-import { AnyObject, IMD } from "@spax/core";
+import { AnyObject, IBlock } from "@spax/core";
 import { ReactNode } from "react";
 export interface LinkProps extends AnyObject {
     to?: string | boolean | {
@@ -13,25 +13,25 @@ export interface LinkProps extends AnyObject {
 }
 export interface RouterProps extends AnyObject {
     scope: string;
-    modules: IMD[];
+    blocks: IBlock[];
     children?: ReactNode;
 }
 export interface SwitchProps extends AnyObject {
     level: number;
-    modules: IMD[];
+    blocks: IBlock[];
     scope: string;
     loose?: boolean;
-    useAuth?: (imd: IMD) => boolean;
+    useAuth?: (imd: IBlock) => boolean;
     NotFound?: React.FC<{}>;
     Forbidden?: React.FC<{}>;
 }
 export interface CarrierProps extends AnyObject {
-    $$meta: IMD;
+    $$meta: IBlock;
     $$scope: string;
-    $$useAuth: (imd: IMD) => boolean;
+    $$useAuth: (imd: IBlock) => boolean;
     $$NotFound: React.FC<{}>;
     $$Forbidden: React.FC<{}>;
 }
 export interface MatchedParams extends AnyObject {
 }
-export declare type TMatchedState = [IMD?, MatchedParams?];
+export declare type TMatchedState = [IBlock?, MatchedParams?];

@@ -3,15 +3,15 @@ import pathToRegexp from "path-to-regexp";
 import React from "react";
 import { useChild } from "./hooks";
 import { getMatched } from "./utils";
-export const Router = ({ children, scope, modules }) => {
+export const Router = ({ children, scope, blocks }) => {
     const [pathname] = usePathname();
     // 为了外部能够第一时间获得匹配到的顶级模块
-    const matchedState = getMatched(scope, pathname, 1, modules);
+    const matchedState = getMatched(scope, pathname, 1, blocks);
     return matchedState ? children : null;
 };
-export const Switch = ({ level, modules, scope, loose = false, useAuth = () => true, Pending = () => null, NotFound = () => null, Forbidden = () => null, children = null, }) => {
+export const Switch = ({ level, blocks, scope, loose = false, useAuth = () => true, Pending = () => null, NotFound = () => null, Forbidden = () => null, children = null, }) => {
     const [pathname] = usePathname();
-    const matchedState = getMatched(scope, pathname, level, modules, loose);
+    const matchedState = getMatched(scope, pathname, level, blocks, loose);
     const authed = useAuth(matchedState ? matchedState[0] : undefined);
     if (matchedState) {
         if (authed) {

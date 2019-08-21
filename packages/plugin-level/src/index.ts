@@ -1,7 +1,7 @@
-import { ICH, IMD, IPO } from "@spax/core";
+import { IBlock, IHooks, IPO } from "@spax/core";
 
-export default ({ parse }: ICH) => {
-  parse.tap("Level", (current: IMD, parent: IMD, option: IPO) => {
+export default ({ parse }: IHooks) => {
+  parse.tap("Level", (current: IBlock, parent: IBlock, option: IPO) => {
     return {
       ...current,
       level: parent.level ? parent.level + 1 : 1,

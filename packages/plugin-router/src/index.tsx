@@ -1,9 +1,9 @@
-import { ICH, ICO, IMD, IPO } from "@spax/core";
+import { IBlock, IHooks, IOptions, IPO } from "@spax/core";
 import { Carrier, Router, Switch } from "@spax/router";
 import React, { ReactElement } from "react";
 
-export default ({ parse, render }: ICH) => {
-  parse.tap("Router", (current: IMD, parent: IMD, option: IPO) => {
+export default ({ parse, render }: IHooks) => {
+  parse.tap("Router", (current: IBlock, parent: IBlock, option: IPO) => {
     return {
       ...current,
       ...normalizeComponent(current, option),
@@ -18,13 +18,13 @@ export default ({ parse, render }: ICH) => {
    */
   render.tap(
     "Router",
-    (modules: IMD[], option: IPO, { scope }: ICO): ReactElement => {
+    (blocks: IBlock[], option: IPO, { scope }: IOptions): ReactElement => {
       // 向后传
-      Object.assign(option, { modules });
+      Object.assign(option, { blocks });
       return (
         <Switch
           level={1}
-          modules={modules}
+          blocks={blocks}
           scope={scope}
           loose={false}
           useAuth={option.useAuth}
@@ -33,11 +33,11 @@ export default ({ parse, render }: ICH) => {
         />
       );
     },
-    (element: ReactElement, option: IPO, { scope }: ICO): ReactElement => {
+    (element: ReactElement, option: IPO, { scope }: IOptions): ReactElement => {
       return (
         <Router
           scope={scope}
-          modules={option.modules}
+          blocks={option.blocks}
         >
           {element}
         </Router>
@@ -53,8 +53,8 @@ export default ({ parse, render }: ICH) => {
  * 同时，设置 empty 属性，
  * 标识输入的 component 属性是否为空。
  */
-function normalizeComponent(current: IMD, option: IPO) {
-  const { path, level, authority = [], data = {}, component, modules = [] } = current;
+function normalizeComponent(current: IBlock, option: IPO) {
+  const { path, level, authority = [], data = {}, component, blocks = [] } = current;
   const empty = component === undefined;
   return {
     key: `${path}&${level}`,
@@ -62,6 +62,6 @@ function normalizeComponent(current: IMD, option: IPO) {
     authority,
     data,
     component: empty ? Carrier : component,
-    modules,
+    blocks,
   };
 }

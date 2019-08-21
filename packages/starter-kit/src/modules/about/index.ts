@@ -4,7 +4,7 @@ export default {
   data: {
     title: "About us",
   },
-  modules: [
-    import("./modules/contact"),
+  blocks: [
+    import("./blocks/contact"),
   ],
 };

@@ -2,27 +2,23 @@ import { InitHook, ParseHook, RenderHook } from "./hooks";
 export interface AnyObject<V = any> {
     [key: string]: V;
 }
-export interface ICoreHooks {
+export interface IHooks {
     init: InitHook;
-    parse: ParseHook<IModuleDescription, IModuleDescription>;
+    parse: ParseHook<IBlock, IBlock>;
     render: RenderHook<any>;
 }
-export declare type ICH = ICoreHooks;
 export declare type TPriority = "pre" | "post";
-export declare type TCorePlugin = (hooks: ICoreHooks) => void;
-export declare type TCP = TCorePlugin;
-export interface IModuleDescription extends AnyObject {
-    modules?: IModuleDescription[];
+export declare type TPlugin = (hooks: IHooks) => void;
+export interface IBlock extends AnyObject {
+    blocks?: IBlock[];
 }
-export declare type IMD = IModuleDescription;
 export interface IPluginOption extends AnyObject {
 }
 export declare type IPO = IPluginOption;
 export interface IPluginOptions extends AnyObject<IPluginOption> {
 }
-export interface ICoreOptions {
+export interface IOptions {
     scope?: string;
     plugins?: IPluginOptions;
-    modules?: IModuleDescription[];
+    blocks?: IBlock[];
 }
-export declare type ICO = ICoreOptions;

@@ -1,15 +1,15 @@
-import { DEFAULT_SCOPE, IMD, parseModules } from "@spax/core";
+import { DEFAULT_SCOPE, IBlock, parseBlocks } from "@spax/core";
 import React, { useEffect, useState } from "react";
 import { Switch } from "./components";
 import { CarrierProps, TMatchedState } from "./types";
 import { matchedDb } from "./utils";
 
-export function useExact({ $$exact }: CarrierProps): boolean {
-  return $$exact;
+export function useBlock({ $$block }: CarrierProps): IBlock {
+  return $$block;
 }
 
-export function useMeta({ $$meta }: CarrierProps): IMD {
-  return $$meta;
+export function useExact({ $$exact }: CarrierProps): boolean {
+  return $$exact;
 }
 
 export function useScope({ $$scope }: CarrierProps): string {
@@ -29,22 +29,22 @@ export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
   return state;
 }
 
-export function useChild({ $$exact, $$meta, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$modules }: CarrierProps): React.FC<any> {
-  const [parsedDynamic, setParsedDynamic] = useState($$meta.modules);
+export function useChild({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }: CarrierProps): React.FC<any> {
+  const [parsedDynamic, setParsedDynamic] = useState($$blocks || []);
 
   useEffect(() => {
-    if ($$modules) {
-      parseModules($$modules, $$meta, $$scope).then(setParsedDynamic);
+    if ($$blocks) {
+      parseBlocks($$blocks, $$block, $$scope).then(setParsedDynamic);
     }
-  }, [$$modules]);
+  }, [$$blocks]);
 
-  const allChildModules = [...$$meta.modules, ...parsedDynamic];
+  const targetBlocks = [...($$block.blocks || []), ...parsedDynamic];
 
   // 如果没有子模块，则返回空
-  return (allChildModules.length) ? ({children, ...props}: any) => (
+  return (targetBlocks.length) ? ({children, ...props}: any) => (
     <Switch
-      level={$$meta.level + 1}
-      modules={allChildModules}
+      level={$$block.level + 1}
+      blocks={targetBlocks}
       scope={$$scope}
       // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
       loose={$$exact}

@@ -1,7 +1,7 @@
 import { debug, error } from "@spax/debug";
 import cache from "./cache";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
-import { ICH, ICO, IMD, IPO, TCP } from "./types";
+import { IBlock, IHooks, IOptions, IPO, TPlugin } from "./types";
 
 const KEY_HOOKS = "hooks";
 const KEY_PLUGINS = "plugins";
@@ -9,14 +9,14 @@ const KEY_OPTIONS = "options";
 const KEY_PARSED = "parsed";
 const KEY_RENDERED = "rendered";
 
-const pluginOptionGetter = (scope: string = DEFAULT_SCOPE, name: string): IPO => {
-  const { plugins: c }: ICO = cache.get(KEY_OPTIONS, scope);
+const pluginOptionGetter = (scope: string, name: string): IPO => {
+  const { plugins: c }: IOptions = cache.get(KEY_OPTIONS, scope);
   return c ? c[name] || c[name.toLowerCase()] || {} : {};
 };
 
 export const DEFAULT_SCOPE = "🚀";
 
-export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> {
+export async function run(plugins: TPlugin[] = [], options: IOptions = {}): Promise<any> {
   const { scope = DEFAULT_SCOPE } = options;
 
   if (cache.has("run", scope)) {
@@ -31,7 +31,7 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
   cache.set(KEY_PLUGINS, plugins, scope);
   cache.set(KEY_OPTIONS, options, scope);
 
-  const hooks: ICH = {
+  const hooks: IHooks = {
     init: new InitHook(scope),
     parse: new ParseHook(scope),
     render: new RenderHook(scope),
@@ -58,13 +58,13 @@ export async function run(plugins: TCP[] = [], options: ICO = {}): Promise<any> 
   await hooks.init.run(pluginOptionGetter, options, "post");
 
   // 直接返回
-  return getRenderedModules(options.modules, scope);
+  return getRenderedBlocks(options.blocks, scope);
 }
 
 /**
  * 未来，此处有可能是 Reactive 的
  */
-export function useParsed(scope: string = DEFAULT_SCOPE): [IMD[]] {
+export function useParsed(scope: string = DEFAULT_SCOPE): [IBlock[]] {
   return [cache.get(KEY_PARSED, scope)];
 }
 
@@ -78,29 +78,34 @@ export function useRendered(scope: string = DEFAULT_SCOPE): [any] {
 /**
  * 递归处理模块，顺序执行 parser
  * @example
- * // modules: [m1, m2]
+ * // blocks: [m1, m2]
  * // parsers: [p1, p2]
  * p1.pre(m1) -> p2.pre(m1) -> p2.post(m1) -> p1.post(m1)
  * p1.pre(m2) -> p2.pre(m2) -> p2.post(m2) -> p1.post(m2)
  * // 如果有子模块（深度优先）
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
-export async function parseModules(modules: IMD[], parent: IMD = {}, scope: string = DEFAULT_SCOPE): Promise<IMD[]> {
-  modules = await Promise.all(modules.map(async (mc: IMD) => {
+export async function parseBlocks(blocks: IBlock[], parent: IBlock, scope: string = DEFAULT_SCOPE): Promise<IBlock[]> {
+  if (!cache.has("run", scope)) {
+    error("Scope `%s` has not initialized yet. Please call `run` first.", scope);
+    return;
+  }
+
+  blocks = await Promise.all(blocks.map(async (mc: IBlock) => {
     mc = await interopDefaultExports(mc);
 
     if (Array.isArray(mc)) {
-      mc = await Promise.all(mc.map((_mc) => parseModule(_mc, parent, scope)));
+      mc = await Promise.all(mc.map((_mc) => parseBlock(_mc, parent, scope)));
       return mc;
     }
 
-    return parseModule(mc, parent, scope);
+    return parseBlock(mc, parent, scope);
   }));
 
-  return modules.flat();
+  return blocks.flat();
 }
 
-async function parseModule(mc: IMD, parent: IMD, scope: string = DEFAULT_SCOPE): Promise<IMD> {
+async function parseBlock(mc: IBlock, parent: IBlock, scope: string): Promise<IBlock> {
   const { parse } = cache.get(KEY_HOOKS, scope);
   const options = cache.get(KEY_OPTIONS, scope);
 
@@ -108,8 +113,8 @@ async function parseModule(mc: IMD, parent: IMD, scope: string = DEFAULT_SCOPE):
   mc = await parse.run(mc, parent, pluginOptionGetter, options, "pre");
 
   // 子模块在 pre 之后、post 之前处理掉
-  if (mc.modules) {
-    mc.modules = await parseModules(mc.modules, mc, scope);
+  if (mc.blocks) {
+    mc.blocks = await parseBlocks(mc.blocks, mc, scope);
   }
 
   // post
@@ -118,45 +123,45 @@ async function parseModule(mc: IMD, parent: IMD, scope: string = DEFAULT_SCOPE):
   return mc;
 }
 
-async function getRenderedModules(modules: IMD[] = [], scope: string = DEFAULT_SCOPE): Promise<any> {
-  const parsedModules = await parseModules(modules, {}, scope);
+async function getRenderedBlocks(blocks: IBlock[] = [], scope: string): Promise<any> {
+  const parsedBlocks = await parseBlocks(blocks, {}, scope);
 
   // 存储以备外部调用
-  cache.set(KEY_PARSED, parsedModules, scope);
+  cache.set(KEY_PARSED, parsedBlocks, scope);
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    debug("Modules parsed: %O", parsedModules);
+    debug("Blocks parsed: %O", parsedBlocks);
   }
 
-  const renderedModules = await renderModules(parsedModules, scope);
+  const renderedBlocks = await renderBlocks(parsedBlocks, scope);
 
   // 存储以备外部调用
-  cache.set(KEY_RENDERED, renderedModules, scope);
+  cache.set(KEY_RENDERED, renderedBlocks, scope);
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    debug("Modules rendered: %O", renderedModules);
+    debug("Blocks rendered: %O", renderedBlocks);
   }
 
-  return renderedModules;
+  return renderedBlocks;
 }
 
 /**
  * 渲染模块树
  */
-async function renderModules(parsedModules: IMD[], scope: string = DEFAULT_SCOPE): Promise<any> {
+async function renderBlocks(parsedBlocks: IBlock[], scope: string): Promise<any> {
   const { render } = cache.get(KEY_HOOKS, scope);
   const options = cache.get(KEY_OPTIONS, scope);
-  let renderedModules: any = parsedModules;
+  let renderedBlocks: any = parsedBlocks;
 
   // 前置处理
-  renderedModules = await render.run(renderedModules, pluginOptionGetter, options, "pre");
+  renderedBlocks = await render.run(renderedBlocks, pluginOptionGetter, options, "pre");
 
   // 后置处理
-  renderedModules = await render.run(renderedModules, pluginOptionGetter, options, "post");
+  renderedBlocks = await render.run(renderedBlocks, pluginOptionGetter, options, "post");
 
-  return renderedModules;
+  return renderedBlocks;
 }
 
 // 对于使用 import() 引入的模块，需要转换

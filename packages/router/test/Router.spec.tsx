@@ -9,9 +9,9 @@ import { Carrier, Router } from "../src/components";
 
 describe("Router", () => {
   test("no matched!", () => {
-    const modules = [];
+    const blocks = [];
     const { container } = render(
-      <Router scope="test1" modules={modules}>
+      <Router scope="test1" blocks={blocks}>
         test
       </Router>,
     );
@@ -19,11 +19,11 @@ describe("Router", () => {
   });
 
   test("matching exactly", () => {
-    const modules = [
+    const blocks = [
       { level: 1, path: "", pathRE: pathToRegexp(""), pathKeys: [] },
     ];
     const { container } = render(
-      <Router scope="test2" modules={modules}>
+      <Router scope="test2" blocks={blocks}>
         test
       </Router>,
     );
@@ -35,7 +35,7 @@ describe("Router", () => {
     actHook(() => {
       result.current[1]("/father3/child");
     });
-    const modules = [
+    const blocks = [
       {
         level: 1,
         path: "/father3",
@@ -44,7 +44,7 @@ describe("Router", () => {
       },
     ];
     const { container } = render(
-      <Router scope="test3" modules={modules}>
+      <Router scope="test3" blocks={blocks}>
         test
       </Router>,
     );
@@ -68,7 +68,7 @@ describe("Router", () => {
     actHook(() => {
       result.current[1]("/father4/child");
     });
-    const nestedModules = [
+    const nestedBlocks = [
       {
         level: 1,
         path: "/father4",
@@ -80,7 +80,7 @@ describe("Router", () => {
             <Carrier {...props} />
           </div>
         ),
-        modules: [
+        blocks: [
           {
             level: 2,
             path: "/father4/child",
@@ -92,7 +92,7 @@ describe("Router", () => {
       },
     ];
     const { container } = render(
-      <Router scope="test4" modules={nestedModules}>
+      <Router scope="test4" blocks={nestedBlocks}>
         test
       </Router>,
     );

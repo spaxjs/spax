@@ -9,7 +9,7 @@ const defaultOptions = {
   // 插件选项
   plugins: {},
   // 业务模块
-  modules: [],
+  blocks: [],
   container: "#root",
 };
 

@@ -1,30 +1,30 @@
-import { run, TCP } from "@spax/core";
+import { run, TPlugin } from "@spax/core";
 import { debug, fatal, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import * as ReactDOM from "react-dom";
-import { IFO } from "./types";
+import { IOptions } from "./types";
 
 export * from "./types";
 
 export default abstract class Framework {
   // 插件
-  public static plugins: TCP[] = [];
+  public static plugins: TPlugin[] = [];
   // 选项
-  public static options: IFO = {
+  public static options: IOptions = {
     scope: "🚀",
     version: "1.0.0",
     // 插件选项
     plugins: {},
     // 业务模块
-    modules: [],
+    blocks: [],
     container: "#root",
   };
 
-  private plugins: TCP[] = [];
-  private options: IFO = {};
+  private plugins: TPlugin[] = [];
+  private options: IOptions = {};
 
-  constructor(options: IFO = {}) {
+  constructor(options: IOptions = {}) {
     /* istanbul ignore next */
     if (process.env.NODE_ENV !== "test") {
       debug(`
@@ -86,7 +86,7 @@ export default abstract class Framework {
   /**
    * 通过原型链实现递归合并
    */
-  private initialize(ctorOptions: IFO): void {
+  private initialize(ctorOptions: IOptions): void {
     let ctr: any = this.constructor;
     // 静态属性 plugins
     const plugins = [ctr.plugins];

@@ -1,4 +1,4 @@
-import { ICO, IPO, TPriority } from "./types";
+import { IOptions, IPO, TPriority } from "./types";
 
 abstract class Hook {
   public abstract hooks: {
@@ -76,8 +76,8 @@ abstract class Hook {
 
 export class InitHook extends Hook {
   public hooks: {
-    pre: Array<[string, (c: IPO, o: ICO) => any]>;
-    post: Array<[string, (c: IPO, o: ICO) => any]>;
+    pre: Array<[string, (c: IPO, o: IOptions) => any]>;
+    post: Array<[string, (c: IPO, o: IOptions) => any]>;
   } = {
     pre: [],
     post: [],
@@ -85,8 +85,8 @@ export class InitHook extends Hook {
 
   public tap(
     name: string,
-    pre?: (c: IPO, o: ICO) => any,
-    post?: (c: IPO, o: ICO) => any,
+    pre?: (c: IPO, o: IOptions) => any,
+    post?: (c: IPO, o: IOptions) => any,
     deps?: string[],
   ) {
     super.tap(name, pre, post, deps);
@@ -94,7 +94,7 @@ export class InitHook extends Hook {
 
   public async run(
     c: ((scope: string, name: string) => IPO),
-    o: ICO,
+    o: IOptions,
     d: TPriority,
   ): Promise<any> {
     return Promise.all(this.hooks[d].map(([name, fn]) => fn(c(this.scope, name), o)));
@@ -103,8 +103,8 @@ export class InitHook extends Hook {
 
 export class ParseHook<A, B> extends Hook {
   public hooks: {
-    pre: Array<[string, (a: A, b: B, c: IPO, o: ICO) => any]>;
-    post: Array<[string, (a: A, b: B, c: IPO, o: ICO) => any]>;
+    pre: Array<[string, (a: A, b: B, c: IPO, o: IOptions) => any]>;
+    post: Array<[string, (a: A, b: B, c: IPO, o: IOptions) => any]>;
   } = {
     pre: [],
     post: [],
@@ -112,8 +112,8 @@ export class ParseHook<A, B> extends Hook {
 
   public tap(
     name: string,
-    pre?: (a: A, b: B, c: IPO, o: ICO) => any,
-    post?: (a: A, b: B, c: IPO, o: ICO) => any,
+    pre?: (a: A, b: B, c: IPO, o: IOptions) => any,
+    post?: (a: A, b: B, c: IPO, o: IOptions) => any,
     deps?: string[],
   ) {
     super.tap(name, pre, post, deps);
@@ -123,7 +123,7 @@ export class ParseHook<A, B> extends Hook {
     a: A,
     b: B,
     c: ((scope: string, name: string) => IPO),
-    o: ICO,
+    o: IOptions,
     d: TPriority,
   ): Promise<any> {
     const hooks = this.hooks[d];
@@ -138,8 +138,8 @@ export class ParseHook<A, B> extends Hook {
 
 export class RenderHook<A> extends Hook {
   public hooks: {
-    pre: Array<[string, (a: A, c: IPO, o: ICO) => any]>;
-    post: Array<[string, (a: A, c: IPO, o: ICO) => any]>;
+    pre: Array<[string, (a: A, c: IPO, o: IOptions) => any]>;
+    post: Array<[string, (a: A, c: IPO, o: IOptions) => any]>;
   } = {
     pre: [],
     post: [],
@@ -147,8 +147,8 @@ export class RenderHook<A> extends Hook {
 
   public tap(
     name: string,
-    pre?: (a: A, c: IPO, o: ICO) => any,
-    post?: (a: A, c: IPO, o: ICO) => any,
+    pre?: (a: A, c: IPO, o: IOptions) => any,
+    post?: (a: A, c: IPO, o: IOptions) => any,
     deps?: string[],
   ) {
     super.tap(name, pre, post, deps);
@@ -157,7 +157,7 @@ export class RenderHook<A> extends Hook {
   public async run(
     a: A,
     c: ((scope: string, name: string) => IPO),
-    o: ICO,
+    o: IOptions,
     d: TPriority,
   ): Promise<any> {
     const hooks = this.hooks[d];

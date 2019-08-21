@@ -1,8 +1,8 @@
-import { ICH, ICO, IPO } from "@spax/core";
+import { IHooks, IOptions, IPO } from "@spax/core";
 import React, { ReactElement } from "react";
 import { Root } from "./Root";
 
-export default ({ render }: ICH) => {
+export default ({ render }: IHooks) => {
   /**
    * <Router>
    *   <Root>
@@ -10,11 +10,11 @@ export default ({ render }: ICH) => {
    */
   render.tap(
     "Theme",
-    (modules: ReactElement, option: IPO, options: ICO): ReactElement => {
+    (blocks: ReactElement, option: IPO, options: IOptions): ReactElement => {
       return (
         <Root
           option={option}
-        >{modules}</Root>
+        >{blocks}</Root>
       );
     },
     undefined,

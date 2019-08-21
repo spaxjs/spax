@@ -1,6 +1,6 @@
 {
   "name": "@spax/framework",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "base framework class",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",

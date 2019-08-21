@@ -1,5 +1,5 @@
-import { TCP } from "@spax/core";
-import Framework, { IFO } from "@spax/framework";
+import { TPlugin } from "@spax/core";
+import Framework, { IOptions } from "@spax/framework";
 import LazyPlugin from "@spax/plugin-lazy";
 import LevelPlugin from "@spax/plugin-level";
 import PathPlugin from "@spax/plugin-path";
@@ -11,7 +11,7 @@ const options = process.env.NODE_ENV === "production"
 
 export default class SimpleFramework extends Framework {
   // 插件
-  public static plugins: TCP[] = [
+  public static plugins: TPlugin[] = [
     PathPlugin,
     LevelPlugin,
     LazyPlugin,
@@ -19,5 +19,5 @@ export default class SimpleFramework extends Framework {
   ];
 
   // 选项
-  public static options: IFO = options.default;
+  public static options: IOptions = options.default;
 }

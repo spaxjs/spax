@@ -10,7 +10,7 @@ export default {
   icon: DeviceHub,
   description: "一些有用的 React Hooks",
   component: UI,
-  modules: [
+  blocks: [
     import("./persist"),
     import("./global"),
     import("./search"),

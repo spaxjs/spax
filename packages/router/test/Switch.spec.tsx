@@ -10,27 +10,27 @@ import { Carrier, Switch } from "../src/components";
 describe("Switch", () => {
   test("NotFound", () => {
     const scope = "test10";
-    const modules = [];
+    const blocks = [];
     const { container } = render(
-      <Switch scope={scope} level={1} modules={modules} />,
+      <Switch scope={scope} level={1} blocks={blocks} />,
     );
     expect(container.textContent).toBe("");
   });
 
   test("custom NotFound", () => {
     const scope = "test101";
-    const modules = [];
+    const blocks = [];
     const { container } = render(
-      <Switch scope={scope} level={1} modules={modules} NotFound={() => <p>NotFound</p>} />,
+      <Switch scope={scope} level={1} blocks={blocks} NotFound={() => <p>NotFound</p>} />,
     );
     expect(container.textContent).toBe("NotFound");
   });
 
   test("custom NotFound and loose", () => {
     const scope = "test102";
-    const modules = [];
+    const blocks = [];
     const { container } = render(
-      <Switch loose scope={scope} level={1} modules={modules} NotFound={() => <p>NotFound</p>} />,
+      <Switch loose scope={scope} level={1} blocks={blocks} NotFound={() => <p>NotFound</p>} />,
     );
     expect(container.textContent).toBe("");
   });
@@ -41,7 +41,7 @@ describe("Switch", () => {
       result.current[1]("/father12");
     });
     const scope = "test12";
-    const modules = [
+    const blocks = [
       {
         level: 1,
         path: "/father12",
@@ -54,7 +54,7 @@ describe("Switch", () => {
       <Switch
         scope={scope}
         level={1}
-        modules={modules}
+        blocks={blocks}
         useAuth={() => false}
       />,
     );
@@ -67,7 +67,7 @@ describe("Switch", () => {
       result.current[1]("/father121");
     });
     const scope = "test121";
-    const modules = [
+    const blocks = [
       {
         level: 1,
         path: "/father121",
@@ -80,7 +80,7 @@ describe("Switch", () => {
       <Switch
         scope={scope}
         level={1}
-        modules={modules}
+        blocks={blocks}
         useAuth={() => false}
         Forbidden={() => <p>Forbidden</p>}
       />,
@@ -94,7 +94,7 @@ describe("Switch", () => {
       result.current[1]("/father13");
     });
     const scope = "test13";
-    const modules = [
+    const blocks = [
       {
         level: 1,
         path: "/father13",
@@ -104,7 +104,7 @@ describe("Switch", () => {
       },
     ];
     const { container } = render(
-      <Switch scope={scope} level={1} modules={modules} />,
+      <Switch scope={scope} level={1} blocks={blocks} />,
     );
     expect(container.textContent).toBe("");
   });
@@ -115,7 +115,7 @@ describe("Switch", () => {
       result.current[1]("/father11");
     });
     const scope = "test11";
-    const modules = [
+    const blocks = [
       {
         level: 1,
         path: "/father11",
@@ -125,7 +125,7 @@ describe("Switch", () => {
       },
     ];
     const { container } = render(
-      <Switch scope={scope} level={1} modules={modules} />,
+      <Switch scope={scope} level={1} blocks={blocks} />,
     );
     expect(container.textContent).toBe("/father11");
   });
@@ -136,7 +136,7 @@ describe("Switch", () => {
       result.current[1]("/father14");
     });
     const scope = "test14";
-    const nestedModules = [
+    const nestedBlocks = [
       {
         level: 1,
         path: "/father14",
@@ -148,7 +148,7 @@ describe("Switch", () => {
             <Carrier {...props} />
           </div>
         ),
-        modules: [
+        blocks: [
           {
             level: 2,
             path: "/father14/child",
@@ -160,7 +160,7 @@ describe("Switch", () => {
       },
     ];
     const { container } = render(
-      <Switch scope={scope} level={1} modules={nestedModules} />,
+      <Switch scope={scope} level={1} blocks={nestedBlocks} />,
     );
     expect(container.textContent).toBe("/father14");
     act(() => {

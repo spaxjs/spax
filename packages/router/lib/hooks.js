@@ -1,4 +1,4 @@
-import { DEFAULT_SCOPE, parseModules } from "@spax/core";
+import { DEFAULT_SCOPE, parseBlocks } from "@spax/core";
 import React, { useEffect, useState } from "react";
 import { Switch } from "./components";
 import { matchedDb } from "./utils";
@@ -21,16 +21,16 @@ export function useMatched(scope = DEFAULT_SCOPE) {
     }, []);
     return state;
 }
-export function useChild({ $$exact, $$meta, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$modules }) {
-    const [parsedDynamic, setParsedDynamic] = useState($$meta.modules);
+export function useChild({ $$exact, $$meta, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }) {
+    const [parsedDynamic, setParsedDynamic] = useState($$meta.blocks);
     useEffect(() => {
-        if ($$modules) {
-            parseModules($$modules, $$meta, $$scope).then(setParsedDynamic);
+        if ($$blocks) {
+            parseBlocks($$blocks, $$meta, $$scope).then(setParsedDynamic);
         }
-    }, [$$modules]);
-    const allChildModules = [...$$meta.modules, ...parsedDynamic];
+    }, [$$blocks]);
+    const allChildBlocks = [...$$meta.blocks, ...parsedDynamic];
     // 如果没有子模块，则返回空
-    return (allChildModules.length) ? ({ children, ...props }) => (React.createElement(Switch, Object.assign({ level: $$meta.level + 1, modules: allChildModules, scope: $$scope, 
+    return (allChildBlocks.length) ? ({ children, ...props }) => (React.createElement(Switch, Object.assign({ level: $$meta.level + 1, blocks: allChildBlocks, scope: $$scope, 
         // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
         loose: $$exact, useAuth: $$useAuth, NotFound: $$NotFound, Forbidden: $$Forbidden }, props), children)) : ({ children }) => children;
 }

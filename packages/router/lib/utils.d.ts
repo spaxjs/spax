@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { IMD } from "@spax/core";
+import { IBlock } from "@spax/core";
 import EventEmitter from "events";
 import { MatchedParams, TMatchedState } from "./types";
 export declare const matchedDb: {
@@ -9,8 +9,8 @@ export declare const matchedDb: {
     check(scope: string, pathname: string): void;
     ensure(scope: string): void;
     get(scope: string): any;
-    add(scope: string, level: number, v: [import("@spax/core").IModuleDescription?, MatchedParams?]): void;
+    add(scope: string, level: number, v: [IBlock?, MatchedParams?]): void;
     emit(scope: string): void;
     on(scope: string, cb: any): () => void;
 };
-export declare function getMatched(scope: string, pathname: string, level: number, modules: IMD[], loose?: boolean): TMatchedState;
+export declare function getMatched(scope: string, pathname: string, level: number, blocks: IBlock[], loose?: boolean): TMatchedState;

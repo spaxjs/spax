@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { ExpandLess, ExpandMore, Remove } from "@material-ui/icons";
 import { createStyles, makeStyles } from "@material-ui/styles";
-import { AnyObject, IMD, useParsed } from "@spax/core";
+import { AnyObject, IBlock, useParsed } from "@spax/core";
 import { debug } from "@spax/debug";
 import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
@@ -42,9 +42,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Menu: React.FC<AnyObject> = (props: any) => {
   const [role] = useGlobalState<string>("role");
-  const [modules] = useParsed();
+  const [blocks] = useParsed();
   const matched = useMatched();
-  const menu = getMenu(role, modules);
+  const menu = getMenu(role, blocks);
   const openedKeys = matched.map(([{ key }]) => key);
 
   return <MenuList menu={menu} openedKeys={openedKeys} />;
@@ -127,9 +127,9 @@ function MenuList(props: any): ReactElement {
 /**
  * 获取需要显示的菜单树结构
  */
-function getMenu(role: string, modules: IMD[]): IMenu[] {
+function getMenu(role: string, blocks: IBlock[]): IMenu[] {
   if (!cacheMap.has(role)) {
-    const menuData = getMenuData(role, modules);
+    const menuData = getMenuData(role, blocks);
 
     if (process.env.NODE_ENV === "development")
       debug("Menu configuration created: %O", menuData);
@@ -139,9 +139,9 @@ function getMenu(role: string, modules: IMD[]): IMenu[] {
   return cacheMap.get(role);
 }
 
-function getMenuData(role: string, modules: IMD[]): IMenu[] {
+function getMenuData(role: string, blocks: IBlock[]): IMenu[] {
   return (
-    modules
+    blocks
       // 过滤掉 路径带变量 的模块
       // 过滤掉无 标题 的模块
       // 过滤掉无 权限 的模块
@@ -149,15 +149,15 @@ function getMenuData(role: string, modules: IMD[]): IMenu[] {
         ({ path, title, authority }) =>
           path.indexOf(":") === -1 && !!title && hasAuth(role, authority),
       )
-      .map(({ key, path, title, icon, empty, modules: childModules }) => {
+      .map(({ key, path, title, icon, empty, blocks: childBlocks }) => {
         return {
           key,
           path,
           title,
           icon,
           empty,
-          children: childModules.length
-            ? getMenuData(role, childModules)
+          children: childBlocks.length
+            ? getMenuData(role, childBlocks)
             : undefined,
         };
       })

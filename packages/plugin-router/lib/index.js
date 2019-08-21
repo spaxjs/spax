@@ -13,12 +13,12 @@ export default ({ parse, render }) => {
      *   <...>
      *     <Switch>
      */
-    render.tap("Router", (modules, option, { scope }) => {
+    render.tap("Router", (blocks, option, { scope }) => {
         // 向后传
-        Object.assign(option, { modules });
-        return (React.createElement(Switch, { level: 1, modules: modules, scope: scope, loose: false, useAuth: option.useAuth, NotFound: option.NotFound, Forbidden: option.Forbidden }));
+        Object.assign(option, { blocks });
+        return (React.createElement(Switch, { level: 1, blocks: blocks, scope: scope, loose: false, useAuth: option.useAuth, NotFound: option.NotFound, Forbidden: option.Forbidden }));
     }, (element, option, { scope }) => {
-        return (React.createElement(Router, { scope: scope, modules: option.modules }, element));
+        return (React.createElement(Router, { scope: scope, blocks: option.blocks }, element));
     }, ["Path"]);
 };
 /**
@@ -28,7 +28,7 @@ export default ({ parse, render }) => {
  * 标识输入的 component 属性是否为空。
  */
 function normalizeComponent(current, option) {
-    const { path, level, authority = [], data = {}, component, modules = [] } = current;
+    const { path, level, authority = [], data = {}, component, blocks = [] } = current;
     const empty = component === undefined;
     return {
         key: `${path}&${level}`,
@@ -36,6 +36,6 @@ function normalizeComponent(current, option) {
         authority,
         data,
         component: empty ? Carrier : component,
-        modules,
+        blocks,
     };
 }
