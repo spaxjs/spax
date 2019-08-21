@@ -1,6 +1,8 @@
+import { IMD } from "@spax/core";
 import React from "react";
-import { TMatchedState } from "./types";
-export declare function useExact({ $$exact }: any): boolean;
-export declare function useCurrent({ $$meta }: any): boolean;
+import { CarrierProps, TMatchedState } from "./types";
+export declare function useExact({ $$exact }: CarrierProps): boolean;
+export declare function useMeta({ $$meta }: CarrierProps): IMD;
+export declare function useScope({ $$scope }: CarrierProps): string;
 export declare function useMatched(scope?: string): TMatchedState[];
-export declare function useChild({ $$exact, $$meta: { level, modules }, $$scope, $$useAuth, $$NotFound, $$Forbidden }: any): React.FC<any>;
+export declare function useChild({ $$exact, $$meta, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$modules }: CarrierProps): React.FC<any>;

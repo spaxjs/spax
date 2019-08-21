@@ -6,6 +6,10 @@ const KEY_PLUGINS = "plugins";
 const KEY_OPTIONS = "options";
 const KEY_PARSED = "parsed";
 const KEY_RENDERED = "rendered";
+const pluginOptionGetter = (scope = DEFAULT_SCOPE, name) => {
+    const { plugins: c } = cache.get(KEY_OPTIONS, scope);
+    return c ? c[name] || c[name.toLowerCase()] || {} : {};
+};
 export const DEFAULT_SCOPE = "🚀";
 export async function run(plugins = [], options = {}) {
     const { scope = DEFAULT_SCOPE } = options;
@@ -39,7 +43,7 @@ export async function run(plugins = [], options = {}) {
     await hooks.init.run(pluginOptionGetter, options, "pre");
     await hooks.init.run(pluginOptionGetter, options, "post");
     // 直接返回
-    return getRenderedModules(scope, options.modules);
+    return getRenderedModules(options.modules, scope);
 }
 /**
  * 未来，此处有可能是 Reactive 的
@@ -53,18 +57,49 @@ export function useParsed(scope = DEFAULT_SCOPE) {
 export function useRendered(scope = DEFAULT_SCOPE) {
     return [cache.get(KEY_RENDERED, scope)];
 }
-async function getRenderedModules(scope = DEFAULT_SCOPE, modules) {
-    if (!modules) {
-        return null;
+/**
+ * 递归处理模块，顺序执行 parser
+ * @example
+ * // modules: [m1, m2]
+ * // parsers: [p1, p2]
+ * p1.pre(m1) -> p2.pre(m1) -> p2.post(m1) -> p1.post(m1)
+ * p1.pre(m2) -> p2.pre(m2) -> p2.post(m2) -> p1.post(m2)
+ * // 如果有子模块（深度优先）
+ * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
+ */
+export async function parseModules(modules, parent = {}, scope = DEFAULT_SCOPE) {
+    modules = await Promise.all(modules.map(async (mc) => {
+        mc = await interopDefaultExports(mc);
+        if (Array.isArray(mc)) {
+            mc = await Promise.all(mc.map((_mc) => parseModule(_mc, parent, scope)));
+            return mc;
+        }
+        return parseModule(mc, parent, scope);
+    }));
+    return modules.flat();
+}
+async function parseModule(mc, parent, scope = DEFAULT_SCOPE) {
+    const { parse } = cache.get(KEY_HOOKS, scope);
+    const options = cache.get(KEY_OPTIONS, scope);
+    // pre
+    mc = await parse.run(mc, parent, pluginOptionGetter, options, "pre");
+    // 子模块在 pre 之后、post 之前处理掉
+    if (mc.modules) {
+        mc.modules = await parseModules(mc.modules, mc, scope);
     }
-    const parsedModules = await parseModules(scope, modules);
+    // post
+    mc = await parse.run(mc, parent, pluginOptionGetter, options, "post");
+    return mc;
+}
+async function getRenderedModules(modules = [], scope = DEFAULT_SCOPE) {
+    const parsedModules = await parseModules(modules, {}, scope);
     // 存储以备外部调用
     cache.set(KEY_PARSED, parsedModules, scope);
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
         debug("Modules parsed: %O", parsedModules);
     }
-    const renderedModules = await renderModules(scope, parsedModules);
+    const renderedModules = await renderModules(parsedModules, scope);
     // 存储以备外部调用
     cache.set(KEY_RENDERED, renderedModules, scope);
     /* istanbul ignore next */
@@ -76,7 +111,7 @@ async function getRenderedModules(scope = DEFAULT_SCOPE, modules) {
 /**
  * 渲染模块树
  */
-async function renderModules(scope = DEFAULT_SCOPE, parsedModules) {
+async function renderModules(parsedModules, scope = DEFAULT_SCOPE) {
     const { render } = cache.get(KEY_HOOKS, scope);
     const options = cache.get(KEY_OPTIONS, scope);
     let renderedModules = parsedModules;
@@ -85,44 +120,6 @@ async function renderModules(scope = DEFAULT_SCOPE, parsedModules) {
     // 后置处理
     renderedModules = await render.run(renderedModules, pluginOptionGetter, options, "post");
     return renderedModules;
-}
-function pluginOptionGetter(scope = DEFAULT_SCOPE, name) {
-    const { plugins: c } = cache.get(KEY_OPTIONS, scope);
-    return c ? c[name] || c[name.toLowerCase()] || {} : {};
-}
-/**
- * 递归处理模块，顺序执行 parser
- * @example
- * // modules: [m1, m2]
- * // parsers: [p1, p2]
- * p1.pre(m1) -> p2.pre(m1) -> p2.post(m1) -> p1.post(m1)
- * p1.pre(m2) -> p2.pre(m2) -> p2.post(m2) -> p1.post(m2)
- * // 如果有子模块（深度优先）
- * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
- */
-async function parseModules(scope = DEFAULT_SCOPE, modules, parent = {}) {
-    modules = await Promise.all(modules.map(async (mc) => {
-        mc = await interopDefaultExports(mc);
-        if (Array.isArray(mc)) {
-            mc = await Promise.all(mc.map((_mc) => parseModule(scope, _mc, parent)));
-            return mc;
-        }
-        return parseModule(scope, mc, parent);
-    }));
-    return modules.flat();
-}
-async function parseModule(scope = DEFAULT_SCOPE, mc, parent) {
-    const { parse } = cache.get(KEY_HOOKS, scope);
-    const options = cache.get(KEY_OPTIONS, scope);
-    // pre
-    mc = await parse.run(mc, parent, pluginOptionGetter, options, "pre");
-    // 子模块在 pre 之后、post 之前处理掉
-    if (mc.modules) {
-        mc.modules = await parseModules(scope, mc.modules, mc);
-    }
-    // post
-    mc = await parse.run(mc, parent, pluginOptionGetter, options, "post");
-    return mc;
 }
 // 对于使用 import() 引入的模块，需要转换
 async function interopDefaultExports(m) {

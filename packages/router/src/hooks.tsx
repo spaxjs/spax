@@ -1,15 +1,19 @@
-import { DEFAULT_SCOPE, IMD } from "@spax/core";
+import { DEFAULT_SCOPE, IMD, parseModules } from "@spax/core";
 import React, { useEffect, useState } from "react";
 import { Switch } from "./components";
-import { TMatchedState } from "./types";
+import { CarrierProps, TMatchedState } from "./types";
 import { matchedDb } from "./utils";
 
-export function useExact({ $$exact }: any): boolean {
+export function useExact({ $$exact }: CarrierProps): boolean {
   return $$exact;
 }
 
-export function useMeta({ $$meta }: any): IMD {
+export function useMeta({ $$meta }: CarrierProps): IMD {
   return $$meta;
+}
+
+export function useScope({ $$scope }: CarrierProps): string {
+  return $$scope;
 }
 
 export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
@@ -25,12 +29,22 @@ export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
   return state;
 }
 
-export function useChild({ $$exact, $$meta: { level, modules }, $$scope, $$useAuth, $$NotFound, $$Forbidden }: any): React.FC<any> {
+export function useChild({ $$exact, $$meta, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$modules }: CarrierProps): React.FC<any> {
+  const [parsedDynamic, setParsedDynamic] = useState($$meta.modules);
+
+  useEffect(() => {
+    if ($$modules) {
+      parseModules($$modules, $$meta, $$scope).then(setParsedDynamic);
+    }
+  }, [$$modules]);
+
+  const allChildModules = [...$$meta.modules, ...parsedDynamic];
+
   // 如果没有子模块，则返回空
-  return (modules && modules.length) ? ({children, ...props}: any) => (
+  return (allChildModules.length) ? ({children, ...props}: any) => (
     <Switch
-      level={level + 1}
-      modules={modules}
+      level={$$meta.level + 1}
+      modules={allChildModules}
       scope={$$scope}
       // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
       loose={$$exact}
