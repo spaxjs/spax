@@ -9,10 +9,10 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@types/lodash@^4.14.136":
-  version "4.14.136"
-  resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.136.tgz#413e85089046b865d960c9ff1d400e04c31ab60f"
-  integrity sha1-QT6FCJBGuGXZYMn/HUAOBMMatg8=
+"@types/lodash@^4.14.137":
+  version "4.14.137"
+  resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.137.tgz#8a4804937dc6462274ffcc088df8f14fc1b368e2"
+  integrity sha1-ikgEk33GRiJ0/8wIjfjxT8GzaOI=
 
 "@types/node@^12.7.2":
   version "12.7.2"
@@ -24,10 +24,10 @@
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
   integrity sha1-8aEee6uww8rWgQC+OB0eBkxo8fY=
 
-"@types/react-dom@^16.8.5":
-  version "16.8.5"
-  resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.8.5.tgz?cache=0&sync_timestamp=1563902640329&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-dom%2Fdownload%2F%40types%2Freact-dom-16.8.5.tgz#3e3f4d99199391a7fb40aa3a155c8dd99b899cbd"
-  integrity sha1-Pj9NmRmTkaf7QKo6FVyN2ZuJnL0=
+"@types/react-dom@^16.9.0":
+  version "16.9.0"
+  resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.9.0.tgz#ba6ddb00bf5de700b0eb91daa452081ffccbfdea"
+  integrity sha1-um3bAL9d5wCw65HapFIIH/zL/eo=
   dependencies:
     "@types/react" "*"
 

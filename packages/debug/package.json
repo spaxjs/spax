@@ -1,6 +1,6 @@
 {
   "name": "@spax/debug",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "debug utilities",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",

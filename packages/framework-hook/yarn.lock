@@ -9,6 +9,29 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@spax/core@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/@spax/core/download/@spax/core-1.0.2.tgz#c926e3c7d0841d4297e6e8265646d61a624394ca"
+  integrity sha1-ySbjx9CEHUKX5ugmVkbWGmJDlMo=
+  dependencies:
+    "@spax/debug" "^1.0.2"
+    history "^4.9.0"
+
+"@spax/debug@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/@spax/debug/download/@spax/debug-1.0.2.tgz#b58a6a9519c18f074863ecace23631921574d2cb"
+  integrity sha1-tYpqlRnBjwdIY+ys4jYxkhV00ss=
+
+"@spax/framework@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/@spax/framework/download/@spax/framework-1.0.2.tgz#339d02e04c8f08b2a96f281eee85c82880db19e4"
+  integrity sha1-M50C4EyPCLKpbyge7oXIKIDbGeQ=
+  dependencies:
+    "@spax/core" "^1.0.2"
+    "@spax/debug" "^1.0.2"
+    history "^4.9.0"
+    lodash "^4.17.15"
+
 "@types/node@^12.7.2":
   version "12.7.2"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.2.tgz?cache=0&sync_timestamp=1565829879515&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.2.tgz#c4e63af5e8823ce9cc3f0b34f7b998c2171f0c44"
@@ -48,6 +71,11 @@ history@^4.9.0:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha1-GSA/tZmR35jjoocFDUZHzerzJJk=
+
+lodash@^4.17.15:
+  version "4.17.15"
+  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
 
 loose-envify@^1.2.0:
   version "1.4.0"

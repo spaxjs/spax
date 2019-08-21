@@ -6,13 +6,13 @@ import { getMatched } from "../src/utils";
 // tslint:disable: react-hooks-nesting
 
 test("useMeta", () => {
-  expect(useMeta({$$meta: { path: "/"}})).toEqual({ path: "/"});
-  expect(useMeta({$$meta: { path: "/login"}})).toEqual({ path: "/login"});
+  expect(useMeta({$$meta: { path: "/" }} as any)).toEqual({ path: "/"});
+  expect(useMeta({$$meta: { path: "/login" }} as any)).toEqual({ path: "/login"});
 });
 
 test("useExact", () => {
-  expect(useExact({$$exact: true})).toBe(true);
-  expect(useExact({$$exact: false})).toBe(false);
+  expect(useExact({$$exact: true} as any)).toBe(true);
+  expect(useExact({$$exact: false} as any)).toBe(false);
 });
 
 test("useMatched", () => {
