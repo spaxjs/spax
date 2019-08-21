@@ -1,2 +1,3 @@
-declare const _default: ({ parse, render }: import("@spax/core").ICoreHooks) => void;
+import { IHooks } from "@spax/core";
+declare const _default: ({ parse, render }: IHooks) => void;
 export default _default;

@@ -38,7 +38,7 @@ export const matchedDb = {
     },
 };
 const cacheMap = new Map();
-export function getMatched(scope = DEFAULT_SCOPE, pathname, level = 1, modules, loose = false) {
+export function getMatched(scope = DEFAULT_SCOPE, pathname, level = 1, blocks, loose = false) {
     const cacheKey = `${scope}&${pathname}&${level}`;
     if (!cacheMap.has(cacheKey)) {
         // `/a/b/c` -> `["/a", "/b", "/c"]`
@@ -48,8 +48,8 @@ export function getMatched(scope = DEFAULT_SCOPE, pathname, level = 1, modules, 
             // 从寻找`完整`匹配到寻找`父级`匹配
             while (n--) {
                 const toPath = tokens.slice(0, n + 1).join("");
-                for (let i = 0; i < modules.length; i++) {
-                    const childModule = modules[i];
+                for (let i = 0; i < blocks.length; i++) {
+                    const childModule = blocks[i];
                     // 严格模式，才寻找 404
                     if (!loose && childModule.path.indexOf("*") !== -1) {
                         if (!fallbackModule) {

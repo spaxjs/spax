@@ -16,5 +16,5 @@ const UI: React.FC<any> = (props: any) => {
 
 export default new FrameworkHook({
   scope: "app2",
-  modules: [{ path: "*", component: UI }],
+  blocks: [{ path: "*", component: UI }],
 }).render();

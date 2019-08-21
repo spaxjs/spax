@@ -1,9 +1,9 @@
-import { AnyObject, ICH, IMD, IPO } from "@spax/core";
+import { AnyObject, IBlock, IHooks, IPO } from "@spax/core";
 import { warn } from "@spax/debug";
 import pathToRegexp, { Key } from "path-to-regexp";
 
-export default ({ parse }: ICH) => {
-  parse.tap("Path", (current: IMD, parent: IMD, option: IPO) => {
+export default ({ parse }: IHooks) => {
+  parse.tap("Path", (current: IBlock, parent: IBlock, option: IPO) => {
     return {
       ...current,
       ...normalizePath(current, parent, option),
@@ -11,7 +11,7 @@ export default ({ parse }: ICH) => {
   });
 };
 
-function normalizePath(current: IMD, parent: IMD, option: IPO): AnyObject {
+function normalizePath(current: IBlock, parent: IBlock, option: IPO): AnyObject {
   let { path } = current;
 
   if (path === undefined) {

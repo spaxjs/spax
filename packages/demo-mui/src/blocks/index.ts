@@ -6,7 +6,7 @@ export default [
   import("./dashboard"),
   import("./hooks"),
   import("./nested"),
-  // import("./todo"),
+  import("./dynamic"),
   // import("./grid"),
   // import("./grid2"),
   // import("./group"),

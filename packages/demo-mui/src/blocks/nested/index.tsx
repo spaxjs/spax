@@ -5,9 +5,9 @@ export default {
   title: "Nested",
   icon: FilterList,
   lazy: () => import("./components/UI"),
-  modules: [
-    import("./modules/c1"),
-    import("./modules/c2"),
+  blocks: [
+    import("./blocks/c1"),
+    import("./blocks/c2"),
     // 404
     {
       path: "*",

@@ -1,4 +1,4 @@
-import { DEFAULT_SCOPE, IMD } from "@spax/core";
+import { DEFAULT_SCOPE, IBlock } from "@spax/core";
 import { debug } from "@spax/debug";
 import EventEmitter from "events";
 import { MatchedParams, TMatchedState } from "./types";
@@ -46,7 +46,7 @@ export function getMatched(
   scope: string = DEFAULT_SCOPE,
   pathname: string,
   level: number = 1,
-  modules: IMD[],
+  blocks: IBlock[],
   loose: boolean = false,
 ): TMatchedState {
   const cacheKey = `${scope}&${pathname}&${level}`;
@@ -56,44 +56,44 @@ export function getMatched(
     const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
 
     const matchedState: TMatchedState = ((n) => {
-      let fallbackModule: any = null;
+      let fallbackBlock: any = null;
       // 从寻找`完整`匹配到寻找`父级`匹配
       while (n--) {
         const toPath = tokens.slice(0, n + 1).join("");
 
-        for (let i = 0; i < modules.length; i++) {
-          const childModule: IMD = modules[i];
+        for (let i = 0; i < blocks.length; i++) {
+          const childBlock: IBlock = blocks[i];
 
           // 严格模式，才寻找 404
-          if (!loose && childModule.path.indexOf("*") !== -1) {
-            if (!fallbackModule) {
-              fallbackModule = childModule;
+          if (!loose && childBlock.path.indexOf("*") !== -1) {
+            if (!fallbackBlock) {
+              fallbackBlock = childBlock;
             }
             continue;
           }
 
-          const execArray = childModule.pathRE.exec(toPath);
+          const execArray = childBlock.pathRE.exec(toPath);
 
           if (execArray) {
-            const matchedParams: MatchedParams = childModule.pathKeys.reduce((params: MatchedParams, {name}, index: number) => ({
+            const matchedParams: MatchedParams = childBlock.pathKeys.reduce((params: MatchedParams, {name}, index: number) => ({
               ...params,
               [name]: execArray[index + 1],
             }), {
-              $$exact: tokens.length === childModule.level,
-              // $$extra: tokens.length < childModule.level,
+              $$exact: tokens.length === childBlock.level,
+              // $$extra: tokens.length < childBlock.level,
             });
 
             /* istanbul ignore next */
             if (process.env.NODE_ENV === "development") {
-              debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childModule);
+              debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childBlock);
             }
 
-            return [childModule, matchedParams] as TMatchedState;
+            return [childBlock, matchedParams] as TMatchedState;
           }
         }
       }
 
-      return fallbackModule ? [fallbackModule, { $$is404: true }] as TMatchedState : null;
+      return fallbackBlock ? [fallbackBlock, { $$is404: true }] as TMatchedState : null;
     })(tokens.length);
 
     if (matchedState) {

@@ -1,10 +1,8 @@
-import { ICO } from "@spax/core";
+import { IOptions as ICoreOptions } from "@spax/core";
 
-export interface IFrameworkOptions extends ICO {
+export interface IOptions extends ICoreOptions {
   // 版本号
   version?: string;
   // 挂载点
   container?: string | HTMLElement;
 }
-
-export type IFO = IFrameworkOptions;

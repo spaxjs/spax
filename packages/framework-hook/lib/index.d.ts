@@ -1,6 +1,6 @@
-import { TCP } from "@spax/core";
-import Framework, { IFO } from "@spax/framework";
+import { TPlugin } from "@spax/core";
+import Framework, { IOptions } from "@spax/framework";
 export default class SimpleFramework extends Framework {
-    static plugins: TCP[];
-    static options: IFO;
+    static plugins: TPlugin[];
+    static options: IOptions;
 }

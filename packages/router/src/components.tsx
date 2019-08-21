@@ -5,16 +5,16 @@ import { useChild } from "./hooks";
 import { CarrierProps, LinkProps, RouterProps, SwitchProps } from "./types";
 import { getMatched } from "./utils";
 
-export const Router: React.FC<RouterProps> = ({ children, scope, modules }: RouterProps): any => {
+export const Router: React.FC<RouterProps> = ({ children, scope, blocks }: RouterProps): any => {
   const [pathname] = usePathname();
   // 为了外部能够第一时间获得匹配到的顶级模块
-  const matchedState = getMatched(scope, pathname, 1, modules);
+  const matchedState = getMatched(scope, pathname, 1, blocks);
   return matchedState ? children : null;
 };
 
 export const Switch: React.FC<SwitchProps> = ({
   level,
-  modules,
+  blocks,
   scope,
   loose = false,
   useAuth = () => true,
@@ -24,7 +24,7 @@ export const Switch: React.FC<SwitchProps> = ({
   children = null,
 }: SwitchProps): any => {
   const [pathname] = usePathname();
-  const matchedState = getMatched(scope, pathname, level, modules, loose);
+  const matchedState = getMatched(scope, pathname, level, blocks, loose);
   const authed = useAuth(matchedState ? matchedState[0] : undefined);
 
   if (matchedState) {
@@ -35,7 +35,7 @@ export const Switch: React.FC<SwitchProps> = ({
         <Matched
           {...data}
           {...matchedState[1]}
-          $$meta={matchedState[0]}
+          $$block={matchedState[0]}
           $$scope={scope}
           $$useAuth={useAuth}
           $$NotFound={NotFound}

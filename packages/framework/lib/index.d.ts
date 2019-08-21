@@ -1,13 +1,13 @@
 /// <reference types="react" />
-import { TCP } from "@spax/core";
-import { IFO } from "./types";
+import { TPlugin } from "@spax/core";
+import { IOptions } from "./types";
 export * from "./types";
 export default abstract class Framework {
-    static plugins: TCP[];
-    static options: IFO;
+    static plugins: TPlugin[];
+    static options: IOptions;
     private plugins;
     private options;
-    constructor(options?: IFO);
+    constructor(options?: IOptions);
     render(): Promise<React.DOMElement<any, any>>;
     mount(callback?: () => void): Promise<void>;
     /**
