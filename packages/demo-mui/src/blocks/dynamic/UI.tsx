@@ -2,7 +2,7 @@ import { Box, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { IBlock } from "@spax/core";
 import { useT } from "@spax/i18n";
-import { Carrier, Link } from "@spax/router";
+import { Link, useBlocksOnTheFly } from "@spax/router";
 import React, { ReactNode, useState } from "react";
 
 const useStyles = makeStyles({
@@ -13,16 +13,17 @@ const useStyles = makeStyles({
 });
 
 const blocksCandidates = [
-  { path: "foo", component: () => <p>foo</p> },
-  { path: "bar", component: () => <p>bar</p> },
-  { path: "baz", component: () => <p>baz</p> },
-  { path: "qux", component: () => <p>qux</p> },
+  { path: "foo", title: "Foo", component: () => <p>foo</p> },
+  { path: "bar", title: "Bar", component: () => <p>bar</p> },
+  { path: "baz", title: "Baz", component: () => <p>baz</p> },
+  { path: "qux", title: "Qux", component: () => <p>qux</p> },
 ];
 
 export default function UI(props: any): ReactNode {
   const { root } = useStyles(props);
   const { t } = useT();
   const [blocksOnTheFly, setBlocksOnTheFly] = useState(null);
+  const BlocksMatchedOnTheFly = useBlocksOnTheFly(props, blocksOnTheFly);
 
   function toggleBlocksOnTheFly() {
     setTimeout(() => {
@@ -38,13 +39,11 @@ export default function UI(props: any): ReactNode {
       <ul>
         {blocksOnTheFly ? blocksOnTheFly.map((d: IBlock) => (
           <li key={d.path}>
-            <Link to={`/blocks/dynamic/${d.path}`}>{d.path}</Link>
+            <Link to={`/dynamic/${d.path}`}>{d.path}</Link>
           </li>
         )) : null}
       </ul>
-      <Carrier
-        {...props}
-        $$blocks={blocksOnTheFly} />
+      <BlocksMatchedOnTheFly />
     </Box>
   );
 }

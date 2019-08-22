@@ -14,6 +14,11 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.2.tgz#c4e63af5e8823ce9cc3f0b34f7b998c2171f0c44"
   integrity sha1-xOY69eiCPOnMPws097mYwhcfDEQ=
 
+events@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/events/download/events-3.0.0.tgz#9a0a0dfaf62893d92b875b8f2698ca4114973e88"
+  integrity sha1-mgoN+vYok9krh1uPJpjKQRSXPog=
+
 history@^4.9.0:
   version "4.9.0"
   resolved "https://registry.npm.taobao.org/history/download/history-4.9.0.tgz#84587c2068039ead8af769e9d6a6860a14fa1bca"

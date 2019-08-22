@@ -29,22 +29,12 @@ export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
   return state;
 }
 
-export function useChild({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }: CarrierProps): React.FC<any> {
-  const [parsedDynamic, setParsedDynamic] = useState($$blocks || []);
-
-  useEffect(() => {
-    if ($$blocks) {
-      parseBlocks($$blocks, $$block, $$scope).then(setParsedDynamic);
-    }
-  }, [$$blocks]);
-
-  const targetBlocks = [...($$block.blocks || []), ...parsedDynamic];
-
+export function useBlocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }: CarrierProps): React.FC<any> {
   // 如果没有子模块，则返回空
-  return (targetBlocks.length) ? ({children, ...props}: any) => (
+  return ($$block.blocks && $$block.blocks.length) ? ({children = null, ...props}: any) => (
     <Switch
       level={$$block.level + 1}
-      blocks={targetBlocks}
+      blocks={$$block.blocks}
       scope={$$scope}
       // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
       loose={$$exact}
@@ -53,5 +43,32 @@ export function useChild({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$F
       Forbidden={$$Forbidden}
       {...props}
     >{children}</Switch>
-  ) : ({ children }) => children;
+  ) : ({ children = null }) => children;
+}
+
+export function useBlocksOnTheFly({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }: CarrierProps, $$blocks: IBlock[]): React.FC<any> {
+  const [parsedBlocks, setParsedBlocks] = useState($$blocks || []);
+
+  useEffect(() => {
+    if ($$blocks) {
+      parseBlocks($$blocks, $$block, $$scope).then(setParsedBlocks);
+    } else {
+      setParsedBlocks([]);
+    }
+  }, [$$blocks]);
+
+  // 如果没有子模块，则返回空
+  return (parsedBlocks.length) ? ({children = null, ...props}: any) => (
+    <Switch
+      level={$$block.level + 1}
+      blocks={parsedBlocks}
+      scope={$$scope}
+      // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
+      loose={$$exact}
+      useAuth={$$useAuth}
+      NotFound={$$NotFound}
+      Forbidden={$$Forbidden}
+      {...props}
+    >{children}</Switch>
+  ) : ({ children = null }) => children;
 }

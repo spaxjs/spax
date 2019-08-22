@@ -44,36 +44,36 @@ export function getMatched(scope = DEFAULT_SCOPE, pathname, level = 1, blocks, l
         // `/a/b/c` -> `["/a", "/b", "/c"]`
         const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
         const matchedState = ((n) => {
-            let fallbackModule = null;
+            let fallbackBlock = null;
             // 从寻找`完整`匹配到寻找`父级`匹配
             while (n--) {
                 const toPath = tokens.slice(0, n + 1).join("");
                 for (let i = 0; i < blocks.length; i++) {
-                    const childModule = blocks[i];
+                    const childBlock = blocks[i];
                     // 严格模式，才寻找 404
-                    if (!loose && childModule.path.indexOf("*") !== -1) {
-                        if (!fallbackModule) {
-                            fallbackModule = childModule;
+                    if (!loose && childBlock.path.indexOf("*") !== -1) {
+                        if (!fallbackBlock) {
+                            fallbackBlock = childBlock;
                         }
                         continue;
                     }
-                    const execArray = childModule.pathRE.exec(toPath);
+                    const execArray = childBlock.pathRE.exec(toPath);
                     if (execArray) {
-                        const matchedParams = childModule.pathKeys.reduce((params, { name }, index) => ({
+                        const matchedParams = childBlock.pathKeys.reduce((params, { name }, index) => ({
                             ...params,
                             [name]: execArray[index + 1],
                         }), {
-                            $$exact: tokens.length === childModule.level,
+                            $$exact: tokens.length === childBlock.level,
                         });
                         /* istanbul ignore next */
                         if (process.env.NODE_ENV === "development") {
-                            debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childModule);
+                            debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childBlock);
                         }
-                        return [childModule, matchedParams];
+                        return [childBlock, matchedParams];
                     }
                 }
             }
-            return fallbackModule ? [fallbackModule, { $$is404: true }] : null;
+            return fallbackBlock ? [fallbackBlock, { $$is404: true }] : null;
         })(tokens.length);
         if (matchedState) {
             cacheMap.set(cacheKey, matchedState);
