@@ -11,11 +11,6 @@ export interface LinkProps extends AnyObject {
     component?: any;
     children?: ReactNode;
 }
-export interface RouterProps extends AnyObject {
-    scope: string;
-    blocks: IBlock[];
-    children?: ReactNode;
-}
 export interface SwitchProps extends AnyObject {
     level: number;
     blocks: IBlock[];

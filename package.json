@@ -60,6 +60,7 @@
     "alias": "lerna link",
     "lint": "tslint --project ./ --fix",
     "build": "lerna run build --no-private",
+    "pre:commit": "yarn lint && yarn build",
     "publish": "lerna publish",
     "dev": "jest --no-cache --watch",
     "test": "jest --no-cache",
@@ -67,7 +68,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint"
+      "pre-commit": "yarn pre:commit"
     }
   }
 }

@@ -13,9 +13,9 @@ abstract class Hook {
 
   public tap(
     name: string,
+    deps?: string[],
     pre?: (...args: any[]) => any,
     post?: (...args: any[]) => any,
-    deps?: string[],
   ) {
     if (pre) {
       const { preIdxMap } = this;
@@ -32,7 +32,7 @@ abstract class Hook {
         this.hooks.pre.push([name, pre]);
       }
       // 如果存在依赖项，则建立依赖项与当前项的索引关系
-      if (deps) {
+      if (deps && deps.length) {
         deps.forEach((dep: string) => {
           if (!preIdxMap.has(dep)) {
             // 如果依赖项不与其他插件存在索引关系，则使用当前项在队列的索引值
@@ -57,7 +57,7 @@ abstract class Hook {
         this.hooks.post.unshift([name, post]);
       }
       // 如果存在依赖项，则建立依赖项与当前项的索引关系
-      if (deps) {
+      if (deps && deps.length) {
         // 当前项的索引，作为依赖项的插入点
         const index = postIdxMap.has(name) ? postIdxMap.get(name) : 0;
         deps.forEach((dep: string) => {
@@ -85,11 +85,11 @@ export class InitHook extends Hook {
 
   public tap(
     name: string,
+    deps?: string[],
     pre?: (c: IPO, o: IOptions) => any,
     post?: (c: IPO, o: IOptions) => any,
-    deps?: string[],
   ) {
-    super.tap(name, pre, post, deps);
+    super.tap(name, deps, pre, post);
   }
 
   public async run(
@@ -112,11 +112,11 @@ export class ParseHook<A, B> extends Hook {
 
   public tap(
     name: string,
+    deps?: string[],
     pre?: (a: A, b: B, c: IPO, o: IOptions) => any,
     post?: (a: A, b: B, c: IPO, o: IOptions) => any,
-    deps?: string[],
   ) {
-    super.tap(name, pre, post, deps);
+    super.tap(name, deps, pre, post);
   }
 
   public async run(
@@ -147,11 +147,11 @@ export class RenderHook<A> extends Hook {
 
   public tap(
     name: string,
+    deps?: string[],
     pre?: (a: A, c: IPO, o: IOptions) => any,
     post?: (a: A, c: IPO, o: IOptions) => any,
-    deps?: string[],
   ) {
-    super.tap(name, pre, post, deps);
+    super.tap(name, deps, pre, post);
   }
 
   public async run(

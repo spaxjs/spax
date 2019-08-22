@@ -2,12 +2,6 @@ import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
 import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
-export const Router = ({ children, scope, blocks }) => {
-    const [pathname] = usePathname();
-    // 为了外部能够第一时间获得匹配到的顶级模块
-    const matchedState = useMatchedBlockAndParams(scope, pathname, 1, blocks);
-    return matchedState ? children : null;
-};
 export const Switch = ({ level, blocks, scope, loose = false, useAuth = () => true, Pending = () => null, NotFound = () => null, Forbidden = () => null, children = null, }) => {
     const [pathname] = usePathname();
     const matchedState = useMatchedBlockAndParams(scope, pathname, level, blocks, loose);

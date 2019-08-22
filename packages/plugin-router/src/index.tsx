@@ -1,49 +1,35 @@
 import { IBlock, IHooks, IOptions, IPO } from "@spax/core";
-import { MatchedChildBockOrChildren, Router, Switch } from "@spax/router";
+import { MatchedChildBockOrChildren, Switch } from "@spax/router";
 import React, { ReactElement } from "react";
 
 export default ({ parse, render }: IHooks) => {
-  parse.tap("Router", (current: IBlock, parent: IBlock, option: IPO) => {
-    return {
-      ...current,
-      ...normalizeComponent(current, option),
-    };
-  }, undefined, ["Lazy", "Level"]);
+  parse.tap(
+    "Router",
+    ["Lazy", "Level", "Path"],
+    (current: IBlock, parent: IBlock, option: IPO) => {
+      return {
+        ...current,
+        ...normalizeComponent(current, option),
+      };
+    },
+  );
 
-  /**
-   * @example
-   * <Router>
-   *   <...>
-   *     <Switch>
-   */
   render.tap(
     "Router",
-    (blocks: IBlock[], option: IPO, { scope }: IOptions): ReactElement => {
-      // 向后传
-      Object.assign(option, { blocks });
+    [],
+    (blocks: IBlock[], {useAuth, NotFound, Forbidden}: IPO, { scope }: IOptions): ReactElement => {
       return (
         <Switch
           level={1}
           blocks={blocks}
           scope={scope}
           loose={false}
-          useAuth={option.useAuth}
-          NotFound={option.NotFound}
-          Forbidden={option.Forbidden}
+          useAuth={useAuth}
+          NotFound={NotFound}
+          Forbidden={Forbidden}
         />
       );
     },
-    (element: ReactElement, option: IPO, { scope }: IOptions): ReactElement => {
-      return (
-        <Router
-          scope={scope}
-          blocks={option.blocks}
-        >
-          {element}
-        </Router>
-      );
-    },
-    ["Path"],
   );
 };
 

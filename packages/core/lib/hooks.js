@@ -4,7 +4,7 @@ class Hook {
         this.preIdxMap = new Map();
         this.postIdxMap = new Map();
     }
-    tap(name, pre, post, deps) {
+    tap(name, deps, pre, post) {
         if (pre) {
             const { preIdxMap } = this;
             // 如果存在，说明当前插件被依赖
@@ -21,7 +21,7 @@ class Hook {
                 this.hooks.pre.push([name, pre]);
             }
             // 如果存在依赖项，则建立依赖项与当前项的索引关系
-            if (deps) {
+            if (deps && deps.length) {
                 deps.forEach((dep) => {
                     if (!preIdxMap.has(dep)) {
                         // 如果依赖项不与其他插件存在索引关系，则使用当前项在队列的索引值
@@ -47,7 +47,7 @@ class Hook {
                 this.hooks.post.unshift([name, post]);
             }
             // 如果存在依赖项，则建立依赖项与当前项的索引关系
-            if (deps) {
+            if (deps && deps.length) {
                 // 当前项的索引，作为依赖项的插入点
                 const index = postIdxMap.has(name) ? postIdxMap.get(name) : 0;
                 deps.forEach((dep) => {
@@ -71,8 +71,8 @@ export class InitHook extends Hook {
             post: [],
         };
     }
-    tap(name, pre, post, deps) {
-        super.tap(name, pre, post, deps);
+    tap(name, deps, pre, post) {
+        super.tap(name, deps, pre, post);
     }
     async run(c, o, d) {
         return Promise.all(this.hooks[d].map(([name, fn]) => fn(c(this.scope, name), o)));
@@ -86,8 +86,8 @@ export class ParseHook extends Hook {
             post: [],
         };
     }
-    tap(name, pre, post, deps) {
-        super.tap(name, pre, post, deps);
+    tap(name, deps, pre, post) {
+        super.tap(name, deps, pre, post);
     }
     async run(a, b, c, o, d) {
         const hooks = this.hooks[d];
@@ -107,8 +107,8 @@ export class RenderHook extends Hook {
             post: [],
         };
     }
-    tap(name, pre, post, deps) {
-        super.tap(name, pre, post, deps);
+    tap(name, deps, pre, post) {
+        super.tap(name, deps, pre, post);
     }
     async run(a, c, o, d) {
         const hooks = this.hooks[d];

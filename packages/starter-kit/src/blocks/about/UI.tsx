@@ -1,4 +1,4 @@
-import { MatchedChildBockOrChildren, Link } from "@spax/router";
+import { Link, MatchedChildBockOrChildren } from "@spax/router";
 import React, { ReactNode } from "react";
 
 export default function UI(props: any): ReactNode {
