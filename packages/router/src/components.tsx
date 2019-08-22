@@ -1,7 +1,7 @@
 import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useChild } from "./hooks";
+import { useBlocks } from "./hooks";
 import { CarrierProps, LinkProps, RouterProps, SwitchProps } from "./types";
 import { getMatched } from "./utils";
 
@@ -59,7 +59,7 @@ export const Switch: React.FC<SwitchProps> = ({
 };
 
 export const Carrier: React.FC<CarrierProps> = ({children = null, ...props}: CarrierProps) => {
-  const MatchedChild = useChild(props);
+  const MatchedChild = useBlocks(props);
   return <MatchedChild>{children}</MatchedChild>;
 };
 

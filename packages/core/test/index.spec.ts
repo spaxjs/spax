@@ -11,9 +11,13 @@ describe("parseBlocks", () => {
 
   test("call after run", async () => {
     const scope = "parseBlocks";
-    await run([], { scope });
-    const parsed = await parseBlocks([], {}, scope);
-    expect(parsed).toEqual([]);
+    const parent = {path: "/", title: "L1", blocks: [{path: "/", title: "L20"}]};
+    const blocks = [{path: "/", title: "L21"}, {path: "/", title: "L22"}];
+    const rendered = await run([], { scope, blocks: [parent]});
+    expect(rendered[0].blocks.length).toBe(1);
+    const parsed = await parseBlocks(blocks, rendered[0], scope);
+    expect(parsed).toEqual(blocks);
+    expect(rendered[0].blocks.length).toBe(2);
   });
 });
 
@@ -59,11 +63,18 @@ describe("run", () => {
       expect(ret1).toEqual([]);
     });
     test("blocks: [{...}]", async () => {
-      const ret2 = await run([], {
+      const blocks = [{title: "hello"}];
+      const ret2 = await run([({ parse }) => {
+        parse.tap("Blocks", (current) => {
+          return {...current};
+        });
+      }], {
         scope: "ret2",
-        blocks: [{title: "hello"}],
+        blocks,
       });
-      expect(ret2).toEqual([{title: "hello"}]);
+      expect(ret2).toEqual(blocks);
+      // not reference
+      expect(ret2[0]).not.toBe(blocks[0]);
     });
   });
 

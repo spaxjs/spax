@@ -2,11 +2,11 @@ import { DEFAULT_SCOPE, parseBlocks } from "@spax/core";
 import React, { useEffect, useState } from "react";
 import { Switch } from "./components";
 import { matchedDb } from "./utils";
+export function useBlock({ $$block }) {
+    return $$block;
+}
 export function useExact({ $$exact }) {
     return $$exact;
-}
-export function useMeta({ $$meta }) {
-    return $$meta;
 }
 export function useScope({ $$scope }) {
     return $$scope;
@@ -21,16 +21,24 @@ export function useMatched(scope = DEFAULT_SCOPE) {
     }, []);
     return state;
 }
-export function useChild({ $$exact, $$meta, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }) {
-    const [parsedDynamic, setParsedDynamic] = useState($$meta.blocks);
+export function useBlocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }) {
+    // 如果没有子模块，则返回空
+    return ($$block.blocks.length) ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: $$block.blocks, scope: $$scope, 
+        // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
+        loose: $$exact, useAuth: $$useAuth, NotFound: $$NotFound, Forbidden: $$Forbidden }, props), children)) : ({ children = null }) => children;
+}
+export function useBlocksOnTheFly({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }, $$blocks) {
+    const [parsedBlocks, setParsedBlocks] = useState($$blocks || []);
     useEffect(() => {
         if ($$blocks) {
-            parseBlocks($$blocks, $$meta, $$scope).then(setParsedDynamic);
+            parseBlocks($$blocks, $$block, $$scope).then(setParsedBlocks);
+        }
+        else {
+            setParsedBlocks([]);
         }
     }, [$$blocks]);
-    const allChildBlocks = [...$$meta.blocks, ...parsedDynamic];
     // 如果没有子模块，则返回空
-    return (allChildBlocks.length) ? ({ children, ...props }) => (React.createElement(Switch, Object.assign({ level: $$meta.level + 1, blocks: allChildBlocks, scope: $$scope, 
+    return (parsedBlocks.length) ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: parsedBlocks, scope: $$scope, 
         // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
-        loose: $$exact, useAuth: $$useAuth, NotFound: $$NotFound, Forbidden: $$Forbidden }, props), children)) : ({ children }) => children;
+        loose: $$exact, useAuth: $$useAuth, NotFound: $$NotFound, Forbidden: $$Forbidden }, props), children)) : ({ children = null }) => children;
 }

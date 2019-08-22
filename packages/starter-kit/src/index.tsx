@@ -1,5 +1,5 @@
-import Framework from "framework";
 import blocks from "blocks";
+import Framework from "framework";
 import * as serviceWorker from "serviceWorker";
 
 // 加载业务模块，挂载到挂载点

@@ -1,4 +1,5 @@
-import { debug, error } from "@spax/debug";
+import { debug, error, warn } from "@spax/debug";
+import { useEffect, useState } from "react";
 import cache from "./cache";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 const KEY_HOOKS = "hooks";
@@ -6,7 +7,7 @@ const KEY_PLUGINS = "plugins";
 const KEY_OPTIONS = "options";
 const KEY_PARSED = "parsed";
 const KEY_RENDERED = "rendered";
-const pluginOptionGetter = (scope = DEFAULT_SCOPE, name) => {
+const pluginOptionGetter = (scope, name) => {
     const { plugins: c } = cache.get(KEY_OPTIONS, scope);
     return c ? c[name] || c[name.toLowerCase()] || {} : {};
 };
@@ -14,7 +15,7 @@ export const DEFAULT_SCOPE = "🚀";
 export async function run(plugins = [], options = {}) {
     const { scope = DEFAULT_SCOPE } = options;
     if (cache.has("run", scope)) {
-        error("Scope `%s` already taken. Please set use a different string.", scope);
+        error("Scope `%s` already taken. Please use a different string.", scope);
         return;
     }
     // 标识已加载，不允许重复执行
@@ -45,11 +46,16 @@ export async function run(plugins = [], options = {}) {
     // 直接返回
     return getRenderedBlocks(options.blocks, scope);
 }
-/**
- * 未来，此处有可能是 Reactive 的
- */
 export function useParsed(scope = DEFAULT_SCOPE) {
-    return [cache.get(KEY_PARSED, scope)];
+    const [state, setState] = useState([]);
+    useEffect(() => {
+        setState(cache.get(KEY_PARSED, scope));
+        cache.on(KEY_PARSED, setState, scope);
+        return () => {
+            cache.off(KEY_PARSED, setState, scope);
+        };
+    }, []);
+    return [state];
 }
 /**
  * 未来，此处有可能是 Reactive 的
@@ -67,32 +73,48 @@ export function useRendered(scope = DEFAULT_SCOPE) {
  * // 如果有子模块（深度优先）
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
-export async function parseBlocks(blocks, parent = {}, scope = DEFAULT_SCOPE) {
+export async function parseBlocks(blocks, parent, scope = DEFAULT_SCOPE, fromInnerCall = false) {
+    if (!cache.has("run", scope)) {
+        error("Scope `%s` has not initialized yet. Please call `run` first.", scope);
+        return;
+    }
     blocks = await Promise.all(blocks.map(async (mc) => {
         mc = await interopDefaultExports(mc);
         if (Array.isArray(mc)) {
-            mc = await Promise.all(mc.map((_mc) => parseModule(_mc, parent, scope)));
+            mc = await Promise.all(mc.map((_mc) => parseBlock(_mc, parent, scope)));
             return mc;
         }
-        return parseModule(mc, parent, scope);
+        return parseBlock(mc, parent, scope);
     }));
-    return blocks.flat();
+    blocks = blocks.flat();
+    // 外部调用时，需要更新 parent.blocks
+    if (!fromInnerCall) {
+        /* istanbul ignore next */
+        if (process.env.NODE_ENV === "development") {
+            // 如果已存在，则告警
+            if (parent.blocks && parent.blocks.length) {
+                warn("Override blocks of parent which is not empty");
+            }
+        }
+        parent.blocks = blocks;
+    }
+    return blocks;
 }
-async function parseModule(mc, parent, scope = DEFAULT_SCOPE) {
+async function parseBlock(mc, parent, scope) {
     const { parse } = cache.get(KEY_HOOKS, scope);
     const options = cache.get(KEY_OPTIONS, scope);
     // pre
     mc = await parse.run(mc, parent, pluginOptionGetter, options, "pre");
     // 子模块在 pre 之后、post 之前处理掉
     if (mc.blocks) {
-        mc.blocks = await parseBlocks(mc.blocks, mc, scope);
+        mc.blocks = await parseBlocks(mc.blocks, mc, scope, true);
     }
     // post
     mc = await parse.run(mc, parent, pluginOptionGetter, options, "post");
     return mc;
 }
-async function getRenderedBlocks(blocks = [], scope = DEFAULT_SCOPE) {
-    const parsedBlocks = await parseBlocks(blocks, {}, scope);
+async function getRenderedBlocks(blocks = [], scope) {
+    const parsedBlocks = await parseBlocks(blocks, {}, scope, true);
     // 存储以备外部调用
     cache.set(KEY_PARSED, parsedBlocks, scope);
     /* istanbul ignore next */
@@ -111,7 +133,7 @@ async function getRenderedBlocks(blocks = [], scope = DEFAULT_SCOPE) {
 /**
  * 渲染模块树
  */
-async function renderBlocks(parsedBlocks, scope = DEFAULT_SCOPE) {
+async function renderBlocks(parsedBlocks, scope) {
     const { render } = cache.get(KEY_HOOKS, scope);
     const options = cache.get(KEY_OPTIONS, scope);
     let renderedBlocks = parsedBlocks;

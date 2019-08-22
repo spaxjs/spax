@@ -15,7 +15,13 @@ import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
 import { Link, useMatched } from "@spax/router";
 import clsx from "clsx";
-import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 interface IMenu {
   title: string;
@@ -23,8 +29,6 @@ interface IMenu {
   path: string;
   children?: IMenu[];
 }
-
-const cacheMap: Map<string, IMenu[]> = new Map();
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,11 +48,24 @@ export const Menu: React.FC<AnyObject> = (props: any) => {
   const [role] = useGlobalState<string>("role");
   const [blocks] = useParsed();
   const matched = useMatched();
-  const menu = getMenu(role, blocks);
+  const menu = useMenu(role, blocks);
   const openedKeys = matched.map(([{ key }]) => key);
 
   return <MenuList menu={menu} openedKeys={openedKeys} />;
 };
+
+/**
+ * 获取需要显示的菜单树结构
+ */
+function useMenu(role: string, blocks: IBlock[]): IMenu[] {
+  return useMemo(() => {
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV === "development") {
+      debug("Generating menu for %s with: %O", role, blocks);
+    }
+    return getMenuData(role, blocks);
+  }, [role, blocks]);
+}
 
 function MenuNest(props: any): ReactElement {
   const { title, icon: Icon = Remove, path, empty, opened } = props;
@@ -68,7 +85,10 @@ function MenuNest(props: any): ReactElement {
           <ListItemIcon className={listItemIcon}>
             <Icon />
           </ListItemIcon>
-          <ListItemText className={clsx(open && listItemActive)} disableTypography>
+          <ListItemText
+            className={clsx(open && listItemActive)}
+            disableTypography
+          >
             {t(title)}
           </ListItemText>
           <Pointer />
@@ -101,7 +121,10 @@ function MenuList(props: any): ReactElement {
                 opened={opened}
               >
                 {/* 如果是非激活的，后代必然是非激活的，所以传空，节省资源 */}
-                <MenuList menu={children} openedKeys={opened ? openedKeys : []} />
+                <MenuList
+                  menu={children}
+                  openedKeys={opened ? openedKeys : []}
+                />
               </MenuNest>
             );
           }
@@ -112,7 +135,10 @@ function MenuList(props: any): ReactElement {
                 <ListItemIcon className={listItemIcon}>
                   <Icon />
                 </ListItemIcon>
-                <ListItemText className={clsx(opened && listItemActive)} disableTypography>
+                <ListItemText
+                  className={clsx(opened && listItemActive)}
+                  disableTypography
+                >
                   {t(title)}
                 </ListItemText>
               </ListItem>
@@ -124,27 +150,12 @@ function MenuList(props: any): ReactElement {
   );
 }
 
-/**
- * 获取需要显示的菜单树结构
- */
-function getMenu(role: string, blocks: IBlock[]): IMenu[] {
-  if (!cacheMap.has(role)) {
-    const menuData = getMenuData(role, blocks);
-
-    if (process.env.NODE_ENV === "development")
-      debug("Menu configuration created: %O", menuData);
-
-    cacheMap.set(role, menuData);
-  }
-  return cacheMap.get(role);
-}
-
 function getMenuData(role: string, blocks: IBlock[]): IMenu[] {
   return (
     blocks
-      // 过滤掉 路径带变量 的模块
-      // 过滤掉无 标题 的模块
-      // 过滤掉无 权限 的模块
+      // 过滤掉 带变量 的模块
+      // 过滤掉 无标题 的模块
+      // 过滤掉 无权限 的模块
       .filter(
         ({ path, title, authority }) =>
           path.indexOf(":") === -1 && !!title && hasAuth(role, authority),

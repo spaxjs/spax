@@ -1,10 +1,10 @@
-import { act, render } from "@testing-library/react";
+import { usePathname } from "@spax/history";
+import { render } from "@testing-library/react";
 import { act as actHook, renderHook } from "@testing-library/react-hooks";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useChild, useExact, useMatched, useBlock, useScope } from "../src/hooks";
+import { useBlock, useBlocks, useExact, useMatched, useScope } from "../src/hooks";
 import { getMatched } from "../src/utils";
-import { usePathname } from "@spax/history";
 
 // tslint:disable: react-hooks-nesting
 
@@ -22,8 +22,8 @@ test("useScope", () => {
   expect(useScope({$$scope: "useScope"} as any)).toBe("useScope");
 });
 
-test("useChild", () => {
-  const scope = "useChild";
+test("useBlocks", () => {
+  const scope = "useBlocks";
   const block = {
     level: 1,
     path: "/father",
@@ -44,7 +44,7 @@ test("useChild", () => {
   actHook(() => {
     result0.current[1]("/father/child");
   });
-  const { result } = renderHook(() => useChild({
+  const { result } = renderHook(() => useBlocks({
     $$exact: false,
     $$block: block,
     $$scope: scope,

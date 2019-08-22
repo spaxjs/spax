@@ -1,7 +1,7 @@
 import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useChild } from "./hooks";
+import { useBlocks } from "./hooks";
 import { getMatched } from "./utils";
 export const Router = ({ children, scope, blocks }) => {
     const [pathname] = usePathname();
@@ -17,7 +17,7 @@ export const Switch = ({ level, blocks, scope, loose = false, useAuth = () => tr
         if (authed) {
             // tslint:disable-next-line: no-shadowed-variable
             const { component: Matched, data } = matchedState[0];
-            return (React.createElement(Matched, Object.assign({}, data, matchedState[1], { "$$meta": matchedState[0], "$$scope": scope, "$$useAuth": useAuth, "$$NotFound": NotFound, "$$Forbidden": Forbidden })));
+            return (React.createElement(Matched, Object.assign({}, data, matchedState[1], { "$$block": matchedState[0], "$$scope": scope, "$$useAuth": useAuth, "$$NotFound": NotFound, "$$Forbidden": Forbidden })));
         }
         // pending
         if (authed === undefined) {
@@ -32,7 +32,7 @@ export const Switch = ({ level, blocks, scope, loose = false, useAuth = () => tr
     return React.createElement(NotFound, null);
 };
 export const Carrier = ({ children = null, ...props }) => {
-    const MatchedChild = useChild(props);
+    const MatchedChild = useBlocks(props);
     return React.createElement(MatchedChild, null, children);
 };
 /**

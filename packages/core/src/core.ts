@@ -1,4 +1,5 @@
-import { debug, error } from "@spax/debug";
+import { debug, error, warn } from "@spax/debug";
+import { useEffect, useState } from "react";
 import cache from "./cache";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 import { IBlock, IHooks, IOptions, IPO, TPlugin } from "./types";
@@ -20,7 +21,7 @@ export async function run(plugins: TPlugin[] = [], options: IOptions = {}): Prom
   const { scope = DEFAULT_SCOPE } = options;
 
   if (cache.has("run", scope)) {
-    error("Scope `%s` already taken. Please set use a different string.", scope);
+    error("Scope `%s` already taken. Please use a different string.", scope);
     return;
   }
 
@@ -61,11 +62,18 @@ export async function run(plugins: TPlugin[] = [], options: IOptions = {}): Prom
   return getRenderedBlocks(options.blocks, scope);
 }
 
-/**
- * 未来，此处有可能是 Reactive 的
- */
 export function useParsed(scope: string = DEFAULT_SCOPE): [IBlock[]] {
-  return [cache.get(KEY_PARSED, scope)];
+  const [state, setState] = useState([]);
+
+  useEffect(() => {
+    setState(cache.get(KEY_PARSED, scope));
+    cache.on(KEY_PARSED, setState, scope);
+    return () => {
+      cache.off(KEY_PARSED, setState, scope);
+    };
+  }, []);
+
+  return [state];
 }
 
 /**
@@ -85,7 +93,12 @@ export function useRendered(scope: string = DEFAULT_SCOPE): [any] {
  * // 如果有子模块（深度优先）
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
-export async function parseBlocks(blocks: IBlock[], parent: IBlock, scope: string = DEFAULT_SCOPE): Promise<IBlock[]> {
+export async function parseBlocks(
+  blocks: IBlock[],
+  parent: IBlock,
+  scope: string = DEFAULT_SCOPE,
+  fromInnerCall: boolean = false,
+): Promise<IBlock[]> {
   if (!cache.has("run", scope)) {
     error("Scope `%s` has not initialized yet. Please call `run` first.", scope);
     return;
@@ -102,7 +115,21 @@ export async function parseBlocks(blocks: IBlock[], parent: IBlock, scope: strin
     return parseBlock(mc, parent, scope);
   }));
 
-  return blocks.flat();
+  blocks = blocks.flat();
+
+  // 外部调用时，需要更新 parent.blocks
+  if (!fromInnerCall) {
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV === "development") {
+      // 如果已存在，则告警
+      if (parent.blocks && parent.blocks.length) {
+        warn("Override blocks of parent which is not empty");
+      }
+    }
+    parent.blocks = blocks;
+  }
+
+  return blocks;
 }
 
 async function parseBlock(mc: IBlock, parent: IBlock, scope: string): Promise<IBlock> {
@@ -114,7 +141,7 @@ async function parseBlock(mc: IBlock, parent: IBlock, scope: string): Promise<IB
 
   // 子模块在 pre 之后、post 之前处理掉
   if (mc.blocks) {
-    mc.blocks = await parseBlocks(mc.blocks, mc, scope);
+    mc.blocks = await parseBlocks(mc.blocks, mc, scope, true);
   }
 
   // post
@@ -124,7 +151,7 @@ async function parseBlock(mc: IBlock, parent: IBlock, scope: string): Promise<IB
 }
 
 async function getRenderedBlocks(blocks: IBlock[] = [], scope: string): Promise<any> {
-  const parsedBlocks = await parseBlocks(blocks, {}, scope);
+  const parsedBlocks = await parseBlocks(blocks, {}, scope, true);
 
   // 存储以备外部调用
   cache.set(KEY_PARSED, parsedBlocks, scope);
