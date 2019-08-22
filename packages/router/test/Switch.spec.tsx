@@ -3,7 +3,7 @@ import { act, render } from "@testing-library/react";
 import { act as actHook, renderHook } from "@testing-library/react-hooks";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { Carrier, Switch } from "../src/components";
+import { MatchedChildBockOrChildren, Switch } from "../src/components";
 
 // tslint:disable: react-hooks-nesting
 
@@ -88,7 +88,7 @@ describe("Switch", () => {
     expect(container.textContent).toBe("Forbidden");
   });
 
-  test("with Carrier", () => {
+  test("with MatchedChildBockOrChildren", () => {
     const { result } = renderHook(() => usePathname());
     actHook(() => {
       result.current[1]("/father13");
@@ -100,7 +100,7 @@ describe("Switch", () => {
         path: "/father13",
         pathRE: pathToRegexp("/father13"),
         pathKeys: [],
-        component: Carrier,
+        component: MatchedChildBockOrChildren,
       },
     ];
     const { container } = render(
@@ -145,7 +145,7 @@ describe("Switch", () => {
         component: (props: any) => (
           <div>
             /father14
-            <Carrier {...props} />
+            <MatchedChildBockOrChildren {...props} />
           </div>
         ),
         blocks: [

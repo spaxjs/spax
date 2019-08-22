@@ -2,7 +2,7 @@ import { Box, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { IBlock } from "@spax/core";
 import { useT } from "@spax/i18n";
-import { Link, useBlocksOnTheFly } from "@spax/router";
+import { Link, useMatchedFromChildBocksOnTheFly } from "@spax/router";
 import React, { ReactNode, useState } from "react";
 
 const useStyles = makeStyles({
@@ -23,7 +23,7 @@ export default function UI(props: any): ReactNode {
   const { root } = useStyles(props);
   const { t } = useT();
   const [blocksOnTheFly, setBlocksOnTheFly] = useState(null);
-  const BlocksMatchedOnTheFly = useBlocksOnTheFly(props, blocksOnTheFly);
+  const BlocksMatchedOnTheFly = useMatchedFromChildBocksOnTheFly(props, blocksOnTheFly);
 
   function toggleBlocksOnTheFly() {
     setTimeout(() => {

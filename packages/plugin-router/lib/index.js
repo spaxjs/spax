@@ -1,4 +1,4 @@
-import { Carrier, Router, Switch } from "@spax/router";
+import { MatchedChildBockOrChildren, Router, Switch } from "@spax/router";
 import React from "react";
 export default ({ parse, render }) => {
     parse.tap("Router", (current, parent, option) => {
@@ -35,7 +35,7 @@ function normalizeComponent(current, option) {
         empty,
         authority,
         data,
-        component: empty ? Carrier : component,
+        component: empty ? MatchedChildBockOrChildren : component,
         blocks,
     };
 }

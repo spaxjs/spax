@@ -1,14 +1,13 @@
 import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useBlocks } from "./hooks";
-import { CarrierProps, LinkProps, RouterProps, SwitchProps } from "./types";
-import { getMatched } from "./utils";
+import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
+import { ComponentProps, LinkProps, RouterProps, SwitchProps } from "./types";
 
 export const Router: React.FC<RouterProps> = ({ children, scope, blocks }: RouterProps): any => {
   const [pathname] = usePathname();
   // 为了外部能够第一时间获得匹配到的顶级模块
-  const matchedState = getMatched(scope, pathname, 1, blocks);
+  const matchedState = useMatchedBlockAndParams(scope, pathname, 1, blocks);
   return matchedState ? children : null;
 };
 
@@ -24,7 +23,7 @@ export const Switch: React.FC<SwitchProps> = ({
   children = null,
 }: SwitchProps): any => {
   const [pathname] = usePathname();
-  const matchedState = getMatched(scope, pathname, level, blocks, loose);
+  const matchedState = useMatchedBlockAndParams(scope, pathname, level, blocks, loose);
   const authed = useAuth(matchedState ? matchedState[0] : undefined);
 
   if (matchedState) {
@@ -58,8 +57,8 @@ export const Switch: React.FC<SwitchProps> = ({
   return <NotFound />;
 };
 
-export const Carrier: React.FC<CarrierProps> = ({children = null, ...props}: CarrierProps) => {
-  const MatchedChild = useBlocks(props);
+export const MatchedChildBockOrChildren: React.FC<ComponentProps> = ({children = null, ...props}: ComponentProps) => {
+  const MatchedChild = useMatchedFromChildBocks(props);
   return <MatchedChild>{children}</MatchedChild>;
 };
 

@@ -13,7 +13,7 @@ import { AnyObject, IBlock, useParsed } from "@spax/core";
 import { debug } from "@spax/debug";
 import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
-import { Link, useMatched } from "@spax/router";
+import { Link, useMatchedArrayOfBlockAndParams } from "@spax/router";
 import clsx from "clsx";
 import React, {
   ReactElement,
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Menu: React.FC<AnyObject> = (props: any) => {
   const [role] = useGlobalState<string>("role");
   const [blocks] = useParsed();
-  const matched = useMatched();
+  const matched = useMatchedArrayOfBlockAndParams();
   const menu = useMenu(role, blocks);
   const openedKeys = matched.map(([{ key }]) => key);
 
