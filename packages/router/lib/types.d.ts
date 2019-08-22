@@ -25,7 +25,7 @@ export interface SwitchProps extends AnyObject {
     NotFound?: React.FC<{}>;
     Forbidden?: React.FC<{}>;
 }
-export interface CarrierProps extends AnyObject {
+export interface ComponentProps extends AnyObject {
     $$block: IBlock;
     $$scope: string;
     $$useAuth: (imd: IBlock) => boolean;

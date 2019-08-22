@@ -1,8 +1,8 @@
 import React from "react";
-import { CarrierProps, LinkProps, RouterProps, SwitchProps } from "./types";
+import { ComponentProps, LinkProps, RouterProps, SwitchProps } from "./types";
 export declare const Router: React.FC<RouterProps>;
 export declare const Switch: React.FC<SwitchProps>;
-export declare const Carrier: React.FC<CarrierProps>;
+export declare const MatchedChildBockOrChildren: React.FC<ComponentProps>;
 /**
  * @example
  * <Link to="/login?rv=1">Login</Link>

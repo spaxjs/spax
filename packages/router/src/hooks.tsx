@@ -1,26 +1,27 @@
 import { DEFAULT_SCOPE, IBlock, parseBlocks } from "@spax/core";
-import React, { useEffect, useState } from "react";
+import { debug } from "@spax/debug";
+import React, { useEffect, useMemo, useState } from "react";
 import { Switch } from "./components";
-import { CarrierProps, TMatchedState } from "./types";
+import { ComponentProps, MatchedParams, TMatchedState } from "./types";
 import { matchedDb } from "./utils";
 
-export function useBlock({ $$block }: CarrierProps): IBlock {
+export function useBlock({ $$block }: ComponentProps): IBlock {
   return $$block;
 }
 
-export function useExact({ $$exact }: CarrierProps): boolean {
+export function useExact({ $$exact }: ComponentProps): boolean {
   return $$exact;
 }
 
-export function useScope({ $$scope }: CarrierProps): string {
+export function useScope({ $$scope }: ComponentProps): string {
   return $$scope;
 }
 
-export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
-  const [state, setState] = useState(matchedDb.get(scope));
+export function useMatchedArrayOfBlockAndParams(scope: string = DEFAULT_SCOPE): TMatchedState[] {
+  const [state, setState] = useState([]);
 
   useEffect(() => {
-    // 因为 useMatched 多处复用，
+    // 因为 useMatchedArrayOfBlockAndParams 多处复用，
     // 所以每个组件加载后都要用 useEffect 同步状态
     setState(matchedDb.get(scope));
     return matchedDb.on(scope, setState);
@@ -29,7 +30,69 @@ export function useMatched(scope: string = DEFAULT_SCOPE): TMatchedState[] {
   return state;
 }
 
-export function useBlocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }: CarrierProps): React.FC<any> {
+export function useMatchedBlockAndParams(
+  scope: string = DEFAULT_SCOPE,
+  pathname: string,
+  level: number = 1,
+  blocks: IBlock[],
+  loose: boolean = false,
+): TMatchedState {
+  return useMemo(() => {
+    // `/a/b/c` -> `["/a", "/b", "/c"]`
+    const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
+
+    const matchedBlockAndParams: TMatchedState = ((n) => {
+      let fallbackBlock: any = null;
+      // 从寻找`完整`匹配到寻找`父级`匹配
+      while (n--) {
+        const toPath = tokens.slice(0, n + 1).join("");
+
+        for (let i = 0; i < blocks.length; i++) {
+          const childBlock: IBlock = blocks[i];
+
+          // 严格模式，才寻找 404
+          if (!loose && childBlock.path.indexOf("*") !== -1) {
+            if (!fallbackBlock) {
+              fallbackBlock = childBlock;
+            }
+            continue;
+          }
+
+          const execArray = childBlock.pathRE.exec(toPath);
+
+          if (execArray) {
+            const matchedParams: MatchedParams = childBlock.pathKeys.reduce((params: MatchedParams, {name}, index: number) => ({
+              ...params,
+              [name]: execArray[index + 1],
+            }), {
+              $$exact: tokens.length === childBlock.level,
+              // $$extra: tokens.length < childBlock.level,
+            });
+
+            /* istanbul ignore next */
+            if (process.env.NODE_ENV === "development") {
+              debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childBlock);
+            }
+
+            return [childBlock, matchedParams] as TMatchedState;
+          }
+        }
+      }
+
+      return fallbackBlock ? [fallbackBlock, { $$is404: true }] as TMatchedState : null;
+    })(tokens.length);
+
+    if (matchedBlockAndParams) {
+      matchedDb.check(scope, pathname);
+      matchedDb.add(scope, level, matchedBlockAndParams);
+      return matchedBlockAndParams;
+    }
+
+    return null;
+  }, [scope, pathname, level]);
+}
+
+export function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }: ComponentProps): React.FC<any> {
   // 如果没有子模块，则返回空
   return ($$block.blocks && $$block.blocks.length) ? ({children = null, ...props}: any) => (
     <Switch
@@ -46,7 +109,7 @@ export function useBlocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$
   ) : ({ children = null }) => children;
 }
 
-export function useBlocksOnTheFly({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }: CarrierProps, $$blocks: IBlock[]): React.FC<any> {
+export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }: ComponentProps, $$blocks: IBlock[]): React.FC<any> {
   const [parsedBlocks, setParsedBlocks] = useState($$blocks || []);
 
   useEffect(() => {

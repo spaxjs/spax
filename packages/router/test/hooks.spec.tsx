@@ -3,8 +3,7 @@ import { render } from "@testing-library/react";
 import { act as actHook, renderHook } from "@testing-library/react-hooks";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useBlock, useBlocks, useExact, useMatched, useScope } from "../src/hooks";
-import { getMatched } from "../src/utils";
+import { useBlock, useExact, useMatchedArrayOfBlockAndParams, useMatchedBlockAndParams, useMatchedFromChildBocks, useScope } from "../src/hooks";
 
 // tslint:disable: react-hooks-nesting
 
@@ -22,8 +21,8 @@ test("useScope", () => {
   expect(useScope({$$scope: "useScope"} as any)).toBe("useScope");
 });
 
-test("useBlocks", () => {
-  const scope = "useBlocks";
+test("useMatchedFromChildBocks", () => {
+  const scope = "useMatchedFromChildBocks";
   const block = {
     level: 1,
     path: "/father",
@@ -44,7 +43,7 @@ test("useBlocks", () => {
   actHook(() => {
     result0.current[1]("/father/child");
   });
-  const { result } = renderHook(() => useBlocks({
+  const { result } = renderHook(() => useMatchedFromChildBocks({
     $$exact: false,
     $$block: block,
     $$scope: scope,
@@ -59,8 +58,8 @@ test("useBlocks", () => {
   expect(container.textContent).toBe("/father/child");
 });
 
-test("useMatched", () => {
-  const scope = "useMatched";
+test("useMatchedArrayOfBlockAndParams", () => {
+  const scope = "useMatchedArrayOfBlockAndParams";
   const blocks = [
     {
       level: 1,
@@ -77,14 +76,10 @@ test("useMatched", () => {
       ],
     },
   ];
-  const { result } = renderHook(() => useMatched(scope));
-  actHook(() => {
-    getMatched(scope, "/father/child", 1, blocks, false);
-  });
-  expect(result.current[0][0].path).toBe("/father");
-  actHook(() => {
-    getMatched(scope, "/father/child", 2, blocks[0].blocks, false);
-  });
-  expect(result.current[0][0].path).toBe("/father");
-  expect(result.current[1][0].path).toBe("/father/child");
+  const { result: result0 } = renderHook(() => useMatchedArrayOfBlockAndParams(scope));
+  renderHook(() => useMatchedBlockAndParams(scope, "/father/child", 1, blocks, false));
+  expect(result0.current[0][0].path).toBe("/father");
+  renderHook(() => useMatchedBlockAndParams(scope, "/father/child", 2, blocks[0].blocks, false));
+  expect(result0.current[0][0].path).toBe("/father");
+  expect(result0.current[1][0].path).toBe("/father/child");
 });

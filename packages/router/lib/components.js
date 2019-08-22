@@ -1,17 +1,16 @@
 import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { useBlocks } from "./hooks";
-import { getMatched } from "./utils";
+import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
 export const Router = ({ children, scope, blocks }) => {
     const [pathname] = usePathname();
     // 为了外部能够第一时间获得匹配到的顶级模块
-    const matchedState = getMatched(scope, pathname, 1, blocks);
+    const matchedState = useMatchedBlockAndParams(scope, pathname, 1, blocks);
     return matchedState ? children : null;
 };
 export const Switch = ({ level, blocks, scope, loose = false, useAuth = () => true, Pending = () => null, NotFound = () => null, Forbidden = () => null, children = null, }) => {
     const [pathname] = usePathname();
-    const matchedState = getMatched(scope, pathname, level, blocks, loose);
+    const matchedState = useMatchedBlockAndParams(scope, pathname, level, blocks, loose);
     const authed = useAuth(matchedState ? matchedState[0] : undefined);
     if (matchedState) {
         if (authed) {
@@ -31,8 +30,8 @@ export const Switch = ({ level, blocks, scope, loose = false, useAuth = () => tr
     }
     return React.createElement(NotFound, null);
 };
-export const Carrier = ({ children = null, ...props }) => {
-    const MatchedChild = useBlocks(props);
+export const MatchedChildBockOrChildren = ({ children = null, ...props }) => {
+    const MatchedChild = useMatchedFromChildBocks(props);
     return React.createElement(MatchedChild, null, children);
 };
 /**

@@ -11,7 +11,7 @@ import { ReactComponent as Login } from "@mdi/svg/svg/login.svg";
 import { ReactComponent as Logout } from "@mdi/svg/svg/logout.svg";
 import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
-import { Link, useMatched } from "@spax/router";
+import { Link, useMatchedArrayOfBlockAndParams } from "@spax/router";
 import React from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { Footer } from "../components/Footer";
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 
 export default function AdminLayout(props: any) {
   const [role, setRole] = useGlobalState<string>("role");
-  const matched = useMatched();
+  const matched = useMatchedArrayOfBlockAndParams();
   const { h1 } = useStyles(props);
   const { t } = useT();
 

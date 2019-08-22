@@ -1,18 +1,18 @@
 import { ArrowBack } from "@material-ui/icons";
-import { Carrier } from "@spax/router";
+import { MatchedChildBockOrChildren } from "@spax/router";
 import React from "react";
 
-const code = `<Carrier {...props}>
+const code = `<MatchedChildBockOrChildren {...props}>
   <ArrowBack fontSize="large" />
   请从左侧菜单进入子模块
-</Carrier>`;
+</MatchedChildBockOrChildren>`;
 
 export default function UI(props: any) {
   return (
-    <Carrier {...props}>
+    <MatchedChildBockOrChildren {...props}>
       <ArrowBack fontSize="large" />
       请从左侧菜单进入子模块
       <pre>{code}</pre>
-    </Carrier>
+    </MatchedChildBockOrChildren>
   );
 }

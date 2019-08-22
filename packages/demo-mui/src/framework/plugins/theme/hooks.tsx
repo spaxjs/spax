@@ -1,9 +1,9 @@
 import { useT } from "@spax/i18n";
-import { useMatched } from "@spax/router";
+import { useMatchedArrayOfBlockAndParams } from "@spax/router";
 import React, { useEffect } from "react";
 
 export function useLayout(): React.FC<{ option: any }> {
-  const matched = useMatched();
+  const matched = useMatchedArrayOfBlockAndParams();
 
   if (matched && matched[0] && matched[0][0]) {
     return matched[0][0].layout === "blank"
@@ -15,7 +15,7 @@ export function useLayout(): React.FC<{ option: any }> {
 }
 
 export function useTitle(fallback: string): void {
-  const matched = useMatched();
+  const matched = useMatchedArrayOfBlockAndParams();
   const { t } = useT();
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { act, render } from "@testing-library/react";
 import { act as actHook, renderHook } from "@testing-library/react-hooks";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
-import { Carrier, Router } from "../src/components";
+import { MatchedChildBockOrChildren, Router } from "../src/components";
 
 // tslint:disable: react-hooks-nesting
 
@@ -77,7 +77,7 @@ describe("Router", () => {
         component: (props: any) => (
           <div>
             /father4
-            <Carrier {...props} />
+            <MatchedChildBockOrChildren {...props} />
           </div>
         ),
         blocks: [
