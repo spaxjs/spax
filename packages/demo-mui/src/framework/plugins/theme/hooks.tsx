@@ -11,7 +11,8 @@ export function useLayout(): React.FC<{ option: any }> {
       : require("./layouts/Admin").default;
   }
 
-  return require("./layouts/Admin").default;
+  // 模块未匹配到，等待……，但是需要将 children 下传，否则无法触发匹配
+  return ({ children }) => (<div>{children}</div>);
 }
 
 export function useTitle(fallback: string): void {

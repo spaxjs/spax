@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 export default ({ parse }) => {
-    parse.tap("Lazy", (current, parent, option) => {
+    parse.tap("Lazy", [], (current, parent, option) => {
         return { ...current, ...handleLazy(current, option) };
     }, (current, parent, option) => {
         // 有可能其它插件会输出异步的 Component，所以这里再做一道处理

@@ -2,14 +2,7 @@ import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
 import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
-import { ComponentProps, LinkProps, RouterProps, SwitchProps } from "./types";
-
-export const Router: React.FC<RouterProps> = ({ children, scope, blocks }: RouterProps): any => {
-  const [pathname] = usePathname();
-  // 为了外部能够第一时间获得匹配到的顶级模块
-  const matchedState = useMatchedBlockAndParams(scope, pathname, 1, blocks);
-  return matchedState ? children : null;
-};
+import { ComponentProps, LinkProps, SwitchProps } from "./types";
 
 export const Switch: React.FC<SwitchProps> = ({
   level,

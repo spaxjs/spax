@@ -1,25 +1,15 @@
-import { MatchedChildBockOrChildren, Router, Switch } from "@spax/router";
+import { MatchedChildBockOrChildren, Switch } from "@spax/router";
 import React from "react";
 export default ({ parse, render }) => {
-    parse.tap("Router", (current, parent, option) => {
+    parse.tap("Router", ["Lazy", "Level", "Path"], (current, parent, option) => {
         return {
             ...current,
             ...normalizeComponent(current, option),
         };
-    }, undefined, ["Lazy", "Level"]);
-    /**
-     * @example
-     * <Router>
-     *   <...>
-     *     <Switch>
-     */
-    render.tap("Router", (blocks, option, { scope }) => {
-        // 向后传
-        Object.assign(option, { blocks });
-        return (React.createElement(Switch, { level: 1, blocks: blocks, scope: scope, loose: false, useAuth: option.useAuth, NotFound: option.NotFound, Forbidden: option.Forbidden }));
-    }, (element, option, { scope }) => {
-        return (React.createElement(Router, { scope: scope, blocks: option.blocks }, element));
-    }, ["Path"]);
+    });
+    render.tap("Router", [], (blocks, { useAuth, NotFound, Forbidden }, { scope }) => {
+        return (React.createElement(Switch, { level: 1, blocks: blocks, scope: scope, loose: false, useAuth: useAuth, NotFound: NotFound, Forbidden: Forbidden }));
+    });
 };
 /**
  * 如果未指定 component，

@@ -1,7 +1,7 @@
 import { warn } from "@spax/debug";
 import pathToRegexp from "path-to-regexp";
 export default ({ parse }) => {
-    parse.tap("Path", (current, parent, option) => {
+    parse.tap("Path", [], (current, parent, option) => {
         return {
             ...current,
             ...normalizePath(current, parent, option),

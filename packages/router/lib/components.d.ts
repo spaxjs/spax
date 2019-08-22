@@ -1,6 +1,5 @@
 import React from "react";
-import { ComponentProps, LinkProps, RouterProps, SwitchProps } from "./types";
-export declare const Router: React.FC<RouterProps>;
+import { ComponentProps, LinkProps, SwitchProps } from "./types";
 export declare const Switch: React.FC<SwitchProps>;
 export declare const MatchedChildBockOrChildren: React.FC<ComponentProps>;
 /**
