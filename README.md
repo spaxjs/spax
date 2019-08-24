@@ -19,9 +19,11 @@ $ npx @spax/spax-cli <project-name>
 
 ## :open_book: 名词解释 Glossary
 
-- 框架：特指 [@spax/core](packages/core) 与 [@spax/framework](packages/framework)
-- 业务框架：比如 [@spax/framework-hook](packages/framework-hook)
-- 模块：业务模块声明，可能包含 path, component 等信息
+- 引擎：特指 [@spax/core](packages/core)
+- 框架
+  - 基础框架：[@spax/framework](packages/framework)
+  - 业务框架：基础框架的子类，比如 [@spax/framework-hook](packages/framework-hook)
+- Block：业务模块声明，可能包含 path, component 等信息
 
 ## :pushpin: 设计原则 Principle
 
