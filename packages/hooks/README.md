@@ -2,10 +2,7 @@
 
 > 一些有用的 React hooks
 
-## useStore
+## useGlobalState
 
-- 基于 [react-hooks-global-state](https://github.com/dai-shi/react-hooks-global-state) 的数据中心化管理
-
-## usePersist
-
-- 使用 localStorage 实现数据持久化
+- 使用 events 实现数据同步
+- 使用 localStorage(or custom storage) 实现数据持久化
