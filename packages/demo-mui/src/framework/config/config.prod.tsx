@@ -2,12 +2,11 @@ import { useGlobalState } from "@spax/hooks";
 import Loading from "framework/components/interaction/Loading";
 import React, { useEffect, useState } from "react";
 
+// const scope = "demo-mui";
 const initialStates = {
   themeType: "light",
   role: "",
   lng: "zh",
-  PersistCount: 0,
-  GlobalCount: 0,
   "sidebar-open": true,
   repo: {
     url: "https://github.com/crossjs/spax",
@@ -26,6 +25,7 @@ function hasAuth(role: string, authority: string[]) {
 
 export default {
   version: "0.0.1",
+  // scope,
   plugins: {
     i18n: {
       fallbackLng: initialStates.lng,

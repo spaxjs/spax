@@ -92,7 +92,7 @@ export function useMatchedBlockAndParams(
   }, [scope, pathname, level]);
 }
 
-export function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }: ComponentProps): React.FC<any> {
+export function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }: ComponentProps): React.FC<any> {
   // 如果没有子模块，则返回空
   return ($$block.blocks && $$block.blocks.length) ? ({children = null, ...props}: any) => (
     <Switch
@@ -121,7 +121,7 @@ export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$scope, $$
   }, [$$blocks]);
 
   // 如果没有子模块，则返回空
-  return (parsedBlocks.length) ? ({children = null, ...props}: any) => (
+  return parsedBlocks.length ? ({children = null, ...props}: any) => (
     <Switch
       level={$$block.level + 1}
       blocks={parsedBlocks}

@@ -103,7 +103,7 @@ Framework.options = {
  * 对象：深拷贝
  * 数组：合并
  */
-function merge(...args) {
+export function merge(...args) {
     return mergeWith({}, ...args, (obj, src) => {
         // 合并数组
         if (Array.isArray(src)) {

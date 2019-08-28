@@ -1,41 +1,65 @@
+import { error, warn } from "@spax/debug";
 import EventEmitter from "events";
-import { useEffect } from "react";
-import { usePersistState } from "./usePersistState";
+import { useEffect, useState } from "react";
 const emitter = new EventEmitter();
-const mapDefault = new Map();
-export function useGlobalState(key, initialState, cacheMap = mapDefault) {
-    if (cacheMap.has(key)) {
-        initialState = cacheMap.get(key);
-    }
-    else {
-        if (typeof initialState === "function") {
-            initialState = initialState();
+emitter.setMaxListeners(Number.MAX_VALUE);
+export const prefix = "@spax&hooks&global&";
+export function useGlobalState(key, initialState, storage = localStorage) {
+    const storageKey = `${prefix}${key}`;
+    const [state, setState] = useState(() => {
+        const value = getState(initialState);
+        // use storage first
+        if (storage) {
+            const storageValue = storage.getItem(storageKey);
+            if (storageValue !== null) {
+                try {
+                    return JSON.parse(storageValue);
+                }
+                catch (error) {
+                    /* istanbul ignore next */
+                    if (process.env.NODE_ENV === "development") {
+                        warn("Invalid value of %s: %O", key, storageValue);
+                    }
+                }
+            }
+            // update storage value
+            storage.setItem(storageKey, JSON.stringify(value));
         }
-        cacheMap.set(key, initialState);
-    }
-    const [state, setState] = usePersistState(key, initialState);
+        return value;
+    });
     const setStateSynchronously = (value) => {
-        // 派发事件
+        // dispatch event
         emitter.emit(key, value);
-        // 将 state 同步到 map
-        cacheMap.set(key, value);
+        // synchronize
+        if (storage) {
+            storage.setItem(storageKey, JSON.stringify(value));
+        }
     };
     useEffect(() => {
-        // mounting 时监听
+        // add listener on mounted
         emitter.on(key, setState);
         return () => {
-            // unmount 时取消监听
+            // remove listener on unmounted
             emitter.off(key, setState);
         };
-    }, []);
+    }, [key]);
     return [
         state,
         setStateSynchronously,
     ];
 }
-export function setGlobalState(key, initialState, cacheMap = mapDefault) {
-    if (typeof initialState === "function") {
-        initialState = initialState();
+export function setGlobalState(key, initialState, storage = localStorage) {
+    if (storage) {
+        const storageKey = `${prefix}${key}`;
+        storage.setItem(storageKey, JSON.stringify(getState(initialState)));
     }
-    cacheMap.set(key, initialState);
+    else {
+        /* istanbul ignore next */
+        if (process.env.NODE_ENV === "development") {
+            error("Parameter `storage` is required");
+        }
+    }
+}
+function getState(initialState) {
+    return typeof initialState === "function" ? initialState() : initialState;
 }

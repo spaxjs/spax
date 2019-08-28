@@ -29,3 +29,8 @@ events@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/events/download/events-3.0.0.tgz#9a0a0dfaf62893d92b875b8f2698ca4114973e88"
   integrity sha1-mgoN+vYok9krh1uPJpjKQRSXPog=
+
+react-hooks-global-state@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.npm.taobao.org/react-hooks-global-state/download/react-hooks-global-state-0.14.0.tgz#10351425bbc87d46a0ff69be9878d3fe8938e95e"
+  integrity sha1-EDUUJbvIfUag/2m+mHjT/ok46V4=

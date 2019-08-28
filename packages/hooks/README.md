@@ -2,15 +2,10 @@
 
 > 一些有用的 React hooks
 
-## useSharedState
+## useStore
 
-- 使用 events 实现数据同步
+- 基于 [react-hooks-global-state](https://github.com/dai-shi/react-hooks-global-state) 的数据中心化管理
 
-## usePersistState
+## usePersist
 
-- 使用 localStorage 实现数据持久化
-
-## useGlobalState
-
-- 使用 events 实现数据同步
 - 使用 localStorage 实现数据持久化

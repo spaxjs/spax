@@ -66,7 +66,7 @@ export function useMatchedBlockAndParams(scope = DEFAULT_SCOPE, pathname, level 
         return null;
     }, [scope, pathname, level]);
 }
-export function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }) {
+export function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }) {
     // 如果没有子模块，则返回空
     return ($$block.blocks && $$block.blocks.length) ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: $$block.blocks, scope: $$scope, 
         // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
@@ -83,7 +83,7 @@ export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$scope, $$
         }
     }, [$$blocks]);
     // 如果没有子模块，则返回空
-    return (parsedBlocks.length) ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: parsedBlocks, scope: $$scope, 
+    return parsedBlocks.length ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: parsedBlocks, scope: $$scope, 
         // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
         loose: $$exact, useAuth: $$useAuth, NotFound: $$NotFound, Forbidden: $$Forbidden }, props), children)) : ({ children = null }) => children;
 }

@@ -11,11 +11,6 @@ module.exports = {
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
-  // "globals": {
-  //   "ts-jest": {
-  //     "tsConfig": "tsconfig.json"
-  //   }
-  // },
   "testMatch": [
     "**/test/*.(ts|tsx)"
   ],

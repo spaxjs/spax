@@ -15,3 +15,8 @@ export default abstract class Framework {
      */
     private initialize;
 }
+/**
+ * 对象：深拷贝
+ * 数组：合并
+ */
+export declare function merge(...args: any[]): any;

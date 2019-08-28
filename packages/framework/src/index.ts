@@ -121,7 +121,7 @@ export default abstract class Framework {
  * 对象：深拷贝
  * 数组：合并
  */
-function merge(...args: any[]) {
+export function merge(...args: any[]) {
   return mergeWith({}, ...args, (obj: any, src: any) => {
     // 合并数组
     if (Array.isArray(src)) {

@@ -6,5 +6,5 @@ export declare function useExact({ $$exact }: ComponentProps): boolean;
 export declare function useScope({ $$scope }: ComponentProps): string;
 export declare function useMatchedArrayOfBlockAndParams(scope?: string): TMatchedState[];
 export declare function useMatchedBlockAndParams(scope: string, pathname: string, level: number, blocks: IBlock[], loose?: boolean): TMatchedState;
-export declare function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden, $$blocks }: ComponentProps): React.FC<any>;
+export declare function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }: ComponentProps): React.FC<any>;
 export declare function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }: ComponentProps, $$blocks: IBlock[]): React.FC<any>;

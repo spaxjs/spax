@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@spax/debug": "^1.1.0",
     "events": "^3.0.0"
   },
   "devDependencies": {
