@@ -13,7 +13,7 @@
     "@spax/core": "^1.1.0",
     "@spax/debug": "^1.1.0",
     "@spax/history": "^1.1.0",
-    "@spax/hooks": "^1.1.0",
+    "@spax/hooks": "^1.1.1",
     "events": "^3.0.0",
     "path-to-regexp": "^3.0.0"
   },
