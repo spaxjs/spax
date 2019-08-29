@@ -2,14 +2,14 @@ import { Box, Button, FormControlLabel, Link, Menu, MenuItem, Switch, Typography
 import { BoxProps } from "@material-ui/core/Box";
 import { Language } from "@material-ui/icons";
 import { ReactComponent as Github } from "@mdi/svg/svg/github-circle.svg";
-import { useGlobalState } from "@spax/hooks";
 import { changeLng, useT } from "@spax/i18n";
 import React, { useEffect, useState } from "react";
+import { useStore } from "../../../store";
 
 export const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {
-  const [ repo ] = useGlobalState<any>("repo");
-  const [ lng, setLng ] = useGlobalState<any>("lng");
-  const [ themeType, setThemeType ] = useGlobalState<"light" | "dark">("themeType", "light");
+  const [ repo ] = useStore<any>("repo");
+  const [ lng, setLng ] = useStore<any>("lng");
+  const [ themeType, setThemeType ] = useStore<"light" | "dark">("theme-type");
   const [ anchorEl, setAnchorEl ] = useState<null | HTMLElement>(null);
   const { t } = useT("Theme");
 

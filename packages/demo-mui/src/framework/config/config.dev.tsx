@@ -1,10 +1,10 @@
-import { useGlobalState } from "@spax/hooks";
 import Loading from "framework/components/interaction/Loading";
 import React, { useEffect, useState } from "react";
+import * as store from "store";
 
 // const scope = "demo-mui";
 const initialStates = {
-  themeType: "light",
+  "theme-type": "light",
   role: "",
   lng: "zh",
   "sidebar-open": true,
@@ -31,6 +31,7 @@ export default {
       fallbackLng: initialStates.lng,
     },
     store: {
+      provider: [store],
       initialStates,
     },
     theme: {
@@ -44,7 +45,7 @@ export default {
       NotFound: require("framework/components/exception/NotFound").default,
       Forbidden: require("framework/components/exception/Forbidden").default,
       useAuth: function useAuth({ authority } = { authority: [] }): boolean {
-        const [role] = useGlobalState<string>("role");
+        const [role] = store.useStore<string>("role");
         const [auth, setAuth] = useState(undefined);
 
         useEffect(() => {

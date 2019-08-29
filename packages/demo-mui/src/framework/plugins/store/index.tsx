@@ -1,18 +1,22 @@
 
-import { IHooks, IPO } from "@spax/core";
+import { IHooks, IOptions, IPO } from "@spax/core";
 import { debug } from "@spax/debug";
-import { setGlobalState } from "@spax/hooks";
 
 export default ({ init }: IHooks) => {
   init.tap(
     "Store",
     [],
-    ({ initialStates = [] }: IPO) => {
-      if (process.env.NODE_ENV === "development")
-        debug("Initialize global states: %O", initialStates);
+    ({ provider = [], initialStates = {} }: IPO, { scope }: IOptions) => {
+      provider.forEach(({ setScope, setStore }, index: number) => {
+        setScope(scope);
 
-      Object.entries(initialStates).forEach(([key, initialState]) => {
-        setGlobalState(key, initialState);
+        if (index === 0) {
+          /* istanbul ignore next */
+          if (process.env.NODE_ENV === "development")
+            debug("Initialize global states: %O", initialStates);
+
+          setStore(initialStates);
+        }
       });
     },
   );

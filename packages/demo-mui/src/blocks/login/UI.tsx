@@ -1,13 +1,13 @@
 import { Box, Button, IconButton, InputAdornment, Link as L, TextField } from "@material-ui/core";
 import { Fingerprint, Visibility, VisibilityOff } from "@material-ui/icons";
 import { usePathname } from "@spax/history";
-import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
 import { Link } from "@spax/router";
 import React, { useEffect, useState } from "react";
+import { useStore } from "store";
 
 export default function UI(props: any) {
-  const [role, setRole] = useGlobalState<string>("role");
+  const [role, setRole] = useStore<string>("role");
   const [, setPath] = usePathname();
   const { t } = useT("Theme");
 
