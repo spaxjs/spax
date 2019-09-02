@@ -4,6 +4,10 @@ import * as ReactDOM from "react-dom";
 import singleSpaReact, { Lifecycles } from "single-spa-react";
 import Root from "./root.component";
 
+/**
+ * 异步模式
+ */
+
 const reactLifecycles: Promise<Lifecycles> = Root.then((R) => singleSpaReact({
   React,
   ReactDOM,

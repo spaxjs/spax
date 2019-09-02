@@ -4,26 +4,30 @@ import * as ReactDOM from "react-dom";
 import singleSpaReact, { Lifecycles } from "single-spa-react";
 import Root from "./root.component";
 
-const reactLifecycles: Promise<Lifecycles> = Root.then((R) => singleSpaReact({
+/**
+ * 同步模式
+ */
+
+const reactLifecycles: Lifecycles = singleSpaReact({
   React,
   ReactDOM,
-  rootComponent: (() => R) as any,
+  loadRootComponent: () => Root.then(R => () => R) as any,
   suppressComponentDidCatchWarning: true,
-}));
+});
 
 let snapshot: any = {};
 
-export async function bootstrap(props) {
-  return (await reactLifecycles).bootstrap(props);
+export function bootstrap(props) {
+  return reactLifecycles.bootstrap(props);
 }
 
-export async function mount(props) {
+export function mount(props) {
   cache.restore(snapshot);
-  return (await reactLifecycles).mount(props);
+  return reactLifecycles.mount(props);
 }
 
-export async function unmount(props) {
+export function unmount(props) {
   snapshot = cache.snapshot();
   cache.clear();
-  return (await reactLifecycles).unmount(props);
+  return reactLifecycles.unmount(props);
 }
