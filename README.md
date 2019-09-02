@@ -55,17 +55,17 @@ $ npx @spax/spax-cli <project-name>
 - [@spax/i18n](packages/i18n) [i18next](https://github.com/i18next/i18next) 的封装
 - [@spax/router](packages/router) 基于 React Hook 的路由实现
 
-## :sparkler: 示例 Demo
+## :sparkler: 示例 Examples
 
 > 以下示例使用的技术栈非必选，实际应用时可根据自身偏好灵活调整。
 
-- [demo with mui](packages/demo-mui)
+- [demo with mui](examples/demo-mui)
   - craco
   - react-scripts
   - material-ui
   - i18next
 
-- [demo for single-spa](packages/demo-single-spa)
+- [demo for single-spa](examples/demo-single-spa)
   - craco
   - react-scripts
   - single-spa

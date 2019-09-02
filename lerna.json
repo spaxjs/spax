@@ -1,11 +1,13 @@
 {
   "version": "independent",
   "packages": [
+    "examples/*",
     "packages/*"
   ],
   "lerna": "3.15.0",
   "npmClient": "yarn",
   "ignoreChanges": [
+    "examples/**",
     "**/test/**",
     "**/*.md"
   ],
