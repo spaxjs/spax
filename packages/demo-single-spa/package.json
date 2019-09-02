@@ -1,6 +1,6 @@
 {
   "name": "demo-single-spa",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "spax",
   "private": true,
   "scripts": {
@@ -16,9 +16,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.1.0",
-    "@spax/framework-hook": "^1.1.0",
-    "@spax/hooks": "^1.1.1",
+    "@spax/core": "^1.2.0",
+    "@spax/framework-hook": "^1.2.0",
+    "@spax/hooks": "^1.2.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "single-spa": "^4.3.7",

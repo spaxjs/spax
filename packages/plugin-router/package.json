@@ -1,6 +1,6 @@
 {
   "name": "@spax/plugin-router",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "router in hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,8 +10,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.1.0",
-    "@spax/router": "^1.1.0"
+    "@spax/core": "^1.2.0",
+    "@spax/router": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.2",
