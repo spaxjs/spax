@@ -11,9 +11,13 @@ export interface IHooks {
 }
 
 export type TPriority = "pre" | "post";
-export type TPlugin = (hooks: IHooks) => void;
+type TPluginName = string;
+type TPluginDeps = string[];
+type TPluginTapper = (hooks: IHooks, option: IPO, options: IOptions) => void;
+export type TPlugin = [TPluginName, TPluginDeps, TPluginTapper];
 
 export interface IBlock extends AnyObject {
+  $$parsed?: boolean;
   blocks?: IBlock[];
 }
 
@@ -24,8 +28,6 @@ export type IPO = IPluginOption;
 export interface IPluginOptions extends AnyObject<IPluginOption>{}
 
 export interface IOptions {
-  // 运行范围
-  scope?: string;
   // 插件选项
   plugins?: IPluginOptions;
   // 业务模块

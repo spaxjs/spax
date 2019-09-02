@@ -1,7 +1,11 @@
-import { renderHook } from "@testing-library/react-hooks";
-import { parseBlocks, run, useParsed, useRendered } from "../src";
+import { act as actHook, renderHook } from "@testing-library/react-hooks";
+import { cache, parseBlocks, run, runParse, runRender, useParsed, useRendered } from "../src";
 
 // tslint:disable: react-hooks-nesting
+
+beforeEach(() => {
+  cache.clear();
+});
 
 describe("parseBlocks", () => {
   test("call before run", async () => {
@@ -10,12 +14,11 @@ describe("parseBlocks", () => {
   });
 
   test("call after run", async () => {
-    const scope = "parseBlocks";
-    const parent = {path: "/", title: "L1", blocks: [{path: "/", title: "L20"}]};
-    const blocks = [{path: "/", title: "L21"}, {path: "/", title: "L22"}];
-    const rendered = await run([], { scope, blocks: [parent]});
+    const parent = { path: "/", title: "L1", blocks: [{ path: "/", title: "L20" }] };
+    const blocks = [{ path: "/", title: "L21" }, { path: "/", title: "L22" }];
+    const rendered = await run([], { blocks: [parent] });
     expect(rendered[0].blocks.length).toBe(1);
-    const parsed = await parseBlocks(blocks, rendered[0], scope);
+    const parsed = await parseBlocks(blocks, rendered[0]);
     expect(parsed).toEqual(blocks);
     expect(rendered[0].blocks.length).toBe(2);
   });
@@ -28,8 +31,8 @@ describe("useParsed", () => {
   });
 
   test("call after run", async () => {
-    await run([], { scope: "useParsed" });
-    const { result } = renderHook(() => useParsed("useParsed"));
+    await run([], {});
+    const { result } = renderHook(() => useParsed());
     expect(result.current[0]).toEqual([]);
   });
 });
@@ -41,263 +44,315 @@ describe("useRendered", () => {
   });
 
   test("call after run", async () => {
-    await run([], { scope: "useRendered" });
-    const { result } = renderHook(() => useRendered("useRendered"));
+    await run([], {});
+    const { result } = renderHook(() => useRendered());
     expect(result.current[0]).toEqual([]);
   });
 });
 
 describe("run", () => {
   describe("returns", () => {
+    test("plugins: undefined", async () => {
+      const ret = await run(undefined, {});
+      expect(ret).toEqual([]);
+    });
+    test("options: undefined", async () => {
+      const ret = await run([]);
+      expect(ret).toEqual([]);
+    });
     test("blocks: undefined", async () => {
-      const ret = await run([], {
-        scope: "ret",
-      });
+      const ret = await run([], {});
       expect(ret).toEqual([]);
     });
     test("blocks: []", async () => {
       const ret1 = await run([], {
-        scope: "ret1",
         blocks: [],
       });
       expect(ret1).toEqual([]);
     });
     test("blocks: [{...}]", async () => {
-      const blocks = [{title: "hello"}];
-      const ret2 = await run([({ parse }) => {
-        parse.tap("Blocks", [], (current) => {
-          return {...current};
+      const blocks = [{ title: "hello" }];
+      const ret2 = await run([["Blocks", [], ({ parse }) => {
+        parse.tap((current) => {
+          return { ...current };
         });
-      }], {
-        scope: "ret2",
-        blocks,
-      });
+      }]], {
+          blocks,
+        });
       expect(ret2).toEqual(blocks);
       // not reference
       expect(ret2[0]).not.toBe(blocks[0]);
     });
   });
 
-  test("scope", async () => {
-    expect(await run([], {})).toEqual([]);
-    // should show error
-    expect(await run([], {})).toBe(undefined);
-  });
-
   describe("plugins", () => {
+    test("options", async () => {
+      await run([["Test", [], (hooks, option) => {
+        hooks.init.tap(() => {
+          expect(option.foo).toBe("bar");
+        });
+      }], ["Test2", [], (hooks, option) => {
+        hooks.init.tap(() => {
+          expect(option.foo).toBe(undefined);
+        });
+      }]], {
+          plugins: {
+            test: {
+              foo: "bar",
+            },
+          },
+          blocks: [],
+        });
+    });
+
     test("ordering", async () => {
       let index = 0;
-      await run([(hooks) => {
-        hooks.init.tap("Test", [], () => {
+      await run([["Test", [], (hooks) => {
+        hooks.init.tap(() => {
           expect(index++).toBe(0);
         }, () => {
           expect(index++).toBe(3);
         });
-        hooks.init.tap("Test2", [], () => {
+      }], ["Test2", [], (hooks) => {
+        hooks.init.tap(() => {
           expect(index++).toBe(1);
         }, () => {
           expect(index++).toBe(2);
         });
-      }], {
-        scope: "ordering",
-        blocks: [],
-      });
+      }]], {
+          blocks: [],
+        });
     });
 
     describe("dependency", () => {
       test("simple", async () => {
         let index = 0;
-        await run([(hooks) => {
-          hooks.init.tap("Test", ["Test2"], () => {
+        await run([["Test", ["Test2"], (hooks) => {
+          hooks.init.tap(() => {
             expect(index++).toBe(1);
           }, () => {
             expect(index++).toBe(2);
           });
-          hooks.init.tap("Test2", [], () => {
+        }], ["Test2", [], (hooks) => {
+          hooks.init.tap(() => {
             expect(index++).toBe(0);
           }, () => {
             expect(index++).toBe(3);
           });
-        }], {
-          scope: "dependency-simple",
-          blocks: [],
-        });
+        }]], {
+            blocks: [],
+          });
       });
+
       test("complicated", async () => {
         let index = 0;
-        await run([(hooks) => {
-          hooks.init.tap("Test", ["Test2"], () => {
+        await run([["Test", ["Test2"], (hooks) => {
+          hooks.init.tap(() => {
             expect(index++).toBe(1);
           }, () => {
             expect(index++).toBe(4);
           });
-          hooks.init.tap("Test2", [], () => {
+        }], ["Test2", [], (hooks) => {
+          hooks.init.tap(() => {
             expect(index++).toBe(0);
           }, () => {
             expect(index++).toBe(5);
           });
-          hooks.init.tap("Test3", ["Test2"], () => {
+        }], ["Test3", ["Test2"], (hooks) => {
+          hooks.init.tap(() => {
             expect(index++).toBe(2);
           }, () => {
             expect(index++).toBe(3);
           });
-        }], {
-          scope: "dependency-complicated",
-          blocks: [],
-        });
+        }]], {
+            blocks: [],
+          });
       });
     });
 
     describe("init", () => {
       test("pre", async () => {
-        await run([(hooks) => {
-          hooks.init.tap("Test", [], (option) => {
+        await run([["Test", [], (hooks, option) => {
+          hooks.init.tap(() => {
             expect(option.foo).toBe("bar");
           });
-        }], {
-          scope: "init-pre",
-          plugins: {
-            test: {
-              foo: "bar",
+        }]], {
+            plugins: {
+              test: {
+                foo: "bar",
+              },
             },
-          },
-          blocks: [],
-        });
+            blocks: [],
+          });
       });
+
       test("post", async () => {
-        await run([(hooks) => {
-          hooks.init.tap("Test", [], undefined, (option) => {
+        await run([["Test", [], (hooks, option) => {
+          hooks.init.tap(undefined, () => {
             expect(option.foo).toBe("bar");
           });
-        }], {
-          scope: "init-post",
-          plugins: {
-            test: {
-              foo: "bar",
+        }]], {
+            plugins: {
+              test: {
+                foo: "bar",
+              },
             },
-          },
-          blocks: [],
-        });
+            blocks: [],
+          });
       });
+
       test("both", async () => {
-        await run([(hooks) => {
-          hooks.init.tap("Test", [], (option) => {
+        await run([["Test", [], (hooks, option) => {
+          hooks.init.tap(() => {
             expect(option.foo).toBe("bar");
-          }, (option) => {
+          }, () => {
             expect(option.foo).toBe("bar");
           });
-        }], {
-          scope: "init",
-          plugins: {
-            test: {
-              foo: "bar",
+        }]], {
+            plugins: {
+              test: {
+                foo: "bar",
+              },
             },
-          },
-          blocks: [],
-        });
+            blocks: [],
+          });
       });
     });
 
     test("parse", async () => {
-      await run([(hooks) => {
-        hooks.parse.tap("Test", [], (current, parent, option) => {
+      await run([["Test", [], (hooks, option) => {
+        hooks.parse.tap((current, parent) => {
           expect(option.foo).toBe("bar");
-          expect(current).toEqual({title: "hello"});
+          expect(current).toEqual({ title: "hello" });
           expect(parent).toEqual({});
           return {
             ...current,
             baz: "qux",
           };
-        }, (current, parent, option) => {
+        }, (current, parent) => {
           expect(option.foo).toBe("bar");
-          expect(current).toEqual({title: "hello", baz: "qux"});
+          expect(current).toEqual({ title: "hello", baz: "qux" });
           expect(parent).toEqual({});
         });
-      }], {
-        scope: "parse",
-        plugins: {
-          test: {
-            foo: "bar",
+      }]], {
+          plugins: {
+            test: {
+              foo: "bar",
+            },
           },
-        },
-        blocks: [{title: "hello"}],
-      });
+          blocks: [{ title: "hello" }],
+        });
     });
 
     test("render", async () => {
-      await run([(hooks) => {
-        hooks.render.tap("Test", [], (blocks, option) => {
+      await run([["Test", [], (hooks, option) => {
+        hooks.render.tap((blocks) => {
           expect(option.foo).toBe("bar");
-          expect(blocks).toEqual([{title: "hello"}]);
+          expect(blocks).toEqual([{ title: "hello" }]);
           return JSON.stringify(blocks);
-        }, (blocks, option) => {
+        }, (blocks) => {
           expect(option.foo).toBe("bar");
-          expect(blocks).toBe(JSON.stringify([{title: "hello"}]));
+          expect(blocks).toBe(JSON.stringify([{ title: "hello" }]));
         });
-      }], {
-        scope: "render",
-        plugins: {
-          test: {
-            foo: "bar",
+      }]], {
+          plugins: {
+            test: {
+              foo: "bar",
+            },
           },
-        },
-        blocks: [{title: "hello"}],
-      });
+          blocks: [{ title: "hello" }],
+        });
     });
   });
 
   describe("blocks", () => {
     test("async", async () => {
-      const scope = "async";
-      const rawValue = [{path: "/"}];
+      const rawValue = [{ path: "/" }];
       const blocks = [Promise.resolve(rawValue), import("./fixtures/home")];
       await run([], {
-        scope,
         blocks,
       });
-      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      const { result: resultParsed, unmount: unmountParsed } = renderHook(() => useParsed());
       expect(resultParsed.current[0]).toEqual(rawValue.concat(rawValue));
-      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      const { result: resultRendered, unmount: unmountRendered } = renderHook(() => useRendered());
       expect(resultRendered.current[0]).toEqual(rawValue.concat(rawValue));
+      unmountParsed();
+      unmountRendered();
     });
 
     test("[{...}]", async () => {
-      const scope = "[{...}]";
-      const blocks = [{path: "/"}];
+      const blocks = [{ path: "/" }];
       await run([], {
-        scope,
         blocks,
       });
-      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      const { result: resultParsed, unmount: unmountParsed } = renderHook(() => useParsed());
       expect(resultParsed.current[0]).toEqual(blocks);
-      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      const { result: resultRendered, unmount: unmountRendered } = renderHook(() => useRendered());
       expect(resultRendered.current[0]).toEqual(blocks);
+      unmountParsed();
+      unmountRendered();
     });
 
     test("[{...,[{...}]}]", async () => {
-      const scope = "[{...,[{...}]}]";
-      const blocks = [{path: "/", blocks: [{path: "/"}]}];
+      const blocks = [{ path: "/", blocks: [{ path: "/" }] }];
       await run([], {
-        scope,
         blocks,
       });
-      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      const { result: resultParsed, unmount: unmountParsed } = renderHook(() => useParsed());
       expect(resultParsed.current[0]).toEqual(blocks);
-      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      const { result: resultRendered, unmount: unmountRendered } = renderHook(() => useRendered());
       expect(resultRendered.current[0]).toEqual(blocks);
+      unmountParsed();
+      unmountRendered();
     });
 
     test("[[{...}]]", async () => {
-      const scope = "[[{...}]]";
-      const blocks = [[{path: "/"}]];
+      const blocks = [[{ path: "/" }]];
       await run([], {
-        scope,
         blocks,
       });
-      const { result: resultParsed } = renderHook(() => useParsed(scope));
+      const { result: resultParsed, unmount: unmountParsed } = renderHook(() => useParsed());
       expect(resultParsed.current[0]).toEqual(blocks[0]);
-      const { result: resultRendered } = renderHook(() => useRendered(scope));
+      const { result: resultRendered, unmount: unmountRendered } = renderHook(() => useRendered());
       expect(resultRendered.current[0]).toEqual(blocks[0]);
+      unmountParsed();
+      unmountRendered();
     });
   });
+});
+
+test("runParse", async () => {
+  const { result, unmount } = renderHook(() => useParsed());
+  expect(result.current[0]).toBe(undefined);
+  await actHook(async () => {
+    const ret = await run([], {
+      blocks: [{ title: "foo" }],
+    });
+    expect(ret).toEqual([{ title: "foo" }]);
+  });
+  expect(result.current[0]).toBe(undefined);
+  await actHook(async () => {
+    const ret2 = await runParse([{ title: "bar" }]);
+    expect(ret2).toEqual([{ title: "bar" }]);
+  });
+  expect(result.current[0]).toEqual([{ title: "bar" }]);
+  unmount();
+});
+
+test("runRender", async () => {
+  const { result, unmount } = renderHook(() => useRendered());
+  expect(result.current[0]).toBe(undefined);
+  await actHook(async () => {
+    const ret = await run([], {
+      blocks: [{ title: "foo" }],
+    });
+    expect(ret).toEqual([{ title: "foo" }]);
+  });
+  expect(result.current[0]).toBe(undefined);
+  await actHook(async () => {
+    const ret2 = await runRender([{ title: "bar" }]);
+    expect(ret2).toEqual([{ title: "bar" }]);
+  });
+  expect(result.current[0]).toEqual([{ title: "bar" }]);
+  unmount();
 });

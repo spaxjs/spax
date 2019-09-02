@@ -1,37 +1,30 @@
 import EventEmitter from "events";
 export const matchedDb = {
-    value: {},
+    value: [],
     emitter: new EventEmitter(),
     pathname: undefined,
-    check(scope, pathname) {
+    check(pathname) {
         if (this.pathname !== pathname) {
             this.pathname = pathname;
-            this.value[scope] = [];
+            this.value = [];
         }
     },
-    ensure(scope) {
-        if (!this.value.hasOwnProperty(scope)) {
-            this.value[scope] = [];
-        }
+    get() {
+        return this.value;
     },
-    get(scope) {
-        this.ensure(scope);
-        return this.value[scope];
-    },
-    add(scope, level, v) {
-        this.ensure(scope);
-        const newValue = [...this.value[scope]];
+    add(level, v) {
+        const newValue = [...this.value];
         newValue[level - 1] = v;
-        this.value[scope] = newValue;
-        this.emit(scope);
+        this.value = newValue;
+        this.emit();
     },
-    emit(scope) {
-        this.emitter.emit(scope, this.value[scope]);
+    emit() {
+        this.emitter.emit("change", this.value);
     },
-    on(scope, cb) {
-        this.emitter.on(scope, cb);
+    on(cb) {
+        this.emitter.on("change", cb);
         return () => {
-            this.emitter.off(scope, cb);
+            this.emitter.off("change", cb);
         };
     },
 };

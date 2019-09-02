@@ -1,28 +1,60 @@
 import EventEmitter from "events";
+import { useEffect, useState } from "react";
+import { AnyObject } from "./types";
 
 const map: Map<string, any> = new Map();
 const events = new EventEmitter();
 
-export default {
-  key(key: string, scope: string): string {
-    return `${scope}&${key}`;
+export const cache = {
+  snapshot(): AnyObject {
+    const v = {};
+    map.forEach((value, key) => {
+      Object.assign(v, {[key]: value});
+    });
+    return v;
   },
-  get(key: string, scope: string) {
-    return map.get(this.key(key, scope));
+  restore(snapshot: AnyObject): void {
+    Object.entries(snapshot).forEach(([key, value]: [string, any]) => {
+      cache.set(key, value);
+    });
   },
-  set(key: string, value: any, scope: string) {
-    return map.set(this.key(key, scope), value);
+  clear(): void {
+    map.clear();
   },
-  has(key: string, scope: string) {
-    return map.has(this.key(key, scope));
+  get<S = any>(key: string): S {
+    return map.get(key);
   },
-  on(key: string, listener: any, scope: string) {
-    events.on(this.key(key, scope), listener);
+  set(key: string, value: any,shouldEmit: boolean = false): void {
+    map.set(key, value);
+    if (shouldEmit) {
+      events.emit(key, value);
+    }
   },
-  off(key: string, listener: any, scope: string) {
-    events.off(this.key(key, scope), listener);
+  has(key: string): boolean {
+    return map.has(key);
   },
-  emit(key: string, scope: string) {
-    events.emit(this.key(key, scope), this.get(key, scope));
+  on(key: string, listener: any): void {
+    events.on(key, listener);
+  },
+  off(key: string, listener: any): void {
+    events.off(key, listener);
   },
 };
+
+export function useCached<S>(key: string): [S, (v: S) => void] {
+  const [state, setState] = useState(cache.get(key));
+
+  useEffect(() => {
+    cache.on(key, setState);
+    return () => {
+      cache.off(key, setState);
+    };
+  }, []);
+
+  return [
+    state,
+    (value) => {
+      cache.set(key, value, true);
+    },
+  ];
+}

@@ -1,13 +1,17 @@
 import { warn } from "@spax/debug";
 import pathToRegexp from "path-to-regexp";
-export default ({ parse }) => {
-    parse.tap("Path", [], (current, parent, option) => {
-        return {
-            ...current,
-            ...normalizePath(current, parent, option),
-        };
-    });
-};
+export default [
+    "Path",
+    [],
+    ({ parse }, option) => {
+        parse.tap((current, parent) => {
+            return {
+                ...current,
+                ...normalizePath(current, parent, option),
+            };
+        });
+    },
+];
 function normalizePath(current, parent, option) {
     let { path } = current;
     if (path === undefined) {

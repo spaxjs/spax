@@ -51,7 +51,15 @@ export function useGlobalState(key, initialState, storage = localStorage) {
 export function setGlobalState(key, initialState, storage = localStorage) {
     if (storage) {
         const storageKey = `${prefix}${key}`;
-        storage.setItem(storageKey, JSON.stringify(getState(initialState)));
+        if (storage.getItem(storageKey) === null) {
+            storage.setItem(storageKey, JSON.stringify(getState(initialState)));
+        }
+        else {
+            /* istanbul ignore next */
+            if (process.env.NODE_ENV === "development") {
+                warn("Storage `%s` is exists, now skip overriding.", key);
+            }
+        }
     }
     else {
         /* istanbul ignore next */

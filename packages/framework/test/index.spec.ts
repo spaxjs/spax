@@ -4,7 +4,6 @@ import Framework from "../src";
 // tslint:disable: react-hooks-nesting
 
 const defaultOptions = {
-  scope: "🚀",
   version: "1.0.0",
   // 插件选项
   plugins: {},
@@ -28,14 +27,12 @@ test("mount", async () => {
   const container = document.createElement("div");
   class A extends Framework {
     static options = {
-      scope: "framework-a-mount",
       container,
     };
   }
   const a = new A();
   expect((a as any).options).toEqual({
     ...defaultOptions,
-    scope: "framework-a-mount",
     container,
   });
   await a.mount();
@@ -46,14 +43,12 @@ test("mount(callback)", async () => {
   const container = document.createElement("div");
   class C extends Framework {
     static options = {
-      scope: "framework-c-mount",
       container,
     };
   }
   const c = new C();
   expect((c as any).options).toEqual({
     ...defaultOptions,
-    scope: "framework-c-mount",
     container,
   });
 
@@ -69,13 +64,11 @@ test("mount(callback)", async () => {
 test("mount(error)", async () => {
   class B extends Framework {
     static options = {
-      scope: "framework-b-mount",
     };
   }
   const b = new B();
   expect((b as any).options).toEqual({
     ...defaultOptions,
-    scope: "framework-b-mount",
   });
 
   let thrown = false;

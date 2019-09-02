@@ -11,6 +11,7 @@ import { ExpandLess, ExpandMore, Remove } from "@material-ui/icons";
 import { createStyles, makeStyles } from "@material-ui/styles";
 import { AnyObject, IBlock, useParsed } from "@spax/core";
 import { debug } from "@spax/debug";
+import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
 import { Link, useMatchedArrayOfBlockAndParams } from "@spax/router";
 import clsx from "clsx";
@@ -21,7 +22,6 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { useStore } from "../../../store";
 
 interface IMenu {
   title: string;
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Menu: React.FC<AnyObject> = (props: any) => {
-  const [role] = useStore<string>("role");
+  const [role] = useGlobalState<string>("role");
   const [blocks] = useParsed();
   const matched = useMatchedArrayOfBlockAndParams();
   const menu = useMenu(role, blocks);
@@ -153,12 +153,16 @@ function MenuList(props: any): ReactElement {
 function getMenuData(role: string, blocks: IBlock[]): IMenu[] {
   return (
     blocks
+      // 过滤掉 404 的模块
       // 过滤掉 带变量 的模块
       // 过滤掉 无标题 的模块
       // 过滤掉 无权限 的模块
       .filter(
         ({ path, title, authority }) =>
-          path.indexOf(":") === -1 && !!title && hasAuth(role, authority),
+          path.indexOf("*") === -1 &&
+          path.indexOf(":") === -1 &&
+          !!title &&
+          hasAuth(role, authority),
       )
       .map(({ key, path, title, icon, empty, blocks: childBlocks }) => {
         return {

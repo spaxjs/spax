@@ -7,7 +7,6 @@ import { ComponentProps, LinkProps, SwitchProps } from "./types";
 export const Switch: React.FC<SwitchProps> = ({
   level,
   blocks,
-  scope,
   loose = false,
   useAuth = () => true,
   Pending = () => null,
@@ -16,7 +15,7 @@ export const Switch: React.FC<SwitchProps> = ({
   children = null,
 }: SwitchProps): any => {
   const [pathname] = usePathname();
-  const matchedState = useMatchedBlockAndParams(scope, pathname, level, blocks, loose);
+  const matchedState = useMatchedBlockAndParams(pathname, level, blocks, loose);
   const authed = useAuth(matchedState ? matchedState[0] : undefined);
 
   if (matchedState) {
@@ -28,7 +27,6 @@ export const Switch: React.FC<SwitchProps> = ({
           {...data}
           {...matchedState[1]}
           $$block={matchedState[0]}
-          $$scope={scope}
           $$useAuth={useAuth}
           $$NotFound={NotFound}
           $$Forbidden={Forbidden}

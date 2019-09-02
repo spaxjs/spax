@@ -14,16 +14,14 @@ export interface LinkProps extends AnyObject {
 export interface SwitchProps extends AnyObject {
     level: number;
     blocks: IBlock[];
-    scope: string;
     loose?: boolean;
-    useAuth?: (imd: IBlock) => boolean;
+    useAuth?: (block: IBlock) => boolean;
     NotFound?: React.FC<{}>;
     Forbidden?: React.FC<{}>;
 }
 export interface ComponentProps extends AnyObject {
     $$block: IBlock;
-    $$scope: string;
-    $$useAuth: (imd: IBlock) => boolean;
+    $$useAuth: (block: IBlock) => boolean;
     $$NotFound: React.FC<{}>;
     $$Forbidden: React.FC<{}>;
 }

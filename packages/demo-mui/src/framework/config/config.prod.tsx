@@ -1,17 +1,7 @@
-import Loading from "framework/components/interaction/Loading";
+import { useGlobalState } from "@spax/hooks";
 import React, { useEffect, useState } from "react";
-import * as store from "store";
-
-// const scope = "demo-mui";
-const initialStates = {
-  "theme-type": "light",
-  role: "",
-  lng: "zh",
-  "sidebar-open": true,
-  repo: {
-    url: "https://github.com/crossjs/spax",
-  },
-};
+import Loading from "../components/interaction/Loading";
+import store from "../store";
 
 function hasAuth(role: string, authority: string[]) {
   if (authority.length === 0) {
@@ -25,15 +15,11 @@ function hasAuth(role: string, authority: string[]) {
 
 export default {
   version: "0.0.1",
-  // scope,
   plugins: {
     i18n: {
-      fallbackLng: initialStates.lng,
+      fallbackLng: store.initialStates.lng,
     },
-    store: {
-      provider: [store],
-      initialStates,
-    },
+    store,
     theme: {
       logoImage: require("images/logo.png"),
       siteTitle: "spax",
@@ -45,7 +31,7 @@ export default {
       NotFound: require("framework/components/exception/NotFound").default,
       Forbidden: require("framework/components/exception/Forbidden").default,
       useAuth: function useAuth({ authority } = { authority: [] }): boolean {
-        const [role] = store.useStore<string>("role");
+        const [role] = useGlobalState<string>("role");
         const [auth, setAuth] = useState(undefined);
 
         useEffect(() => {

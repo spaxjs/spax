@@ -1,10 +1,12 @@
-declare const _default: {
-    key(key: string, scope: string): string;
-    get(key: string, scope: string): any;
-    set(key: string, value: any, scope: string): Map<string, any>;
-    has(key: string, scope: string): boolean;
-    on(key: string, listener: any, scope: string): void;
-    off(key: string, listener: any, scope: string): void;
-    emit(key: string, scope: string): void;
+import { AnyObject } from "./types";
+export declare const cache: {
+    snapshot(): AnyObject<any>;
+    restore(snapshot: AnyObject<any>): void;
+    clear(): void;
+    get<S = any>(key: string): S;
+    set(key: string, value: any, shouldEmit?: boolean): void;
+    has(key: string): boolean;
+    on(key: string, listener: any): void;
+    off(key: string, listener: any): void;
 };
-export default _default;
+export declare function useCached<S>(key: string): [S, (v: S) => void];

@@ -2,38 +2,31 @@ import EventEmitter from "events";
 import { TMatchedState } from "./types";
 
 export const matchedDb = {
-  value: {},
+  value: [],
   emitter: new EventEmitter(),
   pathname: undefined,
-  check(scope: string, pathname: string) {
+  check(pathname: string) {
     if (this.pathname !== pathname) {
       this.pathname = pathname;
-      this.value[scope] = [];
+      this.value = [];
     }
   },
-  ensure(scope: string) {
-    if (!this.value.hasOwnProperty(scope)) {
-      this.value[scope] = [];
-    }
+  get() {
+    return this.value;
   },
-  get(scope: string) {
-    this.ensure(scope);
-    return this.value[scope];
-  },
-  add(scope: string, level: number, v: TMatchedState) {
-    this.ensure(scope);
-    const newValue = [...this.value[scope]];
+  add(level: number, v: TMatchedState) {
+    const newValue = [...this.value];
     newValue[level - 1] = v;
-    this.value[scope] = newValue;
-    this.emit(scope);
+    this.value = newValue;
+    this.emit();
   },
-  emit(scope: string) {
-    this.emitter.emit(scope, this.value[scope]);
+  emit() {
+    this.emitter.emit("change", this.value);
   },
-  on(scope: string, cb: any) {
-    this.emitter.on(scope, cb);
+  on(cb: any) {
+    this.emitter.on("change", cb);
     return () => {
-      this.emitter.off(scope, cb);
+      this.emitter.off("change", cb);
     };
   },
 };

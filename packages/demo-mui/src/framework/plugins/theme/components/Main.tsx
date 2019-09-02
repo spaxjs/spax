@@ -1,8 +1,8 @@
 import { Box, Theme } from "@material-ui/core";
 import { BoxProps } from "@material-ui/core/Box";
 import { createStyles, makeStyles } from "@material-ui/styles";
+import { useGlobalState } from "@spax/hooks";
 import React from "react";
-import { useStore } from "../../../store";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 );
 
 export const Main: React.FC<BoxProps> = ({children, ...props}: any) => {
-  const [open] = useStore<boolean>("sidebar-open");
+  const [open] = useGlobalState<boolean>("sidebar-open");
   const {main, drawerHeader} = useStyles({ open });
   return (
     <Box

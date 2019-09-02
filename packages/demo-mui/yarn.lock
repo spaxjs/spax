@@ -1008,16 +1008,16 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@material-ui/core@^4.3.3":
-  version "4.3.3"
-  resolved "https://registry.npm.taobao.org/@material-ui/core/download/@material-ui/core-4.3.3.tgz#38a02331da7916c18e65c3dc56f3f6a67ba60c07"
-  integrity sha1-OKAjMdp5FsGOZcPcVvP2pnumDAc=
+"@material-ui/core@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.npm.taobao.org/@material-ui/core/download/@material-ui/core-4.4.0.tgz#820b6ee91da9eaf4018ff9e87e6ca04fc985e35a"
+  integrity sha1-ggtu6R2p6vQBj/nofmygT8mF41o=
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@material-ui/styles" "^4.3.3"
     "@material-ui/system" "^4.3.3"
     "@material-ui/types" "^4.1.1"
-    "@material-ui/utils" "^4.3.0"
+    "@material-ui/utils" "^4.4.0"
     "@types/react-transition-group" "^4.2.0"
     clsx "^1.0.2"
     convert-css-length "^2.0.1"
@@ -1078,10 +1078,19 @@
   dependencies:
     "@types/react" "*"
 
-"@material-ui/utils@^4.1.0", "@material-ui/utils@^4.3.0":
+"@material-ui/utils@^4.1.0":
   version "4.3.0"
   resolved "https://registry.npm.taobao.org/@material-ui/utils/download/@material-ui/utils-4.3.0.tgz#ea7f09815c792e80f270ef8b916517c3f9caba13"
   integrity sha1-6n8JgVx5LoDycO+LkWUXw/nKuhM=
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.6"
+
+"@material-ui/utils@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.npm.taobao.org/@material-ui/utils/download/@material-ui/utils-4.4.0.tgz#9275421e2798a067850d201212d46f12725828ad"
+  integrity sha1-knVCHieYoGeFDSASEtRvEnJYKK0=
   dependencies:
     "@babel/runtime" "^7.4.4"
     prop-types "^15.7.2"
@@ -1283,10 +1292,10 @@
   resolved "https://registry.npm.taobao.org/@types/json-schema/download/@types/json-schema-7.0.3.tgz#bdfd69d61e464dcc81b25159c270d75a73c1a636"
   integrity sha1-vf1p1h5GTcyBslFZwnDXWnPBpjY=
 
-"@types/node@^12.7.2":
-  version "12.7.2"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.2.tgz?cache=0&sync_timestamp=1565829879515&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.2.tgz#c4e63af5e8823ce9cc3f0b34f7b998c2171f0c44"
-  integrity sha1-xOY69eiCPOnMPws097mYwhcfDEQ=
+"@types/node@^12.7.3":
+  version "12.7.3"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.3.tgz#27b3f40addaf2f580459fdb405222685542f907a"
+  integrity sha1-J7P0Ct2vL1gEWf20BSImhVQvkHo=
 
 "@types/prop-types@*":
   version "15.7.1"
@@ -9681,10 +9690,10 @@ typedarray@^0.0.6:
   resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.5.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha1-yDD2V/k/HqhGgZ6SkJL1/lmD6Xc=
+typescript@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.6.2.tgz?cache=0&sync_timestamp=1567232271963&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.6.2.tgz#105b0f1934119dde543ac8eb71af3a91009efe54"
+  integrity sha1-EFsPGTQRnd5UOsjrca86kQCe/lQ=
 
 uglify-js@3.4.x:
   version "3.4.10"

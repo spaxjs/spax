@@ -1,6 +1,5 @@
 import { debug, error, warn } from "@spax/debug";
-import { useEffect, useState } from "react";
-import cache from "./cache";
+import { cache, useCached } from "./cache";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 import { IBlock, IHooks, IOptions, IPO, TPlugin } from "./types";
 
@@ -10,77 +9,69 @@ const KEY_OPTIONS = "options";
 const KEY_PARSED = "parsed";
 const KEY_RENDERED = "rendered";
 
-const pluginOptionGetter = (scope: string, name: string): IPO => {
-  const { plugins: c }: IOptions = cache.get(KEY_OPTIONS, scope);
+const pluginOptionGetter = (name: string): IPO => {
+  const { plugins: c }: IOptions = cache.get(KEY_OPTIONS);
   return c ? c[name] || c[name.toLowerCase()] || {} : {};
 };
 
-export const DEFAULT_SCOPE = "🚀";
-
 export async function run(plugins: TPlugin[] = [], options: IOptions = {}): Promise<any> {
-  const { scope = DEFAULT_SCOPE } = options;
-
-  if (cache.has("run", scope)) {
-    error("Scope `%s` already taken. Please use a different string.", scope);
-    return;
+  if (process.env.NODE_ENV !== "test") {
+    if (cache.has("run")) {
+      error("Should not call run twice.");
+      return;
+    }
   }
 
   // 标识已加载，不允许重复执行
-  cache.set("run", 1, scope);
+  cache.set("run", 1);
 
-  // 存储以备外部调用
-  cache.set(KEY_PLUGINS, plugins, scope);
-  cache.set(KEY_OPTIONS, options, scope);
+  await runInit(plugins, options);
 
-  const hooks: IHooks = {
-    init: new InitHook(scope),
-    parse: new ParseHook(scope),
-    render: new RenderHook(scope),
-  };
-
-  // 存储以备外部调用
-  cache.set(KEY_HOOKS, hooks, scope);
-
-  /* istanbul ignore next */
-  if (process.env.NODE_ENV === "development") {
-    debug("Hooks created: %O", hooks);
-  }
-
-  // 插件
-  plugins.forEach((plugin) => plugin(hooks));
-
-  /* istanbul ignore next */
-  if (process.env.NODE_ENV === "development") {
-    debug("Plugins enabled: %O", plugins);
-  }
-
-  // 初始化
-  await hooks.init.run(pluginOptionGetter, options, "pre");
-  await hooks.init.run(pluginOptionGetter, options, "post");
-
-  // 直接返回
-  return getRenderedBlocks(options.blocks, scope);
-}
-
-export function useParsed(scope: string = DEFAULT_SCOPE): [IBlock[]] {
-  const [state, setState] = useState([]);
-
-  useEffect(() => {
-    setState(cache.get(KEY_PARSED, scope));
-    cache.on(KEY_PARSED, setState, scope);
-    return () => {
-      cache.off(KEY_PARSED, setState, scope);
-    };
-  }, []);
-
-  return [state];
+  return runRender(await runParse(options.blocks, false), false);
 }
 
 /**
- * 未来，此处有可能是 Reactive 的
+ * parse 函数允许重复执行，
+ * 生成的数据将会覆盖原有数据。
  */
-export function useRendered(scope: string = DEFAULT_SCOPE): [any] {
-  return [cache.get(KEY_RENDERED, scope)];
+export async function runParse(blocks: IBlock[] = [], shouldEmit: boolean = true) {
+  const parsedBlocks = await parseBlocks(blocks, {}, true);
+
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV === "development") {
+    debug("Blocks parsed: %O", parsedBlocks);
+  }
+
+  // 存储以备外部调用
+  cache.set(KEY_PARSED, parsedBlocks, shouldEmit);
+
+  return parsedBlocks;
+}
+
+/**
+ * render 函数允许重复执行，
+ * 生成的数据将会覆盖原有数据。
+ */
+export async function runRender(blocks: IBlock[] = [], shouldEmit: boolean = true) {
+  const renderedBlocks = await renderBlocks(blocks);
+
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV === "development") {
+    debug("Blocks rendered: %O", renderedBlocks);
+  }
+
+  // 存储以备外部调用
+  cache.set(KEY_RENDERED, renderedBlocks, shouldEmit);
+
+  return renderedBlocks;
+}
+
+export function useParsed(): [IBlock[], (v: IBlock[]) => void] {
+  return useCached<IBlock[]>(KEY_PARSED);
+}
+
+export function useRendered(): [any, (v: any) => void] {
+  return useCached<any>(KEY_RENDERED);
 }
 
 /**
@@ -94,13 +85,12 @@ export function useRendered(scope: string = DEFAULT_SCOPE): [any] {
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
 export async function parseBlocks(
-  blocks: IBlock[],
+  blocks: IBlock[] = [],
   parent: IBlock,
-  scope: string = DEFAULT_SCOPE,
   fromInnerCall: boolean = false,
 ): Promise<IBlock[]> {
-  if (!cache.has("run", scope)) {
-    error("Scope `%s` has not initialized yet. Please call `run` first.", scope);
+  if (!cache.has("run")) {
+    error("Please call `run` first.");
     return;
   }
 
@@ -108,11 +98,11 @@ export async function parseBlocks(
     mc = await interopDefaultExports(mc);
 
     if (Array.isArray(mc)) {
-      mc = await Promise.all(mc.map((_mc) => parseBlock(_mc, parent, scope)));
+      mc = await Promise.all(mc.map((_mc) => parseBlock(_mc, parent)));
       return mc;
     }
 
-    return parseBlock(mc, parent, scope);
+    return parseBlock(mc, parent);
   }));
 
   blocks = blocks.flat();
@@ -132,66 +122,114 @@ export async function parseBlocks(
   return blocks;
 }
 
-async function parseBlock(mc: IBlock, parent: IBlock, scope: string): Promise<IBlock> {
-  const { parse } = cache.get(KEY_HOOKS, scope);
-  const options = cache.get(KEY_OPTIONS, scope);
+async function parseBlock(mc: IBlock, parent: IBlock): Promise<IBlock> {
+  const { parse } = cache.get(KEY_HOOKS);
 
-  // pre
-  mc = await parse.run(mc, parent, pluginOptionGetter, options, "pre");
+  if (!mc.$$parsed) {
+    // pre
+    mc = await parse.run(mc, parent, "pre");
+  }
 
   // 子模块在 pre 之后、post 之前处理掉
   if (mc.blocks) {
-    mc.blocks = await parseBlocks(mc.blocks, mc, scope, true);
+    mc.blocks = await parseBlocks(mc.blocks, mc, true);
   }
 
-  // post
-  mc = await parse.run(mc, parent, pluginOptionGetter, options, "post");
+  if (!mc.$$parsed) {
+    // post
+    mc = await parse.run(mc, parent, "post");
+  }
 
   return mc;
-}
-
-async function getRenderedBlocks(blocks: IBlock[] = [], scope: string): Promise<any> {
-  const parsedBlocks = await parseBlocks(blocks, {}, scope, true);
-
-  // 存储以备外部调用
-  cache.set(KEY_PARSED, parsedBlocks, scope);
-
-  /* istanbul ignore next */
-  if (process.env.NODE_ENV === "development") {
-    debug("Blocks parsed: %O", parsedBlocks);
-  }
-
-  const renderedBlocks = await renderBlocks(parsedBlocks, scope);
-
-  // 存储以备外部调用
-  cache.set(KEY_RENDERED, renderedBlocks, scope);
-
-  /* istanbul ignore next */
-  if (process.env.NODE_ENV === "development") {
-    debug("Blocks rendered: %O", renderedBlocks);
-  }
-
-  return renderedBlocks;
 }
 
 /**
  * 渲染模块树
  */
-async function renderBlocks(parsedBlocks: IBlock[], scope: string): Promise<any> {
-  const { render } = cache.get(KEY_HOOKS, scope);
-  const options = cache.get(KEY_OPTIONS, scope);
+async function renderBlocks(parsedBlocks: IBlock[]): Promise<any> {
+  const { render } = cache.get(KEY_HOOKS);
   let renderedBlocks: any = parsedBlocks;
 
   // 前置处理
-  renderedBlocks = await render.run(renderedBlocks, pluginOptionGetter, options, "pre");
+  renderedBlocks = await render.run(renderedBlocks, "pre");
 
   // 后置处理
-  renderedBlocks = await render.run(renderedBlocks, pluginOptionGetter, options, "post");
+  renderedBlocks = await render.run(renderedBlocks, "post");
 
   return renderedBlocks;
 }
 
-// 对于使用 import() 引入的模块，需要转换
+async function runInit(plugins: TPlugin[], options: IOptions) {
+  // 存储以备外部调用
+  cache.set(KEY_PLUGINS, plugins);
+  cache.set(KEY_OPTIONS, options);
+
+  // 初始化三个插槽
+  const hooks: IHooks = {
+    init: new InitHook(),
+    parse: new ParseHook(),
+    render: new RenderHook(),
+  };
+
+  // 存储以备外部调用
+  cache.set(KEY_HOOKS, hooks);
+
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV === "development") {
+    debug("Hooks created: %O", hooks);
+  }
+
+  // 加载插件
+  await loadPlugins(plugins, options, hooks);
+
+  // 执行插件的初始化钩子
+  await hooks.init.run("pre");
+  await hooks.init.run("post");
+}
+
+async function loadPlugins(plugins: TPlugin[], options: IOptions, hooks: IHooks) {
+  const ordererPlugins = [];
+  const pluginNameMap = new Map();
+
+  plugins.forEach((plugin) => {
+    const [name, deps] = plugin;
+    // 如果存在，说明当前插件被依赖
+    if (pluginNameMap.has(name)) {
+      // 插入到依赖项之前
+      // 当前插件的依赖项的索引值
+      const index = pluginNameMap.get(name);
+      ordererPlugins.splice(index, 0, plugin);
+      // 前面被插入后，依赖项的索引值增大
+      pluginNameMap.set(name, index + 1);
+    } else {
+      // 暂未检测到被其它插件依赖，则直接插入到列表最后
+      ordererPlugins.push(plugin);
+    }
+    // 如果存在依赖项，则建立依赖项与当前项的索引关系
+    if (deps && deps.length) {
+      deps.forEach((dep: string) => {
+        if (!pluginNameMap.has(dep)) {
+          // 如果依赖项不与其他插件存在索引关系，则使用当前项在队列的索引值
+          pluginNameMap.set(dep, ordererPlugins.length - 1);
+        }
+        // 如果已存在索引值，则不作更新，
+        // 因为该索引值必然小于新索引值，
+        // 选择沿用旧的值，可以保证依赖项插入的顺序足够靠前。
+      });
+    }
+  });
+
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV === "development") {
+    debug("Plugins enabled: %O", ordererPlugins);
+  }
+
+  return Promise.all(
+    ordererPlugins.map(([name, , plugin]) => plugin(hooks, pluginOptionGetter(name), options)),
+  );
+}
+
+// 对于使用 import()/require() 引入的模块，需要转换
 async function interopDefaultExports(m: any): Promise<any> {
   const _ = await m;
 

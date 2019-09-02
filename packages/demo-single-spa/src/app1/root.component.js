@@ -1,8 +1,10 @@
 import React from 'react';
 import BuggyCounter from "../BuggyCounter.tsx";
 import ErrorBoundary from "../ErrorBoundary.tsx";
+import GlobalCounter from "../GlobalCounter.tsx";
 
 export default class Root extends React.Component {
+  state = {}
   render() {
     if (this.state.errorInfo) {
       // Error path
@@ -24,6 +26,7 @@ export default class Root extends React.Component {
         <ErrorBoundary>
           <BuggyCounter />
         </ErrorBoundary>
+        <GlobalCounter />
       </div>
     );
   }

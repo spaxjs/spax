@@ -1,19 +1,21 @@
-import { AnyObject, IBlock, IHooks, IPO } from "@spax/core";
+import { AnyObject, IBlock, IHooks, IPO, TPlugin } from "@spax/core";
 import { warn } from "@spax/debug";
 import pathToRegexp, { Key } from "path-to-regexp";
 
-export default ({ parse }: IHooks) => {
-  parse.tap(
-    "Path",
-    [],
-    (current: IBlock, parent: IBlock, option: IPO) => {
-      return {
-        ...current,
-        ...normalizePath(current, parent, option),
-      };
-    },
-  );
-};
+export default [
+  "Path",
+  [],
+  ({ parse }: IHooks, option: IPO) => {
+    parse.tap(
+      (current: IBlock, parent: IBlock) => {
+        return {
+          ...current,
+          ...normalizePath(current, parent, option),
+        };
+      },
+    );
+  },
+] as TPlugin;
 
 function normalizePath(current: IBlock, parent: IBlock, option: IPO): AnyObject {
   let { path } = current;

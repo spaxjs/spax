@@ -1,37 +1,40 @@
-import { IBlock, IHooks, IOptions, IPO } from "@spax/core";
+import { IBlock, IHooks, IPO, TPlugin, useParsed } from "@spax/core";
 import { MatchedChildBockOrChildren, Switch } from "@spax/router";
 import React, { ReactElement } from "react";
 
-export default ({ parse, render }: IHooks) => {
-  parse.tap(
-    "Router",
-    ["Lazy", "Level", "Path"],
-    (current: IBlock, parent: IBlock, option: IPO) => {
+export default [
+  "Router",
+  ["Lazy", "Level", "Path"],
+  ({ parse, render }: IHooks, option: IPO) => {
+    parse.tap((current: IBlock, parent: IBlock) => {
       return {
         ...current,
         ...normalizeComponent(current, option),
       };
-    },
-  );
+    });
 
-  render.tap(
-    "Router",
-    [],
-    (blocks: IBlock[], {useAuth, NotFound, Forbidden}: IPO, { scope }: IOptions): ReactElement => {
-      return (
-        <Switch
-          level={1}
-          blocks={blocks}
-          scope={scope}
-          loose={false}
-          useAuth={useAuth}
-          NotFound={NotFound}
-          Forbidden={Forbidden}
-        />
-      );
-    },
+    render.tap(
+      (blocks: IBlock[]): ReactElement => {
+        return <Wrapper option={option} />;
+      },
+    );
+  },
+] as TPlugin;
+
+function Wrapper({ option: { useAuth, NotFound, Forbidden } }: any) {
+  const [blocks] = useParsed();
+
+  return (
+    <Switch
+      level={1}
+      blocks={blocks}
+      loose={false}
+      useAuth={useAuth}
+      NotFound={NotFound}
+      Forbidden={Forbidden}
+    />
   );
-};
+}
 
 /**
  * 如果未指定 component，
@@ -40,7 +43,14 @@ export default ({ parse, render }: IHooks) => {
  * 标识输入的 component 属性是否为空。
  */
 function normalizeComponent(current: IBlock, option: IPO) {
-  const { path, level, authority = [], data = {}, component, blocks = [] } = current;
+  const {
+    path,
+    level,
+    authority = [],
+    data = {},
+    component,
+    blocks = [],
+  } = current;
   const empty = component === undefined;
   return {
     key: `${path}&${level}`,

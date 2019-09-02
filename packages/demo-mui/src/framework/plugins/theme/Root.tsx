@@ -3,14 +3,12 @@ import { ThemeProvider } from "@material-ui/styles";
 import { IPO } from "@spax/core";
 import { debug } from "@spax/debug";
 import React from "react";
-import { useStore } from "../../store";
 import { DocumentTitle } from "./components/DocumentTitle";
+import { useTheme } from "./hooks";
 import { Layout } from "./Layout";
-import getTheme from "./theme";
 
 export const Root: React.FC<{ option: IPO }> = ({children, option}: any) => {
-  const [ themeType ] = useStore<"light" | "dark">("theme-type");
-  const theme = getTheme(themeType);
+  const theme = useTheme();
 
   if (process.env.NODE_ENV === "development")
     debug("Theme config: %O", theme);

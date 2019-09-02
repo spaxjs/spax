@@ -1,13 +1,15 @@
-import { IHooks, IPO } from "@spax/core";
+import { IHooks, IPO, TPlugin } from "@spax/core";
 import React, { ReactElement } from "react";
 import { Root } from "./Root";
 
-export default ({ render }: IHooks) => {
-  render.tap(
-    "Theme",
-    ["Router"],
-    (element: ReactElement, option: IPO): ReactElement => {
-      return <Root option={option}>{element}</Root>;
-    },
-  );
-};
+export default [
+  "Theme",
+  ["Router"],
+  ({ render }: IHooks, option: IPO) => {
+    render.tap(
+      (element: ReactElement): ReactElement => {
+        return <Root option={option}>{element}</Root>;
+      },
+    );
+  },
+] as TPlugin;

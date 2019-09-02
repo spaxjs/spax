@@ -1,12 +1,14 @@
-import { IHooks, IOptions, IPO } from "@spax/core";
+import { IHooks, IPO, TPlugin } from "@spax/core";
 import { setup } from "@spax/i18n";
 
-export default ({ init }: IHooks) => {
-  init.tap(
-    "I18n",
-    [],
-    (option: IPO, options: IOptions) => {
-      setup(option);
-    },
-  );
-};
+export default [
+  "I18n",
+  [],
+  ({ init }: IHooks, option: IPO) => {
+    init.tap(
+      () => {
+        setup(option);
+      },
+    );
+  },
+] as TPlugin;

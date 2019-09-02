@@ -1,37 +1,33 @@
-import { IOptions, IPO, TPriority } from "./types";
+import { TPriority } from "./types";
 declare abstract class Hook {
-    protected scope: string;
     abstract hooks: {
         pre: any[];
         post: any[];
     };
-    preIdxMap: Map<string, number>;
-    postIdxMap: Map<string, number>;
-    constructor(scope: string);
-    tap(name: string, deps?: string[], pre?: (...args: any[]) => any, post?: (...args: any[]) => any): void;
+    tap(pre?: (...args: any[]) => any, post?: (...args: any[]) => any): void;
 }
 export declare class InitHook extends Hook {
     hooks: {
-        pre: Array<[string, (c: IPO, o: IOptions) => any]>;
-        post: Array<[string, (c: IPO, o: IOptions) => any]>;
+        pre: Array<() => any>;
+        post: Array<() => any>;
     };
-    tap(name: string, deps?: string[], pre?: (c: IPO, o: IOptions) => any, post?: (c: IPO, o: IOptions) => any): void;
-    run(c: ((scope: string, name: string) => IPO), o: IOptions, d: TPriority): Promise<any>;
+    tap(pre?: () => any, post?: () => any): void;
+    run(d: TPriority): Promise<any>;
 }
 export declare class ParseHook<A, B> extends Hook {
     hooks: {
-        pre: Array<[string, (a: A, b: B, c: IPO, o: IOptions) => any]>;
-        post: Array<[string, (a: A, b: B, c: IPO, o: IOptions) => any]>;
+        pre: Array<(a: A, b: B) => any>;
+        post: Array<(a: A, b: B) => any>;
     };
-    tap(name: string, deps?: string[], pre?: (a: A, b: B, c: IPO, o: IOptions) => any, post?: (a: A, b: B, c: IPO, o: IOptions) => any): void;
-    run(a: A, b: B, c: ((scope: string, name: string) => IPO), o: IOptions, d: TPriority): Promise<any>;
+    tap(pre?: (a: A, b: B) => any, post?: (a: A, b: B) => any): void;
+    run(a: A, b: B, d: TPriority): Promise<any>;
 }
 export declare class RenderHook<A> extends Hook {
     hooks: {
-        pre: Array<[string, (a: A, c: IPO, o: IOptions) => any]>;
-        post: Array<[string, (a: A, c: IPO, o: IOptions) => any]>;
+        pre: Array<(a: A) => any>;
+        post: Array<(a: A) => any>;
     };
-    tap(name: string, deps?: string[], pre?: (a: A, c: IPO, o: IOptions) => any, post?: (a: A, c: IPO, o: IOptions) => any): void;
-    run(a: A, c: ((scope: string, name: string) => IPO), o: IOptions, d: TPriority): Promise<any>;
+    tap(pre?: (a: A) => any, post?: (a: A) => any): void;
+    run(a: A, d: TPriority): Promise<any>;
 }
 export {};

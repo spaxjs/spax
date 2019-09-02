@@ -91,7 +91,6 @@ export default class Framework {
 Framework.plugins = [];
 // 选项
 Framework.options = {
-    scope: "🚀",
     version: "1.0.0",
     // 插件选项
     plugins: {},

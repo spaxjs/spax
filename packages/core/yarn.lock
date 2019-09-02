@@ -9,10 +9,10 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@types/node@^12.7.2":
-  version "12.7.2"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.2.tgz#c4e63af5e8823ce9cc3f0b34f7b998c2171f0c44"
-  integrity sha1-xOY69eiCPOnMPws097mYwhcfDEQ=
+"@types/node@^12.7.3":
+  version "12.7.3"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.3.tgz#27b3f40addaf2f580459fdb405222685542f907a"
+  integrity sha1-J7P0Ct2vL1gEWf20BSImhVQvkHo=
 
 events@^3.0.0:
   version "3.0.0"

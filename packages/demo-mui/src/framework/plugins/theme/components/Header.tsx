@@ -2,8 +2,8 @@ import { AppBar, IconButton, Theme, Toolbar } from "@material-ui/core";
 import { AppBarProps } from "@material-ui/core/AppBar";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { createStyles, makeStyles } from "@material-ui/styles";
+import { useGlobalState } from "@spax/hooks";
 import React from "react";
-import { useStore } from "../../../store";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 );
 
 export const Header: React.FC<AppBarProps> = ({children, ...props}: any) => {
-  const [open, setOpen] = useStore<boolean>("sidebar-open");
+  const [open, setOpen] = useGlobalState<boolean>("sidebar-open");
   const {appBar, menuButton} = useStyles({ open });
   return (
     <AppBar

@@ -1,4 +1,4 @@
-import { DEFAULT_SCOPE, parseBlocks } from "@spax/core";
+import { parseBlocks } from "@spax/core";
 import { debug } from "@spax/debug";
 import React, { useEffect, useMemo, useState } from "react";
 import { Switch } from "./components";
@@ -9,20 +9,17 @@ export function useBlock({ $$block }) {
 export function useExact({ $$exact }) {
     return $$exact;
 }
-export function useScope({ $$scope }) {
-    return $$scope;
-}
-export function useMatchedArrayOfBlockAndParams(scope = DEFAULT_SCOPE) {
+export function useMatchedArrayOfBlockAndParams() {
     const [state, setState] = useState([]);
     useEffect(() => {
         // 因为 useMatchedArrayOfBlockAndParams 多处复用，
         // 所以每个组件加载后都要用 useEffect 同步状态
-        setState(matchedDb.get(scope));
-        return matchedDb.on(scope, setState);
+        setState(matchedDb.get());
+        return matchedDb.on(setState);
     }, []);
     return state;
 }
-export function useMatchedBlockAndParams(scope = DEFAULT_SCOPE, pathname, level = 1, blocks, loose = false) {
+export function useMatchedBlockAndParams(pathname, level = 1, blocks, loose = false) {
     return useMemo(() => {
         // `/a/b/c` -> `["/a", "/b", "/c"]`
         const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
@@ -59,31 +56,31 @@ export function useMatchedBlockAndParams(scope = DEFAULT_SCOPE, pathname, level 
             return fallbackBlock ? [fallbackBlock, { $$is404: true }] : null;
         })(tokens.length);
         if (matchedBlockAndParams) {
-            matchedDb.check(scope, pathname);
-            matchedDb.add(scope, level, matchedBlockAndParams);
+            matchedDb.check(pathname);
+            matchedDb.add(level, matchedBlockAndParams);
             return matchedBlockAndParams;
         }
         return null;
-    }, [scope, pathname, level]);
+    }, [pathname, level]);
 }
-export function useMatchedFromChildBocks({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }) {
+export function useMatchedFromChildBocks({ $$exact, $$block, $$useAuth, $$NotFound, $$Forbidden }) {
     // 如果没有子模块，则返回空
-    return ($$block.blocks && $$block.blocks.length) ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: $$block.blocks, scope: $$scope, 
+    return ($$block.blocks && $$block.blocks.length) ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: $$block.blocks, 
         // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
         loose: $$exact, useAuth: $$useAuth, NotFound: $$NotFound, Forbidden: $$Forbidden }, props), children)) : ({ children = null }) => children;
 }
-export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$scope, $$useAuth, $$NotFound, $$Forbidden }, $$blocks) {
+export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$useAuth, $$NotFound, $$Forbidden }, $$blocks) {
     const [parsedBlocks, setParsedBlocks] = useState($$blocks || []);
     useEffect(() => {
         if ($$blocks) {
-            parseBlocks($$blocks, $$block, $$scope).then(setParsedBlocks);
+            parseBlocks($$blocks, $$block).then(setParsedBlocks);
         }
         else {
             setParsedBlocks([]);
         }
     }, [$$blocks]);
     // 如果没有子模块，则返回空
-    return parsedBlocks.length ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: parsedBlocks, scope: $$scope, 
+    return parsedBlocks.length ? ({ children = null, ...props }) => (React.createElement(Switch, Object.assign({ level: $$block.level + 1, blocks: parsedBlocks, 
         // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
         loose: $$exact, useAuth: $$useAuth, NotFound: $$NotFound, Forbidden: $$Forbidden }, props), children)) : ({ children = null }) => children;
 }

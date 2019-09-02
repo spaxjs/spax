@@ -10,7 +10,6 @@ import {
   useMatchedBlockAndParams,
   useMatchedFromChildBocks,
   useMatchedFromChildBocksOnTheFly,
-  useScope,
 } from "../src/hooks";
 
 // tslint:disable: react-hooks-nesting
@@ -27,12 +26,7 @@ test("useExact", () => {
   expect(useExact({ $$exact: false } as any)).toBe(false);
 });
 
-test("useScope", () => {
-  expect(useScope({ $$scope: "useScope" } as any)).toBe("useScope");
-});
-
 test("useMatchedFromChildBocks", () => {
-  const scope = "useMatchedFromChildBocks";
   const block = {
     level: 1,
     path: "/father",
@@ -57,7 +51,6 @@ test("useMatchedFromChildBocks", () => {
     useMatchedFromChildBocks({
       $$exact: false,
       $$block: block,
-      $$scope: scope,
       $$useAuth: () => true,
       $$NotFound: () => <p>NotFound</p>,
       $$Forbidden: () => <p>Forbidden</p>,
@@ -69,7 +62,6 @@ test("useMatchedFromChildBocks", () => {
 });
 
 test("useMatchedFromChildBocksOnTheFly", () => {
-  const scope = "useMatchedFromChildBocksOnTheFly";
   const block = {
     level: 1,
     path: "/father",
@@ -94,7 +86,6 @@ test("useMatchedFromChildBocksOnTheFly", () => {
     useMatchedFromChildBocksOnTheFly({
       $$exact: false,
       $$block: block,
-      $$scope: scope,
       $$useAuth: () => true,
       $$NotFound: () => <p>NotFound</p>,
       $$Forbidden: () => <p>Forbidden</p>,
@@ -106,7 +97,6 @@ test("useMatchedFromChildBocksOnTheFly", () => {
 });
 
 test("useMatchedFromChildBocksOnTheFly 2", () => {
-  const scope = "useMatchedFromChildBocksOnTheFly";
   const block = {
     level: 1,
     path: "/father",
@@ -123,7 +113,6 @@ test("useMatchedFromChildBocksOnTheFly 2", () => {
     useMatchedFromChildBocksOnTheFly({
       $$exact: false,
       $$block: block,
-      $$scope: scope,
       $$useAuth: () => true,
       $$NotFound: () => <p>NotFound</p>,
       $$Forbidden: () => <p>Forbidden</p>,
@@ -135,7 +124,6 @@ test("useMatchedFromChildBocksOnTheFly 2", () => {
 });
 
 test("useMatchedArrayOfBlockAndParams", () => {
-  const scope = "useMatchedArrayOfBlockAndParams";
   const blocks = [
     {
       level: 1,
@@ -153,14 +141,14 @@ test("useMatchedArrayOfBlockAndParams", () => {
     },
   ];
   const { result: result0 } = renderHook(() =>
-    useMatchedArrayOfBlockAndParams(scope),
+    useMatchedArrayOfBlockAndParams(),
   );
   renderHook(() =>
-    useMatchedBlockAndParams(scope, "/father/child", 1, blocks, false),
+    useMatchedBlockAndParams("/father/child", 1, blocks, false),
   );
   expect(result0.current[0][0].path).toBe("/father");
   renderHook(() =>
-    useMatchedBlockAndParams(scope, "/father/child", 2, blocks[0].blocks, false),
+    useMatchedBlockAndParams("/father/child", 2, blocks[0].blocks, false),
   );
   expect(result0.current[0][0].path).toBe("/father");
   expect(result0.current[1][0].path).toBe("/father/child");

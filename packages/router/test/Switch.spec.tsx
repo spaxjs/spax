@@ -9,28 +9,25 @@ import { MatchedChildBockOrChildren, Switch } from "../src/components";
 
 describe("Switch", () => {
   test("NotFound", () => {
-    const scope = "test10";
     const blocks = [];
     const { container } = render(
-      <Switch scope={scope} level={1} blocks={blocks} />,
+      <Switch level={1} blocks={blocks} />,
     );
     expect(container.textContent).toBe("");
   });
 
   test("custom NotFound", () => {
-    const scope = "test101";
     const blocks = [];
     const { container } = render(
-      <Switch scope={scope} level={1} blocks={blocks} NotFound={() => <p>NotFound</p>} />,
+      <Switch level={1} blocks={blocks} NotFound={() => <p>NotFound</p>} />,
     );
     expect(container.textContent).toBe("NotFound");
   });
 
   test("custom NotFound and loose", () => {
-    const scope = "test102";
     const blocks = [];
     const { container } = render(
-      <Switch loose scope={scope} level={1} blocks={blocks} NotFound={() => <p>NotFound</p>} />,
+      <Switch loose level={1} blocks={blocks} NotFound={() => <p>NotFound</p>} />,
     );
     expect(container.textContent).toBe("");
   });
@@ -40,7 +37,6 @@ describe("Switch", () => {
     actHook(() => {
       result.current[1]("/father12");
     });
-    const scope = "test12";
     const blocks = [
       {
         level: 1,
@@ -52,7 +48,7 @@ describe("Switch", () => {
     ];
     const { container } = render(
       <Switch
-        scope={scope}
+
         level={1}
         blocks={blocks}
         useAuth={() => false}
@@ -66,7 +62,6 @@ describe("Switch", () => {
     actHook(() => {
       result.current[1]("/father121");
     });
-    const scope = "test121";
     const blocks = [
       {
         level: 1,
@@ -78,7 +73,7 @@ describe("Switch", () => {
     ];
     const { container } = render(
       <Switch
-        scope={scope}
+
         level={1}
         blocks={blocks}
         useAuth={() => false}
@@ -93,7 +88,6 @@ describe("Switch", () => {
     actHook(() => {
       result.current[1]("/father13");
     });
-    const scope = "test13";
     const blocks = [
       {
         level: 1,
@@ -104,7 +98,7 @@ describe("Switch", () => {
       },
     ];
     const { container } = render(
-      <Switch scope={scope} level={1} blocks={blocks} />,
+      <Switch level={1} blocks={blocks} />,
     );
     expect(container.textContent).toBe("");
   });
@@ -114,7 +108,6 @@ describe("Switch", () => {
     actHook(() => {
       result.current[1]("/father11");
     });
-    const scope = "test11";
     const blocks = [
       {
         level: 1,
@@ -125,7 +118,7 @@ describe("Switch", () => {
       },
     ];
     const { container } = render(
-      <Switch scope={scope} level={1} blocks={blocks} />,
+      <Switch level={1} blocks={blocks} />,
     );
     expect(container.textContent).toBe("/father11");
   });
@@ -135,7 +128,6 @@ describe("Switch", () => {
     actHook(() => {
       result.current[1]("/father14");
     });
-    const scope = "test14";
     const nestedBlocks = [
       {
         level: 1,
@@ -160,7 +152,7 @@ describe("Switch", () => {
       },
     ];
     const { container } = render(
-      <Switch scope={scope} level={1} blocks={nestedBlocks} />,
+      <Switch level={1} blocks={nestedBlocks} />,
     );
     expect(container.textContent).toBe("/father14");
     act(() => {
