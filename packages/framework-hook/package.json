@@ -12,6 +12,8 @@
   "dependencies": {
     "@spax/core": "^1.2.0",
     "@spax/framework": "^1.2.0",
+    "@spax/plugin-auth": "^1.2.0",
+    "@spax/plugin-i18n": "^1.2.0",
     "@spax/plugin-lazy": "^1.2.0",
     "@spax/plugin-level": "^1.2.0",
     "@spax/plugin-path": "^1.2.0",
