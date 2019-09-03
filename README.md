@@ -37,6 +37,7 @@ $ npx @spax/spax-cli <project-name>
 
 ## :nut_and_bolt: 插件 Plugins
 
+- [@spax/plugin-auth](packages/plugin-auth) 支持权限控制
 - [@spax/plugin-i18n](packages/plugin-i18n) 支持多语言
 - [@spax/plugin-lazy](packages/plugin-lazy) 支持异步组件
 - [@spax/plugin-level](packages/plugin-level) 标记模块层级
