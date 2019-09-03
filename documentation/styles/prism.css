@@ -1,0 +1,143 @@
+code[class*="language-"],
+pre[class*="language-"] {
+  font-family: Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono",
+    "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono",
+    "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L",
+    "Courier New", Courier, monospace;
+  font-size: 16px;
+  line-height: 1.375;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  background: #f8f8f8;
+  color: #373b41;
+  position: relative;
+}
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection {
+  text-shadow: none;
+  background: #e0e0e0;
+}
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+  text-shadow: none;
+  background: #e0e0e0;
+}
+pre[class*="language-"] {
+  border-radius: 2px;
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+}
+pre[class*="language-"] > code::before {
+  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #ccc;
+  text-align: right;
+  font-size: 0.9em;
+  padding: 5px 10px 0;
+  letter-spacing: normal;
+}
+pre[class*="language-"] > code.lang-typescript::before {
+  content: "TS";
+}
+pre[class*="language-"] > code.lang-bash::before {
+  content: "Shell";
+}
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em;
+  border-radius: 0.3em;
+}
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #b4b7b4;
+}
+.token.punctuation {
+  color: #373b41;
+}
+.token.namespace {
+  opacity: 0.7;
+}
+.token.operator,
+.token.boolean,
+.token.number {
+  color: #f96a38;
+}
+.token.property {
+  color: #fba922;
+}
+.token.tag {
+  color: #3971ed;
+}
+.token.string {
+  color: #3971ed;
+}
+.token.selector {
+  color: #a36ac7;
+}
+.token.attr-name {
+  color: #f96a38;
+}
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #3971ed;
+}
+.token.attr-value,
+.token.keyword,
+.token.control,
+.token.directive,
+.token.unit {
+  color: #198844;
+}
+.token.statement,
+.token.regex,
+.token.atrule {
+  color: #3971ed;
+}
+.token.placeholder,
+.token.variable {
+  color: #3971ed;
+}
+.token.deleted {
+  text-decoration: line-through;
+}
+.token.inserted {
+  border-bottom: 1px dotted #1d1f21;
+  text-decoration: none;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.important {
+  color: #cc342b;
+}
+.token.entity {
+  cursor: help;
+}
+pre > code.highlight {
+  outline: 0.4em solid #cc342b;
+  outline-offset: 0.4em;
+}

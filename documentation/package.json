@@ -1,0 +1,20 @@
+{
+  "name": "documentation",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "gitbook-plugin-back-to-top-button": "^0.1.4",
+    "gitbook-plugin-baidu-tongji": "^1.0.4",
+    "gitbook-plugin-code": "^0.1.0",
+    "gitbook-plugin-custom-favicon": "^0.0.4",
+    "gitbook-plugin-expandable-chapters": "^0.2.0",
+    "gitbook-plugin-insert-logo": "^0.1.5",
+    "gitbook-plugin-minifier": "^0.0.1",
+    "gitbook-plugin-prism": "^2.4.0",
+    "gitbook-plugin-search-pro": "^2.0.2"
+  },
+  "scripts": {
+    "start": "gitbook serve",
+    "deploy": "bash ./deploy.sh"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "title": "SPAX",
+  "author": "crossjs",
+  "description": "使用 React、TypeScript，可扩展、插件化、渐进式，满足各种规模的业务开发。",
+  "language": "en",
+  "styles": {
+    "website": "styles/website.css"
+  },
+  "plugins": [
+    "-fontsettings",
+    "-highlight",
+    "-lunr",
+    "-search",
+    "-sharing",
+    "back-to-top-button",
+    "baidu-tongji",
+    "code",
+    "custom-favicon",
+    "expandable-chapters",
+    "insert-logo",
+    "minifier",
+    "prism",
+    "search-pro"
+  ],
+  "pluginsConfig": {
+    "baidu-tongji": {
+      "url": "//hm.baidu.com/hm.js",
+			"token": "2f301087608b46fcf7ed9425729a110f"
+		},
+    "code": {
+      "copyButtons": false
+    },
+    "favicon": "images/favicon.ico",
+    "github": {
+      "url": "https://github.com/crossjs/spax"
+    },
+    "insert-logo": {
+      "url": "/images/logo.png",
+      "style": "background: none; height: 48px"
+    },
+    "prism": {
+      "css": [
+        "../../styles/prism.css"
+      ]
+    }
+  }
+}

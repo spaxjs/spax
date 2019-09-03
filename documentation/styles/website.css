@@ -1,0 +1,91 @@
+.markdown-section a {
+  color: #4caf50;
+}
+.markdown-section a:active,
+.markdown-section a:focus,
+.markdown-section a:hover {
+  color: #367d38;
+}
+.markdown-section h1 {
+  font-size: 1.75em;
+}
+.markdown-section h2 {
+  font-size: 1.5em;
+}
+.markdown-section h3 {
+  font-size: 1.25em;
+}
+.markdown-section h4 {
+  font-size: 1em;
+}
+.markdown-section h5 {
+  font-size: 1em;
+  color: #777;
+}
+.markdown-section h6 {
+  font-size: 1em;
+  color: #999;
+}
+.book-summary ul.summary li.divider {
+  display: none;
+}
+.book-summary ul.summary li a, .book-summary ul.summary li span {
+  font-size: 15px;
+  padding: 8px 12px;
+}
+.book-summary ul.summary li a:hover {
+  color: #4caf50;
+}
+.book-summary ul.summary li span {
+  color: #6d8494;
+  cursor: default;
+}
+.book-summary ul.summary li.active > a {
+  color: #4caf50;
+  text-decoration: none;
+}
+.book-summary .exc-trigger {
+  font-size: 10px !important;
+}
+#book-search-results .search-results .has-results .search-results-item a {
+  color: #4caf50;
+}
+#buttons {
+  margin-top: 1.275rem;
+}
+#button-github,
+#button-preview {
+  border-radius: 3rem;
+  color: #fff;
+  display: inline-block;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+}
+#button-github {
+  background: #4caf50;
+  margin-right: 1rem;
+  width: 9rem;
+}
+#button-preview {
+  background: #6d8494;
+  width: 10rem;
+}
+#button-github:hover,
+#button-preview:hover {
+  text-decoration: none;
+}
+#button-github:hover {
+  background: #367d38;
+}
+#button-preview:hover {
+  background: #485661;
+}
+html,
+body {
+  font-size: 16px;
+  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+}
+.gitbook-link {
+  display: none !important;
+}
