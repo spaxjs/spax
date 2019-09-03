@@ -32,57 +32,6 @@ describe("Switch", () => {
     expect(container.textContent).toBe("");
   });
 
-  test("Forbidden", () => {
-    const { result } = renderHook(() => usePathname());
-    actHook(() => {
-      result.current[1]("/father12");
-    });
-    const blocks = [
-      {
-        level: 1,
-        path: "/father12",
-        pathRE: pathToRegexp("/father12"),
-        pathKeys: [],
-        component: (props: any) => "/father12",
-      },
-    ];
-    const { container } = render(
-      <Switch
-
-        level={1}
-        blocks={blocks}
-        useAuth={() => false}
-      />,
-    );
-    expect(container.textContent).toBe("");
-  });
-
-  test("custom Forbidden", () => {
-    const { result } = renderHook(() => usePathname());
-    actHook(() => {
-      result.current[1]("/father121");
-    });
-    const blocks = [
-      {
-        level: 1,
-        path: "/father121",
-        pathRE: pathToRegexp("/father121"),
-        pathKeys: [],
-        component: (props: any) => "/father121",
-      },
-    ];
-    const { container } = render(
-      <Switch
-
-        level={1}
-        blocks={blocks}
-        useAuth={() => false}
-        Forbidden={() => <p>Forbidden</p>}
-      />,
-    );
-    expect(container.textContent).toBe("Forbidden");
-  });
-
   test("with MatchedChildBockOrChildren", () => {
     const { result } = renderHook(() => usePathname());
     actHook(() => {

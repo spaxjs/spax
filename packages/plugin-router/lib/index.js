@@ -16,9 +16,9 @@ export default [
         });
     },
 ];
-function Wrapper({ option: { useAuth, NotFound, Forbidden } }) {
+function Wrapper({ option: { NotFound } }) {
     const [blocks] = useParsed();
-    return (React.createElement(Switch, { level: 1, blocks: blocks, loose: false, useAuth: useAuth, NotFound: NotFound, Forbidden: Forbidden }));
+    return (React.createElement(Switch, { level: 1, blocks: blocks, loose: false, NotFound: NotFound }));
 }
 /**
  * 如果未指定 component，
@@ -27,12 +27,11 @@ function Wrapper({ option: { useAuth, NotFound, Forbidden } }) {
  * 标识输入的 component 属性是否为空。
  */
 function normalizeComponent(current, option) {
-    const { path, level, authority = [], data = {}, component, blocks = [], } = current;
+    const { path, level, data = {}, component, blocks = [], } = current;
     const empty = component === undefined;
     return {
         key: `${path}&${level}`,
         empty,
-        authority,
         data,
         component: empty ? MatchedChildBockOrChildren : component,
         blocks,

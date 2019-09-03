@@ -21,7 +21,7 @@ export default [
   },
 ] as TPlugin;
 
-function Wrapper({ option: { useAuth, NotFound, Forbidden } }: any) {
+function Wrapper({ option: { NotFound } }: any) {
   const [blocks] = useParsed();
 
   return (
@@ -29,9 +29,7 @@ function Wrapper({ option: { useAuth, NotFound, Forbidden } }: any) {
       level={1}
       blocks={blocks}
       loose={false}
-      useAuth={useAuth}
       NotFound={NotFound}
-      Forbidden={Forbidden}
     />
   );
 }
@@ -46,7 +44,6 @@ function normalizeComponent(current: IBlock, option: IPO) {
   const {
     path,
     level,
-    authority = [],
     data = {},
     component,
     blocks = [],
@@ -55,7 +52,6 @@ function normalizeComponent(current: IBlock, option: IPO) {
   return {
     key: `${path}&${level}`,
     empty,
-    authority,
     data,
     component: empty ? MatchedChildBockOrChildren : component,
     blocks,

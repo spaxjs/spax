@@ -1,0 +1,29 @@
+{
+  "name": "@spax/plugin-auth",
+  "version": "1.2.0",
+  "description": "authenticate Blocks with HOC",
+  "main": "lib/index.js",
+  "author": "crossjs<liwenfu@crossjs.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crossjs/spax.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@spax/core": "^1.2.0",
+    "@spax/debug": "^1.1.0",
+    "@spax/hooks": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.2"
+  },
+  "scripts": {
+    "start": "tsc -w",
+    "build": "rm -rf lib && tsc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "gitHead": "674926434ad7d832d180722c8487a1278101cd97"
+}

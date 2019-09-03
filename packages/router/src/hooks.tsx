@@ -87,7 +87,7 @@ export function useMatchedBlockAndParams(
   }, [pathname, level]);
 }
 
-export function useMatchedFromChildBocks({ $$exact, $$block, $$useAuth, $$NotFound, $$Forbidden }: ComponentProps): React.FC<any> {
+export function useMatchedFromChildBocks({ $$exact, $$block, $$NotFound }: ComponentProps): React.FC<any> {
   // 如果没有子模块，则返回空
   return ($$block.blocks && $$block.blocks.length) ? ({children = null, ...props}: any) => (
     <Switch
@@ -95,15 +95,13 @@ export function useMatchedFromChildBocks({ $$exact, $$block, $$useAuth, $$NotFou
       blocks={$$block.blocks}
       // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
       loose={$$exact}
-      useAuth={$$useAuth}
       NotFound={$$NotFound}
-      Forbidden={$$Forbidden}
       {...props}
     >{children}</Switch>
   ) : ({ children = null }) => children;
 }
 
-export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$useAuth, $$NotFound, $$Forbidden }: ComponentProps, $$blocks: IBlock[]): React.FC<any> {
+export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$NotFound }: ComponentProps, $$blocks: IBlock[]): React.FC<any> {
   const [parsedBlocks, setParsedBlocks] = useState($$blocks || []);
 
   useEffect(() => {
@@ -121,9 +119,7 @@ export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$useAuth, 
       blocks={parsedBlocks}
       // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
       loose={$$exact}
-      useAuth={$$useAuth}
       NotFound={$$NotFound}
-      Forbidden={$$Forbidden}
       {...props}
     >{children}</Switch>
   ) : ({ children = null }) => children;

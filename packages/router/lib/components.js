@@ -2,21 +2,13 @@ import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
 import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
-export const Switch = ({ level, blocks, loose = false, useAuth = () => true, Pending = () => null, NotFound = () => null, Forbidden = () => null, children = null, }) => {
+export const Switch = ({ level, blocks, loose = false, NotFound = () => null, children = null, }) => {
     const [pathname] = usePathname();
     const matchedState = useMatchedBlockAndParams(pathname, level, blocks, loose);
-    const authed = useAuth(matchedState ? matchedState[0] : undefined);
     if (matchedState) {
-        if (authed) {
-            // tslint:disable-next-line: no-shadowed-variable
-            const { component: Matched, data } = matchedState[0];
-            return (React.createElement(Matched, Object.assign({}, data, matchedState[1], { "$$block": matchedState[0], "$$useAuth": useAuth, "$$NotFound": NotFound, "$$Forbidden": Forbidden })));
-        }
-        // pending
-        if (authed === undefined) {
-            return React.createElement(Pending, null);
-        }
-        return React.createElement(Forbidden, null);
+        // tslint:disable-next-line: no-shadowed-variable
+        const { component: Matched, data } = matchedState[0];
+        return (React.createElement(Matched, Object.assign({}, data, matchedState[1], { "$$block": matchedState[0], "$$NotFound": NotFound })));
     }
     // 宽松模式，不显示 404
     if (loose) {

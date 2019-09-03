@@ -27,6 +27,7 @@
     "@spax/history": "^1.2.0",
     "@spax/hooks": "^1.2.0",
     "@spax/i18n": "^1.2.0",
+    "@spax/plugin-auth": "^1.2.0",
     "@spax/plugin-i18n": "^1.2.0",
     "@spax/router": "^1.2.0",
     "clsx": "^1.0.4",

@@ -51,9 +51,7 @@ test("useMatchedFromChildBocks", () => {
     useMatchedFromChildBocks({
       $$exact: false,
       $$block: block,
-      $$useAuth: () => true,
       $$NotFound: () => <p>NotFound</p>,
-      $$Forbidden: () => <p>Forbidden</p>,
     }),
   );
   const C = result.current;
@@ -86,9 +84,7 @@ test("useMatchedFromChildBocksOnTheFly", () => {
     useMatchedFromChildBocksOnTheFly({
       $$exact: false,
       $$block: block,
-      $$useAuth: () => true,
       $$NotFound: () => <p>NotFound</p>,
-      $$Forbidden: () => <p>Forbidden</p>,
     }, block.blocks),
   );
   const C = result.current;
@@ -113,9 +109,7 @@ test("useMatchedFromChildBocksOnTheFly 2", () => {
     useMatchedFromChildBocksOnTheFly({
       $$exact: false,
       $$block: block,
-      $$useAuth: () => true,
       $$NotFound: () => <p>NotFound</p>,
-      $$Forbidden: () => <p>Forbidden</p>,
     }, block.blocks),
   );
   const C = result.current;

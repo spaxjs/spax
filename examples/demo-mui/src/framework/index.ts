@@ -1,6 +1,7 @@
 import { TPlugin } from "@spax/core";
 import { IOptions } from "@spax/framework";
 import FrameworkHook from "@spax/framework-hook";
+import AuthPlugin from "@spax/plugin-auth";
 import I18nPlugin from "@spax/plugin-i18n";
 import options from "./config";
 import StorePlugin from "./plugins/store";
@@ -9,6 +10,7 @@ import ThemePlugin from "./plugins/theme";
 
 export default class Framework extends FrameworkHook {
   public static plugins: TPlugin[] = [
+    AuthPlugin,
     I18nPlugin,
     StorePlugin,
     ThemePlugin,
