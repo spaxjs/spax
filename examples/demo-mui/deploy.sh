@@ -5,7 +5,7 @@ read MESSAGE
 echo "Deploying $MESSAGE ..."
 
 # build
-yarn build
+# yarn build
 
 # commit
 cd build

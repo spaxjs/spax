@@ -8,7 +8,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "deploy": "bash ./scripts/deploy.sh"
+    "deploy": "bash ./deploy.sh"
   },
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
