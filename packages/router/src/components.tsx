@@ -1,4 +1,3 @@
-import { usePathname } from "@spax/history";
 import pathToRegexp from "path-to-regexp";
 import React from "react";
 import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
@@ -11,8 +10,7 @@ export const Switch: React.FC<SwitchProps> = ({
   NotFound = () => null,
   children = null,
 }: SwitchProps): any => {
-  const [pathname] = usePathname();
-  const matchedState = useMatchedBlockAndParams(pathname, level, blocks, loose);
+  const matchedState = useMatchedBlockAndParams(level, blocks, loose);
 
   if (matchedState) {
     // tslint:disable-next-line: no-shadowed-variable

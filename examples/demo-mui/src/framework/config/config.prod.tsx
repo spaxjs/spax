@@ -13,6 +13,10 @@ export default {
       logoImage: require("images/logo.png"),
       siteTitle: "spax",
     },
+    layout: {
+      logoImage: require("images/logo.png"),
+      siteTitle: "spax",
+    },
     lazy: {
       fallback: <Loading />,
     },

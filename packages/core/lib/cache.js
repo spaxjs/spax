@@ -4,15 +4,16 @@ const map = new Map();
 const events = new EventEmitter();
 export const cache = {
     snapshot() {
-        const v = {};
+        const snapshot = {};
         map.forEach((value, key) => {
-            Object.assign(v, { [key]: value });
+            Object.assign(snapshot, { [key]: value });
         });
-        return v;
+        return snapshot;
     },
     restore(snapshot) {
+        map.clear();
         Object.entries(snapshot).forEach(([key, value]) => {
-            cache.set(key, value);
+            map.set(key, value);
         });
     },
     clear() {

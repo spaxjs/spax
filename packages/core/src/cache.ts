@@ -7,15 +7,16 @@ const events = new EventEmitter();
 
 export const cache = {
   snapshot(): AnyObject {
-    const v = {};
+    const snapshot = {};
     map.forEach((value, key) => {
-      Object.assign(v, {[key]: value});
+      Object.assign(snapshot, {[key]: value});
     });
-    return v;
+    return snapshot;
   },
   restore(snapshot: AnyObject): void {
+    map.clear();
     Object.entries(snapshot).forEach(([key, value]: [string, any]) => {
-      cache.set(key, value);
+      map.set(key, value);
     });
   },
   clear(): void {
@@ -24,7 +25,7 @@ export const cache = {
   get<S = any>(key: string): S {
     return map.get(key);
   },
-  set(key: string, value: any,shouldEmit: boolean = false): void {
+  set(key: string, value: any, shouldEmit: boolean = false): void {
     map.set(key, value);
     if (shouldEmit) {
       events.emit(key, value);

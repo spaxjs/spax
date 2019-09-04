@@ -5,6 +5,16 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 const emitter = new EventEmitter();
 emitter.setMaxListeners(Number.MAX_VALUE);
 
+const memoryStorage = {
+  __value: {},
+  getItem(key: string): string {
+    return this.__value.hasOwnProperty(key) ? this.__value[key] : null;
+  },
+  setItem(key: string, value: string): void {
+    this.__value[key] = value;
+  },
+};
+
 export const prefix = "@spax&hooks&global&";
 
 export function useGlobalState<S>(
@@ -13,6 +23,10 @@ export function useGlobalState<S>(
   storage: Storage = localStorage,
 ): [S, Dispatch<SetStateAction<S>>] {
   const storageKey = `${prefix}${key}`;
+
+  if (storage === null) {
+    storage = memoryStorage as any;
+  }
 
   const [state, setState] = useState(() => {
     const value = getState(initialState);
@@ -50,6 +64,22 @@ export function useGlobalState<S>(
   };
 
   useEffect(() => {
+    // use storage first
+    if (storage) {
+      const storageValue = storage.getItem(storageKey);
+
+      if (storageValue !== null) {
+        try {
+          setState(JSON.parse(storageValue));
+        } catch (error) {
+          /* istanbul ignore next */
+          if (process.env.NODE_ENV === "development") {
+            warn("Invalid value of %s: %O", key, storageValue);
+          }
+        }
+      }
+    }
+
     // add listener on mounted
     emitter.on(key, setState);
 
@@ -70,6 +100,10 @@ export function setGlobalState<S>(
   initialState: S | (() => S),
   storage: Storage = localStorage,
 ): void {
+  if (storage === null) {
+    storage = memoryStorage as any;
+  }
+
   if (storage) {
     const storageKey = `${prefix}${key}`;
     if (storage.getItem(storageKey) === null) {

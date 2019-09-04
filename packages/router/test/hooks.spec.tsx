@@ -6,7 +6,6 @@ import React from "react";
 import {
   useBlock,
   useExact,
-  useMatchedArrayOfBlockAndParams,
   useMatchedBlockAndParams,
   useMatchedFromChildBocks,
   useMatchedFromChildBocksOnTheFly,
@@ -24,6 +23,37 @@ test("useBlock", () => {
 test("useExact", () => {
   expect(useExact({ $$exact: true } as any)).toBe(true);
   expect(useExact({ $$exact: false } as any)).toBe(false);
+});
+
+test("useMatchedBlockAndParams", () => {
+  const blocks = [
+    {
+      level: 1,
+      path: "/foo",
+      pathRE: pathToRegexp("/foo"),
+      pathKeys: [],
+      blocks: [
+        {
+          level: 2,
+          path: "/foo/bar",
+          pathRE: pathToRegexp("/foo/bar"),
+          pathKeys: [],
+        },
+      ],
+    },
+  ];
+  const { result: result0 } = renderHook(() => usePathname());
+  actHook(() => {
+    result0.current[1]("/foo/bar");
+  });
+  const { result: result1 } = renderHook(() =>
+    useMatchedBlockAndParams(1, blocks, false),
+  );
+  expect(result1.current[0].path).toBe("/foo");
+  const { result: result2 } = renderHook(() =>
+    useMatchedBlockAndParams(2, blocks[0].blocks, false),
+  );
+  expect(result2.current[0].path).toBe("/foo/bar");
 });
 
 test("useMatchedFromChildBocks", () => {
@@ -81,11 +111,14 @@ test("useMatchedFromChildBocksOnTheFly", () => {
     result0.current[1]("/father/child");
   });
   const { result } = renderHook(() =>
-    useMatchedFromChildBocksOnTheFly({
-      $$exact: false,
-      $$block: block,
-      $$NotFound: () => <p>NotFound</p>,
-    }, block.blocks),
+    useMatchedFromChildBocksOnTheFly(
+      {
+        $$exact: false,
+        $$block: block,
+        $$NotFound: () => <p>NotFound</p>,
+      },
+      block.blocks,
+    ),
   );
   const C = result.current;
   const { container } = render(<C />);
@@ -106,44 +139,16 @@ test("useMatchedFromChildBocksOnTheFly 2", () => {
     result0.current[1]("/father/child");
   });
   const { result } = renderHook(() =>
-    useMatchedFromChildBocksOnTheFly({
-      $$exact: false,
-      $$block: block,
-      $$NotFound: () => <p>NotFound</p>,
-    }, block.blocks),
+    useMatchedFromChildBocksOnTheFly(
+      {
+        $$exact: false,
+        $$block: block,
+        $$NotFound: () => <p>NotFound</p>,
+      },
+      block.blocks,
+    ),
   );
   const C = result.current;
   const { container } = render(<C />);
   expect(container.textContent).toBe("");
-});
-
-test("useMatchedArrayOfBlockAndParams", () => {
-  const blocks = [
-    {
-      level: 1,
-      path: "/father",
-      pathRE: pathToRegexp("/father"),
-      pathKeys: [],
-      blocks: [
-        {
-          level: 2,
-          path: "/father/child",
-          pathRE: pathToRegexp("/father/child"),
-          pathKeys: [],
-        },
-      ],
-    },
-  ];
-  const { result: result0 } = renderHook(() =>
-    useMatchedArrayOfBlockAndParams(),
-  );
-  renderHook(() =>
-    useMatchedBlockAndParams("/father/child", 1, blocks, false),
-  );
-  expect(result0.current[0][0].path).toBe("/father");
-  renderHook(() =>
-    useMatchedBlockAndParams("/father/child", 2, blocks[0].blocks, false),
-  );
-  expect(result0.current[0][0].path).toBe("/father");
-  expect(result0.current[1][0].path).toBe("/father/child");
 });

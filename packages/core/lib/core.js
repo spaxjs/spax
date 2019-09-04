@@ -11,15 +11,12 @@ const pluginOptionGetter = (name) => {
     return c ? c[name] || c[name.toLowerCase()] || {} : {};
 };
 export async function run(plugins = [], options = {}) {
-    if (process.env.NODE_ENV !== "test") {
-        if (cache.has("run")) {
-            error("Should not call run twice.");
-            return;
-        }
+    if (cache.has("init")) {
+        cache.clear();
     }
-    // 标识已加载，不允许重复执行
-    cache.set("run", 1);
     await runInit(plugins, options);
+    // 标识已加载
+    cache.set("init", 1);
     return runRender(await runParse(options.blocks, false), false);
 }
 /**
@@ -67,9 +64,9 @@ export function useRendered() {
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
 export async function parseBlocks(blocks = [], parent, fromInnerCall = false) {
-    if (!cache.has("run")) {
+    if (!cache.has("init")) {
         error("Please call `run` first.");
-        return;
+        return [];
     }
     blocks = await Promise.all(blocks.map(async (mc) => {
         mc = await interopDefaultExports(mc);

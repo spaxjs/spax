@@ -28,6 +28,5 @@ export function mount(props) {
 
 export function unmount(props) {
   snapshot = cache.snapshot();
-  cache.clear();
   return reactLifecycles.unmount(props);
 }

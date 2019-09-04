@@ -1,9 +1,9 @@
 import { IBlock, parseBlocks } from "@spax/core";
 import { debug } from "@spax/debug";
+import { usePathname } from "@spax/history";
 import React, { useEffect, useMemo, useState } from "react";
 import { Switch } from "./components";
 import { ComponentProps, MatchedParams, TMatchedState } from "./types";
-import { matchedDb } from "./utils";
 
 export function useBlock({ $$block }: ComponentProps): IBlock {
   return $$block;
@@ -13,95 +13,97 @@ export function useExact({ $$exact }: ComponentProps): boolean {
   return $$exact;
 }
 
-export function useMatchedArrayOfBlockAndParams(): TMatchedState[] {
-  const [state, setState] = useState([]);
-
-  useEffect(() => {
-    // 因为 useMatchedArrayOfBlockAndParams 多处复用，
-    // 所以每个组件加载后都要用 useEffect 同步状态
-    setState(matchedDb.get());
-    return matchedDb.on(setState);
-  }, []);
-
-  return state;
-}
-
 export function useMatchedBlockAndParams(
-  pathname: string,
   level: number = 1,
   blocks: IBlock[],
   loose: boolean = false,
 ): TMatchedState {
+  const [pathname] = usePathname();
+
   return useMemo(() => {
     // `/a/b/c` -> `["/a", "/b", "/c"]`
-    const tokens = pathname.match(/\/[^?/]+/ig) || ["/"];
+    const tokens = pathname.match(/\/[^?/]+/gi) || ["/"];
+    let n = tokens.length;
 
-    const matchedBlockAndParams: TMatchedState = ((n) => {
-      let fallbackBlock: any = null;
-      // 从寻找`完整`匹配到寻找`父级`匹配
-      while (n--) {
-        const toPath = tokens.slice(0, n + 1).join("");
+    let fallbackBlock: any = null;
+    // 从寻找`完整`匹配到寻找`父级`匹配
+    while (n--) {
+      const toPath = tokens.slice(0, n + 1).join("");
 
-        for (let i = 0; i < blocks.length; i++) {
-          const childBlock: IBlock = blocks[i];
+      for (let i = 0; i < blocks.length; i++) {
+        const childBlock: IBlock = blocks[i];
 
-          // 严格模式，才寻找 404
-          if (!loose && childBlock.path.indexOf("*") !== -1) {
-            if (!fallbackBlock) {
-              fallbackBlock = childBlock;
-            }
-            continue;
+        // 严格模式，才寻找 404
+        if (!loose && childBlock.path.indexOf("*") !== -1) {
+          if (!fallbackBlock) {
+            fallbackBlock = childBlock;
           }
+          continue;
+        }
 
-          const execArray = childBlock.pathRE.exec(toPath);
+        const execArray = childBlock.pathRE.exec(toPath);
 
-          if (execArray) {
-            const matchedParams: MatchedParams = childBlock.pathKeys.reduce((params: MatchedParams, {name}, index: number) => ({
+        if (execArray) {
+          const matchedParams: MatchedParams = childBlock.pathKeys.reduce(
+            (params: MatchedParams, { name }, index: number) => ({
               ...params,
               [name]: execArray[index + 1],
-            }), {
+            }),
+            {
+              // TODO 如果路由有默认的 prefix，
+              // 则此处的 tokens.length 应该减去 prefix 提供的 token 长度
               $$exact: tokens.length === childBlock.level,
               // $$extra: tokens.length < childBlock.level,
-            });
+            },
+          );
 
-            /* istanbul ignore next */
-            if (process.env.NODE_ENV === "development") {
-              debug("Matched of `%s`%s: %O", toPath, matchedParams.$$exact ? " exactly" : "", childBlock);
-            }
-
-            return [childBlock, matchedParams] as TMatchedState;
+          /* istanbul ignore next */
+          if (process.env.NODE_ENV === "development") {
+            debug(
+              "Matched of `%s`%s: %O",
+              toPath,
+              matchedParams.$$exact ? " exactly" : "",
+              childBlock,
+            );
           }
+
+          return [childBlock, matchedParams] as TMatchedState;
         }
       }
-
-      return fallbackBlock ? [fallbackBlock, { $$is404: true }] as TMatchedState : null;
-    })(tokens.length);
-
-    if (matchedBlockAndParams) {
-      matchedDb.check(pathname);
-      matchedDb.add(level, matchedBlockAndParams);
-      return matchedBlockAndParams;
     }
 
-    return null;
+    return fallbackBlock
+      ? ([fallbackBlock, { $$is404: true }] as TMatchedState)
+      : null;
   }, [pathname, level]);
 }
 
-export function useMatchedFromChildBocks({ $$exact, $$block, $$NotFound }: ComponentProps): React.FC<any> {
+export function useMatchedFromChildBocks({
+  $$exact,
+  $$block,
+  $$NotFound,
+}: ComponentProps): React.FC<any> {
   // 如果没有子模块，则返回空
-  return ($$block.blocks && $$block.blocks.length) ? ({children = null, ...props}: any) => (
-    <Switch
-      level={$$block.level + 1}
-      blocks={$$block.blocks}
-      // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
-      loose={$$exact}
-      NotFound={$$NotFound}
-      {...props}
-    >{children}</Switch>
-  ) : ({ children = null }) => children;
+  return $$block.blocks && $$block.blocks.length
+    ? ({ children = null, ...props }: any) => (
+        <Switch
+          level={$$block.level + 1}
+          blocks={$$block.blocks}
+          // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
+          loose={$$exact}
+          NotFound={$$NotFound}
+          {...props}
+        >
+          {children}
+        </Switch>
+      )
+    : ({ children = null }) => children;
 }
 
-export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$NotFound }: ComponentProps, $$blocks: IBlock[]): React.FC<any> {
+export function useMatchedFromChildBocksOnTheFly(
+  { $$exact, $$block, $$NotFound }: ComponentProps,
+  $$blocks: IBlock[],
+): React.FC<any> {
   const [parsedBlocks, setParsedBlocks] = useState($$blocks || []);
 
   useEffect(() => {
@@ -113,14 +115,18 @@ export function useMatchedFromChildBocksOnTheFly({ $$exact, $$block, $$NotFound 
   }, [$$blocks]);
 
   // 如果没有子模块，则返回空
-  return parsedBlocks.length ? ({children = null, ...props}: any) => (
-    <Switch
-      level={$$block.level + 1}
-      blocks={parsedBlocks}
-      // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
-      loose={$$exact}
-      NotFound={$$NotFound}
-      {...props}
-    >{children}</Switch>
-  ) : ({ children = null }) => children;
+  return parsedBlocks.length
+    ? ({ children = null, ...props }: any) => (
+        <Switch
+          level={$$block.level + 1}
+          blocks={parsedBlocks}
+          // 当前已完整匹配到，如果未匹配到子模块，不用显示 404。
+          loose={$$exact}
+          NotFound={$$NotFound}
+          {...props}
+        >
+          {children}
+        </Switch>
+      )
+    : ({ children = null }) => children;
 }

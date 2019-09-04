@@ -10,7 +10,7 @@ beforeEach(() => {
 describe("parseBlocks", () => {
   test("call before run", async () => {
     const parsed = await parseBlocks([], {});
-    expect(parsed).toBe(undefined);
+    expect(parsed).toEqual([]);
   });
 
   test("call after run", async () => {
@@ -51,6 +51,13 @@ describe("useRendered", () => {
 });
 
 describe("run", () => {
+  test("twice", async () => {
+    const ret = await run(undefined, {});
+    const ret1 = await run(undefined, {});
+    expect(ret).toEqual([]);
+    expect(ret1).toEqual([]);
+  });
+
   describe("returns", () => {
     test("plugins: undefined", async () => {
       const ret = await run(undefined, {});

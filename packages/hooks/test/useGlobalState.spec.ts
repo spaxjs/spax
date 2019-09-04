@@ -147,7 +147,7 @@ describe("no persist", () => {
     const { result }
       = renderHook(() => useGlobalState("test7", 70, null));
 
-    expect(result.current[0]).toBe(70);
+    expect(result.current[0]).toBe(1);
 
     actHook(() => {
       result.current[1](0);

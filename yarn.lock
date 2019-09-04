@@ -1767,10 +1767,10 @@
   resolved "https://registry.npm.taobao.org/@sheerun/mutationobserver-shim/download/@sheerun/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
   integrity sha1-gBPyr1Sit9c19xVg/zYNOoF2qHs=
 
-"@testing-library/dom@^6.0.0":
-  version "6.0.1"
-  resolved "https://registry.npm.taobao.org/@testing-library/dom/download/@testing-library/dom-6.0.1.tgz#939c7524bcf91d750bbb3bac3366d17e166224a0"
-  integrity sha1-k5x1JLz5HXULuzusM2bRfhZiJKA=
+"@testing-library/dom@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.npm.taobao.org/@testing-library/dom/download/@testing-library/dom-6.1.0.tgz#8d5a954158e81ecd7c994907f4ec240296ed823b"
+  integrity sha1-jVqVQVjoHs18mUkH9OwkApbtgjs=
   dependencies:
     "@babel/runtime" "^7.5.5"
     "@sheerun/mutationobserver-shim" "^0.3.2"
@@ -1803,13 +1803,13 @@
     "@types/react" ">=16.9.0"
     "@types/react-test-renderer" ">=16.9.0"
 
-"@testing-library/react@^9.1.3":
-  version "9.1.3"
-  resolved "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-9.1.3.tgz#3fb495227322ea36cd817532441dabb552e0d6ce"
-  integrity sha1-P7SVInMi6jbNgXUyRB2rtVLg1s4=
+"@testing-library/react@^9.1.4":
+  version "9.1.4"
+  resolved "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-9.1.4.tgz?cache=0&sync_timestamp=1567556813950&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40testing-library%2Freact%2Fdownload%2F%40testing-library%2Freact-9.1.4.tgz#4cc1a228a944c0f468ee501e7da1651d8bbd9902"
+  integrity sha1-TMGiKKlEwPRo7lAefaFlHYu9mQI=
   dependencies:
     "@babel/runtime" "^7.5.5"
-    "@testing-library/dom" "^6.0.0"
+    "@testing-library/dom" "^6.1.0"
     "@types/testing-library__react" "^9.1.0"
 
 "@types/babel__core@^7.1.0":
@@ -1901,10 +1901,10 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.2.tgz#c4e63af5e8823ce9cc3f0b34f7b998c2171f0c44"
   integrity sha1-xOY69eiCPOnMPws097mYwhcfDEQ=
 
-"@types/node@^12.7.3":
-  version "12.7.3"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.3.tgz#27b3f40addaf2f580459fdb405222685542f907a"
-  integrity sha1-J7P0Ct2vL1gEWf20BSImhVQvkHo=
+"@types/node@^12.7.4":
+  version "12.7.4"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.4.tgz?cache=0&sync_timestamp=1567536511501&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.4.tgz#64db61e0359eb5a8d99b55e05c729f130a678b04"
+  integrity sha1-ZNth4DWetajZm1XgXHKfEwpniwQ=
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -3893,10 +3893,10 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npm.taobao.org/husky/download/husky-3.0.4.tgz#10a48ac11ab50859b0939750fa0b4e07ad0bf669"
-  integrity sha1-EKSKwRq1CFmwk5dQ+gtOB60L9mk=
+husky@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.npm.taobao.org/husky/download/husky-3.0.5.tgz?cache=0&sync_timestamp=1567354771612&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhusky%2Fdownload%2Fhusky-3.0.5.tgz#d7db27c346645a8dc52df02aa534a377ad7925e0"
+  integrity sha1-19snw0ZkWo3FLfAqpTSjd615JeA=
   dependencies:
     chalk "^2.4.2"
     cosmiconfig "^5.2.1"

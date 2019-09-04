@@ -15,17 +15,14 @@ const pluginOptionGetter = (name: string): IPO => {
 };
 
 export async function run(plugins: TPlugin[] = [], options: IOptions = {}): Promise<any> {
-  if (process.env.NODE_ENV !== "test") {
-    if (cache.has("run")) {
-      error("Should not call run twice.");
-      return;
-    }
+  if (cache.has("init")) {
+    cache.clear();
   }
 
-  // 标识已加载，不允许重复执行
-  cache.set("run", 1);
-
   await runInit(plugins, options);
+
+  // 标识已加载
+  cache.set("init", 1);
 
   return runRender(await runParse(options.blocks, false), false);
 }
@@ -89,9 +86,9 @@ export async function parseBlocks(
   parent: IBlock,
   fromInnerCall: boolean = false,
 ): Promise<IBlock[]> {
-  if (!cache.has("run")) {
+  if (!cache.has("init")) {
     error("Please call `run` first.");
-    return;
+    return [];
   }
 
   blocks = await Promise.all(blocks.map(async (mc: IBlock) => {
