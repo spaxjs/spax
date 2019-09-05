@@ -85,7 +85,7 @@ function getState<S>(initialState: S | (() => S)): S {
   return typeof initialState === "function" ? (initialState as () => S)() : initialState;
 }
 
-function getStorage(key: string, storage?: Storage) {
+function getStorage(key: string, storage?: Storage): Storage {
   if (storage) {
     storageMap.set(key, storage);
     return storage;

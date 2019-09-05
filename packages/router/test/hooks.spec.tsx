@@ -35,8 +35,23 @@ test("useMatchedBlockAndParams", () => {
       blocks: [
         {
           level: 2,
-          path: "/foo/bar",
-          pathRE: pathToRegexp("/foo/bar"),
+          path: "/foo/:bar",
+          pathRE: pathToRegexp("/foo/:bar"),
+          pathKeys: [
+            {
+              name: "bar",
+              prefix: "/",
+              delimiter: "/",
+              optional: false,
+              repeat: false,
+              pattern: "[^\\/]+?",
+            },
+          ],
+        },
+        {
+          level: 2,
+          path: "*",
+          pathRE: pathToRegexp("(.*)"),
           pathKeys: [],
         },
       ],
@@ -53,7 +68,7 @@ test("useMatchedBlockAndParams", () => {
   const { result: result2 } = renderHook(() =>
     useMatchedBlockAndParams(2, blocks[0].blocks, false),
   );
-  expect(result2.current[0].path).toBe("/foo/bar");
+  expect(result2.current[0].path).toBe("/foo/:bar");
 });
 
 test("useMatchedFromChildBocks", () => {

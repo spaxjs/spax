@@ -12,7 +12,7 @@ module.exports = {
     "react-app-polyfill/jsdom"
   ],
   "testMatch": [
-    "packages/*/test/*.spec.(ts|tsx)"
+    "**/test/*.spec.(ts|tsx)"
   ],
   "testEnvironment": "jest-environment-jsdom-fourteen",
   "collectCoverage": true,

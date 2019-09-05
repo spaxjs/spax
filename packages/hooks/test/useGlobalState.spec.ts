@@ -31,9 +31,9 @@ describe("rehydrate", () => {
   test("parse", () => {
     localStorage.setItem("test3", "[123]");
 
-    const hr
+    const hr1
       = renderHook(() => useGlobalState("test3", 3, localStorage));
-    expect(hr.result.current[0]).toEqual([123]);
+    expect(hr1.result.current[0]).toEqual([123]);
   });
 
   test("catch", () => {
@@ -124,7 +124,7 @@ describe("persist Storage", () => {
 
     test("should ignore initialState", () => {
       const hr1
-        = renderHook(() => useGlobalState("persist-storage-preset", 0, localStorage));
+        = renderHook(() => useGlobalState("persist-storage-preset", 0));
       expect(hr1.result.current[0]).toBe(6);
 
       actHook(() => {
@@ -133,7 +133,7 @@ describe("persist Storage", () => {
       expect(hr1.result.current[0]).toBe(1);
 
       const hr2
-        = renderHook(() => useGlobalState("persist-storage-preset", 0, localStorage));
+        = renderHook(() => useGlobalState("persist-storage-preset", 0));
       expect(hr2.result.current[0]).toBe(1);
 
       actHook(() => {
