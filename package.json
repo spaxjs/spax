@@ -38,6 +38,8 @@
     "@types/node": "^12.7.4",
     "babel-jest": "^24.9.0",
     "babel-preset-react-app": "^9.0.1",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "3.0.2",
     "git-message": "^2.0.2",
     "husky": "^3.0.5",
     "jest": "^24.9.0",
@@ -59,6 +61,7 @@
     "alias": "lerna link",
     "lint": "tslint --project ./ --fix",
     "build": "lerna run build --no-private",
+    "commit": "git-cz",
     "publish": "lerna publish",
     "dev": "jest --no-cache --watch",
     "test": "jest --no-cache",
@@ -67,6 +70,11 @@
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
