@@ -11,6 +11,9 @@ module.exports = {
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
+  "setupFilesAfterEnv": [
+    "<rootDir>/test/enzyme.ts"
+  ],
   "testMatch": [
     "**/test/*.spec.(ts|tsx)"
   ],
@@ -20,8 +23,7 @@ module.exports = {
     "packages/*/src/**.(ts|tsx)",
     "!**/src/types.(ts|tsx)",
     "!**/framework-*/**",
-    "!**/plugin-*/**",
-    "!**/spax-*/**",
+    "!**/spax-cli/**",
     "!**/node_modules/**"
   ],
   "coverageReporters": [

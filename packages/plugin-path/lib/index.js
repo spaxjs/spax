@@ -3,16 +3,16 @@ import pathToRegexp from "path-to-regexp";
 export default [
     "Path",
     [],
-    ({ parse }, option) => {
+    ({ parse }) => {
         parse.tap((current, parent) => {
             return {
                 ...current,
-                ...normalizePath(current, parent, option),
+                ...normalizePath(current, parent),
             };
         });
     },
 ];
-function normalizePath(current, parent, option) {
+function normalizePath(current, parent) {
     let { path } = current;
     if (path === undefined) {
         path = "";

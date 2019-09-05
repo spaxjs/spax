@@ -5,10 +5,10 @@ export default [
     "Router",
     ["Lazy", "Level", "Path"],
     ({ parse, render }, option) => {
-        parse.tap((current, parent) => {
+        parse.tap((current) => {
             return {
                 ...current,
-                ...normalizeComponent(current, option),
+                ...normalizeComponent(current),
             };
         });
         render.tap((blocks) => {
@@ -26,7 +26,7 @@ function Wrapper({ option: { NotFound } }) {
  * 同时，设置 empty 属性，
  * 标识输入的 component 属性是否为空。
  */
-function normalizeComponent(current, option) {
+function normalizeComponent(current) {
     const { path, level, data = {}, component, blocks = [], } = current;
     const empty = component === undefined;
     return {

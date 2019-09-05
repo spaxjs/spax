@@ -34,6 +34,8 @@ export function useMatchedBlockAndParams(level = 1, blocks, loose = false) {
                         ...params,
                         [name]: execArray[index + 1],
                     }), {
+                        // TODO 如果路由有默认的 prefix，
+                        // 则此处的 tokens.length 应该减去 prefix 提供的 token 长度
                         $$exact: tokens.length === childBlock.level,
                     });
                     /* istanbul ignore next */

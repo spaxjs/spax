@@ -4,10 +4,10 @@ export default [
     "Auth",
     [],
     ({ parse }, option) => {
-        parse.tap((current, parent) => {
+        parse.tap((current) => {
             return {
                 ...current,
-                ...normalizeAuth(current, parent, option),
+                ...normalizeAuth(current, option),
             };
         });
     },
@@ -25,7 +25,7 @@ function hasAuth(role, authority) {
     }
     return authority.indexOf(role) !== -1;
 }
-function normalizeAuth(current, parent, { roleKey = "role", Forbidden = () => null }) {
+function normalizeAuth(current, { roleKey = "role", Forbidden = () => null }) {
     const { authority = [], component: C } = current;
     return {
         authority,

@@ -6,10 +6,10 @@ export default [
   "Router",
   ["Lazy", "Level", "Path"],
   ({ parse, render }: IHooks, option: IPO) => {
-    parse.tap((current: IBlock, parent: IBlock) => {
+    parse.tap((current: IBlock) => {
       return {
         ...current,
-        ...normalizeComponent(current, option),
+        ...normalizeComponent(current),
       };
     });
 
@@ -40,7 +40,7 @@ function Wrapper({ option: { NotFound } }: any) {
  * 同时，设置 empty 属性，
  * 标识输入的 component 属性是否为空。
  */
-function normalizeComponent(current: IBlock, option: IPO) {
+function normalizeComponent(current: IBlock) {
   const {
     path,
     level,

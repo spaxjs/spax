@@ -1,7 +1,7 @@
 export default [
     "Level",
     [],
-    ({ parse }, option) => {
+    ({ parse }) => {
         parse.tap((current, parent) => {
             return {
                 ...current,

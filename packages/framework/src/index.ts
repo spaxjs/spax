@@ -123,16 +123,12 @@ export default abstract class Framework {
 export function merge(...args: any[]) {
   return mergeWith({}, ...args, (obj: any, src: any) => {
     // 合并数组
-    if (Array.isArray(src)) {
-      if (Array.isArray(obj)) {
-        return obj.concat(src);
-      }
+    if (Array.isArray(src) && Array.isArray(obj)) {
+      return obj.concat(src);
     }
     // 合并对象
-    if (isPlainObject(src)) {
-      if (isPlainObject(obj)) {
-        return merge(obj, src);
-      }
+    if (isPlainObject(src) && isPlainObject(obj)) {
+      return merge(obj, src);
     }
     // 其它，直接覆盖
     return src;

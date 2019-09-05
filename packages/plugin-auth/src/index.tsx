@@ -6,10 +6,10 @@ export default [
   "Auth",
   [],
   ({ parse }: IHooks, option: IPO) => {
-    parse.tap((current: IBlock, parent: IBlock) => {
+    parse.tap((current: IBlock) => {
       return {
         ...current,
-        ...normalizeAuth(current, parent, option),
+        ...normalizeAuth(current, option),
       };
     });
   },
@@ -37,7 +37,6 @@ function hasAuth(role: string, authority: string[]) {
 
 function normalizeAuth(
   current: IBlock,
-  parent: IBlock,
   { roleKey = "role", Forbidden = () => null }: IPO,
 ): AnyObject {
   const { authority = [], component: C } = current;

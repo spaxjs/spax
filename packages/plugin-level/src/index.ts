@@ -1,9 +1,9 @@
-import { IBlock, IHooks, IPO, TPlugin } from "@spax/core";
+import { IBlock, IHooks, TPlugin } from "@spax/core";
 
 export default [
   "Level",
   [],
-  ({ parse }: IHooks, option: IPO) => {
+  ({ parse }: IHooks) => {
     parse.tap(
       (current: IBlock, parent: IBlock) => {
         return {
