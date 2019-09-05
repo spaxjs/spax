@@ -21,9 +21,8 @@ jobs:
       run: |
         rm -f .npmrc
         npm install
-        npm run boot
+        npm run bootstrap
         npm run build
-        npm run alias
         npm test
         npx codecov
       env:

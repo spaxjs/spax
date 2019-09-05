@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/crossjs/spax.svg?branch=master)](https://travis-ci.org/crossjs/spax)
 [![codecov](https://codecov.io/gh/crossjs/spax/branch/master/graph/badge.svg)](https://codecov.io/gh/crossjs/spax)
 [![DevDependencies](https://img.shields.io/david/dev/crossjs/spax.svg)](https://david-dm.org/crossjs/spax?type=dev)
-[![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## :coffee: 立即使用 StarterKit

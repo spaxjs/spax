@@ -11,9 +11,8 @@ before_install:
   - rm -f .npmrc
 before_script:
   # - yarn cache clean @types/react-dom
-  - yarn boot
+  - yarn bootstrap
   - yarn build
-  - yarn alias
 after_success:
   - yarn global add codecov
   - codecov
