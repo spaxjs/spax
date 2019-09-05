@@ -1,9 +1,15 @@
+import { AnyObject, IBlock } from "@spax/core";
 import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
 import { useEffect } from "react";
 
+interface MatchedState extends AnyObject {
+  $$block: IBlock;
+  $$exact: boolean;
+}
+
 export function useMatchedList() {
-  return useGlobalState("demo-ui/layout", [], null);
+  return useGlobalState<MatchedState[]>("demo-ui/layout", [], null);
 }
 
 export function useTitle(fallback: string): void {

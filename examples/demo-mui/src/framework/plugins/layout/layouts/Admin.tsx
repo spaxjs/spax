@@ -20,6 +20,7 @@ import { Logo } from "../components/Logo";
 import { Main } from "../components/Main";
 import { Menu } from "../components/Menu";
 import { Sidebar } from "../components/Sidebar";
+import { useMatchedList } from "../hooks";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({
@@ -31,17 +32,17 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 
 export default function AdminLayout(props: any) {
   const [role, setRole] = useGlobalState<string>("role");
-  // const [matched] = useMatchedListOfBlockAndParams();
+  const [matched] = useMatchedList();
   const { h1 } = useStyles(props);
   const { t } = useT();
 
-  const lastMatched = null; // matched[matched.length - 1];
+  const lastMatched = matched[matched.length - 1];
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh">
       <Header>
         <Typography className={h1} variant="h1">
-          {lastMatched && lastMatched[0].title ? t(lastMatched[0].title) : ""}
+          {lastMatched && lastMatched.$$block.title ? t(lastMatched.$$block.title) : ""}
         </Typography>
         {role ? (
           <IconButton color="inherit" edge="end" onClick={() => setRole("")}>

@@ -6,7 +6,7 @@ export default {
   version: "0.0.1",
   plugins: {
     i18n: {
-      fallbackLng: store.initialStates.lng,
+      fallbackLng: "zh",
     },
     store,
     theme: {

@@ -1,5 +1,7 @@
 export default {
-  initialStates: {
-    GlobalCount: 0,
-  },
+  initialStates: [{
+    states: {
+      GlobalCount: 0,
+    },
+  }],
 };

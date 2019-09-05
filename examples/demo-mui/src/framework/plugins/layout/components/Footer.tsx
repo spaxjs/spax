@@ -7,7 +7,6 @@ import { changeLng, useT } from "@spax/i18n";
 import React, { useEffect, useState } from "react";
 
 export const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {
-  const [ repo ] = useGlobalState<any>("repo");
   const [ lng, setLng ] = useGlobalState<any>("lng");
   const [ themeType, setThemeType ] = useGlobalState<"light" | "dark">("theme-type");
   const [ anchorEl, setAnchorEl ] = useState<null | HTMLElement>(null);
@@ -39,7 +38,7 @@ export const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {
         display="flex"
         flexDirection="row"
         justifyContent="center">
-        <Link href={repo.url}>
+        <Link href="https://github.com/crossjs/spax">
           <Github fill="currentColor" />
         </Link>
         <Typography variant="subtitle1">

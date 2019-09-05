@@ -1,232 +1,185 @@
 import { act as actHook, renderHook } from "@testing-library/react-hooks";
-import { prefix, setGlobalState ,useGlobalState } from "../src/useGlobalState";
+import { setGlobalState, useGlobalState } from "../src/useGlobalState";
 
 // tslint:disable: react-hooks-nesting
 
 beforeAll(() => {
-  localStorage.removeItem(`${prefix}test1`);
-  localStorage.removeItem(`${prefix}test2`);
-  localStorage.removeItem(`${prefix}test3`);
-  localStorage.removeItem(`${prefix}test4`);
-  localStorage.removeItem(`${prefix}test5`);
-  localStorage.removeItem(`${prefix}test6`);
-  localStorage.removeItem(`${prefix}test7`);
-  localStorage.removeItem(`${prefix}test8`);
-  localStorage.removeItem(`${prefix}test9`);
+  localStorage.clear();
 });
 
 afterAll(() => {
-  localStorage.removeItem(`${prefix}test1`);
-  localStorage.removeItem(`${prefix}test2`);
-  localStorage.removeItem(`${prefix}test3`);
-  localStorage.removeItem(`${prefix}test4`);
-  localStorage.removeItem(`${prefix}test5`);
-  localStorage.removeItem(`${prefix}test6`);
-  localStorage.removeItem(`${prefix}test7`);
-  localStorage.removeItem(`${prefix}test8`);
-  localStorage.removeItem(`${prefix}test9`);
+  localStorage.clear();
 });
 
 describe("initialState", () => {
-  test("primitive", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test1", 0));
-
-    expect(result.current[0]).toBe(0);
+  test("primitive values", () => {
+    const hr
+      = renderHook(() => useGlobalState("initialState-primitive-values", 0));
+    expect(hr.result.current[0]).toBe(0);
   });
 
-  test("function", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test2", () => 2));
-
-    expect(result.current[0]).toBe(2);
+  describe("reference values", () => {
+    test("function", () => {
+      const hr
+        = renderHook(() => useGlobalState("initialState-reference-values-function", () => 2));
+      expect(hr.result.current[0]).toBe(2);
+    });
   });
 });
 
 describe("rehydrate", () => {
   test("parse", () => {
-    localStorage.setItem(`${prefix}test3`, "[123]");
-    const { result }
-      = renderHook(() => useGlobalState("test3", 3));
+    localStorage.setItem("test3", "[123]");
 
-    expect(result.current[0]).toEqual([123]);
+    const hr
+      = renderHook(() => useGlobalState("test3", 3, localStorage));
+    expect(hr.result.current[0]).toEqual([123]);
   });
 
   test("catch", () => {
-    localStorage.setItem(`${prefix}test4`, "{123]");
-    const { result }
-      = renderHook(() => useGlobalState("test4", 4));
+    localStorage.setItem("test4", "{123]");
 
-    expect(result.current[0]).toBe(4);
+    const hr
+      = renderHook(() => useGlobalState("test4", 4, localStorage));
+    expect(hr.result.current[0]).toBe(4);
   });
 });
 
-describe("persist", () => {
-  test("first", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test5", 5));
-
-    expect(result.current[0]).toBe(5);
-
-    actHook(() => {
-      result.current[1](1);
-    });
-
-    expect(result.current[0]).toBe(1);
-  });
-
-  test("second", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test5", 0));
-
-    expect(result.current[0]).toBe(1);
+describe("default Storage", () => {
+  test("normal", () => {
+    const hr1
+      = renderHook(() => useGlobalState("default-storage-normal", 5));
+    expect(hr1.result.current[0]).toBe(5);
 
     actHook(() => {
-      result.current[1](0);
+      hr1.result.current[1](1);
     });
+    expect(hr1.result.current[0]).toBe(1);
 
-    expect(result.current[0]).toBe(0);
-  });
-});
-
-describe("persist after preset", () => {
-  test("preset", () => {
-    setGlobalState("test6", 6);
-
-    expect(localStorage.getItem(`${prefix}test6`)).toBe("6");
-  });
-
-  test("first", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test6", 0));
-
-    expect(result.current[0]).toBe(6);
+    const hr2
+      = renderHook(() => useGlobalState("default-storage-normal", 0));
+    expect(hr2.result.current[0]).toBe(1);
 
     actHook(() => {
-      result.current[1](1);
+      hr2.result.current[1](0);
     });
-
-    expect(result.current[0]).toBe(1);
+    expect(hr2.result.current[0]).toBe(0);
   });
 
-  test("second", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test6", 0));
+  describe("after setGlobalState", () => {
+    test("should ignore initialState", () => {
+      setGlobalState("default-storage-preset", 6);
 
-    expect(result.current[0]).toBe(1);
+      const hr1
+        = renderHook(() => useGlobalState("default-storage-preset", 0));
+      expect(hr1.result.current[0]).toBe(6);
 
-    actHook(() => {
-      result.current[1](0);
+      actHook(() => {
+        hr1.result.current[1](1);
+      });
+      expect(hr1.result.current[0]).toBe(1);
+
+      const hr2
+        = renderHook(() => useGlobalState("default-storage-preset", 0));
+      expect(hr2.result.current[0]).toBe(1);
+
+      actHook(() => {
+        hr2.result.current[1](0);
+      });
+      expect(hr1.result.current[0]).toBe(0);
+      expect(hr2.result.current[0]).toBe(0);
+
+      hr1.unmount();
+      hr2.unmount();
     });
-
-    expect(result.current[0]).toBe(0);
   });
 });
 
-describe("no persist", () => {
-  test("preset", () => {
-    setGlobalState("test7", 7, null);
-
-    expect(localStorage.getItem(`${prefix}test7`)).toBe(null);
-  });
-
-  test("first", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test7", 7, null));
-
-    expect(result.current[0]).toBe(7);
+describe("persist Storage", () => {
+  test("normal", () => {
+    const hr1
+      = renderHook(() => useGlobalState("persist-storage-normal", 5, localStorage));
+    expect(hr1.result.current[0]).toBe(5);
 
     actHook(() => {
-      result.current[1](1);
+      hr1.result.current[1](1);
     });
+    expect(hr1.result.current[0]).toBe(1);
 
-    expect(result.current[0]).toBe(1);
-  });
-
-  test("second", () => {
-    const { result }
-      = renderHook(() => useGlobalState("test7", 70, null));
-
-    expect(result.current[0]).toBe(1);
+    const hr2
+      = renderHook(() => useGlobalState("persist-storage-normal", 0, localStorage));
+    expect(hr2.result.current[0]).toBe(1);
 
     actHook(() => {
-      result.current[1](0);
+      hr2.result.current[1](0);
+    });
+    expect(hr2.result.current[0]).toBe(0);
+  });
+
+  describe("after setGlobalState", () => {
+    test("setGlobalState", () => {
+      setGlobalState("persist-storage-preset", 6, localStorage);
+      expect(localStorage.getItem("persist-storage-preset")).toBe("6");
     });
 
-    expect(result.current[0]).toBe(0);
+    test("should ignore initialState", () => {
+      const hr1
+        = renderHook(() => useGlobalState("persist-storage-preset", 0, localStorage));
+      expect(hr1.result.current[0]).toBe(6);
+
+      actHook(() => {
+        hr1.result.current[1](1);
+      });
+      expect(hr1.result.current[0]).toBe(1);
+
+      const hr2
+        = renderHook(() => useGlobalState("persist-storage-preset", 0, localStorage));
+      expect(hr2.result.current[0]).toBe(1);
+
+      actHook(() => {
+        hr2.result.current[1](0);
+      });
+      expect(hr1.result.current[0]).toBe(0);
+      expect(hr2.result.current[0]).toBe(0);
+
+      hr1.unmount();
+      hr2.unmount();
+    });
   });
 });
 
-describe("shared", () => {
-  test("primitive", () => {
-    const { result, unmount }
-      = renderHook(() => useGlobalState("test8", 0));
-    const { result: result1, unmount: unmount1 }
-      = renderHook(() => useGlobalState("test8", 1));
-    const { result: result2, unmount: unmount2 }
-      = renderHook(() => useGlobalState("test8", 2));
+test("sharing", () => {
+  const hr1
+    = renderHook(() => useGlobalState("test8", 0));
+  const hr2
+    = renderHook(() => useGlobalState("test8", 1));
+  const hr3
+    = renderHook(() => useGlobalState("test8", 2));
 
-    expect(result.current[0]).toBe(0);
-    expect(result1.current[0]).toBe(0);
-    expect(result2.current[0]).toBe(0);
+  expect(hr1.result.current[0]).toBe(0);
+  expect(hr2.result.current[0]).toBe(0);
+  expect(hr3.result.current[0]).toBe(0);
 
-    actHook(() => {
-      // set
-      result.current[1](1);
-    });
-
-    expect(result.current[0]).toBe(1);
-    expect(result1.current[0]).toBe(1);
-    expect(result2.current[0]).toBe(1);
-
-    unmount2();
-
-    actHook(() => {
-      // set
-      result.current[1](2);
-    });
-
-    expect(result.current[0]).toBe(2);
-    expect(result1.current[0]).toBe(2);
-    expect(result2.current[0]).toBe(1);
-
-    unmount();
-    unmount1();
+  actHook(() => {
+    // set
+    hr1.result.current[1](1);
   });
 
-  test("function", () => {
-    const { result, unmount }
-      = renderHook(() => useGlobalState("test9", () => 0));
-    const { result: result1, unmount: unmount1 }
-      = renderHook(() => useGlobalState("test9", () => 1));
-    const { result: result2, unmount: unmount2 }
-      = renderHook(() => useGlobalState("test9", () => 2));
+  expect(hr1.result.current[0]).toBe(1);
+  expect(hr2.result.current[0]).toBe(1);
+  expect(hr3.result.current[0]).toBe(1);
 
-    expect(result.current[0]).toBe(0);
-    expect(result1.current[0]).toBe(0);
-    expect(result2.current[0]).toBe(0);
+  hr3.unmount();
 
-    actHook(() => {
-      // set
-      result.current[1](1);
-    });
-
-    expect(result.current[0]).toBe(1);
-    expect(result1.current[0]).toBe(1);
-    expect(result2.current[0]).toBe(1);
-
-    unmount2();
-
-    actHook(() => {
-      // set
-      result.current[1](2);
-    });
-
-    expect(result.current[0]).toBe(2);
-    expect(result1.current[0]).toBe(2);
-    expect(result2.current[0]).toBe(1);
-
-    unmount();
-    unmount1();
+  actHook(() => {
+    // set
+    hr1.result.current[1](2);
   });
+
+  expect(hr1.result.current[0]).toBe(2);
+  expect(hr2.result.current[0]).toBe(2);
+  expect(hr3.result.current[0]).toBe(1);
+
+  hr1.unmount();
+  hr2.unmount();
 });
