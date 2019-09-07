@@ -43,8 +43,8 @@ const options = process.env.NODE_ENV === "production"
 
 new MyFramework({
   ...options.default,
-  modules: [
-    import("./modules/home"),
+  blocks: [
+    import("./blocks/home"),
     // 404
     {
       path: "*",

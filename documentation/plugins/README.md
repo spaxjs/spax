@@ -35,7 +35,7 @@ export default [
 
     render.tap(
       PluginName,
-      (modules: IBlock[]) => {
+      (blocks: IBlock[]) => {
         // 处理业务模块树，返回值作为下一个插件的输入值
       }
     );
