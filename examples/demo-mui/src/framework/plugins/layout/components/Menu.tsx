@@ -16,8 +16,6 @@ import { useT } from "@spax/i18n";
 import { Link } from "@spax/router";
 import clsx from "clsx";
 import React, {
-  ReactElement,
-  ReactNode,
   useEffect,
   useMemo,
   useState,
@@ -26,7 +24,7 @@ import { useMatchedList } from "../hooks";
 
 interface IMenu {
   title: string;
-  icon: ReactNode;
+  icon: React.ReactNode;
   path: string;
   children?: IMenu[];
 }
@@ -45,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const Menu: React.FC<AnyObject> = (props: any) => {
+export const Menu: React.FC<AnyObject> = (props: AnyObject) => {
   const [role] = useGlobalState<string>("role");
   const [blocks] = useParsed();
   const [matched] = useMatchedList();
@@ -68,12 +66,12 @@ function useMenu(role: string, blocks: IBlock[]): IMenu[] {
   }, [role, blocks]);
 }
 
-function MenuNest(props: any): ReactElement {
+function MenuNest(props: any): React.ReactElement {
   const { title, icon: Icon = Remove, path, empty, opened } = props;
   const [open, setOpen] = useState(opened);
   const { listGroup, listItemIcon, listItemActive } = useStyles({});
   const Pointer = open ? ExpandLess : ExpandMore;
-  const { t } = useT();
+  const [ t ] = useT();
 
   useEffect(() => {
     setOpen(opened);
@@ -102,9 +100,9 @@ function MenuNest(props: any): ReactElement {
   );
 }
 
-function MenuList(props: any): ReactElement {
+function MenuList(props: any): React.ReactElement {
   const { listItemIcon, listItemActive } = useStyles({});
-  const { t } = useT();
+  const [ t ] = useT();
   const { menu, openedKeys } = props;
   return (
     <List component="nav">

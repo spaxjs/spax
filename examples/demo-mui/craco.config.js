@@ -26,6 +26,8 @@ module.exports = {
               "react",
               "react-dom",
               "react-hot-loader",
+              "@material-ui/core",
+              "@material-ui/styles",
               "@types/node",
               "@types/react",
               "@types/react-dom"

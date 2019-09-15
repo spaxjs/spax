@@ -25,7 +25,7 @@ export default ({ render }: IHooks) => {
   render.tap(
     "Router",
     [],
-    (blocks: IBlock[], {useAuth, NotFound, Forbidden}: IPO, { scope }: IOptions): ReactElement => {
+    (blocks: IBlock[], {useAuth, NotFound, Forbidden}: IPO, { scope }: IOptions): React.ReactNode => {
       return (
         <Switch
           level={1}

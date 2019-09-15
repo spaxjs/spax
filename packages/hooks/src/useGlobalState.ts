@@ -78,7 +78,9 @@ export function setGlobalState<S>(
   _storage?: Storage,
 ): void {
   const storage = getStorage(key, _storage);
-  storage.setItem(key, JSON.stringify(getState<S>(initialState)));
+  if (storage.getItem(key) === null) {
+    storage.setItem(key, JSON.stringify(getState<S>(initialState)));
+  }
 }
 
 function getState<S>(initialState: S | (() => S)): S {

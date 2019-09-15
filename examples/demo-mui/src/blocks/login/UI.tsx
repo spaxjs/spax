@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 export default function UI(props: any) {
   const [role, setRole] = useGlobalState<string>("role");
   const [, setPath] = usePathname();
-  const { t } = useT("Theme");
+  const [ t ] = useT("Theme");
 
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("admin");

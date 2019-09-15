@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   }),
 );
 
-export const Sidebar: React.FC<DrawerProps> = ({children, ...props}: any) => {
+export const Sidebar: React.FC<DrawerProps> = ({children, ...props}: DrawerProps) => {
   const [open] = useGlobalState<boolean>("sidebar-open");
   const {drawer, drawerPaper} = useStyles({ open });
   return (

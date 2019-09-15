@@ -22,7 +22,7 @@ const blocksOnTheFly = [
 
 export default function UI(props: any): ReactNode {
   const { root } = useStyles(props);
-  const { t } = useT();
+  const [ t ] = useT();
 
   function updateBlocks() {
     setTimeout(() => {

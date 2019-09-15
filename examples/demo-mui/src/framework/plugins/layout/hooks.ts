@@ -14,7 +14,7 @@ export function useMatchedList() {
 
 export function useTitle(fallback: string): void {
   const [matched] = useMatchedList();
-  const { t } = useT();
+  const [ t ] = useT();
 
   useEffect(() => {
     document.title = matched

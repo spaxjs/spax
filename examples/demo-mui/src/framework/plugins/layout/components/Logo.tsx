@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   }),
 );
 
-export const Logo: React.FC<Partial<LinkProps> & { className?: any, option?: any }> = ({className, option, ...props}: any) => {
-  const { logo } = useStyles(props);
+type LogoProps = Partial<LinkProps> & { className?: any, option?: any };
 
-  const { logoImage, siteTitle } = option;
+export const Logo: React.FC<LogoProps> = ({ className, option: { logoImage, siteTitle }, ...props }: LogoProps) => {
+  const { logo } = useStyles(props);
 
   return (
     <Link

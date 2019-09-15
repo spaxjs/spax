@@ -1,8 +1,8 @@
 import { Badge, Box, Button, Paper, Typography } from "@material-ui/core";
 import { Add, Favorite, Remove } from "@material-ui/icons";
-import React, { ReactElement, useState} from "react";
+import React, { useState } from "react";
 
-export default function LocalCount({children, ...props}: any): ReactElement<void> {
+export default function LocalCount({children, ...props}: any): React.ReactElement {
   const [count, setCount] = useState(0);
   return (
     <>

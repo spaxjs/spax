@@ -1,6 +1,6 @@
 import { IBlock, IHooks, IPO, TPlugin, useParsed } from "@spax/core";
 import { MatchedChildBockOrChildren, Switch } from "@spax/router";
-import React, { ReactElement } from "react";
+import React from "react";
 
 export default [
   "Router",
@@ -14,7 +14,7 @@ export default [
     });
 
     render.tap(
-      (blocks: IBlock[]): ReactElement => {
+      (blocks: IBlock[]): React.ReactElement => {
         return <Wrapper option={option} />;
       },
     );

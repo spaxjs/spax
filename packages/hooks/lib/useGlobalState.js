@@ -56,7 +56,9 @@ export function useGlobalState(key, initialState, _storage) {
 }
 export function setGlobalState(key, initialState, _storage) {
     const storage = getStorage(key, _storage);
-    storage.setItem(key, JSON.stringify(getState(initialState)));
+    if (storage.getItem(key) === null) {
+        storage.setItem(key, JSON.stringify(getState(initialState)));
+    }
 }
 function getState(initialState) {
     return typeof initialState === "function" ? initialState() : initialState;

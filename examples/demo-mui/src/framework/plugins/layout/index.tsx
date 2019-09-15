@@ -1,5 +1,5 @@
 import { AnyObject, IBlock, IHooks, IPO, TPlugin } from "@spax/core";
-import React, { ReactElement, useEffect } from "react";
+import React, { useEffect } from "react";
 import { DocumentTitle } from "./components/DocumentTitle";
 import { useMatchedList } from "./hooks";
 
@@ -14,7 +14,7 @@ export default [
       };
     });
 
-    render.tap((element: ReactElement) => {
+    render.tap((element: React.ReactElement) => {
       return (
         <>
           <DocumentTitle fallback={option.siteTitle} />

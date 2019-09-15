@@ -1,14 +1,14 @@
-import i18n, { InitOptions } from "i18next";
+import deepmerge from "deepmerge";
+import i18n, { InitOptions, TFunction } from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-fetch-backend";
-import { recursive } from "merge";
 import { initReactI18next, useTranslation } from "react-i18next";
 
 interface AnyObject<V = any> {
   [key: string]: V;
 }
 
-export function setup(options?: InitOptions) {
+export function setup(options?: InitOptions): void {
   i18n
     // load translation using xhr -> see /public/locales
     // learn more: https://github.com/perrin4869/i18next-fetch-backend
@@ -20,7 +20,7 @@ export function setup(options?: InitOptions) {
     .use(initReactI18next)
     // init i18next
     // for all options read: https://www.i18next.com/overview/configuration-options
-    .init(recursive({
+    .init(deepmerge({
       interpolation: {
         // react already safes from xss
         escapeValue: false,
@@ -30,16 +30,19 @@ export function setup(options?: InitOptions) {
     }, options));
 }
 
-export function useT(ns: string = i18n.options.defaultNS[0]) {
-  return useTranslation(ns.toLowerCase(), { useSuspense: false });
+export function useT(ns: string = i18n.options.defaultNS[0]): [TFunction, (resources: AnyObject) => void] {
+  const { t } = useTranslation(ns.toLowerCase(), { useSuspense: false });
+  return [
+    t,
+    (resources: AnyObject) => {
+      i18n.addResourceBundle(i18n.language, ns.toLowerCase(), resources, true, true);
+    },
+  ];
 }
 
-export function addT(resources: AnyObject<AnyObject>, ns: string = i18n.options.defaultNS[0]) {
-  Object.entries(resources).forEach(([lng, res]) => {
-    i18n.addResourceBundle(lng, ns.toLowerCase(), res, true, true);
-  });
-}
-
-export function changeLng(lng: string) {
-  i18n.changeLanguage(lng);
+export function useLng(): [string, (lng: string) => void] {
+  return [
+    i18n.language,
+    i18n.changeLanguage.bind(i18n),
+  ];
 }

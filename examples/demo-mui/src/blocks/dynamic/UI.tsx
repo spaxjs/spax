@@ -21,7 +21,7 @@ const blocksCandidates = [
 
 export default function UI(props: any): ReactNode {
   const { root } = useStyles(props);
-  const { t } = useT();
+  const [ t ] = useT();
   const [blocksOnTheFly, setBlocksOnTheFly] = useState(null);
   const BlocksMatchedOnTheFly = useMatchedFromChildBocksOnTheFly(props, blocksOnTheFly);
 

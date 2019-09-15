@@ -25,13 +25,17 @@ export function setup(options) {
     }, options));
 }
 export function useT(ns = i18n.options.defaultNS[0]) {
-    return useTranslation(ns.toLowerCase(), { useSuspense: false });
+    const { t } = useTranslation(ns.toLowerCase(), { useSuspense: false });
+    return [
+        t,
+        (resources) => {
+            i18n.addResourceBundle(i18n.language, ns.toLowerCase(), resources, true, true);
+        },
+    ];
 }
-export function addT(resources, ns = i18n.options.defaultNS[0]) {
-    Object.entries(resources).forEach(([lng, res]) => {
-        i18n.addResourceBundle(lng, ns.toLowerCase(), res, true, true);
-    });
-}
-export function changeLng(lng) {
-    i18n.changeLanguage(lng);
+export function useLng() {
+    return [
+        i18n.language,
+        i18n.changeLanguage.bind(i18n),
+    ];
 }

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   }),
 );
 
-export const Main: React.FC<BoxProps> = ({children, ...props}: any) => {
+export const Main: React.FC<BoxProps> = ({children, ...props}: BoxProps) => {
   const [open] = useGlobalState<boolean>("sidebar-open");
   const {main, drawerHeader} = useStyles({ open });
   return (

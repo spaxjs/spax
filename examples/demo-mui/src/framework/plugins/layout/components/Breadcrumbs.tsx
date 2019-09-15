@@ -7,7 +7,7 @@ import { useMatchedList } from "../hooks";
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = (props: any) => {
   const [matched] = useMatchedList();
-  const { t } = useT();
+  const [ t ] = useT();
 
   return (
     <B {...props}>

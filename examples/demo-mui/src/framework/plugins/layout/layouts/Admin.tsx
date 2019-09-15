@@ -34,7 +34,7 @@ export default function AdminLayout(props: any) {
   const [role, setRole] = useGlobalState<string>("role");
   const [matched] = useMatchedList();
   const { h1 } = useStyles(props);
-  const { t } = useT();
+  const [ t ] = useT();
 
   const lastMatched = matched[matched.length - 1];
 
