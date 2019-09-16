@@ -1,10 +1,10 @@
 import { useParsed } from "@spax/core";
 import { MatchedChildBockOrChildren, Switch } from "@spax/router";
 import React from "react";
-export default [
-    "Router",
-    ["Lazy", "Level", "Path"],
-    ({ parse, render }, option) => {
+export default {
+    name: "Router",
+    deps: ["Lazy", "Level", "Path"],
+    plug: ({ parse, render }, option) => {
         parse.tap((current) => {
             return {
                 ...current,
@@ -15,7 +15,7 @@ export default [
             return React.createElement(Wrapper, { option: option });
         });
     },
-];
+};
 function Wrapper({ option: { NotFound } }) {
     const [blocks] = useParsed();
     return (React.createElement(Switch, { level: 1, blocks: blocks, loose: false, NotFound: NotFound }));

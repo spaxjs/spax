@@ -8,7 +8,7 @@
 
 ```typescript
 // 引入类型声明（我们推荐使用 Typescript 开发）
-import { IHooks, IOptions, IBlock, IPO } from "@spax/core";
+import { ISlots, IOptions, IBlock, IPO } from "@spax/core";
 
 const PluginName = "SomePlugin";
 const PluginDeps = ["ElsePlugin"];
@@ -18,7 +18,7 @@ export default [
   PluginName,
   PluginDeps,
   // option 当前插件配置项；options 全局配置项
-  ({ init, parse, render }: IHooks, option: IPO, options: IOptions) => {
+  ({ init, parse, render }: ISlots, option: IPO, options: IOptions) => {
     init.tap(
       PluginName,
       () => {

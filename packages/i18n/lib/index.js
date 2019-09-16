@@ -1,7 +1,7 @@
+import deepmerge from "deepmerge";
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-fetch-backend";
-import { recursive } from "merge";
 import { initReactI18next, useTranslation } from "react-i18next";
 export function setup(options) {
     i18n
@@ -15,7 +15,7 @@ export function setup(options) {
         .use(initReactI18next)
         // init i18next
         // for all options read: https://www.i18next.com/overview/configuration-options
-        .init(recursive({
+        .init(deepmerge({
         interpolation: {
             // react already safes from xss
             escapeValue: false,

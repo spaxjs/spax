@@ -1,9 +1,9 @@
-import { IBlock, IHooks, TPlugin } from "@spax/core";
+import { IBlock, IPlugin, ISlots } from "@spax/core";
 
-export default [
-  "Level",
-  [],
-  ({ parse }: IHooks) => {
+export default {
+  name: "Level",
+  deps: [],
+  plug: ({ parse }: ISlots) => {
     parse.tap(
       (current: IBlock, parent: IBlock) => {
         return {
@@ -13,4 +13,4 @@ export default [
       },
     );
   },
-] as TPlugin;
+} as IPlugin;

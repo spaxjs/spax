@@ -79,11 +79,11 @@ describe("run", () => {
     });
     test("blocks: [{...}]", async () => {
       const blocks = [{ title: "hello" }];
-      const ret2 = await run([["Blocks", [], ({ parse }) => {
+      const ret2 = await run([{name: "Blocks", deps: [], plug: ({ parse }) => {
         parse.tap((current) => {
           return { ...current };
         });
-      }]], {
+      }}], {
           blocks,
         });
       expect(ret2).toEqual(blocks);
@@ -94,15 +94,15 @@ describe("run", () => {
 
   describe("plugins", () => {
     test("options", async () => {
-      await run([["Test", [], (hooks, option) => {
+      await run([{name: "Test", deps: [], plug: (hooks, option) => {
         hooks.init.tap(() => {
           expect(option.foo).toBe("bar");
         });
-      }], ["Test2", [], (hooks, option) => {
+      }}, {name: "Test2", deps: [], plug: (hooks, option) => {
         hooks.init.tap(() => {
           expect(option.foo).toBe(undefined);
         });
-      }]], {
+      }}], {
           plugins: {
             test: {
               foo: "bar",
@@ -114,19 +114,19 @@ describe("run", () => {
 
     test("ordering", async () => {
       let index = 0;
-      await run([["Test", [], (hooks) => {
+      await run([{name: "Test", deps: [], plug: (hooks) => {
         hooks.init.tap(() => {
           expect(index++).toBe(0);
         }, () => {
           expect(index++).toBe(3);
         });
-      }], ["Test2", [], (hooks) => {
+      }}, {name: "Test2", deps: [], plug: (hooks) => {
         hooks.init.tap(() => {
           expect(index++).toBe(1);
         }, () => {
           expect(index++).toBe(2);
         });
-      }]], {
+      }}], {
           blocks: [],
         });
     });
@@ -134,44 +134,44 @@ describe("run", () => {
     describe("dependency", () => {
       test("simple", async () => {
         let index = 0;
-        await run([["Test", ["Test2"], (hooks) => {
+        await run([{name: "Test", deps: ["Test2"], plug: (hooks) => {
           hooks.init.tap(() => {
             expect(index++).toBe(1);
           }, () => {
             expect(index++).toBe(2);
           });
-        }], ["Test2", [], (hooks) => {
+        }}, {name: "Test2", deps: [], plug: (hooks) => {
           hooks.init.tap(() => {
             expect(index++).toBe(0);
           }, () => {
             expect(index++).toBe(3);
           });
-        }]], {
+        }}], {
             blocks: [],
           });
       });
 
       test("complicated", async () => {
         let index = 0;
-        await run([["Test", ["Test2"], (hooks) => {
+        await run([{name: "Test", deps: ["Test2"], plug: (hooks) => {
           hooks.init.tap(() => {
             expect(index++).toBe(1);
           }, () => {
             expect(index++).toBe(4);
           });
-        }], ["Test2", [], (hooks) => {
+        }}, {name: "Test2", deps: [], plug: (hooks) => {
           hooks.init.tap(() => {
             expect(index++).toBe(0);
           }, () => {
             expect(index++).toBe(5);
           });
-        }], ["Test3", ["Test2"], (hooks) => {
+        }}, {name: "Test3", deps: ["Test2"], plug: (hooks) => {
           hooks.init.tap(() => {
             expect(index++).toBe(2);
           }, () => {
             expect(index++).toBe(3);
           });
-        }]], {
+        }}], {
             blocks: [],
           });
       });
@@ -179,11 +179,11 @@ describe("run", () => {
 
     describe("init", () => {
       test("pre", async () => {
-        await run([["Test", [], (hooks, option) => {
+        await run([{name: "Test", deps: [], plug: (hooks, option) => {
           hooks.init.tap(() => {
             expect(option.foo).toBe("bar");
           });
-        }]], {
+        }}], {
             plugins: {
               test: {
                 foo: "bar",
@@ -194,11 +194,11 @@ describe("run", () => {
       });
 
       test("post", async () => {
-        await run([["Test", [], (hooks, option) => {
+        await run([{name: "Test", deps: [], plug: (hooks, option) => {
           hooks.init.tap(undefined, () => {
             expect(option.foo).toBe("bar");
           });
-        }]], {
+        }}], {
             plugins: {
               test: {
                 foo: "bar",
@@ -209,13 +209,13 @@ describe("run", () => {
       });
 
       test("both", async () => {
-        await run([["Test", [], (hooks, option) => {
+        await run([{name: "Test", deps: [], plug: (hooks, option) => {
           hooks.init.tap(() => {
             expect(option.foo).toBe("bar");
           }, () => {
             expect(option.foo).toBe("bar");
           });
-        }]], {
+        }}], {
             plugins: {
               test: {
                 foo: "bar",
@@ -227,7 +227,7 @@ describe("run", () => {
     });
 
     test("parse", async () => {
-      await run([["Test", [], (hooks, option) => {
+      await run([{name: "Test", deps: [], plug: (hooks, option) => {
         hooks.parse.tap((current, parent) => {
           expect(option.foo).toBe("bar");
           expect(current).toEqual({ title: "hello" });
@@ -241,7 +241,7 @@ describe("run", () => {
           expect(current).toEqual({ title: "hello", baz: "qux" });
           expect(parent).toEqual({});
         });
-      }]], {
+      }}], {
           plugins: {
             test: {
               foo: "bar",
@@ -252,7 +252,7 @@ describe("run", () => {
     });
 
     test("render", async () => {
-      await run([["Test", [], (hooks, option) => {
+      await run([{name: "Test", deps: [], plug: (hooks, option) => {
         hooks.render.tap((blocks) => {
           expect(option.foo).toBe("bar");
           expect(blocks).toEqual([{ title: "hello" }]);
@@ -261,7 +261,7 @@ describe("run", () => {
           expect(option.foo).toBe("bar");
           expect(blocks).toBe(JSON.stringify([{ title: "hello" }]));
         });
-      }]], {
+      }}], {
           plugins: {
             test: {
               foo: "bar",

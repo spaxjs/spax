@@ -1,8 +1,8 @@
 import React, { Suspense } from "react";
-export default [
-    "Lazy",
-    [],
-    ({ parse }, option) => {
+export default {
+    name: "Lazy",
+    deps: [],
+    plug: ({ parse }, option) => {
         parse.tap((current) => {
             return { ...current, ...handleLazy(current, option) };
         }, (current) => {
@@ -10,7 +10,7 @@ export default [
             return { ...current, ...handleLazy(current, option) };
         });
     },
-];
+};
 function handleLazy(current, { fallback = React.createElement("div", null, "...") }) {
     const { lazy } = current;
     if (lazy) {

@@ -1,4 +1,4 @@
-class Hook {
+class Slot {
     tap(pre, post) {
         if (pre) {
             this.hooks.pre.push(pre);
@@ -8,7 +8,7 @@ class Hook {
         }
     }
 }
-export class InitHook extends Hook {
+export class InitSlot extends Slot {
     constructor() {
         super(...arguments);
         this.hooks = {
@@ -23,7 +23,7 @@ export class InitHook extends Hook {
         return Promise.all(this.hooks[d].map((fn) => fn()));
     }
 }
-export class ParseHook extends Hook {
+export class ParseSlot extends Slot {
     constructor() {
         super(...arguments);
         this.hooks = {
@@ -44,7 +44,7 @@ export class ParseHook extends Hook {
         return a;
     }
 }
-export class RenderHook extends Hook {
+export class RenderSlot extends Slot {
     constructor() {
         super(...arguments);
         this.hooks = {

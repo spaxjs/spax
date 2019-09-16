@@ -1,9 +1,9 @@
 import { debug, error, warn } from "@spax/debug";
 import { cache, useCached } from "./cache";
-import { InitHook, ParseHook, RenderHook } from "./hooks";
-import { IBlock, IHooks, IOptions, IPO, TPlugin } from "./types";
+import { InitSlot, ParseSlot, RenderSlot } from "./slots";
+import { IBlock, IOptions, IPlugin, IPO, ISlots } from "./types";
 
-const KEY_HOOKS = "hooks";
+const KEY_SLOTS = "slots";
 const KEY_PLUGINS = "plugins";
 const KEY_OPTIONS = "options";
 const KEY_PARSED = "parsed";
@@ -14,7 +14,7 @@ const pluginOptionGetter = (name: string): IPO => {
   return c ? c[name] || c[name.toLowerCase()] || {} : {};
 };
 
-export async function run(plugins: TPlugin[] = [], options: IOptions = {}): Promise<any> {
+export async function run(plugins: IPlugin[] = [], options: IOptions = {}): Promise<any> {
   if (cache.has("init")) {
     cache.clear();
   }
@@ -120,7 +120,7 @@ export async function parseBlocks(
 }
 
 async function parseBlock(mc: IBlock, parent: IBlock): Promise<IBlock> {
-  const { parse } = cache.get(KEY_HOOKS);
+  const { parse } = cache.get(KEY_SLOTS);
 
   if (!mc.$$parsed) {
     // pre
@@ -144,7 +144,7 @@ async function parseBlock(mc: IBlock, parent: IBlock): Promise<IBlock> {
  * 渲染模块树
  */
 async function renderBlocks(parsedBlocks: IBlock[]): Promise<any> {
-  const { render } = cache.get(KEY_HOOKS);
+  const { render } = cache.get(KEY_SLOTS);
   let renderedBlocks: any = parsedBlocks;
 
   // 前置处理
@@ -156,40 +156,40 @@ async function renderBlocks(parsedBlocks: IBlock[]): Promise<any> {
   return renderedBlocks;
 }
 
-async function runInit(plugins: TPlugin[], options: IOptions) {
+async function runInit(plugins: IPlugin[], options: IOptions) {
   // 存储以备外部调用
   cache.set(KEY_PLUGINS, plugins);
   cache.set(KEY_OPTIONS, options);
 
   // 初始化三个插槽
-  const hooks: IHooks = {
-    init: new InitHook(),
-    parse: new ParseHook(),
-    render: new RenderHook(),
+  const slots: ISlots = {
+    init: new InitSlot(),
+    parse: new ParseSlot(),
+    render: new RenderSlot(),
   };
 
   // 存储以备外部调用
-  cache.set(KEY_HOOKS, hooks);
+  cache.set(KEY_SLOTS, slots);
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    debug("Hooks created: %O", hooks);
+    debug("Hook slots created: %O", slots);
   }
 
   // 加载插件
-  await loadPlugins(plugins, options, hooks);
+  await loadPlugins(plugins, options, slots);
 
   // 执行插件的初始化钩子
-  await hooks.init.run("pre");
-  await hooks.init.run("post");
+  await slots.init.run("pre");
+  await slots.init.run("post");
 }
 
-async function loadPlugins(plugins: TPlugin[], options: IOptions, hooks: IHooks) {
-  const ordererPlugins = [];
-  const pluginNameMap = new Map();
+async function loadPlugins(plugins: IPlugin[], options: IOptions, slots: ISlots) {
+  const ordererPlugins: IPlugin[] = [];
+  const pluginNameMap: Map<string, number> = new Map();
 
   plugins.forEach((plugin) => {
-    const [name, deps] = plugin;
+    const { name, deps } = plugin;
     // 如果存在，说明当前插件被依赖
     if (pluginNameMap.has(name)) {
       // 插入到依赖项之前
@@ -222,7 +222,7 @@ async function loadPlugins(plugins: TPlugin[], options: IOptions, hooks: IHooks)
   }
 
   return Promise.all(
-    ordererPlugins.map(([name, , plugin]) => plugin(hooks, pluginOptionGetter(name), options)),
+    ordererPlugins.map(({ name, plug }) => plug(slots, pluginOptionGetter(name), options)),
   );
 }
 

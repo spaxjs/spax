@@ -1,15 +1,15 @@
 import { CssBaseline } from "@material-ui/core";
 import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
 import { ThemeProvider } from "@material-ui/styles";
-import { IHooks, IPO, TPlugin } from "@spax/core";
+import { IPlugin, IPO, ISlots } from "@spax/core";
 import { debug } from "@spax/debug";
 import { setType, useTheme } from "@spax/theme";
 import React from "react";
 
-export default [
-  "Theme",
-  ["Router"],
-  ({ init, render }: IHooks, { paletteType, overrides }: IPO) => {
+export default {
+  name: "Theme",
+  deps: ["Router"],
+  plug: ({ init, render }: ISlots, { paletteType, overrides }: IPO) => {
     init.tap(() => {
       setType(paletteType);
     });
@@ -20,7 +20,7 @@ export default [
       },
     );
   },
-] as TPlugin;
+} as IPlugin;
 
 interface RootProps { children: React.ReactNode; overrides: Partial<ThemeOptions>; }
 

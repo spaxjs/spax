@@ -1,12 +1,12 @@
 
-import { IHooks, IPO, TPlugin } from "@spax/core";
+import { IPlugin, IPO, ISlots } from "@spax/core";
 import { debug } from "@spax/debug";
 import { setGlobalState } from "@spax/hooks";
 
-export default [
-  "Store",
-  [],
-  ({ init }: IHooks, { initialStates = [] }: IPO) => {
+export default {
+  name: "Store",
+  deps: [],
+  plug: ({ init }: ISlots, { initialStates = [] }: IPO) => {
     init.tap(() => {
       /* istanbul ignore next */
       if (process.env.NODE_ENV === "development")
@@ -17,6 +17,6 @@ export default [
           setGlobalState(key, initialState, storage);
         });
       });
-    },
-  );
-}] as TPlugin;
+    });
+  },
+} as IPlugin;

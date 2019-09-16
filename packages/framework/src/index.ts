@@ -1,4 +1,4 @@
-import { run, TPlugin } from "@spax/core";
+import { IPlugin, run } from "@spax/core";
 import { debug, fatal, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
@@ -9,7 +9,7 @@ export * from "./types";
 
 export default abstract class Framework {
   // 插件
-  public static plugins: TPlugin[] = [];
+  public static plugins: IPlugin[] = [];
   // 选项
   public static options: IOptions = {
     version: "1.0.0",
@@ -20,7 +20,7 @@ export default abstract class Framework {
     container: "#root",
   };
 
-  private plugins: TPlugin[] = [];
+  private plugins: IPlugin[] = [];
   private options: IOptions = {};
 
   constructor(options: IOptions = {}) {

@@ -21,7 +21,7 @@ import Framework from "@spax/framework";
 
 class MyFramework extends Framework {
   // 插件
-  public static plugins: TPlugin[] = [
+  public static plugins: IPlugin[] = [
     SomePlugin,
     ElsePlugin,
   ];

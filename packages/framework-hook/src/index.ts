@@ -1,4 +1,4 @@
-import { TPlugin } from "@spax/core";
+import { IPlugin } from "@spax/core";
 import Framework, { IOptions } from "@spax/framework";
 import AuthPlugin from "@spax/plugin-auth";
 import I18nPlugin from "@spax/plugin-i18n";
@@ -13,7 +13,7 @@ const options = process.env.NODE_ENV === "production"
 
 export default class SimpleFramework extends Framework {
   // 插件
-  public static plugins: TPlugin[] = [
+  public static plugins: IPlugin[] = [
     AuthPlugin,
     I18nPlugin,
     PathPlugin,

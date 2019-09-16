@@ -33,7 +33,7 @@ mount();
 ### 插件列表 plugins
 
 ```typescript
-Array<({ init, parse, render }: IHooks) => void>
+Array<({ init, parse, render }: ISlots) => void>
 ```
 
 ### 选项 options

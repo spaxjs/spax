@@ -1,7 +1,7 @@
 import { debug, error, warn } from "@spax/debug";
 import { cache, useCached } from "./cache";
-import { InitHook, ParseHook, RenderHook } from "./hooks";
-const KEY_HOOKS = "hooks";
+import { InitSlot, ParseSlot, RenderSlot } from "./slots";
+const KEY_SLOTS = "slots";
 const KEY_PLUGINS = "plugins";
 const KEY_OPTIONS = "options";
 const KEY_PARSED = "parsed";
@@ -91,7 +91,7 @@ export async function parseBlocks(blocks = [], parent, fromInnerCall = false) {
     return blocks;
 }
 async function parseBlock(mc, parent) {
-    const { parse } = cache.get(KEY_HOOKS);
+    const { parse } = cache.get(KEY_SLOTS);
     if (!mc.$$parsed) {
         // pre
         mc = await parse.run(mc, parent, "pre");
@@ -110,7 +110,7 @@ async function parseBlock(mc, parent) {
  * 渲染模块树
  */
 async function renderBlocks(parsedBlocks) {
-    const { render } = cache.get(KEY_HOOKS);
+    const { render } = cache.get(KEY_SLOTS);
     let renderedBlocks = parsedBlocks;
     // 前置处理
     renderedBlocks = await render.run(renderedBlocks, "pre");
@@ -123,28 +123,28 @@ async function runInit(plugins, options) {
     cache.set(KEY_PLUGINS, plugins);
     cache.set(KEY_OPTIONS, options);
     // 初始化三个插槽
-    const hooks = {
-        init: new InitHook(),
-        parse: new ParseHook(),
-        render: new RenderHook(),
+    const slots = {
+        init: new InitSlot(),
+        parse: new ParseSlot(),
+        render: new RenderSlot(),
     };
     // 存储以备外部调用
-    cache.set(KEY_HOOKS, hooks);
+    cache.set(KEY_SLOTS, slots);
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-        debug("Hooks created: %O", hooks);
+        debug("Hook slots created: %O", slots);
     }
     // 加载插件
-    await loadPlugins(plugins, options, hooks);
+    await loadPlugins(plugins, options, slots);
     // 执行插件的初始化钩子
-    await hooks.init.run("pre");
-    await hooks.init.run("post");
+    await slots.init.run("pre");
+    await slots.init.run("post");
 }
-async function loadPlugins(plugins, options, hooks) {
+async function loadPlugins(plugins, options, slots) {
     const ordererPlugins = [];
     const pluginNameMap = new Map();
     plugins.forEach((plugin) => {
-        const [name, deps] = plugin;
+        const { name, deps } = plugin;
         // 如果存在，说明当前插件被依赖
         if (pluginNameMap.has(name)) {
             // 插入到依赖项之前
@@ -175,7 +175,7 @@ async function loadPlugins(plugins, options, hooks) {
     if (process.env.NODE_ENV === "development") {
         debug("Plugins enabled: %O", ordererPlugins);
     }
-    return Promise.all(ordererPlugins.map(([name, , plugin]) => plugin(hooks, pluginOptionGetter(name), options)));
+    return Promise.all(ordererPlugins.map(({ name, plug }) => plug(slots, pluginOptionGetter(name), options)));
 }
 // 对于使用 import()/require() 引入的模块，需要转换
 async function interopDefaultExports(m) {

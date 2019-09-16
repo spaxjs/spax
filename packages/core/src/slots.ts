@@ -1,6 +1,6 @@
 import { TPriority } from "./types";
 
-abstract class Hook {
+abstract class Slot {
   public abstract hooks: {
     pre: any[];
     post: any[];
@@ -19,7 +19,7 @@ abstract class Hook {
   }
 }
 
-export class InitHook extends Hook {
+export class InitSlot extends Slot {
   public hooks: {
     pre: Array<() => any>;
     post: Array<() => any>;
@@ -42,7 +42,7 @@ export class InitHook extends Hook {
   }
 }
 
-export class ParseHook<A, B> extends Hook {
+export class ParseSlot<A, B> extends Slot {
   public hooks: {
     pre: Array<(a: A, b: B) => any>;
     post: Array<(a: A, b: B) => any>;
@@ -73,7 +73,7 @@ export class ParseHook<A, B> extends Hook {
   }
 }
 
-export class RenderHook<A> extends Hook {
+export class RenderSlot<A> extends Slot {
   public hooks: {
     pre: Array<(a: A) => any>;
     post: Array<(a: A) => any>;

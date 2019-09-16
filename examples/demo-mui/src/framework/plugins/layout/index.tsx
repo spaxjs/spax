@@ -1,12 +1,12 @@
-import { AnyObject, IBlock, IHooks, IPO, TPlugin } from "@spax/core";
+import { AnyObject, IBlock, IPlugin, IPO, ISlots } from "@spax/core";
 import React, { useEffect } from "react";
 import { DocumentTitle } from "./components/DocumentTitle";
 import { useMatchedList } from "./hooks";
 
-export default [
-  "Layout",
-  ["Level"],
-  ({ parse, render }: IHooks, option: IPO) => {
+export default {
+  name: "Layout",
+  deps: ["Level"],
+  plug: ({ parse, render }: ISlots, option: IPO) => {
     parse.tap((current: IBlock, parent: IBlock) => {
       return {
         ...current,
@@ -23,7 +23,7 @@ export default [
       );
     });
   },
-] as TPlugin;
+} as IPlugin;
 
 const StateCollector: React.FC<any> = ({ level, matchedProps }: any) => {
   const [state, setState] = useMatchedList();

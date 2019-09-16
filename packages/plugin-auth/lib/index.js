@@ -1,9 +1,9 @@
 import { useGlobalState } from "@spax/hooks";
 import React from "react";
-export default [
-    "Auth",
-    [],
-    ({ parse }, option) => {
+export default {
+    name: "Auth",
+    deps: [],
+    plug: ({ parse }, option) => {
         parse.tap((current) => {
             return {
                 ...current,
@@ -11,8 +11,8 @@ export default [
             };
         });
     },
-];
-const Wrapper = ({ children = null, authority, roleKey, Forbidden, }) => {
+};
+const Wrapper = ({ children, authority, roleKey, Forbidden, }) => {
     const [role] = useGlobalState(roleKey);
     return hasAuth(role, authority) ? children : React.createElement(Forbidden, null);
 };

@@ -1,9 +1,9 @@
 /// <reference types="react" />
-import { TPlugin } from "@spax/core";
+import { IPlugin } from "@spax/core";
 import { IOptions } from "./types";
 export * from "./types";
 export default abstract class Framework {
-    static plugins: TPlugin[];
+    static plugins: IPlugin[];
     static options: IOptions;
     private plugins;
     private options;

@@ -21,7 +21,7 @@ in `@spax/plugin-router`
 ```typescript
 import { Router, Switch, Carrier, Link, useMatched } from "@spax/router";
 
-export default ({ render }: IHooks) => {
+export default ({ render }: ISlots) => {
   render.tap(
     "Router",
     [],

@@ -1,14 +1,14 @@
-import { IHooks, IPO, TPlugin } from "@spax/core";
+import { IPlugin, IPO, ISlots } from "@spax/core";
 import { setup } from "@spax/i18n";
 
-export default [
-  "I18n",
-  [],
-  ({ init }: IHooks, option: IPO) => {
+export default {
+  name: "I18n",
+  deps: [],
+  plug: ({ init }: ISlots, option: IPO) => {
     init.tap(
       () => {
         setup(option);
       },
     );
   },
-] as TPlugin;
+} as IPlugin;

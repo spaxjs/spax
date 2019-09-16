@@ -1,11 +1,11 @@
-import { AnyObject, IBlock, IHooks, IPO, TPlugin } from "@spax/core";
+import { AnyObject, IBlock, IPlugin, IPO, ISlots } from "@spax/core";
 import { useGlobalState } from "@spax/hooks";
 import React from "react";
 
-export default [
-  "Auth",
-  [],
-  ({ parse }: IHooks, option: IPO) => {
+export default {
+  name: "Auth",
+  deps: [],
+  plug: ({ parse }: ISlots, option: IPO) => {
     parse.tap((current: IBlock) => {
       return {
         ...current,
@@ -13,7 +13,7 @@ export default [
       };
     });
   },
-] as TPlugin;
+} as IPlugin;
 
 interface WrapperProps {
   children: React.ReactElement;

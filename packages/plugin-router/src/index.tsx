@@ -1,11 +1,11 @@
-import { IBlock, IHooks, IPO, TPlugin, useParsed } from "@spax/core";
+import { IBlock, IPlugin, IPO, ISlots, useParsed } from "@spax/core";
 import { MatchedChildBockOrChildren, Switch } from "@spax/router";
 import React from "react";
 
-export default [
-  "Router",
-  ["Lazy", "Level", "Path"],
-  ({ parse, render }: IHooks, option: IPO) => {
+export default {
+  name: "Router",
+  deps: ["Lazy", "Level", "Path"],
+  plug: ({ parse, render }: ISlots, option: IPO) => {
     parse.tap((current: IBlock) => {
       return {
         ...current,
@@ -19,7 +19,7 @@ export default [
       },
     );
   },
-] as TPlugin;
+} as IPlugin;
 
 function Wrapper({ option: { NotFound } }: any) {
   const [blocks] = useParsed();

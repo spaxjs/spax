@@ -1,5 +1,5 @@
-import { IBlock, IOptions, TPlugin } from "./types";
-export declare function run(plugins?: TPlugin[], options?: IOptions): Promise<any>;
+import { IBlock, IOptions, IPlugin } from "./types";
+export declare function run(plugins?: IPlugin[], options?: IOptions): Promise<any>;
 /**
  * parse 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。

@@ -1,11 +1,11 @@
-import { IBlock, IHooks, TPlugin } from "@spax/core";
+import { IBlock, IPlugin, ISlots } from "@spax/core";
 import { warn } from "@spax/debug";
 import pathToRegexp, { Key } from "path-to-regexp";
 
-export default [
-  "Path",
-  [],
-  ({ parse }: IHooks) => {
+export default {
+  name: "Path",
+  deps: [],
+  plug: ({ parse }: ISlots) => {
     parse.tap(
       (current: IBlock, parent: IBlock) => {
         return {
@@ -15,7 +15,7 @@ export default [
       },
     );
   },
-] as TPlugin;
+} as IPlugin;
 
 interface PathProps {
   path: string;
