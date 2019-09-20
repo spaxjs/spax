@@ -13,10 +13,9 @@ export const Switch: React.FC<SwitchProps> = ({
   const matchedState = useMatchedBlockAndParams(level, blocks, loose);
 
   if (matchedState) {
-    // tslint:disable-next-line: no-shadowed-variable
-    const { component: Matched, data } = matchedState[0];
+    const { component: Comp, data } = matchedState[0];
     return (
-      <Matched
+      <Comp
         {...data}
         {...matchedState[1]}
         $$block={matchedState[0]}

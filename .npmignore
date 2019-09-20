@@ -7,3 +7,4 @@ src/
 *.bak
 *.log
 .DS_Store
+tsconfig.json
