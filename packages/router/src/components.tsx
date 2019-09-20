@@ -1,4 +1,4 @@
-import pathToRegexp from "path-to-regexp";
+import { compile } from "path-to-regexp";
 import React from "react";
 import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
 import { ComponentProps, LinkProps, SwitchProps } from "./types";
@@ -58,7 +58,7 @@ export const Link: React.FC<LinkProps> = ({children, to, as: As, component: Cp, 
   } else if (to.pathname.charAt(0) !== "/") {
     to.pathname = `/${to.pathname}`;
   }
-  const url = pathToRegexp.compile(to.pathname)(to.params || {});
+  const url = compile(to.pathname)(to.params || {});
   return (
     As
     ? <As {...props} href={`/#${url}`}>{children}</As>

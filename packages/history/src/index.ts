@@ -1,6 +1,6 @@
 import { AnyObject } from "@spax/core";
 import { createHashHistory, History, Location } from "history";
-import pathToRegexp from "path-to-regexp";
+import { compile } from "path-to-regexp";
 import queryString from "query-string";
 import { useEffect, useState } from "react";
 
@@ -35,7 +35,7 @@ export function useLocation(history: History = hashHistory): [Location, (
       hash?: AnyObject,
       replace?: boolean,
     ) => {
-      let url = pathToRegexp.compile(pathname)(params);
+      let url = compile(pathname)(params);
       if (search) {
         const searchStr = queryString.stringify(search);
         if (searchStr) {

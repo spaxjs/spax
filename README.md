@@ -56,18 +56,20 @@ $ npx @spax/spax-cli <project-name>
 - [@spax/hooks](packages/hooks) 一些常用的 React Hooks
 - [@spax/i18n](packages/i18n) [i18next](https://github.com/i18next/i18next) 的封装
 - [@spax/router](packages/router) 基于 React Hook 的路由实现
+- [@spax/theme](packages/theme) Mui Theme hooks
 
 ## :sparkler: 示例 Examples
 
 > 以下示例使用的技术栈非必选，实际应用时可根据自身偏好灵活调整。
 
 - [demo with mui](examples/demo-mui)
-  - craco
   - react-scripts
+  - react-app-rewired
+  - customize-cra
   - material-ui
   - i18next
 
 - [demo for single-spa](examples/demo-single-spa)
-  - craco
   - react-scripts
+  - craco
   - single-spa

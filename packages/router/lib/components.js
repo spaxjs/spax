@@ -1,4 +1,4 @@
-import pathToRegexp from "path-to-regexp";
+import { compile } from "path-to-regexp";
 import React from "react";
 import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
 export const Switch = ({ level, blocks, loose = false, NotFound = () => null, children = null, }) => {
@@ -39,7 +39,7 @@ export const Link = ({ children, to, as: As, component: Cp, ...props }) => {
     else if (to.pathname.charAt(0) !== "/") {
         to.pathname = `/${to.pathname}`;
     }
-    const url = pathToRegexp.compile(to.pathname)(to.params || {});
+    const url = compile(to.pathname)(to.params || {});
     return (As
         ? React.createElement(As, Object.assign({}, props, { href: `/#${url}` }), children)
         : Cp

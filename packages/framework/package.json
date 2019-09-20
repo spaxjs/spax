@@ -12,12 +12,12 @@
   "dependencies": {
     "@spax/core": "^1.3.0",
     "@spax/debug": "^1.1.0",
-    "history": "^4.9.0",
+    "history": "^4.10.1",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.137",
-    "@types/node": "^12.7.2",
+    "@types/lodash": "^4.14.138",
+    "@types/node": "^12.7.5",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0"
   },

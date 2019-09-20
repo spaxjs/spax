@@ -1,5 +1,5 @@
 import { createHashHistory } from "history";
-import pathToRegexp from "path-to-regexp";
+import { compile } from "path-to-regexp";
 import queryString from "query-string";
 import { useEffect, useState } from "react";
 const hashHistory = createHashHistory();
@@ -18,7 +18,7 @@ export function useLocation(history = hashHistory) {
     return [
         location,
         (pathname, params, search, hash, replace) => {
-            let url = pathToRegexp.compile(pathname)(params);
+            let url = compile(pathname)(params);
             if (search) {
                 const searchStr = queryString.stringify(search);
                 if (searchStr) {
