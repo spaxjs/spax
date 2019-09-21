@@ -1,5 +1,6 @@
 import { green, lime } from "@material-ui/core/colors";
 import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
+import { IOptions } from "@spax/framework";
 import React from "react";
 import Loading from "../components/interaction/Loading";
 import store from "../store";
@@ -19,8 +20,12 @@ export default {
       paletteType: "light",
       overrides: {
         palette: {
-          primary: green,
-          secondary: lime,
+          primary: Object.assign(green, {
+            contrastText: "#ffffff",
+          }),
+          secondary: Object.assign(lime, {
+            contrastText: green[500],
+          }),
         },
         typography: {
           h1: {
@@ -60,4 +65,4 @@ export default {
       NotFound: require("../components/exception/NotFound").default,
     },
   },
-};
+} as IOptions;

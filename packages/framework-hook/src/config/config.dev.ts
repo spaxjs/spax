@@ -1,3 +1,5 @@
+import { IOptions } from "@spax/framework";
+
 export default {
   version: "0.0.1",
   plugins: {
@@ -8,4 +10,4 @@ export default {
       NotFound: require("../components/exception/NotFound").default,
     },
   },
-};
+} as IOptions;

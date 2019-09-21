@@ -1,3 +1,4 @@
+import { IOptions } from "@spax/framework";
 import blocks from "blocks";
 import store from "store";
 
@@ -6,4 +7,4 @@ export default {
   plugins: {
     store,
   },
-};
+} as IOptions;
