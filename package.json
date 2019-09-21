@@ -65,6 +65,7 @@
     "bootstrap": "lerna bootstrap",
     "lint": "tslint --project ./ --fix",
     "build": "lerna run build --no-private",
+    "precommit": "git add -A",
     "commit": "git-cz",
     "publish": "lerna publish",
     "dev": "jest --no-cache --watch",

@@ -19,7 +19,7 @@ interface WrapperProps {
   children: React.ReactElement;
   authority: string[];
   roleKey: string;
-  Forbidden: React.FC;
+  Forbidden: React.FC<{}>;
 }
 
 const Wrapper: React.FC<WrapperProps> = ({
@@ -44,7 +44,7 @@ function hasAuth(role: string, authority: string[]): boolean {
 
 interface NormalizeResult {
   authority: string[];
-  component: React.FC;
+  component: React.FC<AnyObject>;
 }
 
 function normalizeAuth(
@@ -56,7 +56,11 @@ function normalizeAuth(
     authority,
     component: (props: AnyObject) => {
       return (
-        <Wrapper authority={authority} roleKey={roleKey} Forbidden={Forbidden}>
+        <Wrapper
+          authority={authority}
+          roleKey={roleKey}
+          Forbidden={Forbidden}
+        >
           <C {...props} />
         </Wrapper>
       );
