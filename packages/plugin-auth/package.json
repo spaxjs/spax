@@ -1,6 +1,6 @@
 {
   "name": "@spax/plugin-auth",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "authenticate Blocks with HOC",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.3.1",
+    "@spax/core": "^1.3.2",
     "@spax/debug": "^1.1.0",
     "@spax/hooks": "^1.3.1"
   },
