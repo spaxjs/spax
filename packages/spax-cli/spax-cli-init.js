@@ -18,7 +18,7 @@ program
   .version(packageJson.version, "-v, --version")
   .parse(process.argv);
 
-const [destDir, template = "crossjs/spax-starter-boilerplate"] = program.args;
+const [destDir, template = "spaxjs/starter-boilerplate"] = program.args;
 
 if (!destDir) {
   console.error(chalk.red("请输入项目目录名，如:"));
