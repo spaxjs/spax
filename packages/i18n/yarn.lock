@@ -9,10 +9,10 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@types/node@^12.7.5":
-  version "12.7.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.5.tgz#e19436e7f8e9b4601005d73673b6dc4784ffcc2f"
-  integrity sha512-9fq4jZVhPNW8r+UYKnxF1e2HkDWOWKM5bC2/7c9wPV835I0aOrVbS/Hw/pWPk2uKrNXQqg9Z959Kz+IYDd5p3w==
+"@types/node@^12.7.8":
+  version "12.7.8"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.8.tgz#cb1bf6800238898bc2ff6ffa5702c3cadd350708"
+  integrity sha1-yxv2gAI4iYvC/2/6VwLDyt01Bwg=
 
 deepmerge@^4.0.0:
   version "4.0.0"
@@ -43,10 +43,10 @@ i18next@^17.0.16:
   dependencies:
     "@babel/runtime" "^7.3.1"
 
-react-i18next@^10.12.5:
-  version "10.12.5"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-10.12.5.tgz#b52ccf76bfafddd6f006d7784b2cb802076f724f"
-  integrity sha512-bWVldjtKy5Tb7gsYF1E1Q7s1aEvTFigFZXH5wR8PYe7xPpK3ed6duGLiBRUVNCYGaydFsdVnju7A8wan/Nj3Vg==
+react-i18next@^10.13.1:
+  version "10.13.1"
+  resolved "https://registry.npm.taobao.org/react-i18next/download/react-i18next-10.13.1.tgz#4ad37e0bec5e4cf53aaa2a0c96a4e171e01ad520"
+  integrity sha1-StN+C+xeTPU6qioMlqThceAa1SA=
   dependencies:
     "@babel/runtime" "^7.3.1"
     html-parse-stringify2 "2.0.1"
