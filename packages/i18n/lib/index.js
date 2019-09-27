@@ -2,8 +2,9 @@ import deepmerge from "deepmerge";
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-fetch-backend";
+import React from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
-export function setup(options) {
+export function setup(options = {}) {
     i18n
         // load translation using xhr -> see /public/locales
         // learn more: https://github.com/perrin4869/i18next-fetch-backend
@@ -34,8 +35,12 @@ export function useT(ns = i18n.options.defaultNS[0]) {
     ];
 }
 export function useLng() {
+    const [v, setV] = React.useState(i18n.language);
     return [
-        i18n.language,
-        i18n.changeLanguage.bind(i18n),
+        v,
+        (lng) => {
+            i18n.changeLanguage(lng);
+            setV(i18n.language);
+        },
     ];
 }

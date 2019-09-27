@@ -4,9 +4,8 @@ import { useMatchedBlockAndParams, useMatchedFromChildBocks } from "./hooks";
 export const Switch = ({ level, blocks, loose = false, NotFound = () => null, children = null, }) => {
     const matchedState = useMatchedBlockAndParams(level, blocks, loose);
     if (matchedState) {
-        // tslint:disable-next-line: no-shadowed-variable
-        const { component: Matched, data } = matchedState[0];
-        return (React.createElement(Matched, Object.assign({}, data, matchedState[1], { "$$block": matchedState[0], "$$NotFound": NotFound })));
+        const { component: Comp, data } = matchedState[0];
+        return (React.createElement(Comp, Object.assign({}, data, matchedState[1], { "$$block": matchedState[0], "$$NotFound": NotFound })));
     }
     // 宽松模式，不显示 404
     if (loose) {

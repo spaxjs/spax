@@ -1,12 +1,3 @@
-declare const _default: {
-    version: string;
-    plugins: {
-        auth: {
-            Forbidden: any;
-        };
-        router: {
-            NotFound: any;
-        };
-    };
-};
+import { IOptions } from "@spax/framework";
+declare const _default: IOptions;
 export default _default;

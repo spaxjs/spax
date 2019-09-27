@@ -2,8 +2,8 @@ import deepmerge from "deepmerge";
 import i18n, { InitOptions, TFunction } from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-fetch-backend";
-import { initReactI18next, useTranslation } from "react-i18next";
 import React from "react";
+import { initReactI18next, useTranslation } from "react-i18next";
 
 interface AnyObject<V = any> {
   [key: string]: V;
