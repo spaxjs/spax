@@ -15,7 +15,10 @@ const blocks = [
 ];
 
 test("auth", async () => {
-  const rendered = await run([PluginAuth], { blocks, plugins: { auth: { Forbidden: () => "403" }} });
+  const rendered = await run(
+    [PluginAuth],
+    { blocks, plugins: { auth: { Forbidden: () => "403" } } },
+  );
   expect(rendered[0].authority).toEqual(["foo"]);
   expect(typeof rendered[0].component).toBe("function");
   expect(rendered[0].blocks[0].authority).toEqual(["bar"]);

@@ -4,9 +4,6 @@ read MESSAGE
 
 echo "Deploying $MESSAGE ..."
 
-# build
-# yarn build
-
 # commit
 cd build
 git init

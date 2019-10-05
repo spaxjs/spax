@@ -3,7 +3,7 @@ import { Add, Favorite, Remove } from "@material-ui/icons";
 import { useGlobalState } from "@spax/hooks";
 import React from "react";
 
-export default function GlobalCount(props: any): React.ReactElement {
+const GlobalCount = ({ children, ...props }: any): React.ReactElement => {
   const [count, setCount] = useGlobalState("GlobalCount");
   return (
     <Paper
@@ -22,6 +22,9 @@ export default function GlobalCount(props: any): React.ReactElement {
           onClick={() => setCount(prevCount => prevCount + 1)}
         ><Add /></Button>
       </Box>
+      {children}
     </Paper>
   );
-}
+};
+
+export default GlobalCount;

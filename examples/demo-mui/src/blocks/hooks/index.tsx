@@ -7,9 +7,8 @@ export default {
   icon: DeviceHub,
   description: "一些有用的 React Hooks",
   component: UI,
+  greedy: true,
   blocks: [
     import("./global"),
-    import("./search"),
-    import("./hash"),
   ],
 };

@@ -37,7 +37,9 @@ describe("cache", () => {
     const key = "key";
     cache.set(key, "foo");
     const { result, unmount } = renderHook(() => useCached(key));
-    const { result: result2, unmount: unmount2 } = renderHook(() => useCached(key));
+    const { result: result2, unmount: unmount2 } = renderHook(() =>
+      useCached(key),
+    );
     expect(result.current[0]).toBe("foo");
     expect(result2.current[0]).toBe("foo");
     actHook(() => {

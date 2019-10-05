@@ -1,6 +1,7 @@
 import { green, lime } from "@material-ui/core/colors";
 import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
 import { IOptions } from "@spax/framework";
+import { useGlobalState } from "@spax/hooks";
 import React from "react";
 import Loading from "../components/interaction/Loading";
 import store from "../store";
@@ -14,7 +15,7 @@ export default {
     store,
     layout: {
       logoImage: require("images/logo.png"),
-      siteTitle: "spax",
+      siteTitle: "Spax",
     },
     theme: {
       paletteType: "light",
@@ -58,7 +59,10 @@ export default {
       fallback: <Loading />,
     },
     auth: {
-      roleKey: "role",
+      useAuth: function useAuth(authority: string[]) {
+        const [role] = useGlobalState<string>("role");
+        return hasAuth(role, authority);
+      },
       Forbidden: require("../components/exception/Forbidden").default,
     },
     router: {
@@ -66,3 +70,13 @@ export default {
     },
   },
 } as IOptions;
+
+function hasAuth(role: string, authority: string[]): boolean {
+  if (authority.length === 0) {
+    return true;
+  }
+  if (!role) {
+    return false;
+  }
+  return authority.indexOf(role) !== -1;
+}

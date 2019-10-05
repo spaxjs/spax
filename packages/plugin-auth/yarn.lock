@@ -3,6 +3,6 @@
 
 
 "@types/node@^12.7.8":
-  version "12.7.8"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.8.tgz#cb1bf6800238898bc2ff6ffa5702c3cadd350708"
-  integrity sha1-yxv2gAI4iYvC/2/6VwLDyt01Bwg=
+  version "12.7.9"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.9.tgz#da0210f91096aa67138cf5afd04c4d629f8a406a"
+  integrity sha1-2gIQ+RCWqmcTjPWv0ExNYp+KQGo=

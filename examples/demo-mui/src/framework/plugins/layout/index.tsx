@@ -1,79 +1,48 @@
-import { AnyObject, IBlock, IPlugin, IPO, ISlots } from "@spax/core";
-import React, { useEffect } from "react";
+import { IBlock, IPlugin, IPO, ISlots } from "@spax/core";
+import React from "react";
 import { DocumentTitle } from "./components/DocumentTitle";
-import { useMatchedList } from "./hooks";
+import { LayoutProvider } from "./hooks/useLayout";
 
 export default {
   name: "Layout",
   deps: ["Level"],
   plug: ({ parse, render }: ISlots, option: IPO) => {
-    parse.tap((current: IBlock, parent: IBlock) => {
+    parse.tap((current: IBlock): IBlock => {
       return {
         ...current,
-        ...normalizeLayout(current, parent, option),
+        ...normalizeLayout(current, option),
       };
     });
-
-    render.tap((element: React.ReactElement) => {
+    render.tap((element: React.ReactNode): React.ReactNode => {
       return (
-        <>
+        <LayoutProvider>
           <DocumentTitle fallback={option.siteTitle} />
           {element}
-        </>
+        </LayoutProvider>
       );
     });
   },
 } as IPlugin;
 
-const StateCollector: React.FC<any> = ({ level, matchedProps }: any) => {
-  const [state, setState] = useMatchedList();
-
-  useEffect(() => {
-    const newState = state.slice(0, level);
-    newState[level - 1] = matchedProps;
-    setState(newState);
-    // eslint-disable-next-line
-  }, [level, matchedProps]);
-
-  return null;
-};
-
-const LayoutWrapper: React.FC<any> = ({
-  children = null,
-  level,
-  layout,
-  option,
-}: any) => {
-  if ((level === 1 || layout)) {
-    const Layout = layout === "blank"
-      ? require("./layouts/Blank").default
-      : require("./layouts/Admin").default;
-
-    return (
-      <Layout option={option}>
-        {children}
-      </Layout>
-    );
-  }
-
-  return children;
-};
-
 function normalizeLayout(
-  current: IBlock,
-  parent: IBlock,
+  { layout, component: C }: IBlock,
   option: IPO,
-): AnyObject {
-  const { level, layout, component: C } = current;
+): any {
   return {
     component: (props: any) => {
+      if (props.isInGreedy) {
+        return (
+          <C {...props} />
+        );
+      }
+      const Layout = layout === "blank"
+        ? require("./layouts/Blank").default
+        : require("./layouts/Admin").default;
+
       return (
-        <>
-          <StateCollector level={level} matchedProps={props} />
-          <LayoutWrapper level={level} layout={layout} option={option}>
-            <C {...props} />
-          </LayoutWrapper>
-        </>
+        <Layout option={option}>
+          <C {...props} />
+        </Layout>
       );
     },
   };

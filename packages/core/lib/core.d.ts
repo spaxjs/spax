@@ -1,5 +1,6 @@
+/// <reference types="react" />
 import { IBlock, IOptions, IPlugin } from "./types";
-export declare function run(plugins?: IPlugin[], options?: IOptions): Promise<any>;
+export declare function run(plugins?: IPlugin[], options?: IOptions): Promise<React.ReactNode>;
 /**
  * parse 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
@@ -9,9 +10,9 @@ export declare function runParse(blocks?: IBlock[], shouldEmit?: boolean): Promi
  * render 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-export declare function runRender(blocks?: IBlock[], shouldEmit?: boolean): Promise<any>;
+export declare function runRender(blocks?: IBlock[], shouldEmit?: boolean): Promise<React.ReactNode>;
 export declare function useParsed(): [IBlock[], (v: IBlock[]) => void];
-export declare function useRendered(): [any, (v: any) => void];
+export declare function useRendered(): [React.ReactNode, (v: React.ReactNode) => void];
 /**
  * 递归处理模块，顺序执行 parser
  * @example

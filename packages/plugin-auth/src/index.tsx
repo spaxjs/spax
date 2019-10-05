@@ -1,11 +1,17 @@
 import { AnyObject, IBlock, IPlugin, IPO, ISlots } from "@spax/core";
-import { useGlobalState } from "@spax/hooks";
+import { warn } from "@spax/debug";
 import React from "react";
 
 export default {
   name: "Auth",
   deps: [],
   plug: ({ parse }: ISlots, option: IPO) => {
+    if (!option.useAuth) {
+      if (process.env.NODE_ENV === "development") {
+        warn("Plugin config `auth.useAuth` is required!");
+      }
+      return;
+    }
     parse.tap((current: IBlock) => {
       return {
         ...current,
@@ -15,55 +21,22 @@ export default {
   },
 } as IPlugin;
 
-interface WrapperProps {
-  children: React.ReactElement;
-  authority: string[];
-  roleKey: string;
-  Forbidden: React.FC<{}>;
-}
-
-const Wrapper: React.FC<WrapperProps> = ({
-  children,
-  authority,
-  roleKey,
-  Forbidden,
-}: WrapperProps): React.ReactElement => {
-  const [role] = useGlobalState<string>(roleKey);
-  return hasAuth(role, authority) ? children : <Forbidden />;
-};
-
-function hasAuth(role: string, authority: string[]): boolean {
-  if (authority.length === 0) {
-    return true;
-  }
-  if (!role) {
-    return false;
-  }
-  return authority.indexOf(role) !== -1;
-}
-
 interface NormalizeResult {
-  authority: string[];
   component: React.FC<AnyObject>;
 }
 
 function normalizeAuth(
   current: IBlock,
-  { roleKey = "role", Forbidden = () => null }: IPO,
+  { useAuth, Forbidden = () => null, Interlude = () => null }: IPO,
 ): NormalizeResult {
-  const { authority = [], component: C } = current;
+  const { authority, component: C } = current;
   return {
-    authority,
-    component: (props: AnyObject) => {
-      return (
-        <Wrapper
-          authority={authority}
-          roleKey={roleKey}
-          Forbidden={Forbidden}
-        >
-          <C {...props} />
-        </Wrapper>
-      );
-    },
+    component: authority ? function PluginAuthWrapper(props: AnyObject) {
+      const auth = useAuth(authority);
+      if (auth === undefined) {
+        return <Interlude />;
+      }
+      return auth ? <C {...props} /> : <Forbidden />;
+    } : C,
   };
 }

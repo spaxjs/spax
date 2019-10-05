@@ -14,7 +14,10 @@ const pluginOptionGetter = (name: string): IPO => {
   return c ? c[name] || c[name.toLowerCase()] || {} : {};
 };
 
-export async function run(plugins: IPlugin[] = [], options: IOptions = {}): Promise<any> {
+export async function run(
+  plugins: IPlugin[] = [],
+  options: IOptions = {},
+): Promise<React.ReactNode> {
   if (cache.has("init")) {
     cache.clear();
   }
@@ -31,7 +34,10 @@ export async function run(plugins: IPlugin[] = [], options: IOptions = {}): Prom
  * parse 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-export async function runParse(blocks: IBlock[] = [], shouldEmit: boolean = true) {
+export async function runParse(
+  blocks: IBlock[] = [],
+  shouldEmit: boolean = true,
+): Promise<IBlock[]> {
   const parsedBlocks = await parseBlocks(blocks, {}, true);
 
   /* istanbul ignore next */
@@ -49,7 +55,10 @@ export async function runParse(blocks: IBlock[] = [], shouldEmit: boolean = true
  * render 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-export async function runRender(blocks: IBlock[] = [], shouldEmit: boolean = true) {
+export async function runRender(
+  blocks: IBlock[] = [],
+  shouldEmit: boolean = true,
+): Promise<React.ReactNode> {
   const renderedBlocks = await renderBlocks(blocks);
 
   /* istanbul ignore next */
@@ -67,7 +76,7 @@ export function useParsed(): [IBlock[], (v: IBlock[]) => void] {
   return useCached<IBlock[]>(KEY_PARSED);
 }
 
-export function useRendered(): [any, (v: any) => void] {
+export function useRendered(): [React.ReactNode, (v: React.ReactNode) => void] {
   return useCached<any>(KEY_RENDERED);
 }
 
@@ -91,16 +100,18 @@ export async function parseBlocks(
     return [];
   }
 
-  blocks = await Promise.all(blocks.map(async (mc: IBlock) => {
-    mc = await interopDefaultExports(mc);
+  blocks = await Promise.all(
+    blocks.map(async (mc: IBlock) => {
+      mc = await interopDefaultExports(mc);
 
-    if (Array.isArray(mc)) {
-      mc = await Promise.all(mc.map((_mc) => parseBlock(_mc, parent)));
-      return mc;
-    }
+      if (Array.isArray(mc)) {
+        mc = await Promise.all(mc.map(_mc => parseBlock(_mc, parent)));
+        return mc;
+      }
 
-    return parseBlock(mc, parent);
-  }));
+      return parseBlock(mc, parent);
+    }),
+  );
 
   blocks = blocks.flat();
 
@@ -143,7 +154,7 @@ async function parseBlock(mc: IBlock, parent: IBlock): Promise<IBlock> {
 /**
  * 渲染模块树
  */
-async function renderBlocks(parsedBlocks: IBlock[]): Promise<any> {
+async function renderBlocks(parsedBlocks: IBlock[]): Promise<React.ReactNode> {
   const { render } = cache.get(KEY_SLOTS);
   let renderedBlocks: any = parsedBlocks;
 
@@ -156,7 +167,7 @@ async function renderBlocks(parsedBlocks: IBlock[]): Promise<any> {
   return renderedBlocks;
 }
 
-async function runInit(plugins: IPlugin[], options: IOptions) {
+async function runInit(plugins: IPlugin[], options: IOptions): Promise<void> {
   // 存储以备外部调用
   cache.set(KEY_PLUGINS, plugins);
   cache.set(KEY_OPTIONS, options);
@@ -184,11 +195,15 @@ async function runInit(plugins: IPlugin[], options: IOptions) {
   await slots.init.run("post");
 }
 
-async function loadPlugins(plugins: IPlugin[], options: IOptions, slots: ISlots) {
+async function loadPlugins(
+  plugins: IPlugin[],
+  options: IOptions,
+  slots: ISlots,
+) {
   const ordererPlugins: IPlugin[] = [];
   const pluginNameMap: Map<string, number> = new Map();
 
-  plugins.forEach((plugin) => {
+  plugins.forEach(plugin => {
     const { name, deps } = plugin;
     // 如果存在，说明当前插件被依赖
     if (pluginNameMap.has(name)) {
@@ -222,7 +237,9 @@ async function loadPlugins(plugins: IPlugin[], options: IOptions, slots: ISlots)
   }
 
   return Promise.all(
-    ordererPlugins.map(({ name, plug }) => plug(slots, pluginOptionGetter(name), options)),
+    ordererPlugins.map(({ name, plug }) =>
+      plug(slots, pluginOptionGetter(name), options),
+    ),
   );
 }
 

@@ -6,15 +6,18 @@
 export default {
   path: "",
   title: "C0",
-  lazy: () => import("blocks/nested/components/UI"),
+  lazy: () => import("blocks/nested/UI"),
+  greedy: true,
   blocks: [{
     path: "",
     title: "C0",
-    lazy: () => import("blocks/nested/components/UI"),
+    lazy: () => import("blocks/nested/UI"),
+    greedy: true,
     blocks: [{
       path: "",
       title: "C0",
-      lazy: () => import("blocks/nested/components/UI"),
+      lazy: () => import("blocks/nested/UI"),
+      greedy: true,
     }],
   }],
 };

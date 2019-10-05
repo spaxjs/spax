@@ -1,6 +1,5 @@
 import { IBlock, IPlugin, ISlots } from "@spax/core";
 import { warn } from "@spax/debug";
-import pathToRegexp, { Key } from "path-to-regexp";
 
 export default {
   name: "Path",
@@ -19,8 +18,6 @@ export default {
 
 interface PathProps {
   path: string;
-  pathRE: RegExp;
-  pathKeys: Key[];
 }
 
 function normalizePath(current: IBlock, parent: IBlock): PathProps {
@@ -46,12 +43,7 @@ function normalizePath(current: IBlock, parent: IBlock): PathProps {
 
   path = `${father}${myself}`;
 
-  const pathKeys: Key[] = [];
-  const pathRE = pathToRegexp(path, pathKeys);
-
   return {
     path,
-    pathRE,
-    pathKeys,
   };
 }

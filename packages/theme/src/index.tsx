@@ -9,7 +9,9 @@ export function setType(type: PaletteType = "light"): void {
   return setGlobalState<PaletteType>("theme-palette-type", type);
 }
 
-export function useType(type: PaletteType = "light"): [PaletteType, (type: PaletteType) => void] {
+export function useType(
+  type: PaletteType = "light",
+): [PaletteType, (type: PaletteType) => void] {
   return useGlobalState<PaletteType>("theme-palette-type", type);
 }
 

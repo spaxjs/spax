@@ -66,10 +66,7 @@ export function useGlobalState<S>(
     };
   }, [key]);
 
-  return [
-    state,
-    setStateSynchronously,
-  ];
+  return [state, setStateSynchronously];
 }
 
 export function setGlobalState<S>(
@@ -84,7 +81,9 @@ export function setGlobalState<S>(
 }
 
 function getState<S>(initialState: S | (() => S)): S {
-  return typeof initialState === "function" ? (initialState as () => S)() : initialState;
+  return typeof initialState === "function"
+    ? (initialState as () => S)()
+    : initialState;
 }
 
 function getStorage(key: string, storage?: Storage): Storage {

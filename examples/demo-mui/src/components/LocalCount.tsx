@@ -2,7 +2,7 @@ import { Badge, Box, Button, Paper, Typography } from "@material-ui/core";
 import { Add, Favorite, Remove } from "@material-ui/icons";
 import React, { useState } from "react";
 
-export default function LocalCount({children, ...props}: any): React.ReactElement {
+const LocalCount = ({ children, ...props }: any): React.ReactElement => {
   const [count, setCount] = useState(0);
   return (
     <>
@@ -25,4 +25,6 @@ export default function LocalCount({children, ...props}: any): React.ReactElemen
       {children}
     </>
   );
-}
+};
+
+export default LocalCount;

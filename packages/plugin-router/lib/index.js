@@ -1,39 +1,63 @@
-import { useParsed } from "@spax/core";
-import { MatchedChildBockOrChildren, Switch } from "@spax/router";
+import { debug } from "@spax/debug";
 import React from "react";
+import { HashRouter, Route, Switch } from "react-router-dom";
 export default {
     name: "Router",
-    deps: ["Lazy", "Level", "Path"],
-    plug: ({ parse, render }, option) => {
-        parse.tap((current) => {
-            return {
-                ...current,
-                ...normalizeComponent(current),
-            };
-        });
+    deps: [],
+    plug: ({ render }, { Router = HashRouter, NotFound }) => {
         render.tap((blocks) => {
-            return React.createElement(Wrapper, { option: option });
+            return createRoutes(blocks, NotFound);
+        }, (element) => {
+            return React.createElement(Router, null, element);
         });
     },
 };
-function Wrapper({ option: { NotFound } }) {
-    const [blocks] = useParsed();
-    return (React.createElement(Switch, { level: 1, blocks: blocks, loose: false, NotFound: NotFound }));
+// wrap <Route> and use this everywhere instead, then when
+// sub routes are added to any route it'll work
+function createRoute({ component: C, blocks, data, ...props }, NotFound, isInGreedy) {
+    const { path, greedy } = props;
+    return (React.createElement(Route, { key: path, path: path, render: ({ match }) => {
+            if (!match) {
+                return null;
+            }
+            const hasChild = blocks && blocks.length !== 0;
+            if (!C) {
+                if (hasChild) {
+                    return createRoutes(blocks, NotFound, isInGreedy);
+                }
+                return null;
+            }
+            const { isExact, params } = match;
+            // 贪婪：
+            // 该儿子时，父也想出现，所以把子组件交给父，让父来控制该如何显示；
+            // 已经精确匹配了，还想继续向下匹配更多的子级。
+            if (greedy) {
+                if (process.env.NODE_ENV === "development") {
+                    debug("Matching `%s` greedily", path);
+                }
+                return (React.createElement(C, Object.assign({}, props, data, params, { isExact: isExact, isInGreedy: isInGreedy }), createRoutes(blocks, NotFound, true)));
+            }
+            if (isExact) {
+                if (process.env.NODE_ENV === "development") {
+                    debug("Matching `%s` exactly", path);
+                }
+                return React.createElement(C, Object.assign({}, props, data, params, { isExact: isExact, isInGreedy: isInGreedy }));
+            }
+            if (hasChild) {
+                return createRoutes(blocks, NotFound, isInGreedy);
+            }
+            if (path) {
+                if (process.env.NODE_ENV === "development") {
+                    debug("No Matching for `%s`, use NotFound instead", path);
+                }
+                return React.createElement(NotFound, null);
+            }
+            return null;
+        } }));
 }
-/**
- * 如果未指定 component，
- * 则将其设置为只显示子路由的“容器”。
- * 同时，设置 empty 属性，
- * 标识输入的 component 属性是否为空。
- */
-function normalizeComponent(current) {
-    const { path, level, data = {}, component, blocks = [], } = current;
-    const empty = component === undefined;
-    return {
-        key: `${path}&${level}`,
-        empty,
-        data,
-        component: empty ? MatchedChildBockOrChildren : component,
-        blocks,
-    };
+function createRoutes(blocks, NotFound, isInGreedy) {
+    if (!blocks) {
+        return null;
+    }
+    return (React.createElement(Switch, null, blocks.map((block) => createRoute(block, NotFound, isInGreedy))));
 }

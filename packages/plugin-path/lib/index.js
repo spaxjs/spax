@@ -1,5 +1,4 @@
 import { warn } from "@spax/debug";
-import pathToRegexp from "path-to-regexp";
 export default {
     name: "Path",
     deps: [],
@@ -29,11 +28,7 @@ function normalizePath(current, parent) {
     const father = parent.path === "/" ? "" : (parent.path || "");
     const myself = path ? `/${path}` : "";
     path = `${father}${myself}`;
-    const pathKeys = [];
-    const pathRE = pathToRegexp(path, pathKeys);
     return {
         path,
-        pathRE,
-        pathKeys,
     };
 }

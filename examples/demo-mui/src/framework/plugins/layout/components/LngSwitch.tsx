@@ -20,7 +20,11 @@ export const LngSwitch: React.FC<{}> = () => {
 
   return (
     <>
-      <Button aria-controls="locale-menu" aria-haspopup="true" onClick={handleClick}>
+      <Button
+        aria-controls="locale-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
         <Language color="primary" /> {lng}
       </Button>
       <Menu

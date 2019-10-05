@@ -14,7 +14,7 @@
     "@spax/i18n": "^1.3.3"
   },
   "devDependencies": {
-    "@types/node": "^12.7.8"
+    "@types/node": "^12.7.9"
   },
   "scripts": {
     "start": "tsc -w",

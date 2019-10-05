@@ -13,15 +13,17 @@ afterAll(() => {
 
 describe("initialState", () => {
   test("primitive values", () => {
-    const hr
-      = renderHook(() => useGlobalState("initialState-primitive-values", 0));
+    const hr = renderHook(() =>
+      useGlobalState("initialState-primitive-values", 0),
+    );
     expect(hr.result.current[0]).toBe(0);
   });
 
   describe("reference values", () => {
     test("function", () => {
-      const hr
-        = renderHook(() => useGlobalState("initialState-reference-values-function", () => 2));
+      const hr = renderHook(() =>
+        useGlobalState("initialState-reference-values-function", () => 2),
+      );
       expect(hr.result.current[0]).toBe(2);
     });
   });
@@ -31,24 +33,21 @@ describe("rehydrate", () => {
   test("parse", () => {
     localStorage.setItem("test3", "[123]");
 
-    const hr1
-      = renderHook(() => useGlobalState("test3", 3, localStorage));
+    const hr1 = renderHook(() => useGlobalState("test3", 3, localStorage));
     expect(hr1.result.current[0]).toEqual([123]);
   });
 
   test("catch", () => {
     localStorage.setItem("test4", "{123]");
 
-    const hr
-      = renderHook(() => useGlobalState("test4", 4, localStorage));
+    const hr = renderHook(() => useGlobalState("test4", 4, localStorage));
     expect(hr.result.current[0]).toBe(4);
   });
 });
 
 describe("default Storage", () => {
   test("normal", () => {
-    const hr1
-      = renderHook(() => useGlobalState("default-storage-normal", 5));
+    const hr1 = renderHook(() => useGlobalState("default-storage-normal", 5));
     expect(hr1.result.current[0]).toBe(5);
 
     actHook(() => {
@@ -56,8 +55,7 @@ describe("default Storage", () => {
     });
     expect(hr1.result.current[0]).toBe(1);
 
-    const hr2
-      = renderHook(() => useGlobalState("default-storage-normal", 0));
+    const hr2 = renderHook(() => useGlobalState("default-storage-normal", 0));
     expect(hr2.result.current[0]).toBe(1);
 
     actHook(() => {
@@ -70,8 +68,7 @@ describe("default Storage", () => {
     test("should ignore initialState", () => {
       setGlobalState("default-storage-preset", 6);
 
-      const hr1
-        = renderHook(() => useGlobalState("default-storage-preset", 0));
+      const hr1 = renderHook(() => useGlobalState("default-storage-preset", 0));
       expect(hr1.result.current[0]).toBe(6);
 
       actHook(() => {
@@ -79,8 +76,7 @@ describe("default Storage", () => {
       });
       expect(hr1.result.current[0]).toBe(1);
 
-      const hr2
-        = renderHook(() => useGlobalState("default-storage-preset", 0));
+      const hr2 = renderHook(() => useGlobalState("default-storage-preset", 0));
       expect(hr2.result.current[0]).toBe(1);
 
       actHook(() => {
@@ -97,8 +93,9 @@ describe("default Storage", () => {
 
 describe("persist Storage", () => {
   test("normal", () => {
-    const hr1
-      = renderHook(() => useGlobalState("persist-storage-normal", 5, localStorage));
+    const hr1 = renderHook(() =>
+      useGlobalState("persist-storage-normal", 5, localStorage),
+    );
     expect(hr1.result.current[0]).toBe(5);
 
     actHook(() => {
@@ -106,8 +103,9 @@ describe("persist Storage", () => {
     });
     expect(hr1.result.current[0]).toBe(1);
 
-    const hr2
-      = renderHook(() => useGlobalState("persist-storage-normal", 0, localStorage));
+    const hr2 = renderHook(() =>
+      useGlobalState("persist-storage-normal", 0, localStorage),
+    );
     expect(hr2.result.current[0]).toBe(1);
 
     actHook(() => {
@@ -123,8 +121,7 @@ describe("persist Storage", () => {
     });
 
     test("should ignore initialState", () => {
-      const hr1
-        = renderHook(() => useGlobalState("persist-storage-preset", 0));
+      const hr1 = renderHook(() => useGlobalState("persist-storage-preset", 0));
       expect(hr1.result.current[0]).toBe(6);
 
       actHook(() => {
@@ -132,8 +129,7 @@ describe("persist Storage", () => {
       });
       expect(hr1.result.current[0]).toBe(1);
 
-      const hr2
-        = renderHook(() => useGlobalState("persist-storage-preset", 0));
+      const hr2 = renderHook(() => useGlobalState("persist-storage-preset", 0));
       expect(hr2.result.current[0]).toBe(1);
 
       actHook(() => {
@@ -149,12 +145,9 @@ describe("persist Storage", () => {
 });
 
 test("sharing", () => {
-  const hr1
-    = renderHook(() => useGlobalState("test8", 0));
-  const hr2
-    = renderHook(() => useGlobalState("test8", 1));
-  const hr3
-    = renderHook(() => useGlobalState("test8", 2));
+  const hr1 = renderHook(() => useGlobalState("test8", 0));
+  const hr2 = renderHook(() => useGlobalState("test8", 1));
+  const hr3 = renderHook(() => useGlobalState("test8", 2));
 
   expect(hr1.result.current[0]).toBe(0);
   expect(hr2.result.current[0]).toBe(0);

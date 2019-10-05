@@ -1,33 +1,21 @@
 import {
   Collapse,
-  Link as L,
+  createStyles,
+  Link,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  makeStyles,
   Theme,
 } from "@material-ui/core";
 import { ExpandLess, ExpandMore, Remove } from "@material-ui/icons";
-import { createStyles, makeStyles } from "@material-ui/styles";
-import { AnyObject, IBlock, useParsed } from "@spax/core";
-import { debug } from "@spax/debug";
-import { useGlobalState } from "@spax/hooks";
+import { AnyObject } from "@spax/core";
 import { useT } from "@spax/i18n";
-import { Link } from "@spax/router";
 import clsx from "clsx";
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { useMatchedList } from "../hooks";
-
-interface IMenu {
-  title: string;
-  icon: React.ReactNode;
-  path: string;
-  children?: IMenu[];
-}
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { useLayout } from "../hooks/useLayout";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,42 +32,25 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Menu: React.FC<AnyObject> = (props: AnyObject) => {
-  const [role] = useGlobalState<string>("role");
-  const [blocks] = useParsed();
-  const [matched] = useMatchedList();
-  const menu = useMenu(role, blocks);
-  const openedKeys = matched.map(({ $$block: { key } }) => key);
+  const { all } = useLayout();
 
-  return <MenuList menu={menu} openedKeys={openedKeys} />;
+  return <MenuList menuData={all} />;
 };
-
-/**
- * 获取需要显示的菜单树结构
- */
-function useMenu(role: string, blocks: IBlock[]): IMenu[] {
-  return useMemo(() => {
-    /* istanbul ignore next */
-    if (process.env.NODE_ENV === "development") {
-      debug("Generating menu for %s with: %O", role, blocks);
-    }
-    return getMenuData(role, blocks);
-  }, [role, blocks]);
-}
 
 function MenuNest(props: any): React.ReactElement {
   const { title, icon: Icon = Remove, path, empty, opened } = props;
-  const [open, setOpen] = useState(opened);
+  const [open, setOpen] = React.useState(opened);
   const { listGroup, listItemIcon, listItemActive } = useStyles({});
   const Pointer = open ? ExpandLess : ExpandMore;
-  const [ t ] = useT();
+  const [t] = useT();
 
-  useEffect(() => {
+  React.useEffect(() => {
     setOpen(opened);
   }, [opened]);
 
   return (
     <>
-      <Link component={L} to={empty ? false : path}>
+      <Link component={RouterLink} to={empty ? false : path}>
         <ListItem onClick={() => setOpen(!open)}>
           <ListItemIcon className={listItemIcon}>
             <Icon />
@@ -102,40 +73,45 @@ function MenuNest(props: any): React.ReactElement {
 
 function MenuList(props: any): React.ReactElement {
   const { listItemIcon, listItemActive } = useStyles({});
-  const [ t ] = useT();
-  const { menu, openedKeys } = props;
+  const [t] = useT();
+  const { menuData } = props;
   return (
     <List component="nav">
-      {menu.map(
-        ({ key, title, icon: Icon = Remove, path, empty, children }) => {
-          const opened = openedKeys.indexOf(key) !== -1;
+      {menuData.map(
+        ({
+          title,
+          icon: Icon = Remove,
+          path,
+          empty,
+          match,
+          children,
+        }) => {
           if (children) {
             return (
               <MenuNest
-                key={key}
+                key={path}
                 title={title}
                 icon={Icon}
                 path={path}
                 empty={empty}
-                opened={opened}
+                opened={Boolean(match)}
               >
                 {/* 如果是非激活的，后代必然是非激活的，所以传空，节省资源 */}
                 <MenuList
-                  menu={children}
-                  openedKeys={opened ? openedKeys : []}
+                  menuData={children}
                 />
               </MenuNest>
             );
           }
           // 没有子节点，直接显示
           return (
-            <Link component={L} key={key} to={path}>
+            <Link key={path} component={RouterLink} to={path}>
               <ListItem>
                 <ListItemIcon className={listItemIcon}>
                   <Icon />
                 </ListItemIcon>
                 <ListItemText
-                  className={clsx(opened && listItemActive)}
+                  className={clsx(Boolean(match) && listItemActive)}
                   disableTypography
                 >
                   {t(title)}
@@ -147,44 +123,4 @@ function MenuList(props: any): React.ReactElement {
       )}
     </List>
   );
-}
-
-function getMenuData(role: string, blocks: IBlock[]): IMenu[] {
-  return (
-    blocks
-      // 过滤掉 404 的模块
-      // 过滤掉 带变量 的模块
-      // 过滤掉 无标题 的模块
-      // 过滤掉 无权限 的模块
-      .filter(
-        ({ path, title, authority }) =>
-          path.indexOf("*") === -1 &&
-          path.indexOf(":") === -1 &&
-          !!title &&
-          hasAuth(role, authority),
-      )
-      .map(({ key, path, title, icon, empty, blocks: childBlocks }) => {
-        return {
-          key,
-          path,
-          title,
-          icon,
-          empty,
-          children: childBlocks.length
-            ? getMenuData(role, childBlocks)
-            : undefined,
-        };
-      })
-      .flat()
-  );
-}
-
-function hasAuth(role: string, authority: string[]) {
-  if (authority.length === 0) {
-    return true;
-  }
-  if (!role) {
-    return false;
-  }
-  return authority.indexOf(role) !== -1;
 }

@@ -1,5 +1,4 @@
-import { Box, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import { runParse } from "@spax/core";
 import { useT } from "@spax/i18n";
 import React, { ReactNode } from "react";
@@ -22,7 +21,7 @@ const blocksOnTheFly = [
 
 export default function UI(props: any): ReactNode {
   const { root } = useStyles(props);
-  const [ t ] = useT();
+  const [t] = useT();
 
   function updateBlocks() {
     setTimeout(() => {
@@ -38,7 +37,10 @@ export default function UI(props: any): ReactNode {
       </Box>
       <Box
         mt={2}>
-        <Button variant="contained" onClick={updateBlocks}>Update Blocks On the Fly</Button>
+        <Button
+          variant="contained"
+          onClick={updateBlocks}
+        >Update Blocks On the Fly</Button>
       </Box>
     </Box>
   );

@@ -3,16 +3,16 @@
 
 
 "@babel/runtime@^7.3.1":
-  version "7.5.5"
-  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
-  integrity sha1-dPulbTXvvspEQJHHhQzNSU/S8TI=
+  version "7.6.2"
+  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.6.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.6.2.tgz#c3d6e41b304ef10dcf13777a33e7694ec4a9a6dd"
+  integrity sha1-w9bkGzBO8Q3PE3d6M+dpTsSppt0=
   dependencies:
     regenerator-runtime "^0.13.2"
 
 "@types/node@^12.7.8":
-  version "12.7.8"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.8.tgz#cb1bf6800238898bc2ff6ffa5702c3cadd350708"
-  integrity sha1-yxv2gAI4iYvC/2/6VwLDyt01Bwg=
+  version "12.7.9"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.9.tgz#da0210f91096aa67138cf5afd04c4d629f8a406a"
+  integrity sha1-2gIQ+RCWqmcTjPWv0ExNYp+KQGo=
 
 deepmerge@^4.0.0:
   version "4.0.0"
@@ -28,7 +28,7 @@ html-parse-stringify2@2.0.1:
 
 i18next-browser-languagedetector@^3.0.3:
   version "3.0.3"
-  resolved "https://registry.npm.taobao.org/i18next-browser-languagedetector/download/i18next-browser-languagedetector-3.0.3.tgz?cache=0&sync_timestamp=1565254536091&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fi18next-browser-languagedetector%2Fdownload%2Fi18next-browser-languagedetector-3.0.3.tgz#879ebe421685c70cc5cfa96191364a35ea7da742"
+  resolved "https://registry.npm.taobao.org/i18next-browser-languagedetector/download/i18next-browser-languagedetector-3.0.3.tgz#879ebe421685c70cc5cfa96191364a35ea7da742"
   integrity sha1-h56+QhaFxwzFz6lhkTZKNep9p0I=
 
 i18next-fetch-backend@^2.2.0:
@@ -37,9 +37,9 @@ i18next-fetch-backend@^2.2.0:
   integrity sha1-Of9leFluASLoBpLgTXiX7jc2B9Y=
 
 i18next@^17.0.16:
-  version "17.0.16"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-17.0.16.tgz#4bee0f84d6c79db3095f4eca6ded7920eea6b139"
-  integrity sha512-PtPiycw8H/45AAy2nuS3Ehov1X9k5V/gTJ89Uh8VAA3dx8EbsWwyP3c25fd4PWlLUey3YbRLTNPbre/dPho8Og==
+  version "17.0.18"
+  resolved "https://registry.npm.taobao.org/i18next/download/i18next-17.0.18.tgz#cca2503125af2370daa4657c5320d5ef6924c23a"
+  integrity sha1-zKJQMSWvI3DapGV8UyDV72kkwjo=
   dependencies:
     "@babel/runtime" "^7.3.1"
 
@@ -53,7 +53,7 @@ react-i18next@^10.13.1:
 
 regenerator-runtime@^0.13.2:
   version "0.13.3"
-  resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
+  resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
   integrity sha1-fPanfY9cb2Drc8X8GVWyzrAea/U=
 
 void-elements@^2.0.1:

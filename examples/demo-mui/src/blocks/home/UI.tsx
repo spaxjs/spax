@@ -1,9 +1,8 @@
-import { Box, Link as L, Typography } from "@material-ui/core";
+import { Box, Link, makeStyles, Typography } from "@material-ui/core";
 import { Explore, NavigateNext } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/styles";
 import { useT } from "@spax/i18n";
-import { Link } from "@spax/router";
 import React, { ReactNode } from "react";
+import { Link as RouterLink} from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +31,7 @@ export default function UI(props: any): ReactNode {
         <Explore />
         <NavigateNext />
         <Link
-          component={L}
+          component={RouterLink}
           to="/dashboard">{t("Dashboard")}</Link>
       </Box>
     </Box>

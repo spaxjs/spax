@@ -42,7 +42,7 @@ export default abstract class Framework {
     this.initialize(options);
   }
 
-  public async render(): Promise<React.DOMElement<any, any>> {
+  public async render(): Promise<any> {
     const { plugins, options } = this;
 
     // 解析
@@ -57,8 +57,10 @@ export default abstract class Framework {
       const { options } = this;
 
       // 挂载点
-      const mountingElement: HTMLElement = typeof options.container === "string"
-        ? document.querySelector(options.container) : options.container;
+      const mountingElement: HTMLElement =
+        typeof options.container === "string"
+          ? document.querySelector(options.container)
+          : options.container;
 
       if (!mountingElement) {
         throw Error(`${options.container} is not a valid HTMLElement`);
@@ -111,7 +113,11 @@ export default abstract class Framework {
 
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      debug("Initialize Framework with options: %O, plugins: %O", this.options, this.plugins);
+      debug(
+        "Initialize Framework with options: %O, plugins: %O",
+        this.options,
+        this.plugins,
+      );
     }
   }
 }

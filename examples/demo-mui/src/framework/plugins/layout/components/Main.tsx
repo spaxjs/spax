@@ -1,6 +1,5 @@
-import { Box, Theme } from "@material-ui/core";
+import { Box, createStyles, makeStyles, Theme } from "@material-ui/core";
 import { BoxProps } from "@material-ui/core/Box";
-import { createStyles, makeStyles } from "@material-ui/styles";
 import { useGlobalState } from "@spax/hooks";
 import React from "react";
 

@@ -71,7 +71,7 @@ export async function parseBlocks(blocks = [], parent, fromInnerCall = false) {
     blocks = await Promise.all(blocks.map(async (mc) => {
         mc = await interopDefaultExports(mc);
         if (Array.isArray(mc)) {
-            mc = await Promise.all(mc.map((_mc) => parseBlock(_mc, parent)));
+            mc = await Promise.all(mc.map(_mc => parseBlock(_mc, parent)));
             return mc;
         }
         return parseBlock(mc, parent);
@@ -143,7 +143,7 @@ async function runInit(plugins, options) {
 async function loadPlugins(plugins, options, slots) {
     const ordererPlugins = [];
     const pluginNameMap = new Map();
-    plugins.forEach((plugin) => {
+    plugins.forEach(plugin => {
         const { name, deps } = plugin;
         // 如果存在，说明当前插件被依赖
         if (pluginNameMap.has(name)) {

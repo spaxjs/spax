@@ -1,9 +1,15 @@
-import { useGlobalState } from "@spax/hooks";
+import { warn } from "@spax/debug";
 import React from "react";
 export default {
     name: "Auth",
     deps: [],
     plug: ({ parse }, option) => {
+        if (!option.useAuth) {
+            if (process.env.NODE_ENV === "development") {
+                warn("Plugin config `auth.useAuth` is required!");
+            }
+            return;
+        }
         parse.tap((current) => {
             return {
                 ...current,
@@ -12,26 +18,15 @@ export default {
         });
     },
 };
-const Wrapper = ({ children, authority, roleKey, Forbidden, }) => {
-    const [role] = useGlobalState(roleKey);
-    return hasAuth(role, authority) ? children : React.createElement(Forbidden, null);
-};
-function hasAuth(role, authority) {
-    if (authority.length === 0) {
-        return true;
-    }
-    if (!role) {
-        return false;
-    }
-    return authority.indexOf(role) !== -1;
-}
-function normalizeAuth(current, { roleKey = "role", Forbidden = () => null }) {
-    const { authority = [], component: C } = current;
+function normalizeAuth(current, { useAuth, Forbidden = () => null, Interlude = () => null }) {
+    const { authority, component: C } = current;
     return {
-        authority,
-        component: (props) => {
-            return (React.createElement(Wrapper, { authority: authority, roleKey: roleKey, Forbidden: Forbidden },
-                React.createElement(C, Object.assign({}, props))));
-        },
+        component: authority ? function PluginAuthWrapper(props) {
+            const auth = useAuth(authority);
+            if (auth === undefined) {
+                return React.createElement(Interlude, null);
+            }
+            return auth ? React.createElement(C, Object.assign({}, props)) : React.createElement(Forbidden, null);
+        } : C,
     };
 }

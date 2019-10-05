@@ -1,6 +1,6 @@
 import { CssBaseline } from "@material-ui/core";
 import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
-import { ThemeProvider } from "@material-ui/styles";
+import ThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { IPlugin, IPO, ISlots } from "@spax/core";
 import { debug } from "@spax/debug";
 import { setType, useTheme } from "@spax/theme";
@@ -16,19 +16,23 @@ export default {
 
     render.tap(
       (element: React.ReactNode): React.ReactNode => {
-        return <Root overrides={overrides}>{element}</Root>;
+        return <ThemeRoot overrides={overrides}>{element}</ThemeRoot>;
       },
     );
   },
 } as IPlugin;
 
-interface RootProps { children: React.ReactNode; overrides: Partial<ThemeOptions>; }
+interface ThemeRootProps {
+  children: React.ReactNode;
+  overrides: Partial<ThemeOptions>;
+}
 
-const Root: React.FC<RootProps> = ({children, overrides}: RootProps) => {
+const ThemeRoot = ({ children, overrides }: ThemeRootProps) => {
   const theme = useTheme(overrides);
 
-  if (process.env.NODE_ENV === "development")
+  if (process.env.NODE_ENV === "development") {
     debug("Theme config: %O", theme);
+  }
 
   return (
     <ThemeProvider theme={theme}>

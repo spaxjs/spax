@@ -1,3 +1,3 @@
 # :rocket: AuthPlugin
 
-> authenticate Blocks with HOC
+> authenticate Blocks with hook

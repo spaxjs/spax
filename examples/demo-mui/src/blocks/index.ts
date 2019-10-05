@@ -2,14 +2,10 @@ export default [
   import("./login"),
   import("./register"),
   import("./forgot"),
-  import("./home"),
   import("./dashboard"),
   import("./hooks"),
   import("./nested"),
-  import("./dynamic"),
-  // import("./grid"),
-  // import("./grid2"),
-  // import("./group"),
+  import("./home"),
   // 404
   {
     path: "*",

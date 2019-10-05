@@ -14,8 +14,8 @@
     "events": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.8",
-    "@types/react": "^16.9.3"
+    "@types/node": "^12.7.9",
+    "@types/react": "^16.9.4"
   },
   "peerDependencies": {
     "react": "^16.9.0"

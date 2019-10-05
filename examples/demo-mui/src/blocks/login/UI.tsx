@@ -1,14 +1,13 @@
-import { Box, Button, IconButton, InputAdornment, Link as L, TextField } from "@material-ui/core";
+import { Box, Button, IconButton, InputAdornment, Link, TextField } from "@material-ui/core";
 import { Fingerprint, Visibility, VisibilityOff } from "@material-ui/icons";
-import { usePathname } from "@spax/history";
 import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
-import { Link } from "@spax/router";
 import React, { useEffect, useState } from "react";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 export default function UI(props: any) {
   const [role, setRole] = useGlobalState<string>("role");
-  const [, setPath] = usePathname();
+  const history = useHistory();
   const [ t ] = useT("Theme");
 
   const [username, setUsername] = useState("admin");
@@ -26,9 +25,9 @@ export default function UI(props: any) {
 
   useEffect(() => {
     if (role) {
-      setPath("/");
+      history.push("/");
     }
-  }, [role, setPath]);
+  }, [role, history]);
 
   return (
     <>
@@ -72,10 +71,13 @@ export default function UI(props: any) {
         display="flex"
         flexDirection="row">
         <Box flexGrow={1}>
-          <Link component={L} to="/register">{t("Register")}</Link>
+          <Link component={RouterLink} to="/register">{t("Register")}</Link>
         </Box>
         <Box flexGrow={0}>
-          <Link component={L} to="/forgot">{t("Forgot your password?")}</Link>
+          <Link
+            component={RouterLink}
+            to="/forgot"
+          >{t("Forgot your password?")}</Link>
         </Box>
       </Box>
     </>

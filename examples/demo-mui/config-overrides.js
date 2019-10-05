@@ -22,11 +22,13 @@ module.exports = override(
     "react",
     "react-dom",
     "react-hot-loader",
+    "react-router-dom",
     "path-to-regexp",
     "@material-ui/core",
-    "@material-ui/styles",
+    "@material-ui/icons",
     "@types/node",
     "@types/react",
-    "@types/react-dom"
+    "@types/react-dom",
+    "@types/react-router-dom"
   ])),
 );

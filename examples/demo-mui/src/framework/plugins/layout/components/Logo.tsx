@@ -1,8 +1,7 @@
-import { Theme } from "@material-ui/core";
-import { createStyles, makeStyles } from "@material-ui/styles";
-import { Link, LinkProps } from "@spax/router";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
+import { Link, LinkProps } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({
@@ -21,13 +20,17 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 
 type LogoProps = Partial<LinkProps> & { className?: any, option?: any };
 
-export const Logo: React.FC<LogoProps> = ({ className, option: { logoImage, siteTitle }, ...props }: LogoProps) => {
+export const Logo = ({
+  className,
+  option: { logoImage, siteTitle },
+  ...props
+}: LogoProps) => {
   const { logo } = useStyles(props);
 
   return (
     <Link
       to="/"
-      className={clsx([logo, className])}
+      className={clsx(logo, className)}
       {...props}
     >
       <img
