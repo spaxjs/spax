@@ -1,6 +1,6 @@
 {
   "name": "@spax/framework-hook",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "framework on hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,14 +10,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.3.3",
-    "@spax/framework": "^1.3.3",
-    "@spax/plugin-auth": "^1.3.4",
-    "@spax/plugin-i18n": "^1.3.3",
-    "@spax/plugin-lazy": "^1.3.3",
-    "@spax/plugin-level": "^1.3.3",
-    "@spax/plugin-path": "^1.3.3",
-    "@spax/plugin-router": "^1.3.4"
+    "@spax/core": "^1.4.0",
+    "@spax/framework": "^1.4.0",
+    "@spax/plugin-auth": "^1.4.0",
+    "@spax/plugin-i18n": "^1.4.0",
+    "@spax/plugin-lazy": "^1.4.0",
+    "@spax/plugin-level": "^1.4.0",
+    "@spax/plugin-path": "^1.4.0",
+    "@spax/plugin-router": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.8",
