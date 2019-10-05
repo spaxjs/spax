@@ -15,10 +15,10 @@
     "deepmerge": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.9"
+    "@types/node": "^12.7.11"
   },
   "peerDependencies": {
-    "react": "^16.9.0"
+    "react": "^16.10.2"
   },
   "scripts": {
     "start": "tsc -w",

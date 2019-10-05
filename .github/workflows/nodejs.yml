@@ -17,13 +17,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - uses: sergioramos/yarn-actions/install@master
+      with:
+        frozen-lockfile: true
+    - name: install, build, and test
       run: |
         rm -f .yarnrc
-        npm install
-        npm run bootstrap
-        npm run build
-        npm test
+        yarn
+        yarn bootstrap
+        yarn run build
+        yarn test
         npx codecov
       env:
         CI: true

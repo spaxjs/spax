@@ -16,11 +16,11 @@
   },
   "devDependencies": {
     "@types/node": "^12.7.8",
-    "@types/react": "^16.9.4",
+    "@types/react": "^16.9.5",
     "@types/react-router-dom": "^5.1.0"
   },
   "peerDependencies": {
-    "react": "^16.9.0"
+    "react": "^16.10.2"
   },
   "scripts": {
     "start": "tsc -w",
