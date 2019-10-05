@@ -1,0 +1,1 @@
+{"version":3,"sources":["blocks/forgot/index.ts"],"names":["path","layout","lazy"],"mappings":"6GAAA,OAAe,WACbA,KAAM,SACNC,OAAQ,QACRC,KAAM,kBAAM","file":"static/js/11.7c42629b.chunk.js","sourcesContent":["export default {\n  path: \"forgot\",\n  layout: \"blank\",\n  lazy: () => import(\"./UI\"),\n};\n"],"sourceRoot":""}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["blocks/register/index.ts"],"names":["path","layout","lazy"],"mappings":"6GAAA,OAAe,WACbA,KAAM,WACNC,OAAQ,QACRC,KAAM,kBAAM","file":"static/js/22.08977cf6.chunk.js","sourcesContent":["export default {\n  path: \"register\",\n  layout: \"blank\",\n  lazy: () => import(\"./UI\"),\n};\n"],"sourceRoot":""}

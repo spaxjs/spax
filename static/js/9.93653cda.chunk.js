@@ -1,0 +1,2 @@
+(this["webpackJsonpdemo-mui"]=this["webpackJsonpdemo-mui"]||[]).push([[9],{353:function(a,t,e){"use strict";e.r(t);var h=e(0),n=e.n(h),d=e(34),o=Object(d.a)(n.a.createElement("path",{d:"M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"}),"Dashboard");t.default={path:"dashboard",title:"Dashboard",icon:o,lazy:function(){return e.e(8).then(e.bind(null,347))},data:{description:"dashboard.cc-poetry"}}}}]);
+//# sourceMappingURL=9.93653cda.chunk.js.map

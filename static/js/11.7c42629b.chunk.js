@@ -1,0 +1,2 @@
+(this["webpackJsonpdemo-mui"]=this["webpackJsonpdemo-mui"]||[]).push([[11],{341:function(t,n,u){"use strict";u.r(n),n.default={path:"forgot",layout:"blank",lazy:function(){return u.e(10).then(u.bind(null,329))}}}}]);
+//# sourceMappingURL=11.7c42629b.chunk.js.map

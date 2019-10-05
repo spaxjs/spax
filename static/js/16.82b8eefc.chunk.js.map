@@ -1,0 +1,1 @@
+{"version":3,"sources":["blocks/login/index.ts"],"names":["path","layout","lazy"],"mappings":"6GAAA,OAAe,WACbA,KAAM,QACNC,OAAQ,QACRC,KAAM,kBAAM","file":"static/js/16.82b8eefc.chunk.js","sourcesContent":["export default {\n  path: \"login\",\n  layout: \"blank\",\n  lazy: () => import(\"./UI\"),\n};\n"],"sourceRoot":""}

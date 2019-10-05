@@ -1,0 +1,1 @@
+{"version":3,"sources":["blocks/nested/blocks/c1/blocks/c2/index.tsx"],"names":["path","title","lazy"],"mappings":"4GAAA,OAAe,WACbA,KAAM,KACNC,MAAO,KACPC,KAAM,kBAAM","file":"static/js/2.69ae46aa.chunk.js","sourcesContent":["export default {\n  path: \"c2\",\n  title: \"C2\",\n  lazy: () => import(\"blocks/nested/UI\"),\n};\n"],"sourceRoot":""}

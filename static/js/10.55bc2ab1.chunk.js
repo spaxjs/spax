@@ -1,0 +1,2 @@
+(this["webpackJsonpdemo-mui"]=this["webpackJsonpdemo-mui"]||[]).push([[10],{329:function(e,n,t){"use strict";t.r(n),t.d(n,"default",(function(){return c}));var a=t(305),o=t(41),i=t(0),r=t.n(i),u=t(20);function c(e){return r.a.createElement(a.a,null,r.a.createElement(o.a,{variant:"h1"},"Todo"),r.a.createElement(u.b,{to:"/login"},"Login"))}}}]);
+//# sourceMappingURL=10.55bc2ab1.chunk.js.map
