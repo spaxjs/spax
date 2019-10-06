@@ -1,6 +1,6 @@
 {
   "name": "@spax/plugin-level",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "add level to module config",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.4.0",
+    "@spax/core": "^1.4.1",
     "history": "^4.10.1"
   },
   "devDependencies": {

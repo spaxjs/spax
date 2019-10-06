@@ -1,6 +1,6 @@
 {
   "name": "@spax/plugin-path",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "component path normalizer",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.4.0",
+    "@spax/core": "^1.4.1",
     "@spax/debug": "^1.1.0"
   },
   "devDependencies": {
