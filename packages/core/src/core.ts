@@ -1,44 +1,45 @@
-import { debug, error, warn } from "@spax/debug";
-import { cache, useCached } from "./cache";
+import { debug, error } from "@spax/debug";
+import { cache } from "./cache";
+import {
+  KEY_INIT,
+  KEY_OPTIONS,
+  KEY_PARSED,
+  KEY_PLUGINS,
+  KEY_RENDERED,
+  KEY_SLOTS,
+} from "./constants";
 import { InitSlot, ParseSlot, RenderSlot } from "./slots";
 import { IBlock, IOptions, IPlugin, IPO, ISlots } from "./types";
 
-const KEY_SLOTS = "slots";
-const KEY_PLUGINS = "plugins";
-const KEY_OPTIONS = "options";
-const KEY_PARSED = "parsed";
-const KEY_RENDERED = "rendered";
-
-const pluginOptionGetter = (name: string): IPO => {
-  const { plugins: c }: IOptions = cache.get(KEY_OPTIONS);
-  return c ? c[name] || c[name.toLowerCase()] || {} : {};
+const getPluginOption = (name: string): IPO => {
+  const { plugins }: IOptions = cache.get(KEY_OPTIONS);
+  return plugins ? plugins[name] || plugins[name.toLowerCase()] || {} : {};
 };
 
 export async function run(
   plugins: IPlugin[] = [],
   options: IOptions = {},
 ): Promise<React.ReactNode> {
-  if (cache.has("init")) {
+  if (cache.has(KEY_INIT)) {
     cache.clear();
   }
 
   await runInit(plugins, options);
 
   // 标识已加载
-  cache.set("init", 1);
+  cache.set(KEY_INIT, 1);
 
-  return runRender(await runParse(options.blocks, false), false);
+  return runRender(await runParse(options.blocks));
 }
 
 /**
  * parse 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-export async function runParse(
+async function runParse(
   blocks: IBlock[] = [],
-  shouldEmit: boolean = true,
 ): Promise<IBlock[]> {
-  const parsedBlocks = await parseBlocks(blocks, {}, true);
+  const parsedBlocks = await parseBlocks(blocks, {});
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
@@ -46,7 +47,7 @@ export async function runParse(
   }
 
   // 存储以备外部调用
-  cache.set(KEY_PARSED, parsedBlocks, shouldEmit);
+  cache.set(KEY_PARSED, parsedBlocks);
 
   return parsedBlocks;
 }
@@ -55,9 +56,8 @@ export async function runParse(
  * render 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-export async function runRender(
+async function runRender(
   blocks: IBlock[] = [],
-  shouldEmit: boolean = true,
 ): Promise<React.ReactNode> {
   const renderedBlocks = await renderBlocks(blocks);
 
@@ -67,17 +67,9 @@ export async function runRender(
   }
 
   // 存储以备外部调用
-  cache.set(KEY_RENDERED, renderedBlocks, shouldEmit);
+  cache.set(KEY_RENDERED, renderedBlocks);
 
   return renderedBlocks;
-}
-
-export function useParsed(): [IBlock[], (v: IBlock[]) => void] {
-  return useCached<IBlock[]>(KEY_PARSED);
-}
-
-export function useRendered(): [React.ReactNode, (v: React.ReactNode) => void] {
-  return useCached<any>(KEY_RENDERED);
 }
 
 /**
@@ -90,12 +82,11 @@ export function useRendered(): [React.ReactNode, (v: React.ReactNode) => void] {
  * // 如果有子模块（深度优先）
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
-export async function parseBlocks(
+async function parseBlocks(
   blocks: IBlock[] = [],
   parent: IBlock,
-  fromInnerCall: boolean = false,
 ): Promise<IBlock[]> {
-  if (!cache.has("init")) {
+  if (!cache.has(KEY_INIT)) {
     error("Please call `run` first.");
     return [];
   }
@@ -115,18 +106,6 @@ export async function parseBlocks(
 
   blocks = blocks.flat();
 
-  // 外部调用时，需要更新 parent.blocks
-  if (!fromInnerCall) {
-    /* istanbul ignore next */
-    if (process.env.NODE_ENV === "development") {
-      // 如果已存在，则告警
-      if (parent.blocks && parent.blocks.length) {
-        warn("Override blocks of parent which is not empty");
-      }
-    }
-    parent.blocks = blocks;
-  }
-
   return blocks;
 }
 
@@ -140,7 +119,7 @@ async function parseBlock(mc: IBlock, parent: IBlock): Promise<IBlock> {
 
   // 子模块在 pre 之后、post 之前处理掉
   if (mc.blocks) {
-    mc.blocks = await parseBlocks(mc.blocks, mc, true);
+    mc.blocks = await parseBlocks(mc.blocks, mc);
   }
 
   if (!mc.$$parsed) {
@@ -238,7 +217,7 @@ async function loadPlugins(
 
   return Promise.all(
     ordererPlugins.map(({ name, plug }) =>
-      plug(slots, pluginOptionGetter(name), options),
+      plug(slots, getPluginOption(name), options),
     ),
   );
 }

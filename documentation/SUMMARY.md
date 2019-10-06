@@ -12,7 +12,7 @@
   * [路径插件 PathPlugin](plugins/plugin-path.md)
   * [路由插件 RouterPlugin](plugins/plugin-router.md)
 * 框架 Frameworks
-  * [基础框架 FrameworkHook](frameworks/framework-hook.md)
+  * [基础框架 FrameworkSimple](frameworks/framework-simple.md)
 * 配件 Assets
   * [Debug](assets/debug.md)
   * [I18n](assets/i18n.md)

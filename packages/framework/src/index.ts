@@ -123,8 +123,7 @@ export default abstract class Framework {
 }
 
 /**
- * 对象：深拷贝
- * 数组：合并
+ * 合并对象与数组
  */
 export function merge(...args: any[]) {
   return mergeWith({}, ...args, (obj: any, src: any) => {

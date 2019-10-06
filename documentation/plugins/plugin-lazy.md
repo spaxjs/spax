@@ -13,6 +13,6 @@
 ```typescript
 {
   // 组件加载未完成时显示的占位符
-  fallback: React.ReactNode;
+  fallback: ReactNode;
 }
 ```

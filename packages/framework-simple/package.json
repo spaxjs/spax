@@ -1,7 +1,7 @@
 {
-  "name": "@spax/framework-hook",
+  "name": "@spax/framework-simple",
   "version": "1.4.0",
-  "description": "framework on hooks",
+  "description": "framework out of box",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
@@ -12,10 +12,7 @@
   "dependencies": {
     "@spax/core": "^1.4.0",
     "@spax/framework": "^1.4.0",
-    "@spax/plugin-auth": "^1.4.0",
-    "@spax/plugin-i18n": "^1.4.0",
     "@spax/plugin-lazy": "^1.4.0",
-    "@spax/plugin-level": "^1.4.0",
     "@spax/plugin-path": "^1.4.0",
     "@spax/plugin-router": "^1.4.0"
   },

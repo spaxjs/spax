@@ -27,7 +27,7 @@ $ npx @spax/spax-cli <project-name>
 ## 名词解释 Glossary
 
 * 框架：特指 [core](core/core.md) 与 [framework](core/framework.md)
-* 业务框架：比如 [framework-hook](frameworks/framework-hook.md)
+* 业务框架：比如 [framework-simple](frameworks/framework-simple.md)
 * 模块：业务模块声明，可能包含 `path`, `component`, `data` 等信息
 
 ## 设计原则 Principle

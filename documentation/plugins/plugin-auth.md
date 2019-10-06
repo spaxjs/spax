@@ -12,7 +12,7 @@
 
 ```typescript
 {
-  roleKey: string;
-  Forbidden: component;
+  useAuth: (authority: string[]) => boolean;
+  Forbidden: ReactComponent;
 }
 ```

@@ -1,6 +1,6 @@
 # 路由插件 RouterPlugin
 
-基于 React hooks 的简单而强大的路由。
+基于 React Router 的简单而强大的路由。
 
 ![npm (scoped)](https://img.shields.io/npm/v/@spax/plugin-router?color=4caf50)
 
@@ -12,8 +12,6 @@
 
 ```typescript
 {
-  NotFound: ReactComponent;
   Forbidden: ReactComponent;
-  useAuth: (current: IBlock) => boolean | undefined;
 }
 ```

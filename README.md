@@ -24,7 +24,7 @@ $ npx @spax/spax-cli <project-name>
 - 引擎：特指 [@spax/core](packages/core)
 - 框架
   - 基础框架：[@spax/framework](packages/framework)
-  - 业务框架：基础框架的子类，比如 [@spax/framework-hook](packages/framework-hook)
+  - 业务框架：基础框架的子类，比如 [@spax/framework-simple](packages/framework-simple)
 - Block：业务模块声明，可能包含 path, component 等信息
 
 ## :pushpin: 设计原则 Principle
@@ -48,7 +48,7 @@ $ npx @spax/spax-cli <project-name>
 ## :card_file_box: 框架 Frameworks
 
 - [@spax/framework](packages/framework) 框架基类
-- [@spax/framework-hook](packages/framework-hook) 基础框架，集成常见插件
+- [@spax/framework-simple](packages/framework-simple) 基础框架，集成常见插件
 
 ## :ant: 配件 Assets
 

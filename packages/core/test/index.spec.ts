@@ -1,10 +1,7 @@
 import { act as actHook, renderHook } from "@testing-library/react-hooks";
 import {
   cache,
-  parseBlocks,
   run,
-  runParse,
-  runRender,
   useParsed,
   useRendered,
 } from "../src";
@@ -13,27 +10,6 @@ import {
 
 beforeEach(() => {
   cache.clear();
-});
-
-describe("parseBlocks", () => {
-  test("call before run", async () => {
-    const parsed = await parseBlocks([], {});
-    expect(parsed).toEqual([]);
-  });
-
-  test("call after run", async () => {
-    const parent = {
-      path: "/",
-      title: "L1",
-      blocks: [{ path: "/", title: "L20" }],
-    };
-    const blocks = [{ path: "/", title: "L21" }, { path: "/", title: "L22" }];
-    const rendered = await run([], { blocks: [parent] });
-    expect(rendered[0].blocks.length).toBe(1);
-    const parsed = await parseBlocks(blocks, rendered[0]);
-    expect(parsed).toEqual(blocks);
-    expect(rendered[0].blocks.length).toBe(2);
-  });
 });
 
 describe("useParsed", () => {
@@ -499,40 +475,4 @@ describe("run", () => {
       unmountRendered();
     });
   });
-});
-
-test("runParse", async () => {
-  const { result, unmount } = renderHook(() => useParsed());
-  expect(result.current[0]).toBe(undefined);
-  await actHook(async () => {
-    const ret = await run([], {
-      blocks: [{ title: "foo" }],
-    });
-    expect(ret).toEqual([{ title: "foo" }]);
-  });
-  expect(result.current[0]).toBe(undefined);
-  await actHook(async () => {
-    const ret2 = await runParse([{ title: "bar" }]);
-    expect(ret2).toEqual([{ title: "bar" }]);
-  });
-  expect(result.current[0]).toEqual([{ title: "bar" }]);
-  unmount();
-});
-
-test("runRender", async () => {
-  const { result, unmount } = renderHook(() => useRendered());
-  expect(result.current[0]).toBe(undefined);
-  await actHook(async () => {
-    const ret = await run([], {
-      blocks: [{ title: "foo" }],
-    });
-    expect(ret).toEqual([{ title: "foo" }]);
-  });
-  expect(result.current[0]).toBe(undefined);
-  await actHook(async () => {
-    const ret2 = await runRender([{ title: "bar" }]);
-    expect(ret2).toEqual([{ title: "bar" }]);
-  });
-  expect(result.current[0]).toEqual([{ title: "bar" }]);
-  unmount();
 });

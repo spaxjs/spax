@@ -1,4 +1,4 @@
-import FrameworkHook from "@spax/framework-hook";
+import FrameworkSimple from "@spax/framework-simple";
 import React from "react";
 import BuggyCounter from "../BuggyCounter";
 import ErrorBoundary from "../ErrorBoundary";
@@ -16,6 +16,6 @@ const UI: React.FC<any> = (props: any) => {
   );
 };
 
-export default new FrameworkHook({
+export default new FrameworkSimple({
   blocks: [{ path: "*", component: UI }],
 }).render();

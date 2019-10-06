@@ -5,7 +5,7 @@ import { LayoutProvider } from "./hooks/useLayout";
 
 export default {
   name: "Layout",
-  deps: ["Level"],
+  deps: [],
   plug: ({ parse, render }: ISlots, option: IPO) => {
     parse.tap((current: IBlock): IBlock => {
       return {
