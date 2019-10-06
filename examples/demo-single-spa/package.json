@@ -12,7 +12,7 @@
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/crossjs/spax.git"
+    "url": "git://github.com/spaxjs/spax.git"
   },
   "license": "MIT",
   "dependencies": {

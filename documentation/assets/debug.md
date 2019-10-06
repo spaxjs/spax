@@ -6,7 +6,7 @@ debug utilities
 
 ## 源码 Code
 
-[@spax/debug](https://github.com/crossjs/spax/tree/master/packages/debug)
+[@spax/debug](https://github.com/spaxjs/spax/tree/master/packages/debug)
 
 ## 安装 Install
 

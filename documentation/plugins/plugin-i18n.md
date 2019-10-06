@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/plugin-i18n](https://github.com/crossjs/spax/tree/master/packages/plugin-i18n)
+[@spax/plugin-i18n](https://github.com/spaxjs/spax/tree/master/packages/plugin-i18n)
 
 ## 选项
 

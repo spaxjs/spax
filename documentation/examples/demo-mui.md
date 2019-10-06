@@ -4,7 +4,7 @@
 
 ## 源码 Code
 
-[demo-mui](https://github.com/crossjs/spax/tree/master/examples/demo-mui)
+[demo-mui](https://github.com/spaxjs/spax/tree/master/examples/demo-mui)
 
 ## 启动 Startup
 

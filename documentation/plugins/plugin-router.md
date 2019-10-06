@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/plugin-router](https://github.com/crossjs/spax/tree/master/packages/plugin-router)
+[@spax/plugin-router](https://github.com/spaxjs/spax/tree/master/packages/plugin-router)
 
 ## 选项
 

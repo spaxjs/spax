@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/plugin-lazy](https://github.com/crossjs/spax/tree/master/packages/plugin-lazy)
+[@spax/plugin-lazy](https://github.com/spaxjs/spax/tree/master/packages/plugin-lazy)
 
 ## 选项
 

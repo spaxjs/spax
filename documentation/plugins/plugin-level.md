@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/plugin-level](https://github.com/crossjs/spax/tree/master/packages/plugin-level)
+[@spax/plugin-level](https://github.com/spaxjs/spax/tree/master/packages/plugin-level)
 
 ## 选项
 

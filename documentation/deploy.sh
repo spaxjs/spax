@@ -8,7 +8,7 @@ echo spax.js.org > CNAME
 git init
 git add -A
 git commit -m "pub"
-git push -f https://github.com/crossjs/spax-site.git master:gh-pages
+git push -f https://github.com/spaxjs/website.git master:gh-pages
 
 # back to root
 cd ..

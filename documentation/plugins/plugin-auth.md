@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/plugin-auth](https://github.com/crossjs/spax/tree/master/packages/plugin-auth)
+[@spax/plugin-auth](https://github.com/spaxjs/spax/tree/master/packages/plugin-auth)
 
 ## 选项
 

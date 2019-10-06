@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/hooks](https://github.com/crossjs/spax/tree/master/packages/hooks)
+[@spax/hooks](https://github.com/spaxjs/spax/tree/master/packages/hooks)
 
 ## 安装 Install
 

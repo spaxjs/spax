@@ -6,7 +6,7 @@ router in hooks
 
 ## 源码 Code
 
-[@spax/router](https://github.com/crossjs/spax/tree/master/packages/router)
+[@spax/router](https://github.com/spaxjs/spax/tree/master/packages/router)
 
 ## 安装 Install
 

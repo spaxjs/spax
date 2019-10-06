@@ -9,7 +9,7 @@ cd build
 git init
 git add -A
 git commit -m "$MESSAGE"
-git push -f https://github.com/crossjs/spax.git master:gh-pages
+git push -f https://github.com/spaxjs/spax.git master:gh-pages
 
 # back to root
 cd ..

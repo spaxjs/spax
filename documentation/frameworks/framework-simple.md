@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/framework-simple](https://github.com/crossjs/spax/tree/master/packages/framework-simple)
+[@spax/framework-simple](https://github.com/spaxjs/spax/tree/master/packages/framework-simple)
 
 ## 安装 Install
 

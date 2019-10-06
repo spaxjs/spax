@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/plugin-path](https://github.com/crossjs/spax/tree/master/packages/plugin-path)
+[@spax/plugin-path](https://github.com/spaxjs/spax/tree/master/packages/plugin-path)
 
 ## 选项
 

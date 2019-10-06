@@ -6,7 +6,7 @@ history hooks
 
 ## 源码 Code
 
-[@spax/history](https://github.com/crossjs/spax/tree/master/packages/history)
+[@spax/history](https://github.com/spaxjs/spax/tree/master/packages/history)
 
 ## 安装 Install
 

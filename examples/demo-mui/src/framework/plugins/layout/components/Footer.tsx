@@ -18,7 +18,7 @@ export const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {
         display="flex"
         flexDirection="row"
         justifyContent="center">
-        <Link href="https://github.com/crossjs/spax">
+        <Link href="https://github.com/spaxjs/spax">
           <Github fill="currentColor" />
         </Link>
         <Typography variant="subtitle1">

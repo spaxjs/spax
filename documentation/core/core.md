@@ -6,7 +6,7 @@ SPAX 的发动机，一般不直接使用，而是在 Framework 中使用。
 
 ## 源码 Code
 
-[@spax/core](https://github.com/crossjs/spax/tree/master/packages/core)
+[@spax/core](https://github.com/spaxjs/spax/tree/master/packages/core)
 
 ## 安装 Install
 

@@ -2,10 +2,10 @@
 
 > :fist_raised: 使用 React、TypeScript，可扩展、插件化、渐进式，满足各种规模的业务开发。
 
-[![Actions Status](https://github.com/crossjs/spax/workflows/Node%20CI/badge.svg)](https://github.com/crossjs/spax/actions)
-[![Build Status](https://travis-ci.org/crossjs/spax.svg?branch=master)](https://travis-ci.org/crossjs/spax)
-[![codecov](https://codecov.io/gh/crossjs/spax/branch/master/graph/badge.svg)](https://codecov.io/gh/crossjs/spax)
-[![DevDependencies](https://img.shields.io/david/dev/crossjs/spax.svg)](https://david-dm.org/crossjs/spax?type=dev)
+[![Actions Status](https://github.com/spaxjs/spax/workflows/Node%20CI/badge.svg)](https://github.com/spaxjs/spax/actions)
+[![Build Status](https://travis-ci.org/spaxjs/spax.svg?branch=master)](https://travis-ci.org/spaxjs/spax)
+[![codecov](https://codecov.io/gh/spaxjs/spax/branch/master/graph/badge.svg)](https://codecov.io/gh/spaxjs/spax)
+[![DevDependencies](https://img.shields.io/david/dev/spaxjs/spax.svg)](https://david-dm.org/spaxjs/spax?type=dev)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 

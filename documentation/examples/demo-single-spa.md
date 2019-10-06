@@ -4,4 +4,4 @@
 
 ## 源码 Code
 
-[demo-single-spa](https://github.com/crossjs/spax/tree/master/examples/demo-single-spa)
+[demo-single-spa](https://github.com/spaxjs/spax/tree/master/examples/demo-single-spa)

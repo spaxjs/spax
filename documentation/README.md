@@ -2,13 +2,13 @@
 
 🚀 使用 React、TypeScript，可扩展、插件化、渐进式，满足各种规模的业务开发。
 
-[![Actions Status](https://github.com/crossjs/spax/workflows/Node%20CI/badge.svg)](https://github.com/crossjs/spax/actions) &nbsp;
-[![Build Status](https://travis-ci.org/crossjs/spax.svg?branch=master)](https://travis-ci.org/crossjs/spax) &nbsp;
-[![codecov](https://codecov.io/gh/crossjs/spax/branch/master/graph/badge.svg)](https://codecov.io/gh/crossjs/spax) &nbsp;
-[![DevDependencies](https://img.shields.io/david/dev/crossjs/spax.svg)](https://david-dm.org/crossjs/spax?type=dev)
+[![Actions Status](https://github.com/spaxjs/spax/workflows/Node%20CI/badge.svg)](https://github.com/spaxjs/spax/actions) &nbsp;
+[![Build Status](https://travis-ci.org/spaxjs/spax.svg?branch=master)](https://travis-ci.org/spaxjs/spax) &nbsp;
+[![codecov](https://codecov.io/gh/spaxjs/spax/branch/master/graph/badge.svg)](https://codecov.io/gh/spaxjs/spax) &nbsp;
+[![DevDependencies](https://img.shields.io/david/dev/spaxjs/spax.svg)](https://david-dm.org/spaxjs/spax?type=dev)
 
 <p id="buttons">
-  <a href="https://github.com/crossjs/spax" id="button-github">
+  <a href="https://github.com/spaxjs/spax" id="button-github">
     <i class="fa fa-github" aria-hidden="true"></i> Github</a>
   <a href="https://spax.crossjs.com" id="button-preview">
     <i class="fa fa-eye" aria-hidden="true"></i> Preview</a>

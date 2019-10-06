@@ -6,7 +6,7 @@
 
 ## 源码 Code
 
-[@spax/framework](https://github.com/crossjs/spax/tree/master/packages/framework)
+[@spax/framework](https://github.com/spaxjs/spax/tree/master/packages/framework)
 
 ## 安装 Install
 
