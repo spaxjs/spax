@@ -34,7 +34,8 @@ export default class Framework {
             const { options } = this;
             // 挂载点
             const mountingElement = typeof options.container === "string"
-                ? document.querySelector(options.container) : options.container;
+                ? document.querySelector(options.container)
+                : options.container;
             if (!mountingElement) {
                 throw Error(`${options.container} is not a valid HTMLElement`);
             }
@@ -99,8 +100,7 @@ Framework.options = {
     container: "#root",
 };
 /**
- * 对象：深拷贝
- * 数组：合并
+ * 合并对象与数组
  */
 export function merge(...args) {
     return mergeWith({}, ...args, (obj, src) => {

@@ -49,10 +49,7 @@ export function useGlobalState(key, initialState, _storage) {
             emitter.off(key, setState);
         };
     }, [key]);
-    return [
-        state,
-        setStateSynchronously,
-    ];
+    return [state, setStateSynchronously];
 }
 export function setGlobalState(key, initialState, _storage) {
     const storage = getStorage(key, _storage);
@@ -61,7 +58,9 @@ export function setGlobalState(key, initialState, _storage) {
     }
 }
 function getState(initialState) {
-    return typeof initialState === "function" ? initialState() : initialState;
+    return typeof initialState === "function"
+        ? initialState()
+        : initialState;
 }
 function getStorage(key, storage) {
     if (storage) {

@@ -1,57 +1,47 @@
-import { debug, error, warn } from "@spax/debug";
-import { cache, useCached } from "./cache";
+import { debug, error } from "@spax/debug";
+import { cache } from "./cache";
+import { KEY_INIT, KEY_OPTIONS, KEY_PARSED, KEY_PLUGINS, KEY_RENDERED, KEY_SLOTS, } from "./constants";
 import { InitSlot, ParseSlot, RenderSlot } from "./slots";
-const KEY_SLOTS = "slots";
-const KEY_PLUGINS = "plugins";
-const KEY_OPTIONS = "options";
-const KEY_PARSED = "parsed";
-const KEY_RENDERED = "rendered";
-const pluginOptionGetter = (name) => {
-    const { plugins: c } = cache.get(KEY_OPTIONS);
-    return c ? c[name] || c[name.toLowerCase()] || {} : {};
+const getPluginOption = (name) => {
+    const { plugins } = cache.get(KEY_OPTIONS);
+    return plugins ? plugins[name] || plugins[name.toLowerCase()] || {} : {};
 };
 export async function run(plugins = [], options = {}) {
-    if (cache.has("init")) {
+    if (cache.has(KEY_INIT)) {
         cache.clear();
     }
     await runInit(plugins, options);
     // 标识已加载
-    cache.set("init", 1);
-    return runRender(await runParse(options.blocks, false), false);
+    cache.set(KEY_INIT, 1);
+    return runRender(await runParse(options.blocks));
 }
 /**
  * parse 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-export async function runParse(blocks = [], shouldEmit = true) {
-    const parsedBlocks = await parseBlocks(blocks, {}, true);
+async function runParse(blocks = []) {
+    const parsedBlocks = await parseBlocks(blocks, {});
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
         debug("Blocks parsed: %O", parsedBlocks);
     }
     // 存储以备外部调用
-    cache.set(KEY_PARSED, parsedBlocks, shouldEmit);
+    cache.set(KEY_PARSED, parsedBlocks);
     return parsedBlocks;
 }
 /**
  * render 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-export async function runRender(blocks = [], shouldEmit = true) {
+async function runRender(blocks = []) {
     const renderedBlocks = await renderBlocks(blocks);
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
         debug("Blocks rendered: %O", renderedBlocks);
     }
     // 存储以备外部调用
-    cache.set(KEY_RENDERED, renderedBlocks, shouldEmit);
+    cache.set(KEY_RENDERED, renderedBlocks);
     return renderedBlocks;
-}
-export function useParsed() {
-    return useCached(KEY_PARSED);
-}
-export function useRendered() {
-    return useCached(KEY_RENDERED);
 }
 /**
  * 递归处理模块，顺序执行 parser
@@ -63,8 +53,8 @@ export function useRendered() {
  * // 如果有子模块（深度优先）
  * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
  */
-export async function parseBlocks(blocks = [], parent, fromInnerCall = false) {
-    if (!cache.has("init")) {
+async function parseBlocks(blocks = [], parent) {
+    if (!cache.has(KEY_INIT)) {
         error("Please call `run` first.");
         return [];
     }
@@ -77,17 +67,6 @@ export async function parseBlocks(blocks = [], parent, fromInnerCall = false) {
         return parseBlock(mc, parent);
     }));
     blocks = blocks.flat();
-    // 外部调用时，需要更新 parent.blocks
-    if (!fromInnerCall) {
-        /* istanbul ignore next */
-        if (process.env.NODE_ENV === "development") {
-            // 如果已存在，则告警
-            if (parent.blocks && parent.blocks.length) {
-                warn("Override blocks of parent which is not empty");
-            }
-        }
-        parent.blocks = blocks;
-    }
     return blocks;
 }
 async function parseBlock(mc, parent) {
@@ -98,7 +77,7 @@ async function parseBlock(mc, parent) {
     }
     // 子模块在 pre 之后、post 之前处理掉
     if (mc.blocks) {
-        mc.blocks = await parseBlocks(mc.blocks, mc, true);
+        mc.blocks = await parseBlocks(mc.blocks, mc);
     }
     if (!mc.$$parsed) {
         // post
@@ -175,7 +154,7 @@ async function loadPlugins(plugins, options, slots) {
     if (process.env.NODE_ENV === "development") {
         debug("Plugins enabled: %O", ordererPlugins);
     }
-    return Promise.all(ordererPlugins.map(({ name, plug }) => plug(slots, pluginOptionGetter(name), options)));
+    return Promise.all(ordererPlugins.map(({ name, plug }) => plug(slots, getPluginOption(name), options)));
 }
 // 对于使用 import()/require() 引入的模块，需要转换
 async function interopDefaultExports(m) {

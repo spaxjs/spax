@@ -15,13 +15,15 @@ export function setup(options = {}) {
         // pass the i18n instance to react-i18next.
         .use(initReactI18next)
         // init i18next
-        // for all options read: https://www.i18next.com/overview/configuration-options
+        // for all options read:
+        // https://www.i18next.com/overview/configuration-options
         .init(deepmerge({
         interpolation: {
             // react already safes from xss
             escapeValue: false,
         },
-        // allows some resources to be set on initialization while others can be loaded using a backend connector
+        // allows some resources to be set on initialization
+        // while others can be loaded using a backend connector
         partialBundledLanguages: true,
     }, options));
 }
