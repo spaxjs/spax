@@ -13,7 +13,7 @@
   ],
   "command": {
     "publish": {
-      "ignoreChanges": ["ignored-file", "*.md"],
+      "ignoreChanges": ["*.md", "**/test/**"],
       "message": "chore(release): publish"
     },
     "bootstrap": {
