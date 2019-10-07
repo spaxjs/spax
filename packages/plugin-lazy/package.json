@@ -1,6 +1,6 @@
 {
   "name": "@spax/plugin-lazy",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Suspense and lazy",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.4.1",
+    "@spax/core": "^1.4.2",
     "history": "^4.10.1"
   },
   "devDependencies": {

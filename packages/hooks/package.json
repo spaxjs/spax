@@ -1,6 +1,6 @@
 {
   "name": "@spax/hooks",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "useful hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/debug": "^1.1.0",
+    "@spax/debug": "^1.1.1",
     "events": "^3.0.0"
   },
   "devDependencies": {

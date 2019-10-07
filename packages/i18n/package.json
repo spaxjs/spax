@@ -1,6 +1,6 @@
 {
   "name": "@spax/i18n",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "i18n hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.4.1",
+    "@spax/core": "^1.4.2",
     "deepmerge": "^4.0.0",
     "i18next": "^17.0.16",
     "i18next-browser-languagedetector": "^3.0.3",

@@ -1,6 +1,6 @@
 {
   "name": "@spax/theme",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "theme hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.5.0",
-    "@spax/hooks": "^1.4.1",
+    "@spax/hooks": "^1.4.2",
     "deepmerge": "^4.0.0"
   },
   "devDependencies": {

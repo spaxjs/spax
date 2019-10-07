@@ -1,6 +1,6 @@
 {
   "name": "@spax/framework-simple",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "framework out of box",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,11 +10,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.4.1",
-    "@spax/framework": "^1.4.1",
-    "@spax/plugin-lazy": "^1.4.1",
-    "@spax/plugin-path": "^1.4.1",
-    "@spax/plugin-router": "^1.4.1"
+    "@spax/core": "^1.4.2",
+    "@spax/framework": "^1.4.2",
+    "@spax/plugin-lazy": "^1.4.2",
+    "@spax/plugin-path": "^1.4.2",
+    "@spax/plugin-router": "^1.4.2"
   },
   "devDependencies": {
     "@types/node": "^12.7.8",
