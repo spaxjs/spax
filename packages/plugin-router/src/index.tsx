@@ -28,7 +28,7 @@ function createRoute(
     ...props
   }: IBlock,
   NotFound: any,
-  isInGreedy?: boolean,
+  inGreedy?: boolean,
 ) {
   const { path, greedy } = props;
 
@@ -45,14 +45,12 @@ function createRoute(
 
         if (!C) {
           if (hasChild) {
-            return createRoutes(blocks, NotFound, isInGreedy);
+            return createRoutes(blocks, NotFound, inGreedy);
           }
           return null;
         }
 
-        const { isExact, params } = match;
-
-        // 贪婪：
+        // 贪婪，有两种表现：
         // 该儿子时，父也想出现，所以把子组件交给父，让父来控制该如何显示；
         // 已经精确匹配了，还想继续向下匹配更多的子级。
         if (greedy) {
@@ -63,30 +61,32 @@ function createRoute(
             <C
               {...props}
               {...data}
-              {...params}
-              isExact={isExact}
-              isInGreedy={isInGreedy}
+              match={{
+                ...match,
+                inGreedy,
+              }}
             >
               {createRoutes(blocks, NotFound, true)}
             </C>
           );
         }
 
-        if (isExact) {
+        if (match.isExact) {
           if (process.env.NODE_ENV === "development") {
             debug("Matching `%s` exactly", path);
           }
           return <C
             {...props}
             {...data}
-            {...params}
-            isExact={isExact}
-            isInGreedy={isInGreedy}
+            match={{
+              ...match,
+              inGreedy,
+            }}
           />;
         }
 
         if (hasChild) {
-          return createRoutes(blocks, NotFound, isInGreedy);
+          return createRoutes(blocks, NotFound, inGreedy);
         }
 
         if (path) {
@@ -105,7 +105,7 @@ function createRoute(
 function createRoutes(
   blocks: IBlock[],
   NotFound: any,
-  isInGreedy?: boolean,
+  inGreedy?: boolean,
 ): React.ReactNode {
   if (!blocks) {
     return null;
@@ -113,7 +113,7 @@ function createRoutes(
   return (
     <Switch>
       {
-        blocks.map((block: IBlock) => createRoute(block, NotFound, isInGreedy))
+        blocks.map((block: IBlock) => createRoute(block, NotFound, inGreedy))
       }
     </Switch>
   );
