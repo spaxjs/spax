@@ -1,6 +1,6 @@
 {
   "name": "@spax/plugin-router",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "router in hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",

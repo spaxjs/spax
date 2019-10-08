@@ -1,6 +1,6 @@
 {
   "name": "@spax/framework-simple",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "framework out of box",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -14,7 +14,7 @@
     "@spax/framework": "^1.4.2",
     "@spax/plugin-lazy": "^1.4.2",
     "@spax/plugin-path": "^1.4.2",
-    "@spax/plugin-router": "^1.4.2"
+    "@spax/plugin-router": "^1.4.3"
   },
   "devDependencies": {
     "@types/node": "^12.7.8",
