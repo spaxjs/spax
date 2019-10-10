@@ -6,7 +6,7 @@ import { IBlock } from "./types";
 /**
  * Hook for cached value of the specified key
  */
-export function useCached<S>(key: string): [S, (value: S) => void] {
+function useCached<S>(key: string): [S, (value: S) => void] {
   const [state, setState] = React.useState(cache.get<S>(key));
 
   React.useEffect(() => {

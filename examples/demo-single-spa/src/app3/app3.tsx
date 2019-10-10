@@ -1,4 +1,4 @@
-import { cache } from "@spax/core";
+import { cache } from "@spax/core/lib/cache";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import singleSpaReact, { Lifecycles } from "single-spa-react";

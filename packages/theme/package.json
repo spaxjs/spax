@@ -15,7 +15,7 @@
     "deepmerge": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.11"
+    "@types/node": "^12.7.12"
   },
   "peerDependencies": {
     "react": "^16.10.2"

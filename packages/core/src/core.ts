@@ -1,4 +1,4 @@
-import { debug, error } from "@spax/debug";
+import { debug } from "@spax/debug";
 import { cache } from "./cache";
 import {
   KEY_INIT,
@@ -10,11 +10,6 @@ import {
 } from "./constants";
 import { InitSlot, ParseSlot, RenderSlot } from "./slots";
 import { IBlock, IOptions, IPlugin, IPO, ISlots } from "./types";
-
-const getPluginOption = (name: string): IPO => {
-  const { plugins }: IOptions = cache.get(KEY_OPTIONS);
-  return plugins ? plugins[name] || plugins[name.toLowerCase()] || {} : {};
-};
 
 export async function run(
   plugins: IPlugin[] = [],
@@ -29,16 +24,14 @@ export async function run(
   // 标识已加载
   cache.set(KEY_INIT, 1);
 
-  return runRender(await runParse(options.blocks));
+  return runRender(await runParse(options.blocks || []));
 }
 
 /**
  * parse 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-async function runParse(
-  blocks: IBlock[] = [],
-): Promise<IBlock[]> {
+async function runParse(blocks: IBlock[]): Promise<IBlock[]> {
   const parsedBlocks = await parseBlocks(blocks, {});
 
   /* istanbul ignore next */
@@ -56,9 +49,7 @@ async function runParse(
  * render 函数允许重复执行，
  * 生成的数据将会覆盖原有数据。
  */
-async function runRender(
-  blocks: IBlock[] = [],
-): Promise<React.ReactNode> {
+async function runRender(blocks: IBlock[]): Promise<React.ReactNode> {
   const renderedBlocks = await renderBlocks(blocks);
 
   /* istanbul ignore next */
@@ -72,25 +63,10 @@ async function runRender(
   return renderedBlocks;
 }
 
-/**
- * 递归处理模块，顺序执行 parser
- * @example
- * // blocks: [m1, m2]
- * // parsers: [p1, p2]
- * p1.pre(m1) -> p2.pre(m1) -> p2.post(m1) -> p1.post(m1)
- * p1.pre(m2) -> p2.pre(m2) -> p2.post(m2) -> p1.post(m2)
- * // 如果有子模块（深度优先）
- * p1.pre(m1) -> p2.pre(m1) -> (子模块流程，同父模块) -> p2.post(m1) -> p1.post(m1)
- */
 async function parseBlocks(
-  blocks: IBlock[] = [],
+  blocks: IBlock[],
   parent: IBlock,
 ): Promise<IBlock[]> {
-  if (!cache.has(KEY_INIT)) {
-    error("Please call `run` first.");
-    return [];
-  }
-
   blocks = await Promise.all(
     blocks.map(async (mc: IBlock) => {
       mc = await interopDefaultExports(mc);
@@ -112,20 +88,16 @@ async function parseBlocks(
 async function parseBlock(mc: IBlock, parent: IBlock): Promise<IBlock> {
   const { parse } = cache.get(KEY_SLOTS);
 
-  if (!mc.$$parsed) {
-    // pre
-    mc = await parse.run(mc, parent, "pre");
-  }
+  // pre
+  mc = await parse.run(mc, parent, "pre");
 
   // 子模块在 pre 之后、post 之前处理掉
   if (mc.blocks) {
     mc.blocks = await parseBlocks(mc.blocks, mc);
   }
 
-  if (!mc.$$parsed) {
-    // post
-    mc = await parse.run(mc, parent, "post");
-  }
+  // post
+  mc = await parse.run(mc, parent, "post");
 
   return mc;
 }
@@ -220,6 +192,11 @@ async function loadPlugins(
       plug(slots, getPluginOption(name), options),
     ),
   );
+}
+
+function getPluginOption(name: string): IPO {
+  const { plugins }: IOptions = cache.get(KEY_OPTIONS);
+  return plugins ? plugins[name] || plugins[name.toLowerCase()] || {} : {};
 }
 
 // 对于使用 import()/require() 引入的模块，需要转换

@@ -15,7 +15,7 @@
     "@spax/hooks": "^1.4.2"
   },
   "devDependencies": {
-    "@types/node": "^12.7.8"
+    "@types/node": "^12.7.12"
   },
   "scripts": {
     "start": "tsc -w",
