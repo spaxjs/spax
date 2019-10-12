@@ -1,4 +1,4 @@
-import { debug } from "@spax/debug";
+import { log } from "@spax/debug";
 import { cache } from "./cache";
 import {
   KEY_INIT,
@@ -36,7 +36,7 @@ async function runParse(blocks: IBlock[]): Promise<IBlock[]> {
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    debug("Blocks parsed: %O", parsedBlocks);
+    log("Blocks parsed: %O", parsedBlocks);
   }
 
   // 存储以备外部调用
@@ -54,7 +54,7 @@ async function runRender(blocks: IBlock[]): Promise<React.ReactNode> {
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    debug("Blocks rendered: %O", renderedBlocks);
+    log("Blocks rendered: %O", renderedBlocks);
   }
 
   // 存储以备外部调用
@@ -135,7 +135,7 @@ async function runInit(plugins: IPlugin[], options: IOptions): Promise<void> {
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    debug("Hook slots created: %O", slots);
+    log("Hook slots created: %O", slots);
   }
 
   // 加载插件
@@ -184,7 +184,7 @@ async function loadPlugins(
 
   /* istanbul ignore next */
   if (process.env.NODE_ENV === "development") {
-    debug("Plugins enabled: %O", ordererPlugins);
+    log("Plugins enabled: %O", ordererPlugins);
   }
 
   return Promise.all(

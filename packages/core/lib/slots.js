@@ -39,8 +39,9 @@ export class ParseSlot extends Slot {
         const hookLength = hooks.length;
         for (let i = 0; i < hookLength; i++) {
             const fn = hooks[i];
-            // freeze object
+            /* istanbul ignore next */
             if (process.env.NODE_ENV === "development") {
+                // freeze object
                 a = Object.freeze(a);
             }
             a = await fn(a, b);
@@ -64,8 +65,9 @@ export class RenderSlot extends Slot {
         const hookLength = hooks.length;
         for (let i = 0; i < hookLength; i++) {
             const fn = hooks[i];
-            // freeze object
+            /* istanbul ignore next */
             if (process.env.NODE_ENV === "development") {
+                // freeze object
                 a = Object.freeze(a);
             }
             a = await fn(a);

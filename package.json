@@ -61,11 +61,12 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "lint": "tslint --project ./ --fix",
+    "dev": "lerna run dev --no-private",
     "build": "lerna run build --no-private",
     "precommit": "git add -A",
     "commit": "git-cz",
     "publish": "lerna publish",
-    "dev": "jest --no-cache --watch",
+    "start": "jest --no-cache --watch",
     "test": "jest --no-cache"
   },
   "husky": {

@@ -1,6 +1,6 @@
 
 import { IPlugin, IPO, ISlots } from "@spax/core";
-import { debug } from "@spax/debug";
+import { log } from "@spax/debug";
 import { setGlobalState } from "@spax/hooks";
 
 export default {
@@ -10,7 +10,7 @@ export default {
     init.tap(() => {
       /* istanbul ignore next */
       if (process.env.NODE_ENV === "development")
-        debug("Initialize global states: %O", initialStates);
+        log("Initialize global states: %O", initialStates);
 
       initialStates.forEach(({ storage, states }) => {
         Object.entries(states).forEach(([key, initialState]) => {

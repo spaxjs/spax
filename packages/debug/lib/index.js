@@ -8,8 +8,7 @@ export function log(...args) {
     console.log(...makeArgs(args));
 }
 export function debug(...args) {
-    // console.log 无法显示调用堆栈，所以使用 console.warn
-    console.warn(...makeArgs(args));
+    console.debug(...makeArgs(args));
 }
 export function warn(...args) {
     console.warn(...makeArgs(args));

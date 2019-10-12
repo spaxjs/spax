@@ -11,8 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@spax/core": "^1.4.2",
-    "@spax/debug": "^1.1.1",
-    "react-router-dom": "^5.1.1"
+    "@spax/debug": "^1.1.1"
   },
   "devDependencies": {
     "@types/node": "^12.7.12",
@@ -20,10 +19,12 @@
     "@types/react-router-dom": "^5.1.0"
   },
   "peerDependencies": {
-    "react": "^16.10.2"
+    "react": "^16.10.2",
+    "react-router-dom": "^5.1.1"
   },
   "scripts": {
     "start": "tsc -w",
+    "dev": "tsc",
     "build": "rm -rf lib && tsc"
   },
   "publishConfig": {

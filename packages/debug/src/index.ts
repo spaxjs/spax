@@ -10,8 +10,7 @@ export function log(...args: any[]) {
 }
 
 export function debug(...args: any[]) {
-  // console.log 无法显示调用堆栈，所以使用 console.warn
-  console.warn(...makeArgs(args));
+  console.debug(...makeArgs(args));
 }
 
 export function warn(...args: any[]) {

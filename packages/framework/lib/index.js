@@ -1,5 +1,5 @@
 import { run } from "@spax/core";
-import { debug, fatal, warn } from "@spax/debug";
+import { fatal, log, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import * as ReactDOM from "react-dom";
@@ -9,7 +9,7 @@ export default class Framework {
         this.options = {};
         /* istanbul ignore next */
         if (process.env.NODE_ENV !== "test") {
-            debug(`
+            log(`
    _____ ____  ___   _  __
   / ___// __ \\/   | | |/ /
   \\__ \\/ /_/ / /| | |   /
@@ -45,7 +45,7 @@ export default class Framework {
             ReactDOM.render(rendered, mountingElement, () => {
                 /* istanbul ignore next */
                 if (process.env.NODE_ENV === "development") {
-                    debug("Mounted to container: %O", options.container);
+                    log("Mounted to container: %O", options.container);
                 }
                 if (callback) {
                     callback();
@@ -84,7 +84,7 @@ export default class Framework {
         this.options = merge(...options, ctorOptions);
         /* istanbul ignore next */
         if (process.env.NODE_ENV === "development") {
-            debug("Initialize Framework with options: %O, plugins: %O", this.options, this.plugins);
+            log("Initialize Framework with options: %O, plugins: %O", this.options, this.plugins);
         }
     }
 }

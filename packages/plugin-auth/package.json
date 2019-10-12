@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "tsc -w",
+    "dev": "tsc",
     "build": "rm -rf lib && tsc"
   },
   "publishConfig": {

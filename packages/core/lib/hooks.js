@@ -4,7 +4,7 @@ import { KEY_PARSED, KEY_RENDERED } from "./constants";
 /**
  * Hook for cached value of the specified key
  */
-export function useCached(key) {
+function useCached(key) {
     const [state, setState] = React.useState(cache.get(key));
     React.useEffect(() => {
         cache.on(key, setState);

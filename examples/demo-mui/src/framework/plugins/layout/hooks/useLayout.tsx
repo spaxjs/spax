@@ -1,5 +1,5 @@
 import { IBlock, useParsed } from "@spax/core";
-import { debug } from "@spax/debug";
+import { log } from "@spax/debug";
 import { useGlobalState } from "@spax/hooks";
 import React from "react";
 import { match as routerMatch, matchPath, useLocation } from "react-router-dom";
@@ -30,7 +30,7 @@ export const LayoutProvider = (props: any) => {
   const value = React.useMemo(() => {
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      debug("Generating menu for %s with: %O", role, blocks);
+      log("Generating menu for %s with: %O", role, blocks);
     }
     return getMenuData(pathname, role, blocks, []);
   }, [pathname, role, blocks]);

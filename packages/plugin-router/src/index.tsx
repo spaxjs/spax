@@ -1,5 +1,5 @@
 import { IBlock, IPlugin, IPO, ISlots } from "@spax/core";
-import { debug } from "@spax/debug";
+import { log } from "@spax/debug";
 import React from "react";
 import { HashRouter, Route, RouteComponentProps, Switch } from "react-router-dom";
 
@@ -55,7 +55,7 @@ function createRoute(
         // 已经精确匹配了，还想继续向下匹配更多的子级。
         if (greedy) {
           if (process.env.NODE_ENV === "development") {
-            debug("Matching `%s` greedily", path);
+            log("Matching `%s` greedily", path);
           }
           return (
             <C
@@ -73,7 +73,7 @@ function createRoute(
 
         if (match.isExact) {
           if (process.env.NODE_ENV === "development") {
-            debug("Matching `%s` exactly", path);
+            log("Matching `%s` exactly", path);
           }
           return <C
             {...props}
@@ -91,7 +91,7 @@ function createRoute(
 
         if (path) {
           if (process.env.NODE_ENV === "development") {
-            debug("No Matching for `%s`, use NotFound instead", path);
+            log("No Matching for `%s`, use NotFound instead", path);
           }
           return <NotFound />;
         }

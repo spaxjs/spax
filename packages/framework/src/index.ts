@@ -1,5 +1,5 @@
 import { IPlugin, run } from "@spax/core";
-import { debug, fatal, warn } from "@spax/debug";
+import { fatal, log, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import * as ReactDOM from "react-dom";
@@ -26,7 +26,7 @@ export default abstract class Framework {
   constructor(options: IOptions = {}) {
     /* istanbul ignore next */
     if (process.env.NODE_ENV !== "test") {
-      debug(`
+      log(`
    _____ ____  ___   _  __
   / ___// __ \\/   | | |/ /
   \\__ \\/ /_/ / /| | |   /
@@ -73,7 +73,7 @@ export default abstract class Framework {
       ReactDOM.render(rendered, mountingElement, () => {
         /* istanbul ignore next */
         if (process.env.NODE_ENV === "development") {
-          debug("Mounted to container: %O", options.container);
+          log("Mounted to container: %O", options.container);
         }
         if (callback) {
           callback();
@@ -113,7 +113,7 @@ export default abstract class Framework {
 
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      debug(
+      log(
         "Initialize Framework with options: %O, plugins: %O",
         this.options,
         this.plugins,

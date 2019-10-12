@@ -2,7 +2,7 @@ import { CssBaseline } from "@material-ui/core";
 import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
 import ThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { IPlugin, IPO, ISlots } from "@spax/core";
-import { debug } from "@spax/debug";
+import { log } from "@spax/debug";
 import { setType, useTheme } from "@spax/theme";
 import React from "react";
 
@@ -31,7 +31,7 @@ const ThemeRoot = ({ children, overrides }: ThemeRootProps) => {
   const theme = useTheme(overrides);
 
   if (process.env.NODE_ENV === "development") {
-    debug("Theme config: %O", theme);
+    log("Theme config: %O", theme);
   }
 
   return (
