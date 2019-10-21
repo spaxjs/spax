@@ -11,14 +11,14 @@
   "license": "MIT",
   "dependencies": {
     "@spax/core": "^1.4.2",
-    "deepmerge": "^4.0.0",
+    "deepmerge": "^4.1.1",
     "i18next": "^17.0.16",
     "i18next-browser-languagedetector": "^3.0.3",
     "i18next-fetch-backend": "^2.2.0",
     "react-i18next": "^10.13.1"
   },
   "devDependencies": {
-    "@types/node": "^12.7.12"
+    "@types/node": "^12.11.1"
   },
   "peerDependencies": {
     "react": "^16.10.2"

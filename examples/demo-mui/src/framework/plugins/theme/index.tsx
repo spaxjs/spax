@@ -1,6 +1,6 @@
 import { CssBaseline } from "@material-ui/core";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
-import ThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { IPlugin, IPO, ISlots } from "@spax/core";
 import { log } from "@spax/debug";
 import { setType, useTheme } from "@spax/theme";
@@ -35,9 +35,9 @@ const ThemeRoot = ({ children, overrides }: ThemeRootProps) => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
       <CssBaseline />
       {children}
-    </ThemeProvider>
+    </MuiThemeProvider>
   );
 };
