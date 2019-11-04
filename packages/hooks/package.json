@@ -1,7 +1,7 @@
 {
-  "name": "@spax/plugin-auth",
+  "name": "@spax/hooks",
   "version": "1.4.2",
-  "description": "authenticate Blocks with HOC",
+  "description": "useful hooks",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
@@ -10,11 +10,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.4.2",
-    "@spax/debug": "^1.1.1"
+    "@spax/debug": "^1.1.1",
+    "events": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.11.1"
+    "@types/node": "^12.11.1",
+    "@types/react": "^16.9.9"
+  },
+  "peerDependencies": {
+    "react": "^16.10.2"
   },
   "scripts": {
     "start": "tsc -w",

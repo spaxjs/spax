@@ -9,15 +9,15 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@types/node@^12.7.12":
-  version "12.7.12"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.12.tgz#7c6c571cc2f3f3ac4a59a5f2bd48f5bdbc8653cc"
-  integrity sha1-fGxXHMLz86xKWaXyvUj1vbyGU8w=
+"@types/node@^12.11.1":
+  version "12.11.1"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.11.1.tgz#1fd7b821f798b7fa29f667a1be8f3442bb8922a3"
+  integrity sha1-H9e4IfeYt/op9mehvo80QruJIqM=
 
-deepmerge@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-4.0.0.tgz?cache=0&sync_timestamp=1562601140019&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdeepmerge%2Fdownload%2Fdeepmerge-4.0.0.tgz#3e3110ca29205f120d7cb064960a39c3d2087c09"
-  integrity sha1-PjEQyikgXxINfLBklgo5w9IIfAk=
+deepmerge@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-4.1.1.tgz#ee0866e4019fe62c1276b9062d4c4803d9aea14c"
+  integrity sha1-7ghm5AGf5iwSdrkGLUxIA9muoUw=
 
 html-parse-stringify2@2.0.1:
   version "2.0.1"
