@@ -24,7 +24,6 @@
     "@spax/debug": "^1.1.1",
     "@spax/framework": "^1.4.2",
     "@spax/framework-simple": "^1.4.3",
-    "@spax/hooks": "^1.4.2",
     "@spax/i18n": "^1.4.2",
     "@spax/plugin-i18n": "^1.4.2",
     "@spax/theme": "^1.4.2",

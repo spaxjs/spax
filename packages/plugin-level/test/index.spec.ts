@@ -1,4 +1,4 @@
-import { run } from "@spax/core";
+import { Core } from "@spax/core";
 import PluginLevel from "../src";
 
 const blocks = [
@@ -26,6 +26,6 @@ const blocksProcessed = [
 ];
 
 test("level", async () => {
-  const rendered = await run([PluginLevel], { blocks });
+  const rendered = await new Core([PluginLevel]).run(blocks);
   expect(rendered).toEqual(blocksProcessed);
 });

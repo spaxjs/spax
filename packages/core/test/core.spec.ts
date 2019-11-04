@@ -1,475 +1,253 @@
-import { renderHook } from "@testing-library/react-hooks";
-import { cache } from "../src/cache";
-import { run } from "../src/core";
-import { useParsed, useRendered } from "../src/hooks";
+import { Core } from "../src/core";
+import { InitHook, ParseHook, RenderHook } from "../src/hooks";
+import { IBlock, IOptions, IPlugin } from "../src/types";
 
-// tslint:disable: react-hooks-nesting
+describe("parse", () => {
+  const core = new Core();
 
-beforeEach(() => {
-  cache.clear();
-});
-
-describe("useParsed", () => {
-  test("call before run", () => {
-    const { result } = renderHook(() => useParsed());
-    expect(result.current[0]).toBe(undefined);
-  });
-
-  test("call after run", async () => {
-    await run([], {});
-    const { result } = renderHook(() => useParsed());
-    expect(result.current[0]).toEqual([]);
-  });
-});
-
-describe("useRendered", () => {
-  test("call before run", () => {
-    const { result } = renderHook(() => useRendered());
-    expect(result.current[0]).toBe(undefined);
-  });
-
-  test("call after run", async () => {
-    await run([], {});
-    const { result } = renderHook(() => useRendered());
-    expect(result.current[0]).toEqual([]);
-  });
-});
-
-describe("run", () => {
-  test("twice", async () => {
-    const ret = await run(undefined, {});
-    const ret1 = await run(undefined, {});
+  test("undefined", async () => {
+    const ret = await core.run();
     expect(ret).toEqual([]);
-    expect(ret1).toEqual([]);
   });
 
-  describe("returns", () => {
-    test("plugins: undefined", async () => {
-      const ret = await run(undefined, {});
-      expect(ret).toEqual([]);
-    });
-    test("options: undefined", async () => {
-      const ret = await run([]);
-      expect(ret).toEqual([]);
-    });
-    test("blocks: undefined", async () => {
-      const ret = await run([], {});
-      expect(ret).toEqual([]);
-    });
-    test("blocks: []", async () => {
-      const ret1 = await run([], {
-        blocks: [],
-      });
-      expect(ret1).toEqual([]);
-    });
-    test("blocks: [{...}]", async () => {
-      const blocks = [{ title: "hello" }];
-      const ret2 = await run(
-        [
-          {
-            name: "Blocks",
-            deps: [],
-            plug: ({ parse }) => {
-              parse.tap(current => {
-                return { ...current };
-              });
-            },
-          },
-        ],
-        {
-          blocks,
-        },
-      );
-      expect(ret2).toEqual(blocks);
-      // not reference
-      expect(ret2[0]).not.toBe(blocks[0]);
-    });
+  test("empty array", async () => {
+    const ret = await core.run([]);
+    expect(ret).toEqual([]);
   });
 
-  describe("plugins", () => {
-    test("options", async () => {
-      await run(
-        [
-          {
-            name: "Test",
-            deps: [],
-            plug: (hooks, option) => {
-              hooks.init.tap(() => {
-                expect(option.foo).toBe("bar");
-              });
-            },
-          },
-          {
-            name: "Test2",
-            deps: [],
-            plug: (hooks, option) => {
-              hooks.init.tap(() => {
-                expect(option.foo).toBe(undefined);
-              });
-            },
-          },
-        ],
-        {
-          plugins: {
-            test: {
-              foo: "bar",
-            },
-          },
-          blocks: [],
+  test("[{...}]", async () => {
+    const blocks = [{ title: "hello" }];
+    const ret = await core.run(blocks);
+    expect(ret[0]).toEqual(blocks[0]);
+  });
+
+  test("[[{...}]]", async () => {
+    const blocks = [[{ title: "hello" }]];
+    const ret = await core.run(blocks);
+    expect(ret[0]).toEqual(blocks[0][0]);
+  });
+
+  test("[[import<{...}>]]", async () => {
+    const p = import("./fixtures/p");
+    const q = require("./fixtures/q");
+    const blocks = [[p, q]];
+    const ret = await core.run(blocks);
+    expect(ret[0].title).toEqual("hello");
+    expect(ret[1].title).toEqual("world");
+  });
+});
+
+describe("plugins", () => {
+  test("should have injected parameters", async () => {
+    const plugins: IPlugin[] = [
+      {
+        name: "Test",
+        plug: (hooks, option, _options) => {
+          expect(hooks.init instanceof InitHook).toBe(true);
+          expect(hooks.parse instanceof ParseHook).toBe(true);
+          expect(hooks.render instanceof RenderHook).toBe(true);
+          expect(option).toEqual(options.test);
+          expect(_options).toEqual(options);
         },
-      );
-    });
-
-    test("ordering", async () => {
-      let index = 0;
-      await run(
-        [
-          {
-            name: "Test",
-            deps: [],
-            plug: hooks => {
-              hooks.init.tap(
-                () => {
-                  expect(index++).toBe(0);
-                },
-                () => {
-                  expect(index++).toBe(3);
-                },
-              );
-            },
-          },
-          {
-            name: "Test2",
-            deps: [],
-            plug: hooks => {
-              hooks.init.tap(
-                () => {
-                  expect(index++).toBe(1);
-                },
-                () => {
-                  expect(index++).toBe(2);
-                },
-              );
-            },
-          },
-        ],
-        {
-          blocks: [],
+      },
+      {
+        name: "Test2",
+        plug: (hooks, option, _options) => {
+          expect(hooks.init instanceof InitHook).toBe(true);
+          expect(hooks.parse instanceof ParseHook).toBe(true);
+          expect(hooks.render instanceof RenderHook).toBe(true);
+          expect(option).toEqual({});
+          expect(_options).toEqual(options);
         },
-      );
-    });
+      },
+    ];
+    const options = {
+      test: {
+        foo: "bar",
+      },
+    };
+    await new Core(plugins, options).run();
+  });
 
-    describe("dependency", () => {
-      test("simple", async () => {
-        let index = 0;
-        await run(
-          [
-            {
-              name: "Test",
-              deps: ["Test2"],
-              plug: hooks => {
-                hooks.init.tap(
-                  () => {
-                    expect(index++).toBe(1);
-                  },
-                  () => {
-                    expect(index++).toBe(2);
-                  },
-                );
-              },
+  test("should execute in order", async () => {
+    let index = 0;
+    const core = new Core([
+      {
+        name: "Test",
+        plug: hooks => {
+          expect(index++).toBe(0);
+          hooks.init.tap(
+            () => {
+              expect(index++).toBe(4);
             },
-            {
-              name: "Test2",
-              deps: [],
-              plug: hooks => {
-                hooks.init.tap(
-                  () => {
-                    expect(index++).toBe(0);
-                  },
-                  () => {
-                    expect(index++).toBe(3);
-                  },
-                );
-              },
+            () => {
+              expect(index++).toBe(9);
             },
-          ],
-          {
-            blocks: [],
-          },
-        );
-      });
+          );
+        },
+      },
+      {
+        name: "Test2",
+        plug: hooks => {
+          expect(index++).toBe(1);
+          hooks.init.tap(
+            () => {
+              expect(index++).toBe(5);
+            },
+            () => {
+              expect(index++).toBe(8);
+            },
+          );
+        },
+      },
+      {
+        name: "Test3",
+        plug: hooks => {
+          expect(index++).toBe(2);
+          hooks.init.tap(
+            null,
+            () => {
+              expect(index++).toBe(7);
+            },
+          );
+        },
+      },
+      {
+        name: "Test4",
+        plug: hooks => {
+          expect(index++).toBe(3);
+          hooks.init.tap(
+            () => {
+              expect(index++).toBe(6);
+            },
+          );
+        },
+      },
+    ]);
+    await core.run();
+  });
 
-      test("complicated", async () => {
-        let index = 0;
-        await run(
-          [
-            {
-              name: "Test",
-              deps: ["Test2"],
-              plug: hooks => {
-                hooks.init.tap(
-                  () => {
-                    expect(index++).toBe(1);
-                  },
-                  () => {
-                    expect(index++).toBe(4);
-                  },
-                );
-              },
+  test("should sort by dependencies", async () => {
+    let index = 0;
+    const plugins: IPlugin[] = [
+      {
+        name: "Test",
+        deps: ["Test2"],
+        plug: hooks => {
+          expect(index++).toBe(1);
+          hooks.init.tap(
+            () => {
+              expect(index++).toBe(4);
             },
-            {
-              name: "Test2",
-              deps: [],
-              plug: hooks => {
-                hooks.init.tap(
-                  () => {
-                    expect(index++).toBe(0);
-                  },
-                  () => {
-                    expect(index++).toBe(5);
-                  },
-                );
-              },
+            () => {
+              expect(index++).toBe(7);
             },
-            {
-              name: "Test3",
-              deps: ["Test2"],
-              plug: hooks => {
-                hooks.init.tap(
-                  () => {
-                    expect(index++).toBe(2);
-                  },
-                  () => {
-                    expect(index++).toBe(3);
-                  },
-                );
-              },
+          );
+        },
+      },
+      {
+        name: "Test2",
+        plug: hooks => {
+          expect(index++).toBe(0);
+          hooks.init.tap(
+            () => {
+              expect(index++).toBe(3);
             },
-          ],
-          {
-            blocks: [],
-          },
-        );
-      });
-    });
+            () => {
+              expect(index++).toBe(8);
+            },
+          );
+        },
+      },
+      {
+        name: "Test3",
+        deps: ["Test2"],
+        plug: hooks => {
+          expect(index++).toBe(2);
+          hooks.init.tap(
+            () => {
+              expect(index++).toBe(5);
+            },
+            () => {
+              expect(index++).toBe(6);
+            },
+          );
+        },
+      },
+    ];
+    await new Core(plugins).run();
+  });
 
-    describe("init", () => {
-      test("pre", async () => {
-        await run(
-          [
-            {
-              name: "Test",
-              deps: [],
-              plug: (hooks, option) => {
-                hooks.init.tap(() => {
-                  expect(option.foo).toBe("bar");
-                });
-              },
-            },
-          ],
-          {
-            plugins: {
-              test: {
-                foo: "bar",
-              },
-            },
-            blocks: [],
-          },
-        );
-      });
-
-      test("post", async () => {
-        await run(
-          [
-            {
-              name: "Test",
-              deps: [],
-              plug: (hooks, option) => {
-                hooks.init.tap(undefined, () => {
-                  expect(option.foo).toBe("bar");
-                });
-              },
-            },
-          ],
-          {
-            plugins: {
-              test: {
-                foo: "bar",
-              },
-            },
-            blocks: [],
-          },
-        );
-      });
-
-      test("both", async () => {
-        await run(
-          [
-            {
-              name: "Test",
-              deps: [],
-              plug: (hooks, option) => {
-                hooks.init.tap(
-                  () => {
-                    expect(option.foo).toBe("bar");
-                  },
-                  () => {
-                    expect(option.foo).toBe("bar");
-                  },
-                );
-              },
-            },
-          ],
-          {
-            plugins: {
-              test: {
-                foo: "bar",
-              },
-            },
-            blocks: [],
-          },
-        );
-      });
-    });
-
-    test("parse", async () => {
-      await run(
-        [
-          {
-            name: "Test",
-            deps: [],
-            plug: (hooks, option) => {
-              hooks.parse.tap(
-                (current, parent) => {
-                  expect(option.foo).toBe("bar");
-                  expect(current).toEqual({ title: "hello" });
+  describe("parse", () => {
+    test("should have inject current and parent", async () => {
+      const plugins: IPlugin[] = [
+        {
+          name: "Test",
+          plug: (hooks, option) => {
+            hooks.parse.tap(
+              (current, parent) => {
+                if (current.title === "hello") {
+                  expect(current).toEqual(blocks[0]);
                   expect(parent).toEqual({});
-                  return {
-                    ...current,
+                } else if (current.title === "world") {
+                  expect(parent).toEqual({
+                    ...blocks[0],
                     baz: "qux",
-                  };
-                },
-                (current, parent) => {
-                  expect(option.foo).toBe("bar");
-                  expect(current).toEqual({ title: "hello", baz: "qux" });
-                  expect(parent).toEqual({});
-                },
-              );
-            },
+                  });
+                }
+                return {
+                  ...current,
+                  baz: "qux",
+                };
+              },
+              (current, parent) => {
+                expect(current.baz).toEqual("qux");
+                expect(parent.baz).toEqual(
+                  current.title === "hello" ? undefined : "qux",
+                );
+              },
+            );
           },
-        ],
-        {
-          plugins: {
-            test: {
-              foo: "bar",
-            },
-          },
-          blocks: [{ title: "hello" }],
         },
-      );
-    });
-
-    test("render", async () => {
-      await run(
-        [
-          {
-            name: "Test",
-            deps: [],
-            plug: (hooks, option) => {
-              hooks.render.tap(
-                blocks => {
-                  expect(option.foo).toBe("bar");
-                  expect(blocks).toEqual([{ title: "hello" }]);
-                  return JSON.stringify(blocks);
-                },
-                blocks => {
-                  expect(option.foo).toBe("bar");
-                  expect(blocks).toBe(JSON.stringify([{ title: "hello" }]));
-                },
-              );
-            },
-          },
-        ],
-        {
-          plugins: {
-            test: {
-              foo: "bar",
-            },
-          },
-          blocks: [{ title: "hello" }],
+      ];
+      const options: IOptions = {
+        test: {
+          foo: "bar",
         },
-      );
+      };
+      const blocks: IBlock[] = [
+        { title: "hello", blocks: [{ title: "world" }] },
+      ];
+      await new Core(plugins, options).run(blocks);
     });
   });
 
-  describe("blocks", () => {
-    test("async", async () => {
-      const rawValue = [{ path: "/" }];
-      const blocks = [Promise.resolve(rawValue), import("./fixtures/home")];
-      await run([], {
-        blocks,
-      });
-      const { result: resultParsed, unmount: unmountParsed } = renderHook(() =>
-        useParsed(),
-      );
-      expect(resultParsed.current[0]).toEqual(rawValue.concat(rawValue));
-      const { result: resultRendered, unmount: unmountRendered } = renderHook(
-        () => useRendered(),
-      );
-      expect(resultRendered.current[0]).toEqual(rawValue.concat(rawValue));
-      unmountParsed();
-      unmountRendered();
-    });
-
-    test("[{...}]", async () => {
-      const blocks = [{ path: "/" }];
-      await run([], {
-        blocks,
-      });
-      const { result: resultParsed, unmount: unmountParsed } = renderHook(() =>
-        useParsed(),
-      );
-      expect(resultParsed.current[0]).toEqual(blocks);
-      const { result: resultRendered, unmount: unmountRendered } = renderHook(
-        () => useRendered(),
-      );
-      expect(resultRendered.current[0]).toEqual(blocks);
-      unmountParsed();
-      unmountRendered();
-    });
-
-    test("[{...,[{...}]}]", async () => {
-      const blocks = [{ path: "/", blocks: [{ path: "/" }] }];
-      await run([], {
-        blocks,
-      });
-      const { result: resultParsed, unmount: unmountParsed } = renderHook(() =>
-        useParsed(),
-      );
-      expect(resultParsed.current[0]).toEqual(blocks);
-      const { result: resultRendered, unmount: unmountRendered } = renderHook(
-        () => useRendered(),
-      );
-      expect(resultRendered.current[0]).toEqual(blocks);
-      unmountParsed();
-      unmountRendered();
-    });
-
-    test("[[{...}]]", async () => {
-      const blocks = [[{ path: "/" }]];
-      await run([], {
-        blocks,
-      });
-      const { result: resultParsed, unmount: unmountParsed } = renderHook(() =>
-        useParsed(),
-      );
-      expect(resultParsed.current[0]).toEqual(blocks[0]);
-      const { result: resultRendered, unmount: unmountRendered } = renderHook(
-        () => useRendered(),
-      );
-      expect(resultRendered.current[0]).toEqual(blocks[0]);
-      unmountParsed();
-      unmountRendered();
+  describe("render", () => {
+    test("should have injected blocks", async () => {
+      const plugins: IPlugin[] = [
+        {
+          name: "Test",
+          plug: (hooks, option) => {
+            hooks.render.tap(
+              blocks => {
+                expect(option.foo).toBe("bar");
+                expect(blocks).toEqual([{ title: "hello" }]);
+                return JSON.stringify(blocks);
+              },
+              blocks => {
+                expect(option.foo).toBe("bar");
+                expect(blocks).toBe(JSON.stringify([{ title: "hello" }]));
+              },
+            );
+          },
+        },
+      ];
+      const options: IOptions = {
+        test: {
+          foo: "bar",
+        },
+      };
+      await new Core(plugins, options).run([{ title: "hello" }]);
     });
   });
 });

@@ -1,10 +1,9 @@
-import { IBlock, IPlugin, IPO, ISlots } from "@spax/core";
+import { IBlock, IHooks, IOption, IPlugin } from "@spax/core";
 import React, { Suspense } from "react";
 
 export default {
   name: "Lazy",
-  deps: [],
-  plug: ({ parse }: ISlots, option: IPO) => {
+  plug: ({ parse }: IHooks, option: IOption) => {
     parse.tap(
       (current: IBlock) => {
         return { ...current, ...handleLazy(current, option) };
@@ -17,7 +16,10 @@ export default {
   },
 } as IPlugin;
 
-function handleLazy(current: IBlock, { fallback = <div>...</div> }: IPO) {
+function handleLazy(
+  current: IBlock,
+  { fallback = <div>...</div> }: IOption,
+) {
   const { lazy } = current;
   if (lazy) {
     return {

@@ -11,8 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@spax/core": "^1.4.2",
-    "@spax/debug": "^1.1.1",
-    "@spax/hooks": "^1.4.2"
+    "@spax/debug": "^1.1.1"
   },
   "devDependencies": {
     "@types/node": "^12.7.12"

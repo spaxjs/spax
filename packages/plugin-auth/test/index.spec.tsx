@@ -1,5 +1,5 @@
-import { run } from "@spax/core";
-import { mount } from "enzyme";
+import { Core } from "@spax/core";
+import { render } from "@testing-library/react";
 import React from "react";
 import PluginAuth from "../src";
 
@@ -17,21 +17,17 @@ const blocks = [
 ];
 
 test("auth", async () => {
-  const rendered = await run(
-    [PluginAuth],
-    {
-      blocks,
-      plugins: { auth: { useAuth: () => false, Forbidden: () => "403" } },
-    },
-  );
+  const rendered = await new Core([PluginAuth], {
+    auth: { useAuth: () => false, Forbidden: () => "403" },
+  }).run(blocks);
   expect(rendered[0].authority).toEqual(["foo"]);
   expect(typeof rendered[0].component).toBe("function");
   expect(rendered[0].blocks[0].authority).toEqual(["bar"]);
   expect(typeof rendered[0].blocks[0].component).toBe("function");
   const C1 = rendered[0].component;
-  const wrapper1 = mount(<C1 />);
-  expect(wrapper1.text()).toBe("403");
+  const r1 = render(<C1 />);
+  expect(r1.container.textContent).toBe("403");
   const C2 = rendered[0].blocks[0].component;
-  const wrapper2 = mount(<C2 />);
-  expect(wrapper2.text()).toBe("403");
+  const r2 = render(<C2 />);
+  expect(r2.container.textContent).toBe("403");
 });

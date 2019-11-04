@@ -1,5 +1,5 @@
 import React from "react";
-import { useLayout } from "../hooks/useLayout";
+import { useLayout } from "../use/useLayout";
 
 interface IProps {
   fallback: string;

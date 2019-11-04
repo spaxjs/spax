@@ -1,28 +1,23 @@
-import { InitSlot, ParseSlot, RenderSlot } from "./slots";
-export interface AnyObject<V = any> {
+import { InitHook, ParseHook, RenderHook } from "./hooks";
+export interface ObjectOf<V = any> {
     [key: string]: V;
 }
-export interface ISlots {
-    init: InitSlot;
-    parse: ParseSlot<IBlock, IBlock>;
-    render: RenderSlot<any>;
+export interface IHooks {
+    init: InitHook;
+    parse: ParseHook<IBlock, IBlock>;
+    render: RenderHook<any>;
 }
-export declare type TPriority = "pre" | "post";
+export declare type TPreOrPost = "pre" | "post";
 export interface IPlugin {
     name: string;
     deps?: string[];
-    plug: (hooks: ISlots, option: IPO, options: IOptions) => void;
+    plug: (hooks: IHooks, option: IOption, options: IOptions) => void;
 }
-export interface IBlock extends AnyObject {
+export interface IBlock extends ObjectOf {
     $$parsed?: boolean;
     blocks?: IBlock[];
 }
-export interface IPluginOption extends AnyObject {
+export interface IOption extends ObjectOf {
 }
-export declare type IPO = IPluginOption;
-export interface IPluginOptions extends AnyObject<IPluginOption> {
-}
-export interface IOptions {
-    plugins?: IPluginOptions;
-    blocks?: IBlock[];
+export interface IOptions extends ObjectOf<IOption> {
 }

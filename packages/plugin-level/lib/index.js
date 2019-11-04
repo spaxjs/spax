@@ -1,6 +1,5 @@
 export default {
     name: "Level",
-    deps: [],
     plug: ({ parse }) => {
         parse.tap((current, parent) => {
             return {

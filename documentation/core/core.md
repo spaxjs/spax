@@ -17,7 +17,7 @@ $ yarn add @spax/core
 ## 使用 Usage
 
 ```typescript
-import { run } from "@spax/core";
+import { Core } from "@spax/core";
 import * as ReactDOM from "react-dom";
 
 async function mount() {
@@ -33,7 +33,7 @@ mount();
 ### 插件列表 plugins
 
 ```typescript
-Array<({ init, parse, render }: ISlots) => void>
+Array<({ init, parse, render }: IHooks) => void>
 ```
 
 ### 选项 options
@@ -43,7 +43,7 @@ Array<({ init, parse, render }: ISlots) => void>
   // 运行范围，当页面内存在多个 core 实例时有用
   scope?: string;
   // 插件选项
-  plugins?: IPO;
+  plugins?: IPluginOption;
   // 业务模块
   blocks?: IBlock[];
 }

@@ -1,7 +1,7 @@
 import { createStyles, Drawer, makeStyles, Theme } from "@material-ui/core";
 import { DrawerProps } from "@material-ui/core/Drawer";
-import { useGlobalState } from "@spax/hooks";
 import React from "react";
+import { useLayout } from "../use/useLayout";
 
 const useStyles = makeStyles((theme: Theme & { custom: any }) =>
   createStyles({
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme & { custom: any }) =>
 );
 
 export const Sidebar = ({children, ...props}: DrawerProps) => {
-  const [open] = useGlobalState<boolean>("sidebar-open");
+  const {open = false} = useLayout();
   const {drawer, drawerPaper} = useStyles({ open });
   return (
     <Drawer

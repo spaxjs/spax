@@ -1,4 +1,4 @@
-import { run } from "@spax/core";
+import { Core } from "@spax/core";
 import PluginPath from "../src";
 
 const blocks = [
@@ -17,7 +17,7 @@ const blocks = [
 ];
 
 test("path", async () => {
-  const rendered = await run([PluginPath], { blocks });
+  const rendered = await new Core([PluginPath]).run(blocks);
   expect(rendered[0].path).toBe("");
   expect(rendered[0].blocks[0].path).toBe("/foo");
   expect(rendered[0].blocks[0].blocks[0].path).toBe("/foo/bar");

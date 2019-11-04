@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 export default {
     name: "Lazy",
-    deps: [],
     plug: ({ parse }, option) => {
         parse.tap((current) => {
             return { ...current, ...handleLazy(current, option) };

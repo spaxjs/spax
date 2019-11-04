@@ -2,7 +2,6 @@ import { warn } from "@spax/debug";
 import React from "react";
 export default {
     name: "Auth",
-    deps: [],
     plug: ({ parse }, option) => {
         if (!option.useAuth) {
             if (process.env.NODE_ENV === "development") {

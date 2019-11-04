@@ -11,13 +11,13 @@ module.exports = {
   "setupFiles": [
     "react-app-polyfill/jsdom"
   ],
-  "setupFilesAfterEnv": [
-    "<rootDir>/test/enzyme.ts"
-  ],
+  // "setupFilesAfterEnv": [
+  //   "<rootDir>/test/enzyme.ts"
+  // ],
   "testMatch": [
-    "**/test/*.spec.(ts|tsx)"
+    "**/test/**.spec.(ts|tsx)"
   ],
-  "testEnvironment": "jest-environment-jsdom-fourteen",
+  "testEnvironment": "jest-environment-jsdom-fifteen",
   "collectCoverage": true,
   "collectCoverageFrom": [
     "packages/*/src/**.(ts|tsx)",

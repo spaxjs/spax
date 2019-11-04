@@ -1,5 +1,5 @@
-import { run } from "@spax/core";
-import { mount } from "enzyme";
+import { Core } from "@spax/core";
+import { render } from "@testing-library/react";
 import React from "react";
 import PluginLazy from "../src";
 
@@ -15,15 +15,15 @@ const blocks = [
 ];
 
 test("lazy", async () => {
-  const rendered = await run([PluginLazy], { blocks });
+  const rendered = await new Core([PluginLazy]).run(blocks);
   expect(rendered[0].lazy).toBe(null);
   expect(typeof rendered[0].component).toBe("function");
   expect(rendered[0].blocks[0].lazy).toBe(null);
   expect(typeof rendered[0].blocks[0].component).toBe("function");
   const C1 = rendered[0].component;
-  const wrapper1 = mount(<C1 />);
-  expect(wrapper1.text()).toBe("...");
+  const r1 = render(<C1 />);
+  expect(r1.container.textContent).toBe("...");
   const C2 = rendered[0].blocks[0].component;
-  const wrapper2 = mount(<C2 />);
-  expect(wrapper2.text()).toBe("...");
+  const r2 = render(<C2 />);
+  expect(r2.container.textContent).toBe("...");
 });

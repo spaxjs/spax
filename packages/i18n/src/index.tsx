@@ -5,7 +5,7 @@ import Backend from "i18next-fetch-backend";
 import React from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
 
-interface AnyObject<V = any> {
+interface ObjectOf<V = any> {
   [key: string]: V;
 }
 
@@ -35,11 +35,11 @@ export function setup(options: InitOptions = {}): void {
 
 export function useT(
   ns: string = i18n.options.defaultNS[0],
-): [TFunction, (resources: AnyObject) => void] {
+): [TFunction, (resources: ObjectOf) => void] {
   const { t } = useTranslation(ns.toLowerCase(), { useSuspense: false });
   return [
     t,
-    (resources: AnyObject) => {
+    (resources: ObjectOf) => {
       i18n.addResourceBundle(
         i18n.language, ns.toLowerCase(), resources, true, true,
       );

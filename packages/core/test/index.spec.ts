@@ -1,7 +1,6 @@
-import { run, useParsed, useRendered } from "../src";
+import { Core } from "../src";
+import { Core as _Core} from "../src/core";
 
 test("should export", () => {
-  expect(typeof run).toBe("function");
-  expect(typeof useParsed).toBe("function");
-  expect(typeof useRendered).toBe("function");
+  expect(Core).toBe(_Core);
 });

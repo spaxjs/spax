@@ -3,7 +3,7 @@ import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 export default {
     name: "Router",
-    deps: [],
+    deps: ["Path"],
     plug: ({ render }, { Router = HashRouter, NotFound }) => {
         render.tap((blocks) => {
             return createRoutes(blocks, NotFound);

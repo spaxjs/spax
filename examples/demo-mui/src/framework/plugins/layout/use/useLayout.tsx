@@ -1,6 +1,6 @@
-import { IBlock, useParsed } from "@spax/core";
+import { IBlock } from "@spax/core";
 import { log } from "@spax/debug";
-import { useGlobalState } from "@spax/hooks";
+import { useContext } from "@spax/framework";
 import React from "react";
 import { match as routerMatch, matchPath, useLocation } from "react-router-dom";
 
@@ -25,17 +25,22 @@ export const useLayout = () => {
 
 export const LayoutProvider = (props: any) => {
   const { pathname } = useLocation();
-  const [role] = useGlobalState<string>("role");
-  const [blocks] = useParsed();
-  const value = React.useMemo(() => {
+  const { parsed } = useContext();
+  const menuData = React.useMemo(() => {
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      log("Generating menu for %s with: %O", role, blocks);
+      log("Generating menu of: %O", parsed);
     }
-    return getMenuData(pathname, role, blocks, []);
-  }, [pathname, role, blocks]);
+    return getMenuData(pathname, parsed, []);
+  }, [pathname, parsed]);
+  const [state, setState] = React.useState({});
+
   return (
-    <Context.Provider value={value}>
+    <Context.Provider value={{
+      ...menuData, ...state, setState: (v: any) => {
+        setState({ ...state, ...v });
+      },
+    }}>
       {props.children}
     </Context.Provider>
   );
@@ -46,7 +51,6 @@ export const LayoutProvider = (props: any) => {
  */
 function getMenuData(
   pathname: string,
-  role: string,
   blocks: IBlock[],
   matched: [routerMatch, IBlock][],
 ): IMenuData {
@@ -55,10 +59,9 @@ function getMenuData(
     all: blocks
       // 非 404
       // 有标题
-      // 有权限
       .filter(
-        ({ path, title, authority }) =>
-          path.indexOf("*") === -1 && !!title && hasAuth(role, authority),
+        ({ path, title }) =>
+          path.indexOf("*") === -1 && !!title,
       )
       .map(({ blocks: childBlocks, ...rest }) => {
         const match = matchPath(pathname, { path: rest.path });
@@ -70,20 +73,10 @@ function getMenuData(
           match,
           children:
             childBlocks && childBlocks.length
-              ? getMenuData(pathname, role, childBlocks, matched).all
+              ? getMenuData(pathname, childBlocks, matched).all
               : undefined,
         };
       })
       .flat(),
   };
-}
-
-function hasAuth(role: string, authority: string[]) {
-  if (!authority || authority.length === 0) {
-    return true;
-  }
-  if (!role) {
-    return false;
-  }
-  return authority.indexOf(role) !== -1;
 }

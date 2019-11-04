@@ -18,7 +18,6 @@
   "dependencies": {
     "@spax/core": "^1.4.2",
     "@spax/framework-simple": "^1.4.3",
-    "@spax/hooks": "^1.4.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "single-spa": "^4.4.1",

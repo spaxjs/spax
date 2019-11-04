@@ -1,12 +1,12 @@
 import { Box, Button, IconButton, InputAdornment, Link, TextField } from "@material-ui/core";
 import { Fingerprint, Visibility, VisibilityOff } from "@material-ui/icons";
-import { useGlobalState } from "@spax/hooks";
 import { useT } from "@spax/i18n";
+import { useLayout } from "framework/plugins/layout/use/useLayout";
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 
 export default function UI(props: any) {
-  const [role, setRole] = useGlobalState<string>("role");
+  const {role = "", setState} = useLayout();
   const history = useHistory();
   const [ t ] = useT("Theme");
 
@@ -17,7 +17,7 @@ export default function UI(props: any) {
   function handleSubmit(e: any) {
     e.preventDefault();
     if (username && password) {
-      setRole(username);
+      setState({role: username});
     } else {
       alert("Please input username!");
     }

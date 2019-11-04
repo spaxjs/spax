@@ -1,12 +1,11 @@
-import { IBlock, IPlugin, IPO, ISlots } from "@spax/core";
+import { IBlock, IHooks, IOption, IPlugin } from "@spax/core";
 import React from "react";
 import { DocumentTitle } from "./components/DocumentTitle";
-import { LayoutProvider } from "./hooks/useLayout";
+import { LayoutProvider } from "./use/useLayout";
 
 export default {
   name: "Layout",
-  deps: [],
-  plug: ({ parse, render }: ISlots, option: IPO) => {
+  plug: ({ parse, render }: IHooks, option: IOption) => {
     parse.tap((current: IBlock): IBlock => {
       return {
         ...current,
@@ -26,15 +25,16 @@ export default {
 
 function normalizeLayout(
   { layout, component: C }: IBlock,
-  option: IPO,
+  option: IOption,
 ): any {
   return {
     component: (props: any) => {
-      if (props.isInGreedy) {
+      if (props.match.inGreedy) {
         return (
           <C {...props} />
         );
       }
+
       const Layout = layout === "blank"
         ? require("./layouts/Blank").default
         : require("./layouts/Admin").default;

@@ -21,11 +21,11 @@ in `@spax/plugin-router`
 ```typescript
 import { Router, Switch, Carrier, Link, useMatched } from "@spax/router";
 
-export default ({ render }: ISlots) => {
+export default ({ render }: IHooks) => {
   render.tap(
     "Router",
     [],
-    (blocks: IBlock[], {useAuth, NotFound, Forbidden}: IPO, { scope }: IOptions): React.ReactNode => {
+    (blocks: IBlock[], {useAuth, NotFound, Forbidden}: IPluginOption, { scope }: IOptions): React.ReactNode => {
       return (
         <Switch
           level={1}

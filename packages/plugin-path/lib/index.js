@@ -1,7 +1,6 @@
 import { warn } from "@spax/debug";
 export default {
     name: "Path",
-    deps: [],
     plug: ({ parse }) => {
         parse.tap((current, parent) => {
             return {

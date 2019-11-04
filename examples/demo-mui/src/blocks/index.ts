@@ -3,7 +3,6 @@ export default [
   import("./register"),
   import("./forgot"),
   import("./dashboard"),
-  import("./hooks"),
   import("./nested"),
   import("./home"),
   // 404

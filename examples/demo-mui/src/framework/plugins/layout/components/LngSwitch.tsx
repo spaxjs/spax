@@ -1,11 +1,11 @@
 import { Button, Menu, MenuItem } from "@material-ui/core";
 import { Language } from "@material-ui/icons";
 import { useLng } from "@spax/i18n";
-import React, { useState } from "react";
+import React from "react";
 
 export const LngSwitch: React.FC<{}> = () => {
   const [lng, setLng] = useLng();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);

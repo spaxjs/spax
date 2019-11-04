@@ -4,7 +4,7 @@ import { useT } from "@spax/i18n";
 import pathToRegExp from "path-to-regexp";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useLayout } from "../hooks/useLayout";
+import { useLayout } from "../use/useLayout";
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = (props: any) => {
   const { matched } = useLayout();

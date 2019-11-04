@@ -10,12 +10,12 @@ import {
   Theme,
 } from "@material-ui/core";
 import { ExpandLess, ExpandMore, Remove } from "@material-ui/icons";
-import { AnyObject } from "@spax/core";
+import { ObjectOf } from "@spax/core";
 import { useT } from "@spax/i18n";
 import clsx from "clsx";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useLayout } from "../hooks/useLayout";
+import { useLayout } from "../use/useLayout";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const Menu: React.FC<AnyObject> = (props: AnyObject) => {
+export const Menu: React.FC<ObjectOf> = (props: ObjectOf) => {
   const { all } = useLayout();
 
   return <MenuList menuData={all} />;
@@ -39,19 +39,19 @@ export const Menu: React.FC<AnyObject> = (props: AnyObject) => {
 
 function MenuNest(props: any): React.ReactElement {
   const { title, icon: Icon = Remove, path, empty, opened } = props;
-  const [open, setOpen] = React.useState(opened);
+  const {open = false, setState} = useLayout();
   const { listGroup, listItemIcon, listItemActive } = useStyles({});
   const Pointer = open ? ExpandLess : ExpandMore;
   const [t] = useT();
 
   React.useEffect(() => {
-    setOpen(opened);
-  }, [opened]);
+    setState({ open: opened });
+  }, [opened, setState]);
 
   return (
     <>
       <Link component={RouterLink} to={empty ? false : path}>
-        <ListItem onClick={() => setOpen(!open)}>
+        <ListItem onClick={() => setState({ open: !open })}>
           <ListItemIcon className={listItemIcon}>
             <Icon />
           </ListItemIcon>

@@ -4,7 +4,6 @@ import { ReactComponent as Github } from "@mdi/svg/svg/github-circle.svg";
 import { useT } from "@spax/i18n";
 import React from "react";
 import { LngSwitch } from "./LngSwitch";
-import { ThemeSwitch } from "./ThemeSwitch";
 
 export const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {
   const [ t ] = useT("Theme");
@@ -27,9 +26,6 @@ export const Footer: React.FC<BoxProps> = ({children, ...props}: any) => {
       </Box>
       <Box>
         <LngSwitch />
-      </Box>
-      <Box>
-        <ThemeSwitch />
       </Box>
     </Box>
   );

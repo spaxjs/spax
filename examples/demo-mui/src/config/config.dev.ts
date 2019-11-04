@@ -1,10 +1,3 @@
-import { IOptions } from "@spax/framework";
-import blocks from "blocks";
-import store from "store";
+import { IOptions } from "@spax/core";
 
-export default {
-  blocks,
-  plugins: {
-    store,
-  },
-} as IOptions;
+export default {} as IOptions;

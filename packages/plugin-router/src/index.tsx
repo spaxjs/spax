@@ -1,12 +1,15 @@
-import { IBlock, IPlugin, IPO, ISlots } from "@spax/core";
+import { IBlock, IHooks, IOption, IPlugin } from "@spax/core";
 import { log } from "@spax/debug";
 import React from "react";
 import { HashRouter, Route, RouteComponentProps, Switch } from "react-router-dom";
 
 export default {
   name: "Router",
-  deps: [],
-  plug: ({ render }: ISlots, { Router = HashRouter, NotFound }: IPO) => {
+  deps: ["Path"],
+  plug: (
+    { render }: IHooks,
+    { Router = HashRouter, NotFound }: IOption,
+  ) => {
     render.tap(
       (blocks: IBlock[]): React.ReactNode => {
         return createRoutes(blocks, NotFound);
@@ -110,11 +113,9 @@ function createRoutes(
   if (!blocks) {
     return null;
   }
-  return (
-    <Switch>
-      {
-        blocks.map((block: IBlock) => createRoute(block, NotFound, inGreedy))
-      }
-    </Switch>
-  );
+  return (<Switch>
+    {
+      blocks.map((block: IBlock) => createRoute(block, NotFound, inGreedy))
+    }
+  </Switch>);
 }

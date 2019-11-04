@@ -1,10 +1,9 @@
-import { IBlock, IPlugin, ISlots } from "@spax/core";
+import { IBlock, IHooks, IPlugin } from "@spax/core";
 import { warn } from "@spax/debug";
 
 export default {
   name: "Path",
-  deps: [],
-  plug: ({ parse }: ISlots) => {
+  plug: ({ parse }: IHooks) => {
     parse.tap(
       (current: IBlock, parent: IBlock) => {
         return {
