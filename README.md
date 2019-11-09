@@ -38,10 +38,7 @@ $ npx @spax/spax-cli <project-name>
 
 ## :nut_and_bolt: 插件 Plugins
 
-- [@spax/plugin-auth](packages/plugin-auth) 支持权限控制
-- [@spax/plugin-i18n](packages/plugin-i18n) 支持多语言
 - [@spax/plugin-lazy](packages/plugin-lazy) 支持异步组件
-- [@spax/plugin-level](packages/plugin-level) 标记模块层级
 - [@spax/plugin-path](packages/plugin-path) 规范化模块路由地址
 - [@spax/plugin-router](packages/plugin-router) 提供路由支持
 
@@ -50,24 +47,14 @@ $ npx @spax/spax-cli <project-name>
 - [@spax/framework](packages/framework) 框架基类
 - [@spax/framework-simple](packages/framework-simple) 基础框架，集成常见插件
 
-## :ant: 配件 Assets
-
-- [@spax/history](packages/history) [history](https://github.com/ReactTraining/history) 的 React Hook 封装
-- [@spax/hooks](packages/hooks) 一些常用的 React Hooks
-- [@spax/i18n](packages/i18n) [i18next](https://github.com/i18next/i18next) 的封装
-- [@spax/router](packages/router) 基于 React Hook 的路由实现
-- [@spax/theme](packages/theme) Mui Theme hooks
-
 ## :sparkler: 示例 Examples
 
 > 以下示例使用的技术栈非必选，实际应用时可根据自身偏好灵活调整。
 
-- [demo with mui](examples/demo-mui)
+- [demo](examples/demo-simple)
   - react-scripts
   - react-app-rewired
   - customize-cra
-  - material-ui
-  - i18next
 
 - [demo for single-spa](examples/demo-single-spa)
   - react-scripts
