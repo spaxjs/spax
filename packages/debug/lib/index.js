@@ -4,6 +4,12 @@ function makeArgs(args) {
     }
     return args;
 }
+export function group(...args) {
+    console.group(...makeArgs(args));
+}
+export function groupEnd() {
+    console.groupEnd();
+}
 export function log(...args) {
     console.log(...makeArgs(args));
 }

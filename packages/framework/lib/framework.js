@@ -1,5 +1,5 @@
 import { Core } from "@spax/core";
-import { log, warn } from "@spax/debug";
+import { group, groupEnd, log, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import React from "react";
@@ -21,7 +21,16 @@ export class Framework {
         if (process.env.NODE_ENV === "development") {
             warn("Looks like we are in development mode!");
         }
+        /* istanbul ignore next */
+        if (process.env.NODE_ENV === "development") {
+            group("Framework.Initialize");
+        }
         this.initialize(options);
+        /* istanbul ignore next */
+        if (process.env.NODE_ENV === "development") {
+            groupEnd();
+        }
+        this.core = new Core(this.plugins, this.options);
     }
     async getApp(blocks) {
         // 解析
@@ -62,9 +71,9 @@ export class Framework {
         this.options = merge(...options, ctorOptions);
         /* istanbul ignore next */
         if (process.env.NODE_ENV === "development") {
-            log("Initialize Framework with options: %O, plugins: %O", this.options, this.plugins);
+            log("with plugins: %O", this.plugins);
+            log("with options: %O", this.options);
         }
-        this.core = new Core(this.plugins, this.options);
     }
 }
 // 插件
@@ -73,10 +82,16 @@ Framework.plugins = [];
 Framework.options = {};
 function Provider({ value, ...props }) {
     const [state, setState] = React.useState({});
+    let prevState = {};
+    const setContext = React.useCallback((v) => {
+        const nextState = { ...prevState, ...v };
+        setState(nextState);
+        prevState = nextState;
+    }, [setState]);
     return (React.createElement(Context.Provider, Object.assign({}, props, { value: {
             ...value,
             ...state,
-            setContext: (v) => setState({ ...state, ...v }),
+            setContext,
         } })));
 }
 /**

@@ -1,3 +1,5 @@
+export declare function group(...args: any[]): void;
+export declare function groupEnd(): void;
 export declare function log(...args: any[]): void;
 export declare function debug(...args: any[]): void;
 export declare function warn(...args: any[]): void;

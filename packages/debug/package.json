@@ -10,8 +10,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "tsc -w",
-    "dev": "tsc",
+    "start": "tsc",
     "build": "rm -rf lib && tsc"
   },
   "publishConfig": {

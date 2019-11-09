@@ -19,8 +19,7 @@
     "react": "^16.10.2"
   },
   "scripts": {
-    "start": "tsc -w",
-    "dev": "tsc",
+    "start": "tsc",
     "build": "rm -rf lib && tsc"
   },
   "publishConfig": {

@@ -5,6 +5,14 @@ function makeArgs(args: any[]) {
   return args;
 }
 
+export function group(...args: any[]) {
+  console.group(...makeArgs(args));
+}
+
+export function groupEnd() {
+  console.groupEnd();
+}
+
 export function log(...args: any[]) {
   console.log(...makeArgs(args));
 }

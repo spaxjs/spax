@@ -1,4 +1,4 @@
-import { log } from "@spax/debug";
+import { group, groupEnd, log } from "@spax/debug";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 import { IBlock, IHooks, IOptions, IPlugin } from "./types";
 
@@ -6,15 +6,17 @@ export class Core {
   private hooks: IHooks;
 
   constructor(private plugins: IPlugin[] = [], private options: IOptions = {}) {
-    this.initHooks();
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV === "development") {
+      group("Core.Initialize");
+    }
 
-    // 加载插件
-    this.initPlugins();
+    this.initialize();
 
-    // 前置处理
-    this.hooks.init.run("pre");
-    // 后置处理
-    this.hooks.init.run("post");
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV === "development") {
+      groupEnd();
+    }
   }
 
   public async run(blocks?: IBlock[]) {
@@ -32,6 +34,18 @@ export class Core {
     );
   }
 
+  private initialize(): void {
+    this.initHooks();
+
+    // 加载插件
+    this.initPlugins();
+
+    // 前置处理
+    this.hooks.init.run("pre");
+    // 后置处理
+    this.hooks.init.run("post");
+  }
+
   private initHooks(): void {
     // 初始化三个插槽
     this.hooks = {
@@ -42,7 +56,7 @@ export class Core {
 
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      log("Hook hooks created: %O", this.hooks);
+      log("with hooks: %O", this.hooks);
     }
   }
 
@@ -86,7 +100,7 @@ export class Core {
 
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      log("Plugins plugged in: %O", ordererPlugins);
+      log("plug plugins: %O", ordererPlugins);
     }
   }
 

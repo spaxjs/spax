@@ -1,5 +1,5 @@
 import { Core, IBlock, IOptions, IPlugin, ObjectOf } from "@spax/core";
-import { log, warn } from "@spax/debug";
+import { group, groupEnd, log, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
 import React from "react";
@@ -31,7 +31,19 @@ export abstract class Framework {
       warn("Looks like we are in development mode!");
     }
 
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV === "development") {
+      group("Framework.Initialize");
+    }
+
     this.initialize(options);
+
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV === "development") {
+      groupEnd();
+    }
+
+    this.core = new Core(this.plugins, this.options);
   }
 
   public async getApp(
@@ -83,24 +95,31 @@ export abstract class Framework {
 
     /* istanbul ignore next */
     if (process.env.NODE_ENV === "development") {
-      log(
-        "Initialize Framework with options: %O, plugins: %O",
-        this.options,
-        this.plugins,
-      );
+      log("with plugins: %O", this.plugins);
+      log("with options: %O", this.options);
     }
-
-    this.core = new Core(this.plugins, this.options);
   }
 }
 
 function Provider({ value, ...props }: any) {
   const [state, setState] = React.useState({});
+
+  let prevState: ObjectOf<any> = {};
+
+  const setContext = React.useCallback(
+    (v: ObjectOf<any>) => {
+      const nextState = { ...prevState, ...v };
+      setState(nextState);
+      prevState = nextState;
+    },
+    [setState],
+  );
+
   return (
     <Context.Provider {...props} value={{
       ...value,
       ...state,
-      setContext: (v: ObjectOf<any>) => setState({ ...state, ...v }),
+      setContext,
     }} />
   );
 }

@@ -26,11 +26,6 @@ function normalizePath(current: IBlock, parent: IBlock): PathProps {
     path = "";
   }
 
-  // 404
-  else if (path === "*") {
-    path = "(.*)";
-  }
-
   // 不支持指定的绝对路径
   else if (path.charAt(0) === "/") {
     warn("`path` should NOT start with `/`: %s", path);
@@ -40,7 +35,7 @@ function normalizePath(current: IBlock, parent: IBlock): PathProps {
   const father = parent.path === "/" ? "" : (parent.path || "");
   const myself = path ? `/${path}` : "";
 
-  path = `${father}${myself}`;
+  path = `${father}${myself}` || "/";
 
   return {
     path,

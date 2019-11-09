@@ -1,5 +1,5 @@
 import { IBlock, IHooks, IOption, IPlugin } from "@spax/core";
-import { log } from "@spax/debug";
+import { group, groupEnd, log } from "@spax/debug";
 import React from "react";
 import { HashRouter, Route, RouteComponentProps, Switch } from "react-router-dom";
 
@@ -31,9 +31,15 @@ function createRoute(
     ...props
   }: IBlock,
   NotFound: any,
-  inGreedy?: boolean,
 ) {
-  const { path, greedy } = props;
+  const { path } = props;
+
+  const hasChild = blocks && blocks.length !== 0;
+
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV === "development") {
+    log("create Route for `%s`: %O", path);
+  }
 
   return (
     <Route
@@ -44,34 +50,11 @@ function createRoute(
           return null;
         }
 
-        const hasChild = blocks && blocks.length !== 0;
-
         if (!C) {
           if (hasChild) {
-            return createRoutes(blocks, NotFound, inGreedy);
+            return createRoutes(blocks, NotFound);
           }
           return null;
-        }
-
-        // 贪婪，有两种表现：
-        // 该儿子时，父也想出现，所以把子组件交给父，让父来控制该如何显示；
-        // 已经精确匹配了，还想继续向下匹配更多的子级。
-        if (greedy) {
-          if (process.env.NODE_ENV === "development") {
-            log("Matching `%s` greedily", path);
-          }
-          return (
-            <C
-              {...props}
-              {...data}
-              match={{
-                ...match,
-                inGreedy,
-              }}
-            >
-              {createRoutes(blocks, NotFound, true)}
-            </C>
-          );
         }
 
         if (match.isExact) {
@@ -81,20 +64,17 @@ function createRoute(
           return <C
             {...props}
             {...data}
-            match={{
-              ...match,
-              inGreedy,
-            }}
-          />;
+            match={match}
+          >{hasChild ? createRoutes(blocks, NotFound) : null}</C>;
         }
 
         if (hasChild) {
-          return createRoutes(blocks, NotFound, inGreedy);
+          return createRoutes(blocks, NotFound);
         }
 
         if (path) {
           if (process.env.NODE_ENV === "development") {
-            log("No Matching for `%s`, use NotFound instead", path);
+            log("No Match for `%s`", path);
           }
           return <NotFound />;
         }
@@ -108,14 +88,26 @@ function createRoute(
 function createRoutes(
   blocks: IBlock[],
   NotFound: any,
-  inGreedy?: boolean,
 ): React.ReactNode {
-  if (!blocks) {
+  if (!blocks || !blocks.length) {
     return null;
   }
-  return (<Switch>
-    {
-      blocks.map((block: IBlock) => createRoute(block, NotFound, inGreedy))
-    }
-  </Switch>);
+
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV === "development") {
+    group("PluginRouter.createRoutes");
+  }
+
+  const routes = blocks.map(
+    (block: IBlock) => createRoute(block, NotFound),
+  );
+
+  const ReactNode = blocks.length === 1 ? routes : <Switch>{routes}</Switch>;
+
+  /* istanbul ignore next */
+  if (process.env.NODE_ENV === "development") {
+    groupEnd();
+  }
+
+  return ReactNode;
 }

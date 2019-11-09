@@ -17,8 +17,7 @@
     "@types/node": "^12.11.1"
   },
   "scripts": {
-    "start": "tsc -w",
-    "dev": "tsc",
+    "start": "tsc",
     "build": "rm -rf lib && tsc"
   },
   "publishConfig": {

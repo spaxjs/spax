@@ -1,16 +1,18 @@
-import { log } from "@spax/debug";
+import { group, groupEnd, log } from "@spax/debug";
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 export class Core {
     constructor(plugins = [], options = {}) {
         this.plugins = plugins;
         this.options = options;
-        this.initHooks();
-        // 加载插件
-        this.initPlugins();
-        // 前置处理
-        this.hooks.init.run("pre");
-        // 后置处理
-        this.hooks.init.run("post");
+        /* istanbul ignore next */
+        if (process.env.NODE_ENV === "development") {
+            group("Core.Initialize");
+        }
+        this.initialize();
+        /* istanbul ignore next */
+        if (process.env.NODE_ENV === "development") {
+            groupEnd();
+        }
     }
     async run(blocks) {
         return this.render(await this.parse(blocks));
@@ -21,6 +23,15 @@ export class Core {
     async render(blocks = []) {
         return this.hooks.render.run(await this.hooks.render.run(blocks, "pre"), "post");
     }
+    initialize() {
+        this.initHooks();
+        // 加载插件
+        this.initPlugins();
+        // 前置处理
+        this.hooks.init.run("pre");
+        // 后置处理
+        this.hooks.init.run("post");
+    }
     initHooks() {
         // 初始化三个插槽
         this.hooks = {
@@ -30,7 +41,7 @@ export class Core {
         };
         /* istanbul ignore next */
         if (process.env.NODE_ENV === "development") {
-            log("Hook hooks created: %O", this.hooks);
+            log("with hooks: %O", this.hooks);
         }
     }
     initPlugins() {
@@ -70,7 +81,7 @@ export class Core {
         });
         /* istanbul ignore next */
         if (process.env.NODE_ENV === "development") {
-            log("Plugins plugged in: %O", ordererPlugins);
+            log("plug plugins: %O", ordererPlugins);
         }
     }
     async parseBlocks(blocks, parent) {

@@ -7,6 +7,7 @@ export declare class Core {
     run(blocks?: IBlock[]): Promise<any>;
     parse(blocks?: IBlock[]): Promise<IBlock[]>;
     render(blocks?: IBlock[]): Promise<any>;
+    private initialize;
     private initHooks;
     private initPlugins;
     private parseBlocks;
