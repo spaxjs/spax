@@ -7,7 +7,7 @@ export declare abstract class Framework {
     private options;
     private core;
     constructor(options?: IOptions);
-    getApp(blocks: IBlock[]): Promise<React.ComponentType<{}>>;
+    createApp(blocks: IBlock[]): Promise<React.ComponentType<{}>>;
     /**
      * 通过原型链实现递归合并
      */

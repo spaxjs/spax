@@ -46,7 +46,7 @@ export abstract class Framework {
     this.core = new Core(this.plugins, this.options);
   }
 
-  public async getApp(
+  public async createApp(
     blocks: IBlock[],
   ): Promise<React.ComponentType<{}>> {
     // 解析

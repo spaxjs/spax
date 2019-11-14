@@ -40,11 +40,11 @@ describe("extends", () => {
   });
 });
 
-describe("getApp", () => {
+describe("createApp", () => {
   test("should return to container", async () => {
     class F extends Framework { }
     const f = new F();
-    const App = await f.getApp([]);
+    const App = await f.createApp([]);
     const r = render(<App />);
     expect(r.container.textContent).toBe("[]");
   });
@@ -90,7 +90,7 @@ describe("getApp", () => {
     }
     const f = new F();
     // a
-    const AppA = await f.getApp([{ title: "a" }]);
+    const AppA = await f.createApp([{ title: "a" }]);
     const ra = render(<AppA />, {
       container: createContainer(),
     });
@@ -99,7 +99,7 @@ describe("getApp", () => {
     fireEvent.click(ra.getByText("click me"));
     expect(ra.getByRole("message").textContent).toBe("aa");
     // b
-    const AppB = await f.getApp([{ title: "b" }]);
+    const AppB = await f.createApp([{ title: "b" }]);
     const rb = render(<AppB />, {
       container: createContainer(),
     });
@@ -150,7 +150,7 @@ describe("getApp", () => {
     }
     const f = new F();
     // a
-    const App = await f.getApp([{ title: "a" }, { title: "b" }]);
+    const App = await f.createApp([{ title: "a" }, { title: "b" }]);
     const r = render(<App />, {
       container: createContainer(),
     });

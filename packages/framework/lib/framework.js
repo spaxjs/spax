@@ -32,7 +32,7 @@ export class Framework {
         }
         this.core = new Core(this.plugins, this.options);
     }
-    async getApp(blocks) {
+    async createApp(blocks) {
         // 解析
         const parsed = await this.core.parse(blocks);
         const rendered = await this.core.render(parsed);
