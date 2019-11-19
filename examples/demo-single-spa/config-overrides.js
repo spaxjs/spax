@@ -23,8 +23,6 @@ module.exports = override(
     "react-dom",
     "react-hot-loader",
     "react-router-dom",
-    "@material-ui/core",
-    "@material-ui/icons",
     "@types/node",
     "@types/react",
     "@types/react-dom",

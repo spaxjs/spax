@@ -82,11 +82,9 @@ Framework.plugins = [];
 Framework.options = {};
 function Provider({ value, ...props }) {
     const [state, setState] = React.useState({});
-    let prevState = {};
+    let s = {};
     const setContext = React.useCallback((v) => {
-        const nextState = { ...prevState, ...v };
-        setState(nextState);
-        prevState = nextState;
+        setState(s = { ...s, ...v });
     }, [setState]);
     return (React.createElement(Context.Provider, Object.assign({}, props, { value: {
             ...value,

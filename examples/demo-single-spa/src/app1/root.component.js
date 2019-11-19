@@ -1,7 +1,7 @@
 import React from 'react';
 import BuggyCounter from "../BuggyCounter.tsx";
 import ErrorBoundary from "../ErrorBoundary.tsx";
-import GlobalCounter from "../GlobalCounter.tsx";
+import LocalCounter from "../LocalCounter.tsx";
 
 export default class Root extends React.Component {
   state = {}
@@ -26,7 +26,7 @@ export default class Root extends React.Component {
         <ErrorBoundary>
           <BuggyCounter />
         </ErrorBoundary>
-        <GlobalCounter />
+        <LocalCounter />
       </div>
     );
   }

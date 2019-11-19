@@ -1,6 +1,6 @@
 import { InitHook, ParseHook, RenderHook } from "./hooks";
 
-export interface ObjectOf<V = any> {
+export interface MapOf<V = any> {
   [key: string]: V;
 }
 
@@ -18,11 +18,11 @@ export interface IPlugin {
   plug: (hooks: IHooks, option: IOption, options: IOptions) => void;
 }
 
-export interface IBlock extends ObjectOf {
+export interface IBlock extends MapOf {
   $$parsed?: boolean;
   blocks?: IBlock[];
 }
 
-export interface IOption extends ObjectOf {}
+export interface IOption extends MapOf {}
 
-export interface IOptions extends ObjectOf<IOption>{}
+export interface IOptions extends MapOf<IOption>{}

@@ -14,7 +14,7 @@
     "@spax/debug": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^12.11.1"
+    "@types/node": "^12.12.9"
   },
   "scripts": {
     "start": "tsc",

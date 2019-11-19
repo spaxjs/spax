@@ -1,4 +1,4 @@
-import { Core, IBlock, IOptions, IPlugin, ObjectOf } from "@spax/core";
+import { Core, IBlock, IOptions, IPlugin, MapOf } from "@spax/core";
 import { group, groupEnd, log, warn } from "@spax/debug";
 import isPlainObject from "lodash/isPlainObject";
 import mergeWith from "lodash/mergeWith";
@@ -104,13 +104,11 @@ export abstract class Framework {
 function Provider({ value, ...props }: any) {
   const [state, setState] = React.useState({});
 
-  let prevState: ObjectOf<any> = {};
+  let s: MapOf<any> = {};
 
   const setContext = React.useCallback(
-    (v: ObjectOf<any>) => {
-      const nextState = { ...prevState, ...v };
-      setState(nextState);
-      prevState = nextState;
+    (v: MapOf<any>) => {
+      setState(s = { ...s, ...v });
     },
     [setState],
   );

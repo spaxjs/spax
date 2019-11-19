@@ -2,7 +2,7 @@ import FrameworkSimple from "@spax/framework-simple";
 import React from "react";
 import BuggyCounter from "../BuggyCounter";
 import ErrorBoundary from "../ErrorBoundary";
-import GlobalCounter from "../GlobalCounter";
+import LocalCounter from "../LocalCounter";
 
 const UI: React.FC<any> = (props: any) => {
   return (
@@ -11,11 +11,9 @@ const UI: React.FC<any> = (props: any) => {
       <ErrorBoundary>
         <BuggyCounter />
       </ErrorBoundary>
-      <GlobalCounter />
+      <LocalCounter />
     </div>
   );
 };
 
-export default new FrameworkSimple({
-  blocks: [{ path: "*", component: UI }],
-}).render();
+export default new FrameworkSimple().createApp([{ path: "*", component: UI }]);

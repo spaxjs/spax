@@ -4,10 +4,10 @@
   "description": "spax",
   "private": true,
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
   },
   "author": "crossjs<liwenfu@crossjs.com>",
   "repository": {
@@ -18,22 +18,23 @@
   "dependencies": {
     "@spax/core": "^1.4.2",
     "@spax/framework-simple": "^1.4.3",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "single-spa": "^4.4.1",
-    "single-spa-react": "^2.10.2"
+    "single-spa-react": "^2.10.4"
   },
   "devDependencies": {
-    "@craco/craco": "^5.5.0",
-    "@types/jest": "^24.0.19",
-    "@types/node": "^12.11.1",
-    "@types/react": "^16.9.9",
-    "@types/react-dom": "^16.9.2",
+    "@craco/craco": "^5.6.2",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.9",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
     "@types/single-spa-react": "^2.8.3",
+    "customize-cra": "^0.9.1",
+    "react-app-rewired": "^2.1.5",
     "react-scripts": "^3.2.0",
-    "source-map-loader": "^0.2.4",
-    "typescript": "^3.6.4",
-    "webpack-bundle-analyzer": "^3.5.0"
+    "typescript": "^3.7.2"
   },
   "browserslist": {
     "production": [
