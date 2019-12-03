@@ -1,6 +1,6 @@
 {
   "name": "@spax/plugin-i18n",
-  "version": "1.4.2",
+  "version": "1.4.3-alpha.0",
   "description": "add i18n support",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,8 +10,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/core": "^1.4.2",
-    "@spax/i18n": "^1.4.2"
+    "@spax/core": "^1.4.3-alpha.0",
+    "@spax/i18n": "^1.4.3-alpha.0"
   },
   "devDependencies": {
     "@types/node": "^12.11.1"

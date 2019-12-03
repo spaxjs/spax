@@ -1,6 +1,6 @@
 {
   "name": "@spax/core",
-  "version": "1.4.2",
+  "version": "1.4.3-alpha.0",
   "description": "core engine",
   "main": "lib/index.js",
   "author": "crossjs<liwenfu@crossjs.com>",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@spax/debug": "^1.1.1",
+    "@spax/debug": "^1.1.2-alpha.0",
     "events": "^3.0.0"
   },
   "devDependencies": {
