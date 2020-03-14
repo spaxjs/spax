@@ -1130,6 +1130,66 @@
   resolved "https://registry.npm.taobao.org/@nodelib/fs.stat/download/@nodelib/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
+"@spax/core@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npm.taobao.org/@spax/core/download/@spax/core-1.4.2.tgz#4fe727ec24ad7f356bea23809e84b2fb0fd7cd12"
+  integrity sha1-T+cn7CStfzVr6iOAnoSy+w/XzRI=
+  dependencies:
+    "@spax/debug" "^1.1.1"
+    events "^3.0.0"
+    history "^4.10.1"
+
+"@spax/debug@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.npm.taobao.org/@spax/debug/download/@spax/debug-1.1.1.tgz#ea2107cc3bcfc97f30a1dd4940e2e775e3a257d9"
+  integrity sha1-6iEHzDvPyX8wod1JQOLndeOiV9k=
+
+"@spax/framework-simple@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.npm.taobao.org/@spax/framework-simple/download/@spax/framework-simple-1.4.3.tgz#c9c85cc72d897e3a078661f98b049579eec22763"
+  integrity sha1-ychcxy2JfjoHhmH5iwSVee7CJ2M=
+  dependencies:
+    "@spax/core" "^1.4.2"
+    "@spax/framework" "^1.4.2"
+    "@spax/plugin-lazy" "^1.4.2"
+    "@spax/plugin-path" "^1.4.2"
+    "@spax/plugin-router" "^1.4.3"
+
+"@spax/framework@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npm.taobao.org/@spax/framework/download/@spax/framework-1.4.2.tgz#81811cc737cdb5bb1005a5859aed3f52aec6412b"
+  integrity sha1-gYEcxzfNtbsQBaWFmu0/Uq7GQSs=
+  dependencies:
+    "@spax/core" "^1.4.2"
+    "@spax/debug" "^1.1.1"
+    history "^4.10.1"
+    lodash "^4.17.15"
+
+"@spax/plugin-lazy@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npm.taobao.org/@spax/plugin-lazy/download/@spax/plugin-lazy-1.4.2.tgz#4e8b248af75e5cc79a9ddb6b113d9fda1fcbf8ec"
+  integrity sha1-ToskivdeXMeandtrET2f2h/L+Ow=
+  dependencies:
+    "@spax/core" "^1.4.2"
+    history "^4.10.1"
+
+"@spax/plugin-path@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npm.taobao.org/@spax/plugin-path/download/@spax/plugin-path-1.4.2.tgz#9472572eb2ecbc10211044d5aa4617dde656a23b"
+  integrity sha1-lHJXLrLsvBAhEETVqkYX3eZWojs=
+  dependencies:
+    "@spax/core" "^1.4.2"
+    "@spax/debug" "^1.1.1"
+
+"@spax/plugin-router@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.npm.taobao.org/@spax/plugin-router/download/@spax/plugin-router-1.4.3.tgz#a0bba9aa9e47db7f8283f60565482de2c21c890f"
+  integrity sha1-oLupqp5H23+Cg/YFZUgt4sIciQ8=
+  dependencies:
+    "@spax/core" "^1.4.2"
+    "@spax/debug" "^1.1.1"
+    react-router-dom "^5.1.1"
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.npm.taobao.org/@svgr/babel-plugin-add-jsx-attribute/download/@svgr/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
@@ -1594,9 +1654,9 @@ acorn-walk@^6.0.1:
   integrity sha1-Ejy487hMIXHx9/slJhWxx4prGow=
 
 acorn@^5.5.3:
-  version "5.7.3"
-  resolved "https://registry.npm.taobao.org/acorn/download/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
-  integrity sha1-Z6ojG/iBKXS4UjWpZ3Hra9B+onk=
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
+  integrity sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==
 
 acorn@^6.0.1, acorn@^6.0.4, acorn@^6.2.1:
   version "6.3.0"
@@ -4623,7 +4683,7 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.npm.taobao.org/hex-color-regex/download/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4=
 
-history@^4.9.0:
+history@^4.10.1, history@^4.9.0:
   version "4.10.1"
   resolved "https://registry.npm.taobao.org/history/download/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3"
   integrity sha1-MzcaZeOoOyZ0NOKz87G0xYqtTPM=
@@ -8235,7 +8295,7 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha1-LMD+D7p0LZf9UnxCoTvsTusGJBw=
 
-react-router-dom@^5.1.2:
+react-router-dom@^5.1.1, react-router-dom@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npm.taobao.org/react-router-dom/download/react-router-dom-5.1.2.tgz#06701b834352f44d37fbb6311f870f84c76b9c18"
   integrity sha1-BnAbg0NS9E03+7YxH4cPhMdrnBg=
