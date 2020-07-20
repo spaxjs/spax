@@ -9,6 +9,20 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@spax/core@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npm.taobao.org/@spax/core/download/@spax/core-1.4.2.tgz#4fe727ec24ad7f356bea23809e84b2fb0fd7cd12"
+  integrity sha1-T+cn7CStfzVr6iOAnoSy+w/XzRI=
+  dependencies:
+    "@spax/debug" "^1.1.1"
+    events "^3.0.0"
+    history "^4.10.1"
+
+"@spax/debug@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.npm.taobao.org/@spax/debug/download/@spax/debug-1.1.1.tgz#ea2107cc3bcfc97f30a1dd4940e2e775e3a257d9"
+  integrity sha1-6iEHzDvPyX8wod1JQOLndeOiV9k=
+
 "@types/lodash@^4.14.140":
   version "4.14.141"
   resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.141.tgz#d81f4d0c562abe28713406b571ffb27692a82ae6"
@@ -52,6 +66,11 @@ csstype@^2.2.0:
   resolved "https://registry.npm.taobao.org/csstype/download/csstype-2.6.7.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcsstype%2Fdownload%2Fcsstype-2.6.7.tgz#20b0024c20b6718f4eda3853a1f5a1cce7f5e4a5"
   integrity sha1-ILACTCC2cY9O2jhTofWhzOf15KU=
 
+events@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/events/download/events-3.1.0.tgz#84279af1b34cb75aa88bf5ff291f6d0bd9b31a59"
+  integrity sha1-hCea8bNMt1qoi/X/KR9tC9mzGlk=
+
 history@^4.10.1:
   version "4.10.1"
   resolved "https://registry.npm.taobao.org/history/download/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3"
@@ -70,9 +89,9 @@ history@^4.10.1:
   integrity sha1-GSA/tZmR35jjoocFDUZHzerzJJk=
 
 lodash@^4.17.15:
-  version "4.17.15"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+  version "4.17.19"
+  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha1-5I3e2+MLMyF4PFtDAfvTU7weSks=
 
 loose-envify@^1.2.0:
   version "1.4.0"
